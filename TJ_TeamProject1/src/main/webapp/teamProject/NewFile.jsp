@@ -12,7 +12,7 @@
 <%
 TestClass tc = new TestClass();
 int result = tc.testSQL();
-System.out.println("result");
+System.out.println("result " + result);
 %>
 
 </body>
