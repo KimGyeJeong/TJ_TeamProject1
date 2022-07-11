@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>감자감자</h1>
+<h1>감자감자감자</h1>
 </body>
 </html>
