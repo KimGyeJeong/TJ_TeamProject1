@@ -23,6 +23,7 @@
 	String enc = "UTF-8";
 	DefaultFileRenamePolicy dp =new DefaultFileRenamePolicy();
 	MultipartRequest mr =new MultipartRequest(request, path, max, enc, dp);
+
 	
 	member.setUser_id(mr.getParameter("id"));
 	member.setUser_pw(mr.getParameter("pw"));
@@ -45,6 +46,7 @@
 	//ImgSignupDAO dao = new ImgSignupDAO();
 	//dao.insertMember(member);
 	
+
 	response.sendRedirect("main.jsp");
 	
 	
