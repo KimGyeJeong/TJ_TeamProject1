@@ -66,7 +66,7 @@ public class TestClass {
 			}
 		}
 	}
-
+/*
 	// new method here
 	public int testSQL() {
 		try {
@@ -89,6 +89,6 @@ public class TestClass {
 		}
 
 		return result;
-	}
+	}*/
 
 }
