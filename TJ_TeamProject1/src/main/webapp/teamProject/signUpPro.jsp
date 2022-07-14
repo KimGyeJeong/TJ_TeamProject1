@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,19 +21,17 @@
 	String enc = "UTF-8";
 	DefaultFileRenamePolicy dp =new DefaultFileRenamePolicy();
 	MultipartRequest mr =new MultipartRequest(request, path, max, enc, dp);
-	
+	/*
 	member.setId(mr.getParameter("id"));
 	member.setPw(mr.getParameter("pw"));
 	member.setName(mr.getParameter("name"));
 	member.setGender(mr.getParameter("gender"));
 	member.setEmail(mr.getParameter("email"));
 	
-	member.setPhoto(mr.getFilesystemName("photo"));
+	member.setPhoto(mr.getFilesystemName("photo"));*/
 	
 	//db  가서 저장해
-	ImgSignupDAO dao = new ImgSignupDAO();
-	dao.insertMember(member);
-	
+
 	response.sendRedirect("main.jsp");
 	
 	
