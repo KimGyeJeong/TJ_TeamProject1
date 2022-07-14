@@ -37,7 +37,8 @@ SELECT {
 	FONT-SIZE: 9pt;
 	COLOR: #fff;
 	LINE-HEIGHT: 160%;
-	FONT-FAMILY: 맑은 고딕, verdana, tahoma
+	FONT-FAMILY: 맑은 고딕, verdana, tahoma;
+	background-color: black;
 }
 
 DIV {
