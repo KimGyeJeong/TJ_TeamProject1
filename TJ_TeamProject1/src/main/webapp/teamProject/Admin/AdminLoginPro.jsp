@@ -19,10 +19,23 @@ int result = dao.idpwChk(id, pw);
 
 if(result > 0){		//result == 1	>> success
 	System.out.println("SUCCESS");
+	session.setAttribute("adminId", id);
+	
+	response.sendRedirect("AdminMain.jsp");
 }else if(result<0){	//result == -1	>> DAO ERR
-	
+	%>
+	<script type="text/javascript">
+	alert("오류 발생..\n메인으로 돌아갑니다.");
+	location.replace('../Main.jsp');
+	</script>
+	<%
 }else{				//result == 0	>> Failed
-	
+	%>
+	<script type="text/javascript">
+	alert("아이디나 비밀번호가 일치하지않습니다.\n로그인페이지로 돌아갑니다.");
+	location.replace('AdminLogin.jsp');
+	</script>
+	<%
 }
 %>
 
