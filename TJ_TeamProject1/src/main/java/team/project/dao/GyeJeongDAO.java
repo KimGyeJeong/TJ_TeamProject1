@@ -148,15 +148,15 @@ public class GyeJeongDAO {
 	}
 
 	// new method here
-	public List<UserListDTO> getUserSearch(int startRow, int endRow, String search) {
+	public List<UserListDTO> getUserSearch(int startRow, int endRow, String search, String orderBy) {
 		List<UserListDTO> list = null;
 		UserListDTO dto = null;
 		try {
 			conn = getConnection();
 
 			sql = "select b.* FROM\r\n" + "(select ROWNUM r, A.* from\r\n"
-					+ "(select * from USERLIST where user_id like '%" + search + "%' ORDER BY USER_REG DESC)A)B\r\n"
-					+ "where r>=? and r<=?";
+					+ "(select * from USERLIST where user_id like '%" + search + "%' ORDER BY USER_REG " + orderBy
+					+ ")A)B\r\n" + "where r>=? and r<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -175,7 +175,7 @@ public class GyeJeongDAO {
 					dto.setUser_phone(rs.getString(6));
 					dto.setUser_money(rs.getInt(7));
 					dto.setUser_usemoney(rs.getInt(8));
-					// TODO dto.setUser_stars(rs.getDouble(9)); 수정하기
+					dto.setUser_stars(rs.getDouble(9));
 					dto.setUser_img(rs.getString(10));
 					dto.setUser_reg(rs.getTimestamp(11));
 					dto.setUser_delete(rs.getInt(12));
@@ -197,5 +197,60 @@ public class GyeJeongDAO {
 
 		return list;
 	}
+
+	// new method here
+	// 유저 리스트 가져오기
+	public List<UserListDTO> getUser(int startRow, int endRow, String orderBy) {
+		List<UserListDTO> list = null;
+		UserListDTO dto = null;
+
+		try {
+			conn = getConnection();
+
+			sql = "SELECT b.* FROM\r\n" + "(SELECT ROWNUM r, A.* FROM\r\n"
+					+ "(SELECT * FROM USERLIST ORDER BY USER_REG " + orderBy + ")A)B\r\n" + "WHERE r>=? and r<=?";
+
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list = new ArrayList<UserListDTO>();
+				do {
+					
+					dto = new UserListDTO();
+
+					dto.setUser_id(rs.getString(2));
+					dto.setUser_pw(rs.getString(3));
+					dto.setUser_email(rs.getString(4));
+					dto.setUser_name(rs.getString(5));
+					dto.setUser_phone(rs.getString(6));
+					dto.setUser_money(rs.getInt(7));
+					dto.setUser_usemoney(rs.getInt(8));
+					dto.setUser_stars(rs.getDouble(9));
+					dto.setUser_img(rs.getString(10));
+					dto.setUser_reg(rs.getTimestamp(11));
+					dto.setUser_delete(rs.getInt(12));
+					dto.setUser_deleteReg(rs.getTimestamp(13));
+					dto.setUser_activeReg(rs.getTimestamp(14));
+					dto.setUser_report(rs.getInt(15));
+					dto.setUser_reportCnt(rs.getInt(16));
+
+					list.add(dto);
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getUser(startRow, endRow) ERR");
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	//new method here
 
 }

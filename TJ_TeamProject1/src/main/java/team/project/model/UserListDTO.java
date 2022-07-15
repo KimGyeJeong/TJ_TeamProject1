@@ -10,7 +10,7 @@ public class UserListDTO {
 	private String user_phone;
 	private int user_money;
 	private int user_usemoney;
-	private int user_stars;
+	private double user_stars;
 	private String user_img;
 	private Timestamp user_reg;
 	private int user_delete;
@@ -60,10 +60,10 @@ public class UserListDTO {
 	public void setUser_usemoney(int user_usemoney) {
 		this.user_usemoney = user_usemoney;
 	}
-	public int getUser_stars() {
+	public double getUser_stars() {
 		return user_stars;
 	}
-	public void setUser_stars(int user_stars) {
+	public void setUser_stars(double user_stars) {
 		this.user_stars = user_stars;
 	}
 	public String getUser_img() {
