@@ -8,6 +8,10 @@
 </head>
 <body>
 <h1>메인</h1>
+<%String id=(String)session.getAttribute("u_id"); 
+System.out.println("id :"+id);
+%>
 
+<input type="button" value="logout" onclick="location.href='Login/Logout.jsp'"/>
 </body>
 </html>

@@ -45,7 +45,7 @@
 	
 	
 
-	response.sendRedirect("Main.jsp");
+	response.sendRedirect("../Main.jsp");
 	
 	
 %>

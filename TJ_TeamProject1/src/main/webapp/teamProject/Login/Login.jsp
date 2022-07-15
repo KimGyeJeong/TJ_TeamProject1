@@ -9,6 +9,12 @@
 </head>
 <body>
 <br/>
+	<%if(session.getAttribute("u_id")!=null){%>
+		<script>
+			alert("이미 로그인상태입니다.");
+			history.go(-1);
+		</script>
+	<%  }%>
 	<h1 align="center"> 로그인페이지</h1>
 	<form action="LoginPro.jsp" method="post">
 	<table>
