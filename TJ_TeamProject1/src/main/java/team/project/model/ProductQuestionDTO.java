@@ -8,7 +8,7 @@ public class ProductQuestionDTO {
 	private String pq_title;
 	private String pq_content;
 	private String user_id;
-	private Timestamp pq_writeReq;
+	private Timestamp pq_writeReg;
 	private String pq_answer;
 	private Timestamp pq_answerReg;
 	private int pq_delete;
@@ -42,11 +42,11 @@ public class ProductQuestionDTO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public Timestamp getPq_writeReq() {
-		return pq_writeReq;
+	public Timestamp getPq_writeReg() {
+		return pq_writeReg;
 	}
-	public void setPq_writeReq(Timestamp pq_writeReq) {
-		this.pq_writeReq = pq_writeReq;
+	public void setPq_writeReg(Timestamp pq_writeReq) {
+		this.pq_writeReg = pq_writeReq;
 	}
 	public String getPq_answer() {
 		return pq_answer;

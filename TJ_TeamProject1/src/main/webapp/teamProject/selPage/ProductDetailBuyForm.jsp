@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="team.project.model.ProductQuestionDTO"%>
 <%@page import="team.project.model.BiddingDTO"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.dao.BeomSuDAO"%>
@@ -12,6 +14,7 @@
 </head>
 <%
 	String UID = (String)session.getAttribute("UID");
+	
 	String pageNum = (String)request.getAttribute("pageNum");
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
@@ -21,7 +24,10 @@
 	
 	BeomSuDAO dao = new BeomSuDAO();
 	ProductDTO dto = null;
+	List list = null;
 	dto = dao.productDetailBuy(p_no);
+	ProductQuestionDTO que_dto = new ProductQuestionDTO();
+	list = dao.ProductQuestionList(p_no);
 
 %>
 <body>
@@ -65,16 +71,23 @@
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1'">상품 문의</button></td>
 		</tr>
 <%		if(pageNum.equals("0")){%>
-			
+		<tr>
+			<td colspan="3">
+				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
+				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
+				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
+				<textarea rows="50" cols="200"><%=dto.getP_content() %></textarea>
+			</td>
+		</tr>
 <%		}else{ %>
-			
+		<tr>
+			<td colspan="3">
+		
+			</td>
+		</tr>
 <%		} %>
 		<tr>
-<%		if(UID != null){ %>
-			<td><button onclick="window.open("ProductQuestion.jsp?UID<%=UID %>", "상품 문의", )">상품 문의하기</button></td>
-<%		}else{ %>
-			<td><button onclick="window.open("")">상품 문의하기</button></td>
-<%		} %>
+			<td><button onclick="window.open("ProductQuestion.jsp", "상품 문의", "width=500, height=500, location=no" left=100, top=200)">상품 문의하기</button></td>
 		</tr>
 	</table>	
 	
