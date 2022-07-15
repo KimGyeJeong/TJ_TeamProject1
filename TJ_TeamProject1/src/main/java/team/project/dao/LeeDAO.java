@@ -26,7 +26,7 @@ public class LeeDAO {
 		PreparedStatement pstmt = null; 
 		try {
 			conn = getConnection(); 	
-			String sql= "insert into userlist(user_id,user_pw,user_email,user_name,user_phone,user_img,user_reg) values(?,?,?,?,?,?,sysdate)";
+			String sql= "insert into userlist(user_id, user_pw, user_email, user_name, user_phone, user_img, user_reg) values(?,?,?,?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getUser_id());
 			pstmt.setString(2, member.getUser_pw());
