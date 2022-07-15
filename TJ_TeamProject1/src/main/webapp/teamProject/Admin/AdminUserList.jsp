@@ -14,7 +14,7 @@
 <body>
 	<%
 	request.setCharacterEncoding("UTF-8");
-	
+
 	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd a HH:mm:ss");
 
 	GyeJeongDAO dao = new GyeJeongDAO();
@@ -89,16 +89,15 @@
 			%>
 			<td><%=userNumber--%></td>
 			<td><%=dto.getUser_id()%></td>
-			<td><%=dto.getUser_email() %></td>
-			<td><%=dto.getUser_name() %></td>
-			<td><%=sdf.format(dto.getUser_reg()) %></td>
-			<td><%=dto.getUser_delete() %></td>
-			<td><%=dto.getUser_reportCnt() %></td>
+			<td><%=dto.getUser_email()%></td>
+			<td><%=dto.getUser_name()%></td>
+			<td><%=sdf.format(dto.getUser_reg())%></td>
+			<td><%=dto.getUser_delete()%></td>
+			<td><%=dto.getUser_reportCnt()%></td>
 		</tr>
 		<%
 		}
 		%>
 	</table>
-
 </body>
 </html>
