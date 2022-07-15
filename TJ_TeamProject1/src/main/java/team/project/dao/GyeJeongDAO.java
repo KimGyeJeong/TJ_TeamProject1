@@ -251,5 +251,6 @@ public class GyeJeongDAO {
 
 		return list;
 	}
+	//new method here
 
 }
