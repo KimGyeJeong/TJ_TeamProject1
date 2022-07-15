@@ -17,7 +17,7 @@
 </head>
 <body>
 <% 
-	String path =request.getRealPath("save");
+	String path =request.getRealPath("save"); 
 	System.out.println(path);
 	int max = 1024*1024*5;
 	String enc = "UTF-8";
@@ -37,13 +37,11 @@
 	member_add.setA_address2(mr.getParameter("address2"));
 	
 	LeeDAO dao = new LeeDAO();
-	dao. insertNewUser(member, member_add);
+	int result=dao. insertNewUser(member, member_add);
+	System.out.println("result:"+result);
 	
 	
 	
-	//db  가서 저장해
-	//ImgSignupDAO dao = new ImgSignupDAO();
-	//dao.insertMember(member);
 	
 	response.sendRedirect("main.jsp");
 	
