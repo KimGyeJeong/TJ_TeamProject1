@@ -20,10 +20,11 @@
 		pageNum = "0";
 	}
 	request.setCharacterEncoding("utf-8");
-	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
-	if(p_no == null){
-		p_no = 0;
+	String p = request.getParameter("p_no");
+	if(p == null){
+		p = "-1";
 	}
+	int p_no = Integer.parseInt(p);
 	
 	BeomSuDAO dao = new BeomSuDAO();
 	ProductDTO dto = null;
@@ -34,9 +35,10 @@
 %>
 <body>
 <br />
-	<img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/>
+	
 	<table>
 		<tr>
+			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td><%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
@@ -69,8 +71,8 @@
 		</form>
 <%			} %>
 		<tr>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0'">상품 정보</button></td>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
@@ -84,12 +86,12 @@
 <%		}else{ %>
 		<tr>
 			<td colspan="3">
-<%			if(list.size() != 0){
+<%			if(list != null){
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
 					<h6><%=que_dto.getPq_title() %></h6>
-					<textarea rows="20" cols="200"><%=que_dto.getPq_content() %></textarea>
+					<textarea rows="10" cols="100"><%=que_dto.getPq_content() %></textarea>
 					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
 <%						if(que_dto.getPq_answer() != null){%>
 							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
@@ -103,7 +105,8 @@
 		</tr>
 <%		} %>
 		<tr>
-			<td><button onclick="window.open('ProductQuestion.jsp','width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
+			<td colspan="2"><button onclick="window.open('ProductQuestion.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>&p_title=<%=dto.getP_title() %>', '상품 문의', 'width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no<%=dto.getCa_no() %>'">뒤로 가기</button>
 		</tr>
 	</table>	
 	
