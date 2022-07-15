@@ -23,7 +23,7 @@
 	inquiry.setUser_id((String)session.getAttribute("u_id")); 
 	inquiry.setUq_title(mr.getParameter("subject"));
 	inquiry.setUq_cat(mr.getParameter("category"));
-	inquiry.setUqa_content(mr.getParameter("content"));
+	inquiry.setUq_content(mr.getParameter("content"));
 	inquiry.setUq_img1(mr.getParameter("img1"));
 	inquiry.setUq_img2(mr.getParameter("img2"));
 	inquiry.setUq_img3(mr.getParameter("img3"));
