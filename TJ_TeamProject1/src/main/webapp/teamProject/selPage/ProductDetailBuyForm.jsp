@@ -15,18 +15,20 @@
 <%
 	String UID = (String)session.getAttribute("UID");
 	
-	String pageNum = (String)request.getAttribute("pageNum");
+	String pageNum = (String)request.getParameter("pageNum");
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
 	request.setCharacterEncoding("utf-8");
-	int p_no = Integer.parseInt((String)session.getAttribute("p_no"));
+	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
+	if(p_no == null){
+		p_no = 0;
+	}
 	
 	BeomSuDAO dao = new BeomSuDAO();
 	ProductDTO dto = null;
 	List list = null;
 	dto = dao.productDetailBuy(p_no);
-	ProductQuestionDTO que_dto = new ProductQuestionDTO();
 	list = dao.ProductQuestionList(p_no);
 
 %>
@@ -76,18 +78,32 @@
 				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
 				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
 				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
-				<textarea rows="50" cols="200"><%=dto.getP_content() %></textarea>
+				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
 <%		}else{ %>
 		<tr>
 			<td colspan="3">
-		
+<%			if(list.size() != 0){
+				for(int i = 0; i<list.size(); i++){
+					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
+				%>
+					<h6><%=que_dto.getPq_title() %></h6>
+					<textarea rows="20" cols="200"><%=que_dto.getPq_content() %></textarea>
+					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
+<%						if(que_dto.getPq_answer() != null){%>
+							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
+							<h6>답변 시간 : <%=que_dto.getPq_answerReg() %></h6>
+<%						} %>
+<%				}%>
+<%			}else{%>
+				<h3>작성된 문의글이 없습니다!</h3>
+<%			} %>
 			</td>
 		</tr>
 <%		} %>
 		<tr>
-			<td><button onclick="window.open("ProductQuestion.jsp", "상품 문의", "width=500, height=500, location=no" left=100, top=200)">상품 문의하기</button></td>
+			<td><button onclick="window.open('ProductQuestion.jsp','width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
 		</tr>
 	</table>	
 	

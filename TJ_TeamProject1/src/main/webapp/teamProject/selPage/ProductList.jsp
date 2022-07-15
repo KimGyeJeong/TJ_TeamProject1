@@ -12,7 +12,12 @@
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
-	int ca_no = Integer.parseInt((String)request.getAttribute("ca_no"));
+	String ca = (String)request.getParameter("ca_no");
+	if(ca == null){
+		ca = "3";
+	}
+	int ca_no = Integer.parseInt(ca);
+	
 	BeomSuDAO dao = new BeomSuDAO();
 	List list = null;
 	list = dao.categorySelect(ca_no);
@@ -27,14 +32,13 @@
 			int j = 0;
 			for(int i = j; i<list.size(); i++){%>
 			<tr>
-				<% for(j = i; j<i+5; j++){
-				ProductDTO dto = (ProductDTO)list.get(j);%>
-				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">1
+<%
+				ProductDTO dto = (ProductDTO)list.get(i);%>
+				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">
 				<img src="/teamProject/save/<%=dto.getP_img1() %>" /><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
-				<%}%>
 			</tr>
 			<%}
 		%>
