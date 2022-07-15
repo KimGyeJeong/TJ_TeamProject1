@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
 import team.project.model.UserListDTO;
+import team.project.model.UserQuestionDTO;
 
 
 public class LeeDAO {
@@ -94,6 +95,7 @@ public class LeeDAO {
 			count += updateUserAdd;
 			
 		}catch(Exception e) {
+			System.out.println("LEEDAO.insertNewUser ERR");
 			e.printStackTrace();
 		}finally {
 			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
@@ -129,7 +131,7 @@ public class LeeDAO {
 			else
 				result = 0;
 		} catch (Exception e) {
-			System.out.println("GyeJeongDAO.idpwChk(id, pw) ERR");
+			System.out.println("LEEDAO.idpwChkUser(id, pw) ERR");
 			e.printStackTrace();
 		} finally {
 			closeConnection(rs, pstmt, conn);
@@ -137,5 +139,64 @@ public class LeeDAO {
 
 		return result;
 	}
+	
+	public int insertinquiry(UserQuestionDTO inquiry ) {
+		int result =-1;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		try {
+			conn=getConnection();
+			String sql="insert into userquestion(uq_no,user_id,uq_title,uq_content,uq_cat,uq_img1,uq_img2,uq_img3,uq_reg) VALUES(userquestion_seq.nextval,?,?,?,?,?,?,?,sysdate)";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, inquiry.getUser_id());
+			pstmt.setString(2, inquiry.getUq_title());
+			pstmt.setString(3, inquiry.getUq_content());
+			pstmt.setString(4, inquiry.getUq_cat());
+			pstmt.setString(5, inquiry.getUq_img1());
+			pstmt.setString(6, inquiry.getUq_img2());
+			pstmt.setString(7, inquiry.getUq_img3());
+			
+			int updateCount = pstmt.executeUpdate(); 
+			System.out.println("insertinquiry :"+updateCount);
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			System.out.println("LeeDAO.insertinquiry ERR");
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+			
+		}
+		
+		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
