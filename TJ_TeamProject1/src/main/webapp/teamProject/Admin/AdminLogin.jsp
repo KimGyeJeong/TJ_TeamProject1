@@ -22,7 +22,7 @@
 				<td><input type="password" name="pw"></td>
 			</tr>
 			<tr>
-				<td ><input type="submit" value="login"> <input
+				<td colspan="2"><input type="submit" value="login"> <input
 					type="button" value="go Main" onclick="location.href='../Main.jsp'">
 				</td>
 			</tr>
