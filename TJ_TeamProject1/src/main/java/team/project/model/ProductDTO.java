@@ -144,5 +144,4 @@ public class ProductDTO {
 		this.p_end = p_end;
 	}
 	
-	
 }

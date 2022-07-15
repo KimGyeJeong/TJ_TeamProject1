@@ -1,10 +1,7 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
-<%@page import="team.project.model.ProductDTO"%>
+<%@page import="team.project.model.OrderListDTO"%>
+<%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.dao.InstanceDAO"%>
-<%@page import="team.project.model.CategoryDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,25 +25,17 @@
 			left: 50px;
 			display:inline-block;
 		}
-		#seller p {
-			display: inline;
-		}
 	</style>
 
-	<%
-	request.setCharacterEncoding("UTF-8");
+<% 
 	String uid = (String)session.getAttribute("UID");
-	
-	
-	uid = "17"; 		//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	request.setCharacterEncoding("UTF-8");
 	InstanceDAO dao = new InstanceDAO();
-	List<CategoryDTO> category = dao.getCategory(); 
-	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
-	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+	List<CategoryDTO> category = dao.getCategory();  
+	List<OrderListDTO> orderlist = dao.getOrderList(uid);
 	%>
-	
 	<div style="display: block; margin: 10px 20% 10px;" align="right" >
-		<a href="window.location.href='Login.jsp'" style="width:50px; height: 20px;" >로그인 </a> &nbsp;
+		<a href="window.location.href='Login.jsp'" style="width:50px; height: 20px;" >로그인</a> &nbsp; 
 		<a href="window.location.href=" style="width:50px; height: 20px; " >회원가입 </a>&nbsp;
 		<a href="" style="width:50px; height: 20px; " >알림</a>
 								
@@ -83,7 +72,6 @@
 		</div>
 	</div>
 </head>
-
 <body>
 <h1 style="padding-bottom: 50px; ">&nbsp;</h1>
 
@@ -99,30 +87,17 @@
   <li><a href="MyHelp.jsp"> 고객센터 </a></li>
 </ul>
 <div id="mypagebody" >
-<fieldset>
-	<legend>나의 판매중인 상품</legend>
-		<div id="seller">
-			<p>상품</a></p>
-			<p>가격</p>
-			<p>판매기간</p>
-		</div>
-	<% 	for(int i =0 ; i<sellerProduct.size() ; i++){
-		ProductDTO product = sellerProduct.get(i); %>
-		<div id="seller">
-			<p> <img src="<%= product.getP_img1() %>"> </p>
-			<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
-			<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
-			<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
-			<form action="ProductCancel.jsp" method="post">
-				<input type="hidden" name="P_no" value="<%= product.getP_no() %>">
-				<input type="submit" value="등록취소"> 
-			</form>
-		</div>
-<%		}
-		%>
-	<div></div>
-</fieldset>
+	<fieldset>
+	<legend>구입한 상품</legend>
+	<div>
+	<%	if(orderlist != null){ %>
+			오더리스트 이미지가 없어! 상품테이블하고 주문내역이랑 엮어야함
+	<%	}else{ %>
+		<p> 최근 구입한 상품이 없습니다.</p>	
+	<%	}%>
+	</div>
+	</fieldset>
 </div>
-	
+
 </body>
 </html>

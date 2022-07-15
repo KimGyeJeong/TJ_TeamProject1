@@ -35,22 +35,22 @@ TD {
 
 SELECT {
 	FONT-SIZE: 9pt;
-	COLOR: #fff;
+	COLOR: #000 ;
 	LINE-HEIGHT: 160%;
 	FONT-FAMILY: 맑은 고딕, verdana, tahoma;
-	background-color: black;
+	background-color: white;
 }
 
 DIV {
 	FONT-SIZE: 9pt;
-	COLOR: #fff;
+	COLOR: #000 ;
 	LINE-HEIGHT: 160%;
 	FONT-FAMILY: 맑은 고딕, verdana, tahoma
 }
 
 FORM {
 	FONT-SIZE: 9pt;
-	COLOR: #fff;
+	COLOR: #000;
 	LINE-HEIGHT: 160%;
 	FONT-FAMILY: 맑은 고딕, verdana, tahoma
 }
