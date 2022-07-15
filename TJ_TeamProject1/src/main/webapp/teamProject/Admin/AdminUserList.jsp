@@ -33,20 +33,30 @@
 	//검색
 	// 유저 이름으로 검색
 	String search = request.getParameter("search");
+	
+	//기본 내림차순 정렬
+	String orderBy = request.getParameter("orderBy");
+	if(orderBy == null)
+		orderBy = "DESC";
 
 	/*
 	if (search == null)
 		search = "";
 	*/
 	//이름으로 검색
+	
+		//조건 desc asc? 어떻게 구현?....
+			
 	if (search != null) {
 		userCount = dao.getUserSearchCount(search);
 		if(userCount>0)
-			list = dao.getUserSearch(startRow, endRow, search);
+			list = dao.getUserSearch(startRow, endRow, search, orderBy);
 	} else {
 		userCount = dao.getUserCount();
+		if(userCount >0)
+			list = dao.getUser(startRow, endRow, orderBy);
 	}
-
+ 
 	//추가 옵션
 	//#1.특정기간내
 	//#2.활성화 or 비활성화
