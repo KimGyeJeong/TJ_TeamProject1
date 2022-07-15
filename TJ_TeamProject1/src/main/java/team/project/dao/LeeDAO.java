@@ -146,7 +146,7 @@ public class LeeDAO {
 		PreparedStatement pstmt = null; 
 		try {
 			conn=getConnection();
-			String sql="insert into userquestion(uq_no,user_id,uq_title,uq_content,uq_cat,uq_img1,uq_img2,uq_img3,uq_reg) VALUES(userquestion_seq.nextval,?,?,?,?,?,?,?,sysdate)";
+			String sql="insert into userquestion(uq_no, user_id, uq_title, uq_content, uq_cat,uq_img1,uq_img2,uq_img3,uq_reg) VALUES(userquestion_seq.nextval,?,?,?,?,?,?,?,sysdate)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, inquiry.getUser_id());
 			pstmt.setString(2, inquiry.getUq_title());
