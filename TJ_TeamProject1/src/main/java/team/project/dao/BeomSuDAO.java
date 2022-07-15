@@ -147,4 +147,27 @@ public class BeomSuDAO {
 		}
 		return list;
 	}
+	
+	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into ProductQuestion(pq_no, p_no, pq_title, pq_content, user_id, pq_writeReg, pq_answer, pq_answerReg, pq_delete) ";
+			sql += "values(ProductQuestion_seq.nextval,?,?,?,?,sysdate,null,null,0)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, pq_title);
+			pstmt.setString(3, pq_content);
+			pstmt.setString(4, UID);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return result;
+	}
 }
