@@ -106,7 +106,7 @@ public class GyeJeongDAO {
 			result = 0;
 			conn = getConnection();
 
-			sql = "select count(*) from admin where userid like '%" + search + "%'";
+			sql = "select count(*) from userlist where user_id like '%" + search + "%'";
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -154,7 +154,7 @@ public class GyeJeongDAO {
 		try {
 			conn = getConnection();
 
-			sql = "select b.* FROM\r\n" + "(select ROWNUM r, A.* from\r\n"
+			sql = "select B.* FROM\r\n" + "(select ROWNUM r, A.* from\r\n"
 					+ "(select * from USERLIST where user_id like '%" + search + "%' ORDER BY USER_REG " + orderBy
 					+ ")A)B\r\n" + "where r>=? and r<=?";
 
@@ -162,6 +162,8 @@ public class GyeJeongDAO {
 
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				list = new ArrayList<UserListDTO>();
@@ -211,16 +213,16 @@ public class GyeJeongDAO {
 					+ "(SELECT * FROM USERLIST ORDER BY USER_REG " + orderBy + ")A)B\r\n" + "WHERE r>=? and r<=?";
 
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
 				list = new ArrayList<UserListDTO>();
 				do {
-					
+
 					dto = new UserListDTO();
 
 					dto.setUser_id(rs.getString(2));
@@ -240,10 +242,10 @@ public class GyeJeongDAO {
 					dto.setUser_reportCnt(rs.getInt(16));
 
 					list.add(dto);
-					
-				}while(rs.next());
+
+				} while (rs.next());
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.getUser(startRow, endRow) ERR");
 			e.printStackTrace();
@@ -251,6 +253,6 @@ public class GyeJeongDAO {
 
 		return list;
 	}
-	//new method here
+	// new method here
 
 }

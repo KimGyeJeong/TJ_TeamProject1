@@ -31,7 +31,7 @@
 
 	int startRow = (currentPage - 1) * pageSize + 1;
 	System.out.println("AdminUserList.value startRow : " + startRow);
-	int endRow = startRow * pageSize;
+	int endRow = currentPage * pageSize;
 	System.out.println("AdminUserList.value endRow : " + endRow);
 
 	//유저 수 계산해서 넣어줄 변수
@@ -40,6 +40,7 @@
 	//검색
 	// 유저 이름으로 검색
 	String search = request.getParameter("search");
+	System.out.println("userlist.value search " + search);
 
 	//기본 내림차순 정렬
 	String orderBy = request.getParameter("orderBy");
@@ -50,16 +51,17 @@
 	if (search == null)
 		search = "";
 	*/
+
 	//이름으로 검색
 
-	if (search != null) {
-		userCount = dao.getUserSearchCount(search);
-		if (userCount > 0)
-			list = dao.getUserSearch(startRow, endRow, search, orderBy);
-	} else {
+	if (search == null) {
 		userCount = dao.getUserCount();
 		if (userCount > 0)
 			list = dao.getUser(startRow, endRow, orderBy);
+	} else {
+		userCount = dao.getUserSearchCount(search);
+		if (userCount > 0)
+			list = dao.getUserSearch(startRow, endRow, search, orderBy);
 	}
 
 	//TODO 수정하기 0715
@@ -88,7 +90,8 @@
 				dto = list.get(i);
 			%>
 			<td><%=userNumber--%></td>
-			<td><%=dto.getUser_id()%></td>
+			<td><a
+				href="AdminShowUser.jsp?user_id=<%=dto.getUser_id()%>&pageNum=<%=pageNum%>&search=<%=search%>"><%=dto.getUser_id()%></a></td>
 			<td><%=dto.getUser_email()%></td>
 			<td><%=dto.getUser_name()%></td>
 			<td><%=sdf.format(dto.getUser_reg())%></td>
@@ -99,5 +102,69 @@
 		}
 		%>
 	</table>
+
+	<%-- 페이징 처리하기 --%>
+	<div align="center">
+		<%
+		if (userCount > 0) {
+			int pageNumSize = 5;
+			int pageCount = userCount / pageSize + (userCount % pageSize == 0 ? 0 : 1);
+			int startPage = (int)((currentPage - 1) / pageNumSize) * pageNumSize + 1;
+			int endPage = startPage + pageNumSize - 1;
+
+			if (endPage > pageCount)
+				endPage = pageCount;
+
+			if (startPage > pageNumSize) {
+				if (search != null) {
+		%>
+		<a class="pageNum"
+			href="AdminUserList.jsp?pageNum=<%=startPage - 1%>&search=<%=search%>">&lt;
+			&nbsp;</a>
+		<%
+		} else {
+		%>
+		<a class="pageNum" href="AdminUserList.jsp?pageNum=<%=startPage - 1%>">&lt;
+			&nbsp;</a>
+		<%
+		}
+		} //startPage>pageNumSize
+
+		for (int i = startPage; i < endPage + 1; i++) {
+		if (search != null) {
+		%>
+		<a class="pageNum"
+			href="AdminUserList.jsp?pageNum=<%=i%>&search=<%=search%>">&nbsp;
+			<%=i%> &nbsp;
+		</a>
+		<%
+		} else {
+		%>
+		<a class="pageNum" href="AdminUserList.jsp?pageNum=<%=i%>">&nbsp; <%=i%>
+			&nbsp;
+		</a>
+		<%
+		}
+		}//for
+		
+		if(endPage < pageCount){
+			if(search!=null){
+				%>
+		<a class="pageNum"
+			href="AdminUserList.jsp?pageNum=<%=startPage + pageNumSize%>&search=<%=search%>">&nbsp;
+			&gt; </a>
+		<%
+			}else{
+				%>
+		<a class="pageNum"
+			href="AdminUserList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;
+			&gt; </a>
+		<%
+			}
+		}
+		}
+		%>
+
+	</div>
 </body>
 </html>
