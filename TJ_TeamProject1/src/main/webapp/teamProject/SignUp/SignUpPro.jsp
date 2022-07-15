@@ -17,7 +17,7 @@
 </head>
 <body>
 <% 
-	String path =application.getRealPath("save"); 
+	String path =application.getRealPath("teamProject/Save"); 
 	System.out.println(path);
 	int max = 1024*1024*5;
 	String enc = "UTF-8";
@@ -45,7 +45,7 @@
 	
 	
 
-	response.sendRedirect("main.jsp");
+	response.sendRedirect("Main.jsp");
 	
 	
 %>

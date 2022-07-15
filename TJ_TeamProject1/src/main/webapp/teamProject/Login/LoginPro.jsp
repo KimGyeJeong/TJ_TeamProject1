@@ -1,4 +1,4 @@
-<%@page import="team.project.dao.GyeJeongDAO"%>
+<%@page import="team.project.dao.LeeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,9 +13,10 @@
 	String pw = request.getParameter("pw");
 	String auto = request.getParameter("auto");
 	
-	GyeJeongDAO dao = new GyeJeongDAO();
-	int result = dao.idpwChk(id,pw);
-	if(result == 0 & result == -1){%>
+	LeeDAO dao = new LeeDAO();
+	int result = dao.idpwChkUser(id,pw);
+	System.out.println("result idpw:"+result);
+	if(result < 1){%>
 	<script>
 		alert("존재하지 않는 id 또는 pw 입니다...");
 		history.go(-1);
@@ -30,7 +31,7 @@
 %>
 	<script>
 		alert("로그인 성공!!!!");
-		window.location="main.jsp";
+		window.location="../Main.jsp";
 		
 	
 	</script>
