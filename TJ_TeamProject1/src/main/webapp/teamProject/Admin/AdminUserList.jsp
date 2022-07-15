@@ -31,7 +31,7 @@
 
 	int startRow = (currentPage - 1) * pageSize + 1;
 	System.out.println("AdminUserList.value startRow : " + startRow);
-	int endRow = startRow + pageSize;
+	int endRow = currentPage * pageSize;
 	System.out.println("AdminUserList.value endRow : " + endRow);
 
 	//유저 수 계산해서 넣어줄 변수
@@ -108,8 +108,8 @@
 		<%
 		if (userCount > 0) {
 			int pageNumSize = 5;
-			int pageCount = userCount / pageSize + (userCount % pageNumSize == 0 ? 0 : 1);
-			int startPage = ((currentPage - 1) / pageSize) * pageNumSize + 1;
+			int pageCount = userCount / pageSize + (userCount % pageSize == 0 ? 0 : 1);
+			int startPage = (int)((currentPage - 1) / pageNumSize) * pageNumSize + 1;
 			int endPage = startPage + pageNumSize - 1;
 
 			if (endPage > pageCount)
