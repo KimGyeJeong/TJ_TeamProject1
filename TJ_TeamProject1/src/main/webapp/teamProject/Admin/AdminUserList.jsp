@@ -30,7 +30,9 @@
 	int pageSize = 5; //값 그때그때 수정시키고싶은데...
 
 	int startRow = (currentPage - 1) * pageSize + 1;
+	System.out.println("AdminUserList.value startRow : " + startRow);
 	int endRow = startRow * pageSize;
+	System.out.println("AdminUserList.value endRow : " + endRow);
 
 	//유저 수 계산해서 넣어줄 변수
 	int userCount = 0;
@@ -89,7 +91,7 @@
 			<td><%=dto.getUser_id()%></td>
 			<td><%=dto.getUser_email() %></td>
 			<td><%=dto.getUser_name() %></td>
-			<td><%=sdf.format(dto.getUser_reg()) %></td> 
+			<td><%=sdf.format(dto.getUser_reg()) %></td>
 			<td><%=dto.getUser_delete() %></td>
 			<td><%=dto.getUser_reportCnt() %></td>
 		</tr>

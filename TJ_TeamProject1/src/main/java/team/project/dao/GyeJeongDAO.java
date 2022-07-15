@@ -208,7 +208,7 @@ public class GyeJeongDAO {
 			conn = getConnection();
 
 			sql = "SELECT b.* FROM\r\n" + "(SELECT ROWNUM r, A.* FROM\r\n"
-					+ "(SELECT * FROM USERLIST ORDER BY USER_REG " + orderBy + ")A)B\r\n" + "WHERE r>? and r<?";
+					+ "(SELECT * FROM USERLIST ORDER BY USER_REG " + orderBy + ")A)B\r\n" + "WHERE r>=? and r<=?";
 
 			pstmt = conn.prepareStatement(sql);
 			
