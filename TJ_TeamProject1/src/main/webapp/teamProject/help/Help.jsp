@@ -19,7 +19,7 @@
 		
 		</td>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg2.jpg" width='150'/>
+		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='150'/>
 		
 		</td>
 		<td>
