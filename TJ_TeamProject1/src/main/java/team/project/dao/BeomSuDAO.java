@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import team.project.model.BiddingDTO;
 import team.project.model.ProductDTO;
+import team.project.model.ProductQuestionDTO;
 
 public class BeomSuDAO {
 	private Connection getConn() throws Exception {
@@ -49,6 +50,7 @@ public class BeomSuDAO {
 					dto.setP_finish(rs.getInt("p_finish"));
 					dto.setP_readCount(rs.getInt("p_readCount"));
 					dto.setP_finish(rs.getInt("p_finish"));
+					list.add(dto);
 				}while(rs.next());
 			}
 		}catch (Exception e) {
@@ -107,4 +109,42 @@ public class BeomSuDAO {
 		return dto;
 	}
 	
+	public List ProductQuestionList(int p_no) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from ProductQuestion where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					ProductQuestionDTO dto = new ProductQuestionDTO();
+					dto.setPq_no(rs.getInt("pq_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setPq_title(rs.getString("pq_title"));
+					dto.setPq_content(rs.getString("pq_content"));
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setPq_writeReg(rs.getTimestamp("pq_writeReg"));
+					dto.setPq_answer(rs.getString("pq_answer"));
+					dto.setPq_answerReg(rs.getTimestamp("pq_answerReg"));
+					dto.setPq_delete(rs.getInt("pq_delete"));
+					list.add(dto);
+				}while(rs.next());
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
 }
