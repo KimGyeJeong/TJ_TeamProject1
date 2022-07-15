@@ -23,7 +23,7 @@
 	</script>
 <%}else{
 	//로그인 처리!!
-	session.setAttribute("memId", id);
+	session.setAttribute("u_id", id);
 	
 
 
