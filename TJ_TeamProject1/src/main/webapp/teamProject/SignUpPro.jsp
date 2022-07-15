@@ -17,13 +17,12 @@
 </head>
 <body>
 <% 
-	String path =application.getRealPath("teamProject/Save"); 
+	String path =application.getRealPath("teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5;
 	String enc = "UTF-8";
 	DefaultFileRenamePolicy dp =new DefaultFileRenamePolicy();
 	MultipartRequest mr =new MultipartRequest(request, path, max, enc, dp);
-
 	
 	member.setUser_id(mr.getParameter("id"));
 	member.setUser_pw(mr.getParameter("pw"));
@@ -44,7 +43,6 @@
 	
 	
 	
-
 	response.sendRedirect("Main.jsp");
 	
 	

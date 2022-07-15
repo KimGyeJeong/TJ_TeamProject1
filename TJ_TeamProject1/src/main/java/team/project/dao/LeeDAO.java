@@ -2,6 +2,7 @@ package team.project.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -13,6 +14,46 @@ import team.project.model.UserListDTO;
 
 
 public class LeeDAO {
+	private void closeConnection(PreparedStatement pstmt, Connection conn) {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void closeConnection(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	private Connection getConnection() throws Exception {
 		Context ctx = new InitialContext(); 
 		Context env = (Context)ctx.lookup("java:comp/env");
@@ -51,11 +92,6 @@ public class LeeDAO {
 			int updateUserAdd=pstmt.executeUpdate();
 			System.out.println("insert updateUserAdd:"+updateUser);
 			count += updateUserAdd;
-					
-			
-			
-			
-			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -69,6 +105,37 @@ public class LeeDAO {
 		System.out.println("1정상 0-1개만들어감 -1 둘다안들어감:"+count);
 		
 		return count;
+	}
+	
+	public int idpwChkUser(String id, String pw) {
+		int result =-1;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+
+			String sql = "select count(*) from userlist where user_id = ? and user_pw = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				result = rs.getInt(1);
+			else
+				result = 0;
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.idpwChk(id, pw) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
 	}
 	
 }
