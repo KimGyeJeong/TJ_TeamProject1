@@ -66,6 +66,7 @@ public class LeeDAO {
 		}
 		
 		
+		System.out.println("1정상 0-1개만들어감 -1 둘다안들어감:"+count);
 		
 		return count;
 	}
