@@ -3,8 +3,8 @@ package team.project.model;
 public class CategoryDTO {
 	private int ca_no;
 	private String ca_name;
-	private int ca_grp;
-	private int ca_level;
+	private int ca_grp;		//카테고리 대분류
+	private int ca_level;	//카테고리 소분류
 	
 	
 	public int getCa_no() {
