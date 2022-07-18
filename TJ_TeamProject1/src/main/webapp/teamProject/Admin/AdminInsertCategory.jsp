@@ -153,40 +153,53 @@
 				<tr>
 					<td>대분류</td>
 					<td>
-						<select>
+						<select name="grp">
 					<%
 					for(int i=0; i<list.size();i++){
 						ca_dto = list.get(i);
 						
 						if(ca_dto.getCa_level() == 0){
 							%>							
-								<option><%=ca_dto.getCa_name() %></option>
+								<option value="<%=ca_dto.getCa_name() %>"><%=ca_dto.getCa_name() %></option>
 							<%
 						}
 					}
 					%>
 						</select>
 					</td>
-					<td><input type="text" name="grp"></td>
+					<td><input type="text" name="grpInsert"></td>
 				</tr>
 				<tr>
 					<td>소분류</td>
 					<td>
-						<select>
-					<%
-					for(int i=0; i<list.size();i++){
-						ca_dto = list.get(i);
+						<select name="level">
 						
-						if(ca_dto.getCa_level() != 0){
-							%>							
-								<option><%=ca_dto.getCa_name() %></option>
-							<%
-						}
-					}
-					%>
+							<% 
+							for(int i=0;i<list.size();i++){
+								ca_dto=list.get(i);
+								
+								for(int j=1; j<list.size();j++){
+									if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()==0){
+										%>
+											<optgroup label="<%= ca_dto.getCa_name()%>">
+											<%= ca_dto.getCa_name()%>											
+										<%
+									}
+										if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()!=0){
+											%>
+											<option value="<%= ca_dto.getCa_name()%>">
+											<%= ca_dto.getCa_name()%></option>									
+										<%
+										}
+									}
+									%>
+									</optgroup>
+									<%
+								}								 
+							%>
 						</select>
 					</td>
-					<td><input type="text" name="level"></td>
+					<td><input type="text" name="levelInsert"></td>
 				</tr>
 				<tr>
 					<td colspan="3"> <input type="submit" value="추가"> </td>
