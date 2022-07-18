@@ -54,18 +54,19 @@
 		</tr>
 		<tr>
 			<td><button onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')">찜하기</button></td>
-			<td><button onclick="window.location='/teamProject/selPage/ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>'">구매하기</button></td>
+			<td><button onclick="window.location='ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>&p_status=<%=dto.getP_status()%>'">구매하기</button></td>
 		</tr>	
 <%			}else{%>
-		<form action="/teamProject/selPage/ProductDetailBuyPro.jsp" method="post">
+		<form action="ProductDetailBuyPro.jsp" method="post">
+		<input type="hidden" name="p_status" value="<%=dto.getP_status()%>" />
 		<tr>
 			<td>희망 입찰가 : <input type="text" name="b_bidding" /></td>
 			<td>상한가 : <%=dto.getP_maxPrice() %></td>
 			<td>하한가 : <%=dto.getP_minPrice() %></td>
 		</tr>
 		<tr>
-			<td><input type="button" onclick="window.location='/teamProject/selPage/Wish.jsp?p_no=<%=dto.getP_no()%>'" value="찜하기"/></td>
-			<td><input type="button" onclick="window.location='/teamProject/selPage/ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>'" value="즉시구매(상한가구매)"/></td>
+			<td><input type="button" onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')" value="찜하기"/></td>
+			<td><input type="button" onclick="window.location=ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>&p_status=0'" value="즉시구매(상한가구매)"/></td>
 			<td><input type="submit" name="입찰하기" />
 		</tr>
 		</form>
