@@ -253,6 +253,129 @@ public class GyeJeongDAO {
 
 		return list;
 	}
+
 	// new method here
+	public int updateCatGrp(String grp, String update) {
+		try {
+			result = 0;
+
+			conn = getConnection();
+			sql = "update category set ca_name = ? where ca_name=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, update);
+			pstmt.setString(2, grp);
+
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.updateCatGrp(grp,update) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+		return result;
+	}
+
+	public int updateCatLevel(String grp, String level, String update) {
+		// 소분류 수정할거라 대분류는 필요없을것 같음.. 메모.0718
+		try {
+			result = 0;
+
+			conn = getConnection();
+			sql = "update category set ca_name = ? where ca_name=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, update);
+			pstmt.setString(2, level);
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.updateCatLevel(String grp, String level, String update) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+
+		return result;
+	}
+
+	// 여기 외 않되?
+
+	public int insertCatGrp(String grpInsert, String levelInsert) {
+		int maxGrpNo = 0;
+		try {
+			conn = getConnection();
+
+			sql = "SELECT * from CATEGORY order by CA_GRP desc";
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				maxGrpNo = rs.getInt(3) + 1; // 맥시멈 값에 +1 해서 저장. 새로 저장하기 위해 +1을 해줌
+
+			// 먼저 대분류 값 넣어주기
+			sql = "insert into category(ca_no, ca_name, ca_grp, ca_level) values(category_seq.nextval, ?, ?, 0)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, grpInsert);
+			pstmt.setInt(2, maxGrpNo);
+
+			int temp = pstmt.executeUpdate();
+			System.out.println("insertCAT(grp, levelinsert).value temp " + temp);
+
+			if (temp > 0) {
+				sql = "insert into category(ca_no, ca_name, ca_grp, ca_level) values(category_seq.nextval, ?, ?, 1)";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, levelInsert);
+				pstmt.setInt(2, maxGrpNo);
+
+				result = pstmt.executeUpdate();
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.insertCatGrp(String grpInsert, String leveInsert) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		return result;
+	}
+
+	public int insertCatLevel(String grp, String levelInsert) {
+		int myGrp = 0;
+		try {
+			conn = getConnection();
+			
+			sql="select * from category where ca_name=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, grp);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next())
+				myGrp = rs.getInt(3);
+
+			sql = "insert into category(ca_no, ca_name, ca_grp, ca_level) values(category_seq.nextval, ?, ?, 1)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, levelInsert);
+			pstmt.setInt(2, myGrp);
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.insertCatGrp(String grpInsert, String leveInsert) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
 
 }
