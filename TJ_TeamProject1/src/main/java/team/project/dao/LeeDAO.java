@@ -225,7 +225,6 @@ public class LeeDAO {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
-				System.out.println("김계정정정");
 				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
 				do {
 					UserQuestionDTO dto = new UserQuestionDTO();
@@ -263,6 +262,52 @@ public class LeeDAO {
 	}
 	
 	
+	public UserQuestionDTO getContent(int uq_no) {
+		UserQuestionDTO dto =null;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from userquestion where uq_no ="+uq_no ;
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(); 
+			
+			if(rs.next()) { 
+				do {
+					dto = new UserQuestionDTO();
+					dto.setP_no(rs.getInt("P_NO"));
+					dto.setUq_no(rs.getInt("UQ_NO"));
+					dto.setUser_id(rs.getString("USER_ID"));
+					dto.setUq_title(rs.getString("UQ_TITLE"));
+					dto.setUq_content(rs.getString("UQ_CONTENT"));
+					dto.setUq_cat(rs.getString("UQ_CAT"));
+					dto.setUq_img1(rs.getString("UQ_IMG1"));
+					dto.setUq_img2(rs.getString("UQ_IMG2"));
+					dto.setUq_img3(rs.getString("UQ_IMG3"));
+					dto.setUq_reg(rs.getTimestamp("UQ_REG"));
+					dto.setUqa_content(rs.getString("UQA_CONTENT"));
+					dto.setUqa_reg(rs.getTimestamp("UQA_REG"));
+					
+							
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.getContent ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		
+		
+		return dto;
+	}
 	
 	
 	
