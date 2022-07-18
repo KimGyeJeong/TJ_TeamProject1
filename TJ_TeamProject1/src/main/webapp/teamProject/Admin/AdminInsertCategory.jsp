@@ -24,6 +24,7 @@
 	list = i_dao.getCategory();
 	
 	String grp = "";	//카테고리 추가하기전 비교용
+	int grpNo = 0;		//위와 동일
 	%>
 
 	<h1>Insert New Category Page</h1>
@@ -64,50 +65,135 @@
 	</table>
 </div>
 
+<%-- 카테고리 수정 --%>
 	<div style="text-align: center">
 		<form action="AdminInsertCategoryPro.jsp" method="post">
+		<input type="hidden" name="type" value="update">
 			<table>
 				<tr>
 					<td colspan="2">카테고리 수정</td>
 				</tr>
 				<tr>
-					<td>대분류</td>
+					<td>대분류 수정</td>
 					<td>
 						<select name="grp">
-							<option selected="selected">선택하기..</option>
-						<%
-						for(int i=0;i<list.size();i++){
-							ca_dto=list.get(i);
-							if(ca_dto.getCa_level()==0){
-								
-						%>
-							<option value="<%=ca_dto.getCa_name()%>"><%=ca_dto.getCa_name() %></option>
-						<%
+							<%
+							for(int i=0;i<list.size();i++){
+								ca_dto=list.get(i);
+								if(ca_dto.getCa_level()!=1){
+								%>
+								<option value="<%=ca_dto.getCa_name() %>"><%=ca_dto.getCa_name() %></option>
+								<%
+								}
 							}
-						}
-						%>
+							%>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<td>소분류 수정</td>
 					<td>
 						<select name="level">
-							<option selected="selected">선택하기..</option>
-						<%
-						for(int i=0;i<list.size();i++){
-							ca_dto=list.get(i);
-							if(ca_dto.getCa_level()!=0){
-						%>
-							<option value="<%=ca_dto.getCa_name()%>"><%=ca_dto.getCa_name() %></option>
-						<%
-							}
-						}
-						%>
+						
+							<% 
+							for(int i=0;i<list.size();i++){
+								ca_dto=list.get(i);
+								
+								for(int j=1; j<list.size();j++){
+									if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()==0){
+										%>
+											<optgroup label="<%= ca_dto.getCa_name()%>">
+											<%= ca_dto.getCa_name()%>											
+										<%
+									}
+										if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()!=0){
+											%>
+											<option value="<%= ca_dto.getCa_name()%>">
+											<%= ca_dto.getCa_name()%></option>									
+										<%
+										}
+									}
+									%>
+									</optgroup>
+									<%
+								}								 
+							%>
+							<optgroup label="대분류만 수정하기">
+								<option value="onlyGrp">대분류 이름만 수정하기</option>
+							</optgroup>
 						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>수정 명</td>
+					<td><input type="text" name="update">
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="수정">
 					</td>
 				</tr>
 			</table>
 		</form>
 	</div>
+	
+<%-- 한줄띄어쓰기(꾸미기) --%>
+<div style="text-align: center">
+	<br>
+</div>
 
+<%-- 카테고리 추가 --%>
+	<div style="text-align: center">
+		<form action="AdminInsertCategoryPro.jsp" method="post">
+		<input type="hidden" name="type" value="insert">
+			<table>
+				<tr>
+					<td colspan="3">카테고리 추가</td>
+				</tr>
+				<tr>
+					<td>대분류</td>
+					<td>
+						<select>
+					<%
+					for(int i=0; i<list.size();i++){
+						ca_dto = list.get(i);
+						
+						if(ca_dto.getCa_level() == 0){
+							%>							
+								<option><%=ca_dto.getCa_name() %></option>
+							<%
+						}
+					}
+					%>
+						</select>
+					</td>
+					<td><input type="text" name="grp"></td>
+				</tr>
+				<tr>
+					<td>소분류</td>
+					<td>
+						<select>
+					<%
+					for(int i=0; i<list.size();i++){
+						ca_dto = list.get(i);
+						
+						if(ca_dto.getCa_level() != 0){
+							%>							
+								<option><%=ca_dto.getCa_name() %></option>
+							<%
+						}
+					}
+					%>
+						</select>
+					</td>
+					<td><input type="text" name="level"></td>
+				</tr>
+				<tr>
+					<td colspan="3"> <input type="submit" value="추가"> </td>
+				</tr>
+			</table>
+		</form>
+	</div>
 
 
 </body>
