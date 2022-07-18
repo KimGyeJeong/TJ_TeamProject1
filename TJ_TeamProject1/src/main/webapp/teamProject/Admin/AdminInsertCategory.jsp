@@ -22,6 +22,8 @@
 	List<CategoryDTO> list = null;
 
 	list = i_dao.getCategory();
+	
+	String grp = "";	//카테고리 추가하기전 비교용
 	%>
 
 	<h1>Insert New Category Page</h1>
@@ -66,29 +68,29 @@
 		<form action="AdminInsertCategoryPro.jsp" method="post">
 			<table>
 				<tr>
-					<td colspan="2">카테고리 추가</td>
+					<td colspan="2">카테고리 수정</td>
 				</tr>
 				<tr>
 					<td>대분류</td>
 					<td>
 						<select name="grp">
-							<option>선택하기..</option>
+							<option selected="selected">선택하기..</option>
 						<%
 						for(int i=0;i<list.size();i++){
 							ca_dto=list.get(i);
 							if(ca_dto.getCa_level()==0){
+								
 						%>
 							<option value="<%=ca_dto.getCa_name()%>"><%=ca_dto.getCa_name() %></option>
 						<%
 							}
 						}
 						%>
-							<option value="etcGrp">추가입력...</option>
 						</select>
 					</td>
 					<td>
 						<select name="level">
-							<option>선택하기..</option>
+							<option selected="selected">선택하기..</option>
 						<%
 						for(int i=0;i<list.size();i++){
 							ca_dto=list.get(i);
@@ -99,8 +101,6 @@
 							}
 						}
 						%>
-							<option value="etcGrp">추가입력...</option>						
-						
 						</select>
 					</td>
 				</tr>
