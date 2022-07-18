@@ -102,7 +102,7 @@
 		<tr>
 			<td><%=number-- %></td>
 			<td> <%=dto.getUser_id() %> </td>
-			<td><%=dto.getUq_title()%></td> 
+			<td><a href="InquiryContent.jsp?UQ_NO=<%=dto.getUq_no()%>&pageNum=<%=pageNum%>"><%=dto.getUq_title()%></a></td> 
 			<td><%=dto.getUq_cat() %></td>
 			<td><%=dto.getUq_reg() %></td>
 			<td><%=answer%></td>
@@ -125,14 +125,14 @@
 				if(endPage > pageCount){ endPage = pageCount;}
 				
 				if(startPage > pageNumSize){%>
-				  <a class="pageNums" href="inquiryList.jsp?pageNum=<%=pageNum%>"> &lt; &nbsp; </a>
+				  <a class="pageNums" href="inquiryList.jsp?pageNum=<%=startPage-1%>"> &lt; &nbsp; </a>
 				<%}
 				for(int l = startPage; l <= endPage; l++){ %>
-				<a class="pageNums" href="inquiryList.jsp?pageNum=<%=pageNum%>"> &nbsp; <%=l%> &nbsp; </a>
+				<a class="pageNums" href="inquiryList.jsp?pageNum=<%=l%>"> &nbsp; <%=l%> &nbsp; </a>
 				<%}
 			
 				if(endPage < pageCount) { %>
-					<a class="pageNums" href="inquiryList.jsp?pageNum=<%=pageNum+2%>"> &nbsp; &gt; </a>
+					<a class="pageNums" href="inquiryList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp; &gt; </a>
 				<%}
 			}%>
 			

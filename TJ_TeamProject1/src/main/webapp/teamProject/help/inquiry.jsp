@@ -20,7 +20,7 @@
 			<td>카테고리</td>
 			<td>
 			<select id="category" name="category" size="1">
-				<option value="">선택하세요.</option>
+				<option value="없음">선택하세요.</option>
 				<option value="거래신고">거래신고</option>
 				<option value="회원/계정">회원/계정</option>
 				<option value="기타서비스">기타서비스</option>

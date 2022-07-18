@@ -11,8 +11,8 @@
 <body>
 <br />
 <h1 align="center"> QnA - 자주 올리는 질문 리스트 </h1>
-
-
+<br/>
+<h2 align="center"> 취권마스터 김범수</h2>
 
 </body>
 </html>
