@@ -126,7 +126,7 @@
 				</tr>
 				<tr>
 					<td>수정 명</td>
-					<td><input type="text" name="update">
+					<td><input type="text" name="update" placeholder="수정하고 싶은 이름">
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -167,7 +167,7 @@
 					%>
 						</select>
 					</td>
-					<td><input type="text" name="grpInsert"></td>
+					<td style="width: 100px"><input type="text" name="grpInsert" placeholder="소분류만 추가시 빈칸으로 냅두세요"></td>
 				</tr>
 				<tr>
 					<td>소분류</td>
