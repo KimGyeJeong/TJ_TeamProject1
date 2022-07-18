@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import team.project.model.AddressDTO;
 import team.project.model.BiddingDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
@@ -216,6 +217,119 @@ public class BeomSuDAO {
 			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
 		}
 		
+		return result;
+	}
+	
+	public int productBuyerSet(int p_no, String UID) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_buyerId=? where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(2, p_no);
+			pstmt.setString(1, UID);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public AddressDTO addressCheck(String UID) {
+		AddressDTO addDTO = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from Address where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, UID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				addDTO = new AddressDTO();
+				addDTO.setA_address(rs.getString("a_address"));
+				addDTO.setA_address2(rs.getString("a_address2"));
+				addDTO.setA_comment(rs.getString("a_comment"));
+				addDTO.setA_name(rs.getString("a_name"));
+				addDTO.setA_no(rs.getInt("a_no"));
+				addDTO.setA_tag(rs.getString("a_tag"));
+				addDTO.setA_zipCode(rs.getInt("a_zipCode"));
+				addDTO.setUser_id(UID);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return addDTO;
+	}
+	
+	public AddressDTO addressCheck(String UID, int a_no) {
+		AddressDTO addDTO = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from Address where user_id=? and a_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, UID);
+			pstmt.setInt(2, a_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				addDTO = new AddressDTO();
+				addDTO.setA_address(rs.getString("a_address"));
+				addDTO.setA_address2(rs.getString("a_address2"));
+				addDTO.setA_comment(rs.getString("a_comment"));
+				addDTO.setA_name(rs.getString("a_name"));
+				addDTO.setA_no(a_no);
+				addDTO.setA_tag(rs.getString("a_tag"));
+				addDTO.setA_zipCode(rs.getInt("a_zipCode"));
+				addDTO.setUser_id(UID);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return addDTO;
+	}
+	
+	public int biddingInput(String UID, int b_bidding, int p_no) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into Bidding(B_NO, P_NO, B_BIDDING, USER_ID, B_REG, B_STATUS) ";
+			sql += "values(Bidding_seq.nextval, ?, ?, ?, sysdate, 0)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setInt(2, b_bidding);
+			pstmt.setString(3, UID);
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
 		return result;
 	}
 }
