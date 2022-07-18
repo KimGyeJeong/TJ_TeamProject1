@@ -5,26 +5,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>찜</title>
+<title>Insert title here</title>
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
+	String rp_title = request.getParameter("rp_title");
+	String rp_content = request.getParameter("rp_content");
+	String rp_reportedUid = request.getParameter("rp_reportedUid");
+	String rp_reason = request.getParameter("rp_reason");
 	
 	BeomSuDAO dao = new BeomSuDAO();
-	int result = dao.WishAdd(p_no, UID);
+	int result = dao.RportAdd(p_no, UID, rp_title, rp_content, rp_reportedUid, rp_reason);
 	
 %>
 <body>
 <%
 	if(result == 1){%>
-		<h4>현재 상품을 찜했습니다!</h4>
 		<script>
-		opener.parent.location.reload();
-		</script>
-		<button onclick="opener.parent.location='WishList.jsp', window.close()">찜한상품 보러가기</button>
-		<button onclick="window.close()">계속해서 쇼핑하기</button>
+			alert("신고 완료!");
+			opener.parent.location.reload();
+			window.close();
+			
+		</script>	
 <%	}else{%>
 		<script>
 			alert("작성실패");

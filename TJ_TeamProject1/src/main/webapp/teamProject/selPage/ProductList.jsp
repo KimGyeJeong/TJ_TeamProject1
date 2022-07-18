@@ -12,7 +12,7 @@
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
-	String ca = (String)request.getParameter("ca_no");
+	String ca = request.getParameter("ca_no");
 	if(ca == null){
 		ca = "3";
 	}
@@ -29,6 +29,7 @@
 		<table align="left">
 
 		<%
+		if(list != null){
 			int j = 0;
 			for(int i = j; i<list.size(); i++){%>
 			<tr>
@@ -41,7 +42,9 @@
 				</td>
 			</tr>
 			<%}
-		%>
+		}else{%>
+		<h4>해당 카테고리에 상품이 없습니다!</h4>
+<%		} %>
 			
 		</table>
 
