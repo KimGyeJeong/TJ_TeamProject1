@@ -23,8 +23,8 @@
 
 	list = i_dao.getCategory();
 	
-	String grp = "";	//카테고리 추가하기전 비교용
-	int grpNo = 0;		//위와 동일
+//	String grp = "";	//카테고리 추가하기전 비교용
+//	int grpNo = 0;		//위와 동일
 	%>
 
 	<h1>Insert New Category Page</h1>
