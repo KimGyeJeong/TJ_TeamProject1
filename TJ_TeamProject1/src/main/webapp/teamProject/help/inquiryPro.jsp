@@ -32,7 +32,7 @@
 	int result =dao.insertinquiry(inquiry); 
 	System.out.println("inquiry:"+inquiry);
 	
-	response.sendRedirect("../Main.jsp");
+	response.sendRedirect("Help.jsp");
 	
 	
 	

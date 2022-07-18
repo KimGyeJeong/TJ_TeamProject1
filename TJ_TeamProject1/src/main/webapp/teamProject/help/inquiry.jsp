@@ -47,8 +47,8 @@
 		</tr>
 		<tr>
 				<td colspan="2">
-					<input type="submit" value="제출하기" />
-					<input type="button" value="취소"  onclick="window.location='../Main.jsp'" />
+					<input type="submit" value="제출하기"  />
+					<input type="button" value="취소"  onclick="window.location='help.jsp'" />
 				</td>
 			</tr>
 
