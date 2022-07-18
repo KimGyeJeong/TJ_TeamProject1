@@ -38,7 +38,7 @@
 	member_add.setA_address2(mr.getParameter("address2"));
 	
 	LeeDAO dao = new LeeDAO();
-	int result=dao. insertNewUser(member, member_add);
+	int result=dao.insertNewUser(member, member_add);
 	System.out.println("result:"+result);
 	
 	
