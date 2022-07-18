@@ -149,7 +149,7 @@ public class BeomSuDAO {
 	}
 	
 	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content) {
-		int result = 0;
+		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -168,6 +168,54 @@ public class BeomSuDAO {
 			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
 			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
 		}
+		return result;
+	}
+	
+	public int RportAdd(int p_no, String UID, String rp_title, String rp_content, String rp_reportedUid, String rp_reason) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into Report(RP_NO, RP_REASON, RP_TITLE, RP_CONTENT, RP_REPORTUID, RP_REPORTEDUID, RP_PRO, P_NO, RP_REG) ";
+			sql+= "values(report_seq.nextval, ?, ?, ?, ?, ?, 0, ?, sysdate)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rp_reason);
+			pstmt.setString(2, rp_title);
+			pstmt.setString(3, rp_content);
+			pstmt.setString(4, UID);
+			pstmt.setString(5, rp_reportedUid);
+			pstmt.setInt(6, p_no);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return result;
+	}
+	
+	public int WishAdd(int p_no, String UID) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into WishList values(?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
 		return result;
 	}
 }

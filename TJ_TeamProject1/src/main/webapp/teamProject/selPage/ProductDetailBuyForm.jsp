@@ -39,21 +39,21 @@
 	<table>
 		<tr>
 			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
-			<td><%=dto.getP_title() %></td>
+			<td>상품 제목 : <%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
 		</tr>
 		<tr>
-			<td><%=dto.getP_sellerId() %></td>
+			<td>판매자 : <%=dto.getP_sellerId() %></td>
 			<td>별점 : <%=dto.getP_start() %>/5</td>
-			<td><button onclick="window.location='/teamProject/selPage/ReportForm.jsp?p_sellerId=<%=dto.getP_sellerId()%>'">신고하기</button></td>
+			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
 		<tr>
 			<td colspan="3">가격 : <%=dto.getP_price() %></td>
 		</tr>
 		<tr>
-			<td><button onclick="window.location='/teamProject/selPage/Wish.jsp?p_no=<%=dto.getP_no()%>'">찜하기</button></td>
+			<td><button onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')">찜하기</button></td>
 			<td><button onclick="window.location='/teamProject/selPage/ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>'">구매하기</button></td>
 		</tr>	
 <%			}else{%>
