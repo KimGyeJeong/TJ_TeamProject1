@@ -10,8 +10,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
+<%
+String id = null, pw = null, auto = null; 
+Cookie[] coos = request.getCookies(); 
+if(coos != null){
+	for(Cookie c : coos) {
+		
+		if(c.getName().equals("autoId")) id = c.getValue();   
+		if(c.getName().equals("autoPw")) pw = c.getValue();
+		if(c.getName().equals("autoCh")) auto = c.getValue();
+		System.out.println(id + pw + auto +"쿠키확인");
+	}	
+}
+
+if(auto != null && id != null && pw != null){
+	session.setAttribute("uri", "../help/inquiryList.jsp");
+	response.sendRedirect("Login/LoginPro.jsp");
+}
+%>
+
 <%request.setCharacterEncoding("UTF-8"); %>
-<% String id=(String)session.getAttribute("u_id"); %>
+<%  id=(String)session.getAttribute("u_id"); %>
 	<h3 align="right"> 사용자: <%=id %></h3>
 	
 	<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
