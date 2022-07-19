@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.BeomSuDAO"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="team.project.model.ProductDTO"%>
@@ -14,9 +15,8 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
-	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	
-	String path = request.getRealPath("../save"); 
+	String path = request.getRealPath("teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5; 
 	String enc = "UTF-8"; 
@@ -29,6 +29,7 @@
 	dto.setP_img2(mr.getParameter("p_img2"));
 	dto.setP_img3(mr.getParameter("p_img3"));
 	dto.setP_img4(mr.getParameter("p_img4"));
+	dto.setP_status(Integer.parseInt(mr.getParameter("p_status")));
 	dto.setCa_no(Integer.parseInt(mr.getParameter("ca_no")));
 	dto.setP_content(mr.getParameter("p_content"));
 	dto.setP_finish(Integer.parseInt(mr.getParameter("p_finish")));
@@ -39,8 +40,24 @@
 	dto.setP_sellerId(mr.getParameter("p_sellerId"));
 	dto.setP_status(Integer.parseInt(mr.getParameter("p_status")));
 	dto.setP_title(mr.getParameter("p_title"));
+	dto.setP_start(Timestamp.valueOf(mr.getParameter("p_start")));
+	dto.setP_end(Timestamp.valueOf(mr.getParameter("p_end")));
+	
+	BeomSuDAO dao = new BeomSuDAO();
+	int result = dao.productSelling(dto);
+	
 %>
 <body>
-
+<%	if(result == 1){ %>
+		<script>
+			alert("상품 등록 완료!");
+			window.locarion="ProductDetailBuyForm.jsp?p_no<%=dto.getP_no()%>";
+		</script>
+<%	}else{ %>
+		<script>
+			alert("상품 등록 실패!");
+			window.location="../main.jsp";
+		</script>
+<%	} %>
 </body>
 </html>
