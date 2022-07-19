@@ -6,6 +6,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
+<script>
+function checkField() {
+	let inputs = document.loginForm; 
+	if(!inputs.id.value){
+		alert("아이디를 입력해주세요.");
+		return false; 
+	}
+	if(!inputs.pw.value){
+		alert("비밀번호를 입력해주세요.");
+		return false;
+	}
+}
+
+
+</script>
 <%
 if(session.getAttribute("u_id") == null){ // 로그인 안했을때 
 	
@@ -42,7 +57,7 @@ if(session.getAttribute("u_id") == null){ // 로그인 안했을때
 		
 	<%  }%>
 	<h1 align="center"> 로그인페이지</h1>
-	<form action="LoginPro.jsp" method="post">
+	<form action="LoginPro.jsp" method="post" name="loginForm" onsubmit="return checkField()">
 	<table>
 		<tr>			
 			<td>아이디</td>

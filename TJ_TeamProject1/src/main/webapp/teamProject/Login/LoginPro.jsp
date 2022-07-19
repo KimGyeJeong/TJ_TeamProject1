@@ -56,8 +56,13 @@
 			System.out.println("쿠키테스트 :"+ c1.getValue());
 		}
 	String uri =(String)session.getAttribute("uri");
-		
+	System.out.println("uri:"+uri);
 	
+	if(uri == null ){
+		uri = "../Main.jsp";
+				
+	}
+	System.out.println("uri:"+uri);
 
 
 %>

@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="team.project.dao.LeeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,6 @@ if(coos != null){
 		System.out.println(id + pw + auto +"쿠키확인");
 	}	
 }
-
 if(auto != null && id != null && pw != null){
 	session.setAttribute("uri", "../help/inquiryList.jsp");
 	response.sendRedirect("Login/LoginPro.jsp");
@@ -31,20 +30,22 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%  id=(String)session.getAttribute("u_id"); %>
-	<h3 align="right"> 사용자: <%=id %></h3>
-	
-	<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
-		<script>
+<h3 align="right">
+	사용자:
+	<%=id %></h3>
+
+<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
+<script>
   		alert("로그인 후 사용가능한 서비스입니다.");
-  		history.go(-1);
+  		location.href="../Main.jsp";
   		</script>
-		
-    <%}else{%>
-    	<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;"/>
-  		
-    <%}%>
-    
- <%
+
+<%}else{%>
+<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
+
+<%}%>
+
+<%
  	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null){ 
 		pageNum = "1";   
@@ -86,32 +87,36 @@ if(auto != null && id != null && pw != null){
 
 </head>
 <body>
-<br/>
+	<br />
 
-	
-	
-	<img  src="helpimg2.jpg" width='100'/>
-	<h1>1:1문의내역 목록 <button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'">문의하기</button></h1>
-	
-	
-	<br/>
+
+
+	<img src="helpimg2.jpg" width='100' />
+	<h1>
+		1:1문의내역 목록
+		<button
+			onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'">문의하기</button>
+	</h1>
+
+
+	<br />
 	<% if(count == 0){ // 글이 없으면  %>
-	<br/>
+	<br />
 	<table>
 		<tr>
 			<td colspan="5">게시글이 없습니다.</td>
 		</tr>
 	</table>
 	<%}else{ // 글이 하나라도 있으면 %>
-	<br/>
-		<table>
+	<br />
+	<table>
 		<tr>
-				<td>No.</td>
-				<td>작성자</td>
-				<td>제 목</td>
-				<td>카테고리</td>
-				<td>작성시간</td>
-				<td>상담원 답변여부</td>
+			<td>No.</td>
+			<td>작성자</td>
+			<td>제 목</td>
+			<td>카테고리</td>
+			<td>작성시간</td>
+			<td>상담원 답변여부</td>
 		</tr>
 		<%
 		for(int i=0; i < inquiryList.size(); i++){
@@ -120,20 +125,21 @@ if(auto != null && id != null && pw != null){
 			if(dto.getUqa_content()==null){ answer ="X";}%>
 		<tr>
 			<td><%=number-- %></td>
-			<td> <%=dto.getUser_id() %> </td>
-			<td><a href="InquiryContent.jsp?UQ_NO=<%=dto.getUq_no()%>&pageNum=<%=pageNum%>"><%=dto.getUq_title()%></a></td> 
+			<td><%=dto.getUser_id() %></td>
+			<td><a
+				href="InquiryContent.jsp?UQ_NO=<%=dto.getUq_no()%>&pageNum=<%=pageNum%>"><%=dto.getUq_title()%></a></td>
 			<td><%=dto.getUq_cat() %></td>
 			<td><%=dto.getUq_reg() %></td>
 			<td><%=answer%></td>
-	   </tr>
-	   
-	   
-	   
-		<%} //페이징처리 수정해야함%>	
-		
-		</table>
-		<br />
-		<div align="center">
+		</tr>
+
+
+
+		<%} //페이징처리 수정해야함%>
+
+	</table>
+	<br />
+	<div align="center">
 		<%
 			if(count >0){
 				int pageCount = count/ pageSize +(count % pageSize == 0? 0:1);
@@ -144,22 +150,27 @@ if(auto != null && id != null && pw != null){
 				if(endPage > pageCount){ endPage = pageCount;}
 				
 				if(startPage > pageNumSize){%>
-				  <a class="pageNums" href="inquiryList.jsp?pageNum=<%=startPage-1%>"> &lt; &nbsp; </a>
-				<%}
+		<a class="pageNums" href="inquiryList.jsp?pageNum=<%=startPage-1%>">
+			&lt; &nbsp; </a>
+		<%}
 				for(int l = startPage; l <= endPage; l++){ %>
-				<a class="pageNums" href="inquiryList.jsp?pageNum=<%=l%>"> &nbsp; <%=l%> &nbsp; </a>
-				<%}
+		<a class="pageNums" href="inquiryList.jsp?pageNum=<%=l%>"> &nbsp;
+			<%=l%> &nbsp;
+		</a>
+		<%}
 			
 				if(endPage < pageCount) { %>
-					<a class="pageNums" href="inquiryList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp; &gt; </a>
-				<%}
+		<a class="pageNums"
+			href="inquiryList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp;
+			&gt; </a>
+		<%}
 			}%>
-			
-		</div>
-		
+
+	</div>
+
 
 	<%}%>
 
-	
+
 </body>
 </html>

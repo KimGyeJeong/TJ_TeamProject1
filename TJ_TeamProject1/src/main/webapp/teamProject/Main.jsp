@@ -32,6 +32,7 @@ if(session.getAttribute("u_id") == null){ // 로그인 안했을때
 }
 
 
+
 %>
 </head>
 <body>
@@ -39,6 +40,19 @@ if(session.getAttribute("u_id") == null){ // 로그인 안했을때
 <%String id=(String)session.getAttribute("u_id"); 
 System.out.println("id :"+id);
 %>
+<h3 align="right"> 사용자: <%=id %></h3>
+
+<%if(session.getAttribute("u_id") != null){%>
+<input  type="button" value="로그아웃" onclick="window.location='Login/Logout.jsp'" style="float: right;"/>
+<%}else{%>
+	<script>
+		
+		
+	</script>
+<%}%>
+
+
+
 
 <input type="button" value="logout" onclick="location.href='Login/Logout.jsp'"/>
 </body>

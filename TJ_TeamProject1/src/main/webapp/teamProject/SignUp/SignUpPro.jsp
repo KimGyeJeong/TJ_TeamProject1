@@ -17,7 +17,7 @@
 </head>
 <body>
 <% 
-	String path =application.getRealPath("teamProject/Save"); 
+	String path =application.getRealPath("teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5;
 	String enc = "UTF-8";
