@@ -43,8 +43,8 @@
 	List<CategoryDTO> category = dao.getCategory(); 
 	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
-	%>
 	
+	%>
 	<div style="display: block; margin: 10px 20% 10px;" align="right" >
 		<a href="window.location.href='Login.jsp'" style="width:50px; height: 20px;" >로그인 </a> &nbsp;
 		<a href="window.location.href=" style="width:50px; height: 20px; " >회원가입 </a>&nbsp;
@@ -62,7 +62,8 @@
 		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
 		<button onclick="window.location.href=" style="width:45px; height: 40px; font-size: 8.5px;" >게시판</button>
 		<div style=" margin-right: 300px;">
-		<select onchange="window.location.href='value'" style="width: 150px;">
+	<form action="" name="ca">
+		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
 			<option>카테고리</option>
 		<%	for(int i = 0; i<category.size() ; i++){
 				CategoryDTO ca = category.get(i);
@@ -72,7 +73,7 @@
 						CategoryDTO dto = category.get(j);
 						if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
 							%>
-								<option value="<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
+								<option value="../selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
 							<%
 						}
 					}
@@ -80,6 +81,7 @@
 			}
 		%>
 		</select>
+	</form>
 		</div>
 	</div>
 </head>
@@ -91,11 +93,10 @@
   <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
   <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
   <li><a href="WishList.jsp"> 찜 </a></li>
-  <li><a href="MyReview.jsp"> 나에 대한 후기 </a></li>
-  <li><a href=""> 구매후기 등록 및 목록 </a></li>	//	위랑 겹치는거 같은데?
+  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
   <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
   <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-  <li><a href=""> 나의 문의사항 </a></li>	//	고객센터에 있음
+  <li><a href=""> 나의 문의사항 </a></li>
   <li><a href="MyHelp.jsp"> 고객센터 </a></li>
 </ul>
 <div id="mypagebody" >
