@@ -45,12 +45,14 @@
 			<td><%=ca_dto.getCa_name() %></td>
 		</tr>
 		<%
-		}
+	
 		
-		for(int j=ca_dto.getCa_level(); j<2;j++){
-			ca_dto2 = list.get(i);
+		for(int j=0; j<list.size();j++){
+			ca_dto2 = list.get(j);
 			
-			if(ca_dto2.getCa_level() != 0){
+			if(ca_dto2.getCa_level() != 0 & (ca_dto.getCa_grp() == ca_dto2.getCa_grp())){
+				System.out.println("AIC.jsp value 비교 dto. dto2. " + ca_dto.getCa_name() + ", "+ca_dto2.getCa_name() );
+			
 			%>
 			<tr>
 				<td>소분류</td>
@@ -58,9 +60,11 @@
 			</tr>
 			<%
 			}
+			}
 		}
-
 	}
+
+	
 %>
 	</table>
 </div>
@@ -94,30 +98,26 @@
 					<td>소분류 수정</td>
 					<td>
 						<select name="level">
-						
-							<% 
-							for(int i=0;i<list.size();i++){
-								ca_dto=list.get(i);
+							<%
+							for(int i=0; i<list.size();i++){
+								ca_dto = list.get(i);
 								
-								for(int j=1; j<list.size();j++){
-									if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()==0){
-										%>
-											<optgroup label="<%= ca_dto.getCa_name()%>">
-											<%= ca_dto.getCa_name()%>											
-										<%
-									}
-										if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()!=0){
+								if(ca_dto.getCa_level() == 0){
+									%>
+									<optgroup label="<%=ca_dto.getCa_name()%>">
+									<%
+									for(int j=0; j<list.size();j++){
+										ca_dto2 = list.get(j);
+										if(ca_dto2.getCa_level() != 0 & (ca_dto2.getCa_grp()==ca_dto.getCa_grp())){
 											%>
-											<option value="<%= ca_dto.getCa_name()%>">
-											<%= ca_dto.getCa_name()%></option>									
-										<%
+										 	<option value="<%=ca_dto2.getCa_name() %>"><%=ca_dto2.getCa_name() %></option>
+											<%  
 										}
 									}
-									%>
-									</optgroup>
-									<%
-								}								 
+								}
+							}
 							%>
+							</optgroup>
 							<optgroup label="대분류만 수정하기">
 								<option value="onlyGrp">대분류 이름만 수정하기</option>
 							</optgroup>
@@ -173,30 +173,26 @@
 					<td>소분류</td>
 					<td>
 						<select name="level">
-						
-							<% 
-							for(int i=0;i<list.size();i++){
-								ca_dto=list.get(i);
+							<%
+							for(int i=0; i<list.size();i++){
+								ca_dto = list.get(i);
 								
-								for(int j=1; j<list.size();j++){
-									if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()==0){
-										%>
-											<optgroup label="<%= ca_dto.getCa_name()%>">
-											<%= ca_dto.getCa_name()%>											
-										<%
-									}
-										if(ca_dto.getCa_grp()==j & ca_dto.getCa_level()!=0){
+								if(ca_dto.getCa_level() == 0){
+									%>
+									<optgroup label="<%=ca_dto.getCa_name()%>">
+									<%
+									for(int j=0; j<list.size();j++){
+										ca_dto2 = list.get(j);
+										if(ca_dto2.getCa_level() != 0 & (ca_dto2.getCa_grp()==ca_dto.getCa_grp())){
 											%>
-											<option value="<%= ca_dto.getCa_name()%>">
-											<%= ca_dto.getCa_name()%></option>									
-										<%
+										 	<option value="<%=ca_dto2.getCa_name() %>"><%=ca_dto2.getCa_name() %></option>
+											<%  
 										}
 									}
-									%>
+								}
+							}
+							%>								
 									</optgroup>
-									<%
-								}								 
-							%>
 						</select>
 					</td>
 					<td><input type="text" name="levelInsert"></td>

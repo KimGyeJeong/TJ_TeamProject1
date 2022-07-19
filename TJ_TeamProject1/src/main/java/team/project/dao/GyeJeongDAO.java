@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import team.project.model.NoticeDTO;
 import team.project.model.UserListDTO;
 
 public class GyeJeongDAO {
@@ -301,8 +302,6 @@ public class GyeJeongDAO {
 		return result;
 	}
 
-	// 여기 외 않되?
-
 	public int insertCatGrp(String grpInsert, String levelInsert) {
 		int maxGrpNo = 0;
 		try {
@@ -375,6 +374,29 @@ public class GyeJeongDAO {
 			closeConnection(rs, pstmt, conn);
 		}
 
+		return result;
+	}
+	//new method here
+	public int insertNotice(NoticeDTO dto) {
+		try {
+			conn=getConnection();
+			sql="insert into notice values(notice_seq.nextval, ?, ?, ?, ?, sysdate)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getNo_title());
+			pstmt.setString(2, dto.getNo_content());
+			pstmt.setString(3, dto.getNo_cat());
+			pstmt.setInt(4, dto.getNo_hidden());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.insertNotice(NoticeDTO dto) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
 		return result;
 	}
 

@@ -23,6 +23,10 @@
 			<td><a onclick="location.href='AdminReportList.jsp'">신고글 확인</a>
 			</td>
 		</tr>
+		<tr>
+			<td><a onclick="location.href='AdminNotice.jsp'">공지사항/이벤트 글 작성</a>
+			</td>
+		</tr>
 	</table>
 
 
