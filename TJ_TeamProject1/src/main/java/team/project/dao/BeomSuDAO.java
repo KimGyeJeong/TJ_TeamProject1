@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
 import team.project.model.BiddingDTO;
+import team.project.model.CategoryDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
 import team.project.model.UserListDTO;
@@ -437,5 +438,38 @@ public class BeomSuDAO {
 		}
 		
 		return result;
+	}
+	
+	public List<CategoryDTO>  getCategory() {
+		List<CategoryDTO> list = null; 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql ="select * from category order by ca_grp asc"; 
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList<CategoryDTO>();
+				do {
+					CategoryDTO dto = new CategoryDTO();
+					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setCa_name(rs.getString("ca_name"));
+					dto.setCa_level(rs.getInt("ca_level"));
+					dto.setCa_grp(rs.getInt("ca_grp"));
+					list.add(dto);
+				} while (rs.next());
+			}else{
+				System.out.println("getCategory = 0");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
 	}
 }
