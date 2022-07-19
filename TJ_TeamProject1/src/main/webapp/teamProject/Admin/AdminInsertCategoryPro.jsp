@@ -68,11 +68,12 @@
 			System.out.println("Only Change Level");	//정상작동
 			
 			result = dao.insertCatLevel( grp,  levelInsert);
+			response.sendRedirect("AdminInsertCategory.jsp");
 		}else{
 			System.out.println("Insert new grp, level ");	//정상작동
 			
 			result = dao.insertCatGrp(grpInsert, levelInsert);	//정상작동
-			
+			response.sendRedirect("AdminInsertCategory.jsp");
 		}
 
 	} else { //타입이 없으면...?
