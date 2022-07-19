@@ -20,6 +20,7 @@
 <%	if(p_status == 1){ %>
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
+	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
 		<table>
 			<tr>
 				<td>상품 제목<br/>
@@ -50,8 +51,7 @@
 			<tr>
 				<td>카테고리 선택<br/>
 				<div style=" margin-right: 300px;">
-				<form action="" name="ca_no">
-					<select name = "ca_no" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
+					<select name = "ca_no" onchange="window.location.href=document.ca_no.value" style="width: 150px;" required>
 						<option>카테고리</option>
 					<%	for(int i = 0; i<category.size() ; i++){
 							CategoryDTO ca = category.get(i);
@@ -61,7 +61,7 @@
 									CategoryDTO dto = category.get(j);
 									if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
 										%>
-											<option value="../selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
+											<option value="<%= dto.getCa_no() %>" required><%= dto.getCa_name() %></option>
 										<%
 									}
 								}
@@ -69,7 +69,6 @@
 						}
 					%>
 					</select>
-				</form>
 				</div>
 				</td>
 			</tr>
@@ -84,6 +83,7 @@
 <%	}else{ %>
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
+	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
 		<table>
 			<tr>
 				<td>상품 제목<br/>
@@ -109,12 +109,12 @@
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
-				<input type="date" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" required/></td>
+				<input type="datetime" name="p_start" required/>&nbsp;~&nbsp;<input type="datetime" name="p_end" required/></td>
 			</tr>
 			<tr>
 				<td>카테고리 선택<br/>
 				<div style=" margin-right: 300px;">
-					<select name = "ca_no" onchange="window.location.href=document.ca.cano.value" style="width: 150px;" required>
+					<select name = "ca_no" onchange="window.location.href=document.ca_no.value" style="width: 150px;" required>
 						<option>카테고리</option>
 					<%	for(int i = 0; i<category.size() ; i++){
 							CategoryDTO ca = category.get(i);
@@ -124,7 +124,7 @@
 									CategoryDTO dto = category.get(j);
 									if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
 										%>
-											<option value="=<%= dto.getCa_no() %>" required><%= dto.getCa_name() %></option>
+											<option value="<%= dto.getCa_no() %>" required><%= dto.getCa_name() %></option>
 										<%
 									}
 								}
