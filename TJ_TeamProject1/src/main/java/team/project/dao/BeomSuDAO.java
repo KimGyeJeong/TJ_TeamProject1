@@ -14,6 +14,7 @@ import team.project.model.AddressDTO;
 import team.project.model.BiddingDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
+import team.project.model.UserListDTO;
 
 public class BeomSuDAO {
 	private Connection getConn() throws Exception {
@@ -316,8 +317,8 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "insert into Bidding(B_NO, P_NO, B_BIDDING, USER_ID, B_REG, B_STATUS) ";
-			sql += "values(Bidding_seq.nextval, ?, ?, ?, sysdate, 0)";
+			String sql = "insert into Bidding(B_NO, P_NO, B_BIDDING, USER_ID, B_REG) ";
+			sql += "values(Bidding_seq.nextval, ?, ?, ?, sysdate) where b_status=0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.setInt(2, b_bidding);
@@ -330,6 +331,111 @@ public class BeomSuDAO {
 			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
 			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
 		}
+		return result;
+	}
+	
+	public UserListDTO userCheck(String UID) {
+		UserListDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from UserList where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, UID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new UserListDTO();
+				dto.setUser_id(UID);
+				dto.setUser_pw(rs.getString("user_pw"));
+				dto.setUser_email(rs.getString("user_email"));
+				dto.setUser_name(rs.getString("user_name"));
+				dto.setUser_phone(rs.getString("user_phone"));
+				dto.setUser_money(rs.getInt("user_money"));
+				dto.setUser_usemoney(rs.getInt("user_usemoney"));
+				dto.setUser_stars(rs.getInt("user_stars"));
+				dto.setUser_img(rs.getString("user_img"));
+				dto.setUser_reg(rs.getTimestamp("user_reg"));
+				dto.setUser_delete(rs.getInt("user_delete"));
+				dto.setUser_deleteReg(rs.getTimestamp("user_deleteReg"));
+				dto.setUser_activeReg(rs.getTimestamp("user_activeReg"));
+				dto.setUser_report(rs.getInt("user_report"));
+				dto.setUser_reportCnt(rs.getInt("user_reportCnt"));
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return dto;
+	}
+	
+	public int userMoneyCheck(int p_no, String UID, int money) {
+		int result = -2;
+		int priceMoney = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select p_price from Product where p_no=? and p_buyerId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				priceMoney = rs.getInt(1);
+				if(priceMoney <= money) {
+					sql = "update UserList set user_money=? where user_id=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, money-priceMoney);
+					pstmt.setString(2, UID);
+					result = pstmt.executeUpdate();
+				}else {
+					result = -1;
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		
+		return result;
+	}
+	
+	public int productBuy(int p_no) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select p_finish from Product where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				sql = "update product set p_finish=1";
+				result = pstmt.executeUpdate();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
 		return result;
 	}
 }
