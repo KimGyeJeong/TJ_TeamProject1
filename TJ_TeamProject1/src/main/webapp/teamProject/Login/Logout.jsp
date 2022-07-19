@@ -17,6 +17,18 @@
 	session.removeAttribute("u_id");
 	System.out.println("로그아웃됨");
 	
+	Cookie[] cs=request.getCookies();
+	if(cs != null){
+		for(Cookie c: cs){
+			if(c.getName().equals("autoId")||c.getName().equals("autoPw")||c.getName().equals("autoCh")){
+				c.setMaxAge(0);
+				response.addCookie(c);
+			}
+		}
+		
+	}
+	
+	
 	response.sendRedirect("../Main.jsp");
 %>
 
