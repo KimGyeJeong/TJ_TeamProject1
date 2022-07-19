@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import team.project.model.NoticeDTO;
 import team.project.model.UserListDTO;
+import team.project.model.UserQuestionDTO;
 
 public class GyeJeongDAO {
 	int result = -1;
@@ -348,15 +349,15 @@ public class GyeJeongDAO {
 		int myGrp = 0;
 		try {
 			conn = getConnection();
-			
-			sql="select * from category where ca_name=?";
-			
+
+			sql = "select * from category where ca_name=?";
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, grp);
-			
-			rs=pstmt.executeQuery();
-			
-			if(rs.next())
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
 				myGrp = rs.getInt(3);
 
 			sql = "insert into category(ca_no, ca_name, ca_grp, ca_level) values(category_seq.nextval, ?, ?, 1)";
@@ -376,28 +377,104 @@ public class GyeJeongDAO {
 
 		return result;
 	}
-	//new method here
+
+	// new method here
 	public int insertNotice(NoticeDTO dto) {
 		try {
-			conn=getConnection();
-			sql="insert into notice values(notice_seq.nextval, ?, ?, ?, ?, sysdate)";
-			
+			conn = getConnection();
+			sql = "insert into notice values(notice_seq.nextval, ?, ?, ?, ?, sysdate)";
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getNo_title());
 			pstmt.setString(2, dto.getNo_content());
 			pstmt.setString(3, dto.getNo_cat());
 			pstmt.setInt(4, dto.getNo_hidden());
-			
+
 			result = pstmt.executeUpdate();
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.insertNotice(NoticeDTO dto) ERR");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeConnection(pstmt, conn);
 		}
-		
+
 		return result;
+	}
+
+	// new method here
+	public int getQuestionCount() {
+		result = 0;
+		try {
+			conn = getConnection();
+
+			sql = "select count(*) from userquestion";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				result = rs.getInt(1);
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getQuestionCount() ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
+
+	// new method here
+	public List<UserQuestionDTO> getUserQuestion(int startRow, int endRow) {
+		List<UserQuestionDTO> list = null;
+		UserQuestionDTO dto = null;
+
+		try {
+			conn = getConnection();
+
+			sql = "select b.* from(\r\n" + "select ROWNUM r, a.* from\r\n"
+					+ "(select * from USERQUESTION order by UQ_REG desc)a)b\r\n" + "where r>=? and r<=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs=pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<UserQuestionDTO>();
+				do {
+					dto = new UserQuestionDTO();
+
+					dto.setUq_no(rs.getInt(2));
+					dto.setP_no(rs.getInt(3));
+					dto.setUser_id(rs.getString(4));
+					dto.setUq_title(rs.getString(5));
+					dto.setUq_content(rs.getString(6));
+					dto.setUq_cat(rs.getString(7));
+					dto.setUq_img1(rs.getString(8));
+					dto.setUq_img2(rs.getString(9));
+					dto.setUq_img3(rs.getString(10));
+					dto.setUq_reg(rs.getTimestamp(11));
+					dto.setUqa_content(rs.getString(12));
+					dto.setUqa_reg(rs.getTimestamp(13));
+
+					list.add(dto);
+
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getUserQuestion(startRow, endRow) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+			;
+		}
+		return list;
 	}
 
 }
