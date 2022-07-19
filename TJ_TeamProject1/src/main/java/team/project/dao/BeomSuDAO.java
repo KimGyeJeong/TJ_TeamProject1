@@ -472,4 +472,40 @@ public class BeomSuDAO {
 		}
 		return list;
 	}
+	
+	public int productSelling(ProductDTO dto) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into Product(P_NO, P_STATUS, P_TITLE, P_PRICE, P_MAXPRICE, P_MINPRICE, CA_NO, P_IMG1, P_IMG2, P_IMG3, P_IMG4, P_CONTENT, P_SELLERID, P_BUYERID, P_START, P_END) ";
+			sql += "values(Product_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getP_status());
+			pstmt.setString(2, dto.getP_title());
+			pstmt.setInt(3, dto.getP_price());
+			pstmt.setInt(4, dto.getP_maxPrice());
+			pstmt.setInt(5, dto.getP_minPrice());
+			pstmt.setInt(6, dto.getCa_no());
+			pstmt.setString(7, dto.getP_img1());
+			pstmt.setString(8, dto.getP_img2());
+			pstmt.setString(9, dto.getP_img3());
+			pstmt.setString(10, dto.getP_img4());
+			pstmt.setString(11, dto.getP_content());
+			pstmt.setString(12, dto.getP_sellerId());
+			pstmt.setTimestamp(13, dto.getP_start());
+			pstmt.setTimestamp(14, dto.getP_end());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
 }
