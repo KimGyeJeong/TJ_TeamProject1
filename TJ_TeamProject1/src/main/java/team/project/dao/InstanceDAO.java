@@ -1,5 +1,6 @@
 package team.project.dao;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import team.project.model.AddressDTO;
 import team.project.model.CategoryDTO;
 import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
@@ -147,8 +149,8 @@ public class InstanceDAO {
 		try {
 			conn= getConnection();
 			String sql = "update orderlist set o_pro=3 where o_no=?";
-			pstmt.setInt(1, Ono);
 			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, Ono);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,19 +291,103 @@ public class InstanceDAO {
 	
 	
 	
-
+	// ono 주고 상품정보 가져오기
+		public OrderListDTO  getOrder(String o_no) {
+			OrderListDTO order = null;
+			OrderListDTO dto = null;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int ono = Integer.parseInt(o_no);
+			try {
+				conn = getConnection();
+				String sql = "select * from orderlist where o_no=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, ono);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					dto = new OrderListDTO();
+					dto.setO_no(rs.getInt("o_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setP_status(rs.getInt("p_status"));
+					dto.setA_no(rs.getInt("a_no"));
+					dto.setO_buyerId(rs.getString("o_buyerId"));
+					dto.setO_sellerId(rs.getString("o_sellerId"));
+					dto.setO_pro(rs.getInt("o_pro"));
+					dto.setO_reg(rs.getTimestamp("o_reg"));
+					dto.setO_trackingNo(rs.getInt("o_trackingNo"));
+					dto.setO_review(rs.getInt("o_review"));
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {closeConnection(rs,pstmt, conn);}
+			return order;
+		}
 	
 	
 	
 	
 	
+	public AddressDTO getaddress(int a_no) {
+		AddressDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn =getConnection();
+			String sql = "select * from address where a_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, a_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				dto = new AddressDTO();
+				dto.setA_no(rs.getInt("a_no"));
+				dto.setA_address(rs.getString("a_address"));
+				dto.setA_address2(rs.getString("a_address2"));
+				dto.setA_zipCode(rs.getInt("a_zipCode"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setA_name(rs.getString("a_name"));
+				dto.setA_tag(rs.getString("a_tag"));
+				dto.setA_comment(rs.getString("a_comment"));
+				dto.setA_usereg(rs.getTimestamp("a_usereg"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return dto;
+	}
 	
 	
 	
 	
-	
-	
-	
+	//	uid 주고 a_no 배열 만들어서 a_no 주고 address리스트 갖고오기
+	public List<AddressDTO> getaddressList(String uid) {
+		List<AddressDTO> list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "select a_no from address where user_id=? order by a_usereg desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				List<Integer> a_no = new ArrayList<Integer>(); 
+				do {
+					a_no.add(rs.getInt(1));
+				} while (rs.next());
+				list = new ArrayList<AddressDTO>();
+				for(int a: a_no) {
+					AddressDTO dto = getaddress(a);
+					list.add(dto);
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return list;
+	}
 	
 	
 	
