@@ -1,5 +1,7 @@
 package team.project.model;
 
+import java.sql.Timestamp;
+
 public class AddressDTO {
 	private int a_no;
 	private String a_address;
@@ -9,6 +11,14 @@ public class AddressDTO {
 	private String a_name;
 	private String a_tag;
 	private String a_comment;
+	private Timestamp a_usereg;
+	
+	public Timestamp getA_usereg() {
+		return a_usereg;
+	}
+	public void setA_usereg(Timestamp a_usereg) {
+		this.a_usereg = a_usereg;
+	}
 	public int getA_no() {
 		return a_no;
 	}

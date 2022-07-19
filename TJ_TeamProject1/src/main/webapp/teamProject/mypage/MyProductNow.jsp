@@ -24,7 +24,6 @@
 		}
 		#mypagebody{
 			position: relative;
-			bottom: 400px;
 			left: 50px;
 			display:inline-block;
 		}
