@@ -13,13 +13,14 @@
 <link href="/TJ_TeamProject1/teamProject/style.css" rel="stylesheet" type="text/css" />
 </head>
 <%
+request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
 	
 	String pageNum = (String)request.getParameter("pageNum");
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
-	request.setCharacterEncoding("utf-8");
+	
 	String p = request.getParameter("p_no");
 	if(p == null){
 		p = "-1";
@@ -59,6 +60,7 @@
 <%			}else{%>
 		<form action="ProductDetailBuyPro.jsp" method="post">
 		<input type="hidden" name="p_status" value="<%=dto.getP_status()%>" />
+		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
 			<td>희망 입찰가 : <input type="text" name="b_bidding" /></td>
 			<td>상한가 : <%=dto.getP_maxPrice() %></td>
@@ -67,7 +69,7 @@
 		<tr>
 			<td><input type="button" onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')" value="찜하기"/></td>
 			<td><input type="button" onclick="window.location=ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>&p_status=0'" value="즉시구매(상한가구매)"/></td>
-			<td><input type="submit" name="입찰하기" />
+			<td><input type="submit" value="입찰하기" />
 		</tr>
 		</form>
 <%			} %>
@@ -107,7 +109,7 @@
 <%		} %>
 		<tr>
 			<td colspan="2"><button onclick="window.open('ProductQuestion.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>&p_title=<%=dto.getP_title() %>', '상품 문의', 'width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
-			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no<%=dto.getCa_no() %>'">뒤로 가기</button>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button>
 		</tr>
 	</table>	
 	

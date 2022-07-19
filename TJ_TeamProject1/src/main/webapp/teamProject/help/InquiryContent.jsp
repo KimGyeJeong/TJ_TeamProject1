@@ -44,6 +44,7 @@
  	</tr>
  	<tr>
  		<td><%=dto.getUq_content() %> </td>
+ 		
  	</tr>
 
  </table>
