@@ -23,7 +23,6 @@
 		}
 		#mypagebody{
 			position: relative;
-			bottom: 400px;
 			left: 50px;
 			display:inline-block;
 		}
@@ -34,7 +33,14 @@
 	
 	<script type="text/javascript">
 		function address(){
-			window.open("transAddress.jsp","address","top=100 , left=600 , width=600, height=800, directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no");
+			let properties = "top=100 , left=600 , width=500, height=800, "; 
+				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+				window.open("transAddress.jsp","address",properties);
+		}
+		function detail(uri){
+			let properties = "top=100 , left=600 , width=1000, height=800, "; 
+				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+			window.open(uri,"OrderProInfo",properties);
 		}
 	</script>
 	
@@ -124,9 +130,10 @@
 					<% 	switch(order.getO_pro()) {
 							case 0: %>
 								<td>주문확인</td> 
-								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a> <br>
-									
+								<td>
+									 
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+									<a> <button onclick="address()">배송지 변경</button> </a> <br>
 									
 									<button>구입취소</button> 	<%-- 방치중!!!!!!!!!!!! --%>
 									
@@ -136,16 +143,16 @@
 							case 1: %>
 								<td>배송중</td>
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 								</td>
 							<%	break; 
 							case 2: %>
 								<td>배송완료</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a> <br>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									<script type="text/javascript">
 									function confirmation(){
-										let confirmValue = confirm("선택하세욧!");
+										let confirmValue = confirm("주문을 완료하시겠습니까?");
 										console.log(confirmValue);
 										if(confirmValue==true){ 
 										<%	dao.updateOrderConfirmation(order.getO_no()); %>
@@ -153,19 +160,19 @@
 										}
 									}
 									</script>
-									<a onclick="confirmation()           "><button>주문확정</button></a>
+									<a onclick="confirmation()"><button>주문확정</button></a>
 								</td>
 							<%	break;
 							case 3: %>
 								<td>주문확정</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a> <br> 
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
 								</td>
 							<%	break;
 							case 4: %>
 								<td>반품수거</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a> <br>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									<a> <button onclick="address()">배송지 변경</button> </a>
 								</td>
 								
@@ -173,25 +180,24 @@
 							case 5: %>
 								<td>반송중</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a> 
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
 								</td>
 							<%	break;
 							case 6: %>
 								<td>반송완료</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 								</td>
 							<%	break;
 							case 7: %>
 								<td>환불완료</td> 
 								<td> 
-									<a href="OrderProInfo.jsp?ono=<%= order.getO_no() %>"><button>상세보기</button></a>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 								</td>
 							<%	break;
 						} %>
 				</tr>
 		<%	}%>
-			오더리스트 이미지가 없어! 상품테이블하고 주문내역이랑 엮어야함
 	<%	}else{ %>
 		<p> 저 그런 상품 아닙니다 </p>	
 	<%	}%>
