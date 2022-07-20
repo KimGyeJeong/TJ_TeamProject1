@@ -33,7 +33,13 @@
 	if(p_minPrice == null){
 		p_minPrice = "0";
 	}
+	String p_start = mr.getParameter("p_start");
+	p_start += " 00:00:00";
+	
+	String p_end = mr.getParameter("p_end");
+	p_end += " 00:00:00";
 	ProductDTO dto = new ProductDTO();
+	ProductDTO p_dto = new ProductDTO();
 	
 	dto.setP_img1(mr.getFilesystemName("p_img1"));
 	dto.setP_img2(mr.getFilesystemName("p_img2"));
@@ -48,18 +54,20 @@
 	dto.setP_sellerId(mr.getParameter("p_sellerId"));
 	dto.setP_status(Integer.parseInt(mr.getParameter("p_status")));
 	dto.setP_title(mr.getParameter("p_title"));
-	dto.setP_start(Timestamp.valueOf(mr.getParameter("p_start")));
-	dto.setP_end(Timestamp.valueOf(mr.getParameter("p_end")));
+	dto.setP_start(Timestamp.valueOf(p_start));
+	dto.setP_end(Timestamp.valueOf(p_end));
 	
 	BeomSuDAO dao = new BeomSuDAO();
 	int result = dao.productSelling(dto);
 	
 %>
 <body>
-<%	if(result == 1){ %>
+<%	if(result == 1){ 
+		p_dto = dao.getP_no(dto.getP_img1());
+%>
 		<script>
 			alert("상품 등록 완료!");
-			window.locarion="ProductDetailBuyForm.jsp?p_no<%=dto.getP_no()%>";
+			 window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_dto.getP_no()%>); 
 		</script>
 <%	}else{ %>
 		<script>

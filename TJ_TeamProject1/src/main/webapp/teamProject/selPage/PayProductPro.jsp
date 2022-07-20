@@ -32,25 +32,25 @@
 			dao.biddingInput(UID, b_bidding, p_no);%>
 			<script>
 				alert("입찰이 완료 되었습니다!");
-				window.location="ProductDetailBuyForm.jsp?p_no<%=p_no%>";
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 			</script>
 <%		}else{
 			proResult = dao.productBuy(p_no);
 %>
 			<script>
 				alert("구매가 완료 되었습니다!");
-				window.location="ProductDetailBuyForm.jsp?p_no<%=p_no%>";
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 			</script>
 <%		}
 	}else if(result == -1){%>
 		<script>
 			alert("현재 충전된 잔액이 부족합니다!");
-			window.location="ProductDetailBuyForm.jsp?p_no<%=p_no%>";
+			window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 		</script>
 <%	}else{%>
 		<script>
 			alert("에?러");
-			window.location="ProductDetailBuyForm.jsp?p_no<%=p_no%>";
+			window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 		</script>
 <%	}
 %>

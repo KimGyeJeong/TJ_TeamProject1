@@ -508,4 +508,30 @@ public class BeomSuDAO {
 		
 		return result;
 	}
+	
+	public ProductDTO getP_no(String P_img1) {
+		ProductDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select p_no from Product where p_img1=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, P_img1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new ProductDTO();
+				dto.setP_no(rs.getInt(1));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return dto;
+	}
 }
