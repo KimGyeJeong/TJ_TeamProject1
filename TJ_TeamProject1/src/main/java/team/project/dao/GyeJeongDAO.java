@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import team.project.model.NoticeDTO;
+import team.project.model.ProductDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
@@ -441,8 +442,8 @@ public class GyeJeongDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
-			rs=pstmt.executeQuery();
+
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				list = new ArrayList<UserQuestionDTO>();
@@ -476,5 +477,199 @@ public class GyeJeongDAO {
 		}
 		return list;
 	}
+
+	// new method here
+	public int getProductCount() {
+		result = 0;
+		try {
+			conn = getConnection();
+
+			sql = "select count(*) from product";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductCount() ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
+
+	// new method here
+	public List<ProductDTO> getProductRecent(int startRow, int endRow) {
+		List<ProductDTO> list = null;
+		ProductDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* FROM(\r\n"
+					+ "select * from PRODUCT ORDER BY p_reg desc)a)b\r\n" + "where r>=? and r<=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<ProductDTO>();
+				do {
+					dto = new ProductDTO();
+
+					dto.setP_no(rs.getInt(2));
+					dto.setP_status(rs.getInt(3));
+					dto.setP_title(rs.getString(4));
+					dto.setP_price(rs.getInt(5));
+					dto.setP_maxPrice(rs.getInt(6));
+					dto.setP_minPrice(rs.getInt(7));
+					dto.setCa_no(rs.getInt(8));
+					dto.setP_img1(rs.getString(9));
+					dto.setP_img2(rs.getString(10));
+					dto.setP_img3(rs.getString(11));
+					dto.setP_img4(rs.getString(12));
+					dto.setP_content(rs.getString(13));
+					dto.setP_finish(rs.getInt(14));
+					dto.setP_reg(rs.getTimestamp(15));
+					dto.setP_readCount(rs.getInt(16));
+					dto.setP_delete(rs.getInt(17));
+					dto.setP_sellerId(rs.getString(18));
+					dto.setP_buyerId(rs.getString(19));
+					dto.setP_start(rs.getTimestamp(20));
+					dto.setP_end(rs.getTimestamp(21));
+
+					list.add(dto);
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductRecent(startRow, endRow) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	// TODO
+	public List<ProductDTO> getProductView(int startRow, int endRow) {
+		List<ProductDTO> list = null;
+		ProductDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* from\r\n"
+					+ "(select * from PRODUCT order by P_READCOUNT DESC)a)b\r\n" + "where r>=? and r<=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<ProductDTO>();
+				do {
+					dto = new ProductDTO();
+
+					dto.setP_no(rs.getInt(2));
+					dto.setP_status(rs.getInt(3));
+					dto.setP_title(rs.getString(4));
+					dto.setP_price(rs.getInt(5));
+					dto.setP_maxPrice(rs.getInt(6));
+					dto.setP_minPrice(rs.getInt(7));
+					dto.setCa_no(rs.getInt(8));
+					dto.setP_img1(rs.getString(9));
+					dto.setP_img2(rs.getString(10));
+					dto.setP_img3(rs.getString(11));
+					dto.setP_img4(rs.getString(12));
+					dto.setP_content(rs.getString(13));
+					dto.setP_finish(rs.getInt(14));
+					dto.setP_reg(rs.getTimestamp(15));
+					dto.setP_readCount(rs.getInt(16));
+					dto.setP_delete(rs.getInt(17));
+					dto.setP_sellerId(rs.getString(18));
+					dto.setP_buyerId(rs.getString(19));
+					dto.setP_start(rs.getTimestamp(20));
+					dto.setP_end(rs.getTimestamp(21));
+
+					list.add(dto);
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductView(startRow, endRow) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	// new method here
+	public String getProductCatBig(int bigNo) {
+		String catBig = "";
+		try {
+			conn = getConnection();
+
+			sql = "select CA_NAME FROM category where ca_grp = (\r\n"
+					+ "select CA_GRP from CATEGORY where CA_NO = ?)\r\n" + "and CA_LEVEL = 0";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, bigNo);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				catBig = rs.getString(1);
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductCatBig(bigNo) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return catBig;
+	}
+
+	public String getProductCatSmall(int smallNo) {
+		String catSmall = "";
+		try {
+			conn = getConnection();
+
+			sql = "select CA_NAME FROM CATEGORY WHERE CA_NO = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, smallNo);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				catSmall = rs.getString(1);
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductCatSmall(smallNo) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return catSmall;
+	}
+	// new method here
 
 }
