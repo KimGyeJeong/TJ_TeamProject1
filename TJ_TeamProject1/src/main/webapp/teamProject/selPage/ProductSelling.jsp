@@ -109,7 +109,7 @@
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
-				<input type="datetime" name="p_start" required/>&nbsp;~&nbsp;<input type="datetime" name="p_end" required/></td>
+				<input type="date" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" required/></td>
 			</tr>
 			<tr>
 				<td>카테고리 선택<br/>
