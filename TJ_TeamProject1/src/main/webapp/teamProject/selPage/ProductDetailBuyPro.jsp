@@ -22,12 +22,12 @@
 <%
 		if(result == 1){%>
 			<script>
-				window.location="PayProduct.jsp?p_no=<%=p_no%>&p_status=<%=p_status%>&b_bidding=<%=b_bidding%>";
+				window.location.assign("PayProduct.jsp?p_no="+<%=p_no%>+"&p_status="+<%=p_status%>+"&b_bidding="+<%=b_bidding%>);
 			</script>
 <%		}else{ %>
 			<script>
 				alert("문제발생!!");
-				window.location="ProductDetailBuyForm.jsp?p_no=<%=p_no%>";
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>");
 			</script>
 <%		} %>
 
