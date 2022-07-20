@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
+import team.project.model.NotificationDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
@@ -310,9 +311,111 @@ public class LeeDAO {
 	}
 	
 	
+	public int notificationListCount(String id) {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConnection();
+			String sql="select count(*) from notification where user_id=?";
+	
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			System.out.println("LEEDAO.notificationListCount ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+
+		
+		return result;
+	}
 	
 	
+	public List getNotificationList(int start, int end , String id) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification  ORDER BY NOT_REG DESC) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+					
+							
+					NotificationDTO ndto = new NotificationDTO();
+					ndto.setNot_no(rs.getInt("NOT_NO"));
+					ndto.setUser_id(rs.getString("USER_ID"));
+					ndto.setNot_type(rs.getString("NOT_TYPE"));
+					ndto.setNot_message(rs.getString("NOT_MESSAGE"));
+					ndto.setNot_reg(rs.getTimestamp("NOT_REG"));
+					ndto.setNot_readReg(rs.getTimestamp("NOT_READREG"));
+					ndto.setNot_ch(rs.getInt("NOT_CH"));
+					list.add(ndto);
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.getNotificationList ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
 	
+	public int notificationCheckChange(String value) {
+		System.out.println("value:"+value);
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		int result=0;
+		
+		try {
+			System.out.println("이걸내탓을2?");
+			conn=getConnection();
+			String sql="update notification set NOT_CH =1 WHERE NOT_NO="+value;
+			pstmt =conn.prepareStatement(sql);
+			result =pstmt.executeUpdate();
+			System.out.println("notificationCheckChange"+result);
+			
+		
+		
+			
+		}catch(Exception e) {
+			System.out.println("Ledd.dao - notificationCheckChangeErr");
+		}finally {
+			
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		
+		
+		return result;
+	}
 	
 	
 	
