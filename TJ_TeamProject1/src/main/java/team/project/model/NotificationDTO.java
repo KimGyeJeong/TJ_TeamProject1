@@ -9,6 +9,13 @@ public class NotificationDTO {
 	private String not_message;
 	private Timestamp not_reg;
 	private Timestamp not_readReg;
+	private int not_ch;
+	public int getNot_ch() {
+		return not_ch;
+	}
+	public void setNot_ch(int not_ch) {
+		this.not_ch = not_ch;
+	}
 	public int getNot_no() {
 		return not_no;
 	}
