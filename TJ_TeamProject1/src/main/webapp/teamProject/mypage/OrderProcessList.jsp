@@ -32,10 +32,10 @@
 	</style>
 	
 	<script type="text/javascript">
-		function address(){
+		function address(uri){
 			let properties = "top=100 , left=600 , width=500, height=800, "; 
 				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-				window.open("transAddress.jsp","address",properties);
+				window.open(uri,"address",properties);
 		}
 		function detail(uri){
 			let properties = "top=100 , left=600 , width=1000, height=800, "; 
@@ -131,13 +131,10 @@
 							case 0: %>
 								<td>주문확인</td> 
 								<td>
-									 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<a> <button onclick="address()">배송지 변경</button> </a> <br>
+									<a onclick="detail('OrderProInfo.jsp')"><button>상세보기</button></a> <br>
+									<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
 									
 									<button>구입취소</button> 	<%-- 방치중!!!!!!!!!!!! --%>
-									
-									
 								</td>
 							<%	break; 
 							case 1: %>
@@ -173,7 +170,7 @@
 								<td>반품수거</td> 
 								<td> 
 									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<a> <button onclick="address()">배송지 변경</button> </a>
+									<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a>
 								</td>
 								
 							<%	break; 
