@@ -24,11 +24,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td><a onclick="location.href='AdminNotice.jsp'">공지사항/이벤트 글 작성</a>
+			<td><a onclick="location.href='AdminNotice.jsp'">공지사항/이벤트 글
+					작성</a></td>
+		</tr>
+		<tr>
+			<td><a onclick="location.href='AdminHelpList.jsp'">1대1 문의 확인</a>
 			</td>
 		</tr>
-				<tr>
-			<td><a onclick="location.href='AdminHelpList.jsp'">1대1 문의 확인</a>
+		<tr>
+			<td><a onclick="location.href='AdminProductList.jsp'">상품 확인</a>
 			</td>
 		</tr>
 	</table>
