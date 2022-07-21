@@ -37,10 +37,11 @@
 	</script>
 <%}else{
 	//로그인 처리!!
-	session.setAttribute("u_id", id);
+	session.setAttribute("UID", id);
 	//쿠키처리
 
-		//자동로그인이면 쿠키도 생성하고싶다
+
+
 		if(auto != null){
 			//자동로그인 체크했을 경우
 			Cookie c1 = new Cookie("autoId",id);
