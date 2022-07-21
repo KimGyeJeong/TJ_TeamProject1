@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import team.project.model.AddressDTO;
 import team.project.model.NoticeDTO;
 import team.project.model.ProductDTO;
 import team.project.model.UserListDTO;
@@ -670,6 +671,136 @@ public class GyeJeongDAO {
 
 		return catSmall;
 	}
+
 	// new method here
+	public UserListDTO getUserProfile(String user_id) {
+		UserListDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select * from userlist where user_id=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new UserListDTO();
+
+				dto.setUser_id(rs.getString(1));
+				dto.setUser_pw(rs.getString(2));
+				dto.setUser_email(rs.getString(3));
+				dto.setUser_name(rs.getString(4));
+				dto.setUser_phone(rs.getString(5));
+				dto.setUser_money(rs.getInt(6));
+				dto.setUser_usemoney(rs.getInt(7));
+				dto.setUser_stars(rs.getDouble(8));
+				dto.setUser_img(rs.getString(9));
+				dto.setUser_reg(rs.getTimestamp(10));
+				dto.setUser_delete(rs.getInt(11));
+				dto.setUser_deleteReg(rs.getTimestamp(12));
+				dto.setUser_activeReg(rs.getTimestamp(13));
+				dto.setUser_report(rs.getInt(14));
+				dto.setUser_reportCnt(rs.getInt(15));
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getUserProfile(String user_id) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return dto;
+	}
+
+	public List<AddressDTO> getUserAddress(String user_id) {
+		List<AddressDTO> list = null;
+		AddressDTO dto = null;
+
+		try {
+			conn = getConnection();
+
+			sql = "select * from ADDRESS where user_id = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<AddressDTO>();
+				do {
+					dto = new AddressDTO();
+
+					dto.setA_no(rs.getInt(1));
+					dto.setA_address(rs.getString(2));
+					dto.setA_address2(rs.getString(3));
+					dto.setA_zipCode(rs.getInt(4));
+					dto.setUser_id(rs.getString(5));
+					dto.setA_name(rs.getString(6));
+					dto.setA_tag(rs.getString(7));
+					dto.setA_comment(rs.getString(8));
+					dto.setA_usereg(rs.getTimestamp(9));
+
+					list.add(dto);
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getUserAddress(user_id) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+	// new method here
+	public int setYellowCard(String id,int date) {
+		result = 0;
+		try {
+			conn=getConnection();
+			
+			//date가 99이면 10년 추가 
+			if(date==99) {
+				sql="Update USERLIST\r\n"
+						+ "  SET USER_ACTIVEREG=SYSDATE + (interval '99' YEAR), "
+						+ " user_report=1 "
+						+ "WHERE user_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				result = pstmt.executeUpdate();
+				System.out.println("DAO.Year SUCCESS");
+			}else {
+			//그 외 date 일 추가
+				sql="Update USERLIST\r\n"
+						+ "  SET USER_ACTIVEREG=SYSDATE + (interval '"+date+"' DAY), "
+								+ " user_report=1 "
+						+ "WHERE user_id = ?";
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setString(1, id);
+				
+				result = pstmt.executeUpdate();
+				System.out.println("DAO.Day SUCCESS");
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.setYellowCard(id, date) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
+	//new method here
 
 }
