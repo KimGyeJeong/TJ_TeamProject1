@@ -43,15 +43,13 @@
 </style>
 <script type="text/javascript">
 function addAddress() {
-	let properties = "top=100 , left=600 , width=500, height=800, "; 
+	let properties = "top=100 , left=600 , width=800, height=600, "; 
 	properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
 	window.open("addAddress.jsp","배송지 추가하기",properties);
 }
 </script>
 <%
 String ono = request.getParameter("ono");	
-if(ono == null){ %>
-<%}
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 uid = "qwe8246";
@@ -67,7 +65,7 @@ List<AddressDTO> address = dao.getaddressList(uid);
 <button id="add" onclick="addAddress()" >배송지 추가하기</button>
 </div>
 <h3>&nbsp;</h3>
-	<form action="transAddressPro.js" id="addressform" method="get">
+	<form action="transAddressPro.jsp" id="addressform" method="post">
 	<input type="hidden" value="<%= ono %>" id="ono" name="ono"> 
 <% 	for(int i=0 ; i<address.size() ; i++) {
 		AddressDTO dto = address.get(i);  %>
@@ -86,7 +84,9 @@ List<AddressDTO> address = dao.getaddressList(uid);
 		</fieldset>
 <% 	} %>
 	</form>
-<div id="wrapper"> <div style="display: block; width: 100% ; height: 7.5%;"><button type="submit" form="addressform" id="choose" >선택하기</button></div></div>
+<div id="wrapper"> <div style="display: block; width: 100% ; height: 7.5%;">
+	<button type="submit" form="addressform" id="choose" >선택하기</button>
+</div></div>
 
 </body>
 <script type="text/javascript">

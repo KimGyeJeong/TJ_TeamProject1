@@ -16,6 +16,7 @@
 request.setCharacterEncoding("UTF-8");
 String uid= (String)session.getAttribute("UID");
 uid = "qwe8246";
+
 String ano = request.getParameter("ano");
 String ono = request.getParameter("ono");
 InstanceDAO dao = new InstanceDAO();
@@ -30,14 +31,20 @@ for(int i=0 ; i<addresslist.size() ; i++){
 	String comment = request.getParameter(commentNum).trim();
 	commentlist.put(anolist[i], comment);
 }
-//dao.setAddressNum(ono,ano);
-int result = dao.setAddressAllComment(anolist,commentlist);
+ dao.setAddressAllComment(anolist,commentlist);
+ if(ono == null || ono.equals("") || ono.equals("null")){ %>
+ <script type="text/javascript">
+ window.close();
+ </script>
+ <% } 
+ int result= dao.setAddressNum(ano,ono);
 
 %>
 <body>
+<% if(result == 2){ %>
 <script type="text/javascript">
-window.opener.location="../selPage/PayProduct.jsp?a_no=<%= ano %>";
 window.close();
 </script>
+<% } %>
 </body>
 </html>

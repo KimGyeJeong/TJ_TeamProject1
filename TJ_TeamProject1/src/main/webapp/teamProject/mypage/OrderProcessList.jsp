@@ -87,7 +87,6 @@
 	</div>
 </head>
 <body>
-<input type="text" id="ano" value="123" >
 <h1 style="padding-bottom: 50px; ">&nbsp;</h1>
 
 <ul id="mypagelist">
