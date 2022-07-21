@@ -230,8 +230,9 @@ public class BeomSuDAO {
 			conn = getConn();
 			String sql = "update Product set p_buyerId=? where p_no=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(2, p_no);
 			pstmt.setString(1, UID);
+			pstmt.setInt(2, p_no);
+			pstmt.setString(3, UID);
 			result = pstmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -318,12 +319,12 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "insert into Bidding(B_NO, P_NO, B_BIDDING, USER_ID, B_REG) ";
-			sql += "values(Bidding_seq.nextval, ?, ?, ?, sysdate) where b_status=0";
+			String sql = "update Bidding set b_bidding=? where user_id=? and p_no=? and b_bidding=0 and b_status=0";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, p_no);
-			pstmt.setInt(2, b_bidding);
-			pstmt.setString(3, UID);
+			pstmt.setInt(1, b_bidding);
+			pstmt.setString(2, UID);
+			pstmt.setInt(3, p_no);
+			
 			result = pstmt.executeUpdate();
 			
 		}catch (Exception e) {
@@ -413,6 +414,7 @@ public class BeomSuDAO {
 		
 		return result;
 	}
+	
 	
 	public int productBuy(int p_no) {
 		int result = -1;
@@ -533,5 +535,45 @@ public class BeomSuDAO {
 		}
 		
 		return dto;
+	}
+	
+	public void readCountUp(int p_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_readCount=p_readCount+1 where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public int productBiddingSet(int p_no,String UID) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into Bidding(B_NO, P_NO, B_BIDDING, USER_ID, B_REG) ";
+			sql += "values(Bidding_seq.nextval, ?, 0, ?, sysdate)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
 	}
 }

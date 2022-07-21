@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<% String add =request.getParameter("where"); %>
 </head>
 <body>
 <%String check= request.getParameter("check"); 
@@ -15,16 +16,19 @@
     System.out.println(dto);
     
     if(check.equals("1")){
-    	System.out.println("이걸내탓을?");
     	//실행해서... 값바꿔주기
      LeeDAO dao = new LeeDAO();	
      int result=dao.notificationCheckChange(dto);
      System.out.println("notificationCheckChange result:" +result);
-     
+     System.out.println("add"+add);
+	 response.sendRedirect(add);
     }
-    response.sendRedirect("notificationList.jsp");
+    
     
 %>
+<script>
+
+</script>
 
 </body>
 </html>

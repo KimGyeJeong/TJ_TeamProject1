@@ -22,7 +22,7 @@ function checkField() {
 
 </script>
 <%
-if(session.getAttribute("u_id") == null){ // 로그인 안했을때 
+if(session.getAttribute("UID") == null){ // 로그인 안했을때 
 	
 	// 쿠키가 있는지 검사 
 	String id = null, pw = null, auto = null; 
@@ -49,7 +49,7 @@ if(session.getAttribute("u_id") == null){ // 로그인 안했을때
 </head>
 <body>
 <br/>
-	<%if(session.getAttribute("u_id")!=null){%>
+	<%if(session.getAttribute("UID")!=null){%>
 		<script>
 			alert("이미 로그인상태입니다.");
 			window.location="../Main.jsp";

@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%if(session.getAttribute("u_id")==null){%>
+<%if(session.getAttribute("UID")==null){%>
 		<script>
 			alert("로그인 상태가 아닙니다.");
 			history.go(-1);
 		</script>
 	<%  }%>
 <%
-	session.removeAttribute("u_id");
+	session.removeAttribute("UID");
 	System.out.println("로그아웃됨");
 	
 	Cookie[] cs=request.getCookies();
