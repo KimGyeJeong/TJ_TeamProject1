@@ -418,6 +418,228 @@ public class LeeDAO {
 	}
 	
 	
+	public int notificationListCount2(String id) {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConnection();
+			String sql="select count(*) from notification where user_id=? and NOT_TYPE=1";
+	
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			System.out.println("LEEDAO.notificationListCount2 ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+
+		
+		return result;
+	}
+	
+	public int notificationListCount3(String id) {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConnection();
+			String sql="select count(*) from notification where user_id=? and NOT_TYPE=2";
+	
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			System.out.println("LEEDAO.notificationListCount2 ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+
+		
+		return result;
+	}
+	
+	public int notificationListCount4(String id) {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConnection();
+			String sql="select count(*) from notification where user_id=? and NOT_TYPE=3";
+	
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			System.out.println("LEEDAO.notificationListCount2 ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+
+		
+		return result;
+	}
+	
+	public List getNotificationList2(int start, int end , String id) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where not_type=1 ORDER BY NOT_REG DESC ) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+					
+							
+					NotificationDTO ndto = new NotificationDTO();
+					ndto.setNot_no(rs.getInt("NOT_NO"));
+					ndto.setUser_id(rs.getString("USER_ID"));
+					ndto.setNot_type(rs.getString("NOT_TYPE"));
+					ndto.setNot_message(rs.getString("NOT_MESSAGE"));
+					ndto.setNot_reg(rs.getTimestamp("NOT_REG"));
+					ndto.setNot_readReg(rs.getTimestamp("NOT_READREG"));
+					ndto.setNot_ch(rs.getInt("NOT_CH"));
+					list.add(ndto);
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.getNotificationList2 ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
+	public List getNotificationList3(int start, int end , String id) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where not_type=2 ORDER BY NOT_REG DESC ) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+					
+							
+					NotificationDTO ndto = new NotificationDTO();
+					ndto.setNot_no(rs.getInt("NOT_NO"));
+					ndto.setUser_id(rs.getString("USER_ID"));
+					ndto.setNot_type(rs.getString("NOT_TYPE"));
+					ndto.setNot_message(rs.getString("NOT_MESSAGE"));
+					ndto.setNot_reg(rs.getTimestamp("NOT_REG"));
+					ndto.setNot_readReg(rs.getTimestamp("NOT_READREG"));
+					ndto.setNot_ch(rs.getInt("NOT_CH"));
+					list.add(ndto);
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.getNotificationList3 ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
+	public List getNotificationList4(int start, int end , String id) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where not_type=3 ORDER BY NOT_REG DESC ) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+					
+							
+					NotificationDTO ndto = new NotificationDTO();
+					ndto.setNot_no(rs.getInt("NOT_NO"));
+					ndto.setUser_id(rs.getString("USER_ID"));
+					ndto.setNot_type(rs.getString("NOT_TYPE"));
+					ndto.setNot_message(rs.getString("NOT_MESSAGE"));
+					ndto.setNot_reg(rs.getTimestamp("NOT_REG"));
+					ndto.setNot_readReg(rs.getTimestamp("NOT_READREG"));
+					ndto.setNot_ch(rs.getInt("NOT_CH"));
+					list.add(ndto);
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.getNotificationList4 ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
 	
 	
 	

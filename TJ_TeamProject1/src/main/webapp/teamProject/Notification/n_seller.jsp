@@ -13,10 +13,10 @@
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <head>
 <br />
-<h1 align="center">알림 페이지-전체보기</h1>
+<h1 align="center">알림 페이지-판매자 알림</h1>
 <table>
 	<tr>
-		<td><input type='button' name='seller' value="판매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_seller.jsp'" ></td>
+		<td><input type='button' name='seller' value="판매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_seller.jsp'"></td>
 		<td><input type='button' name='buyer' value="구매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_buyer.jsp'"></td>
 		<td><input type='button' name='warning' value="경고" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_warning.jsp'"></td>
 		<td><input type='button' name='all' value="전체보기" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'"></td>
@@ -71,13 +71,13 @@ if(auto != null && id != null && pw != null){
  	
  	int count=0;
  	List NotificationList = null; 	
- 	count = dao.notificationListCount(id);
+ 	count = dao.notificationListCount2(id);
  
  	
  	
  	
  	if(count >0){
- 		NotificationList=dao.getNotificationList(startRow, endRow, id);
+ 		NotificationList=dao.getNotificationList2(startRow, endRow, id);
  	}
  
  	
@@ -138,16 +138,16 @@ if(auto != null && id != null && pw != null){
 			}else if(dto.getNot_type().equals("3")){
 				notType= "경고";
 			} %>(<%=notType%>)<%=dto.getNot_message() %></td>
-			<form action="notificationListPro.jsp" method="get"  >	
+			<form action="notificationListPro.jsp" method="get" >	
 			<td><%=dto.getNot_reg()%></td> 
-			<td style='display:none'><input type='text' value='notificationList.jsp' name="where"></td>
+			
 			<%--if문으로 이미 체크되어있으면 확인함  --%>
 			
 			<td><%=readCheck%></td>
 			
 			<td><input type='checkbox' value='1' name="check"/></td>
 			<td><input type='submit' value='확인' /></td>
-		
+			<td style='display:none'><input type='text' value='n_seller.jsp' name="where"></td>
 			</tr>
 			<input type='hidden' name='dto' value='<%=dto.getNot_no() %>'>
 			</form>

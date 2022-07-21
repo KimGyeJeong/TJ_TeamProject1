@@ -1,3 +1,8 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="team.project.model.ProductDTO"%>
+<%@page import="team.project.model.CategoryDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="team.project.dao.InstanceDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,8 +12,11 @@
 <title>Main</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 <%
+String uid = null;
+
+
 if(session.getAttribute("UID") == null){ // 로그인 안했을때 
-	
+	uid=(String)session.getAttribute("UID");
 	// 쿠키가 있는지 검사 
 	String id = null, pw = null, auto = null; 
 	Cookie[] coos = request.getCookies(); 
@@ -34,7 +42,84 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 
 
 %>
+
+
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="../style.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		#mypagelist {
+			list-style: none;
+			display: inline-block;
+		}
+		#mypagelist li{
+			margin: 20px;
+			font-size: 18px;
+		}
+		#mypagebody{
+			position: relative;
+			left: 50px;
+			display:inline-block;
+		}
+		#seller p {
+			display: inline;
+		}
+	</style>
+
+	<%
+	request.setCharacterEncoding("UTF-8");
+	InstanceDAO dao = new InstanceDAO();
+	List<CategoryDTO> category = dao.getCategory(); 
+	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
+	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+	
+	%>
+	<div style="display: block; margin: 10px 20% 10px;" align="right" >
+		<a href="Login/Login.jsp"  width: 50px; height: 20px;" >로그인 </a> &nbsp;
+		<a href="SignUp/SignUpForm.jsp"  width: 50px; height: 20px; " >회원가입 </a>&nbsp;
+		<a href="Notification/notificationList.jsp" style="width:50px; height: 20px; " >알림</a>
+								
+	</div>
+	<div align="center">
+		<a href="Main.jsp"><img alt="장물아비" src="mypage/image/logo.png" width="30px"></a>
+		<h1 style="display: inline-block;">장물아비</h1>
+		<form action="../MainSearchPro.jsp" style="display: inline-block;">
+			<input type="text" name="searchword" >
+			<input type="image" name="submit" src="mypage/image/logo.png" alt="검색" width="40px"  />
+		</form>
+		
+		<button onclick="window.location.href='selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
+		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
+		<button onclick="window.location.href=" style="width:60px;  " >게시판</button>
+		<div style=" margin-right: 300px;">
+	<form action="" name="ca">
+		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
+			<option>카테고리</option>
+		<%	for(int i = 0; i<category.size() ; i++){
+				CategoryDTO ca = category.get(i);
+				if(ca.getCa_level()==0){ %>
+					<optgroup label="<%= ca.getCa_name() %>"></optgroup>
+				<%	for(int j = 0; j<category.size(); j++){
+						CategoryDTO dto = category.get(j);
+						if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
+							%>
+								<option value="../selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
+							<%
+						}
+					}
+				}
+			}
+		%>
+		</select>
+	</form>
+		</div>
+	</div>
 </head>
+
+
+
+
+
 <body>
 <h1>메인</h1>
 <%String id=(String)session.getAttribute("UID"); 
@@ -45,15 +130,12 @@ System.out.println("id :"+id);
 <%if(session.getAttribute("UID") != null){%>
 <input  type="button" value="로그아웃" onclick="window.location='Login/Logout.jsp'" style="float: right;"/>
 <%}else{%>
-	<script>
-		
-		
-	</script>
+	
 <%}%>
 
 
 
 
-<input type="button" value="logout" onclick="location.href='Login/Logout.jsp'"/>
+
 </body>
 </html>
