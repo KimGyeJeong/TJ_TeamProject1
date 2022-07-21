@@ -1,3 +1,4 @@
+<%@page import="team.project.model.UserListDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.ProductQuestionDTO"%>
 <%@page import="team.project.model.BiddingDTO"%>
@@ -33,6 +34,7 @@ request.setCharacterEncoding("utf-8");
 	dto = dao.productDetailBuy(p_no);
 	dao.readCountUp(p_no);
 	list = dao.ProductQuestionList(p_no);
+	UserListDTO userDTO = dao.userCheck(UID);
 
 %>
 <body>
@@ -47,7 +49,7 @@ request.setCharacterEncoding("utf-8");
 		</tr>
 		<tr>
 			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=dto.getP_start() %>/5</td>
+			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -123,7 +125,7 @@ request.setCharacterEncoding("utf-8");
 		</tr>
 		<tr>
 			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=dto.getP_start() %>/5</td>
+			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -199,7 +201,7 @@ request.setCharacterEncoding("utf-8");
 		</tr>
 		<tr>
 			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=dto.getP_start() %>/5</td>
+			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>

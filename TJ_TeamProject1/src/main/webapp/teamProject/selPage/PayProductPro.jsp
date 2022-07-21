@@ -1,3 +1,4 @@
+<%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.model.UserListDTO"%>
 <%@page import="team.project.dao.BeomSuDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,6 +16,7 @@
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
 	String b_bid = request.getParameter("b_bidding");
+	int a_no = Integer.parseInt(request.getParameter("ano"));
 	if(b_bid == null){
 		b_bid = "0";
 	}
@@ -45,7 +47,9 @@
 				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 			</script>
 <%		}else{
-			proResult = dao.productBuy(p_no);
+			ProductDTO proDTO = dao.productDetailBuy(p_no);
+			dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), a_no, p_status);
+			dao.productBuy(p_no);
 %>
 			<script>
 				alert("구매가 완료 되었습니다!");
