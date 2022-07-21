@@ -31,18 +31,7 @@
 		}
 	</style>
 	
-	<script type="text/javascript">
-		function address(uri){
-			let properties = "top=100 , left=600 , width=500, height=800, "; 
-				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-				window.open(uri,"address",properties);
-		}
-		function detail(uri){
-			let properties = "top=100 , left=600 , width=1000, height=800, "; 
-				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-			window.open(uri,"OrderProInfo",properties);
-		}
-	</script>
+	
 	
 	
 	<% 
@@ -98,6 +87,7 @@
 	</div>
 </head>
 <body>
+<input type="text" id="ano" value="123" >
 <h1 style="padding-bottom: 50px; ">&nbsp;</h1>
 
 <ul id="mypagelist">
@@ -204,4 +194,17 @@
 </div>
 
 </body>
+<script type="text/javascript">
+	var addr;
+		function address(uri){
+			let properties = "top=100 , left=600 , width=500, height=800, "; 
+				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+				addr = window.open(uri,"address",properties);
+		}
+		function detail(uri){
+			let properties = "top=100 , left=600 , width=1000, height=800, "; 
+				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+			window.open(uri,"OrderProInfo",properties);
+		}
+</script>
 </html>
