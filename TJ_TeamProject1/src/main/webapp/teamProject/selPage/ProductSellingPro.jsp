@@ -14,7 +14,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
-	
+	if(UID != null){	
 	String path = request.getRealPath("teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5; 
@@ -74,6 +74,12 @@
 			alert("상품 등록 실패!");
 			window.location="../Main.jsp";
 		</script>
-<%	} %>
+<%	}
+}else{%>
+		<script>
+			alert("로그인 후 이용해 주세요!");
+			window.location.assign("../Login/Login.jsp");
+		</script>
+<%	}%>
 </body>
 </html>

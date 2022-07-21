@@ -10,6 +10,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
+	if(UID != null){
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	if(p_no == null){
 		p_no = -1;
@@ -48,4 +49,10 @@
 			</tr>
 		</table>
 	</form>
+<%}else{%>
+		<script>
+			alert("로그인 후 이용해 주세요!");
+			window.location.assign("../Login/Login.jsp");
+		</script>
+<%	}%>
 </html>

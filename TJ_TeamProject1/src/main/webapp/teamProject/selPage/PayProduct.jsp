@@ -14,6 +14,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
+	if(UID != null){
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
 	String b_bid = request.getParameter("b_bidding");
@@ -41,7 +42,7 @@
 	<table>
 		<tr>
 			<td>주문결제</td>
-			<td><button onclick="value">배송지 변경</button></td>
+			<td><button onclick="window.open('../mypage/transAddress.jsp', '배송지 변경', 'width=500, height=500, location=no, left=100, top=200')">배송지 변경</button></td>
 		</tr>
 		<tr>
 			<td>구매하시는 분 : <%=proDTO.getP_buyerId() %></td>
@@ -87,5 +88,11 @@
 <%			} %>
 		</table>
 	</form>
+<%}else{%>
+<script>
+alert("로그인 후 이용해 주세요!");
+window.location.assign("../Login/Login.jsp");
+</script>
+<%	} %>
 </body>
 </html>

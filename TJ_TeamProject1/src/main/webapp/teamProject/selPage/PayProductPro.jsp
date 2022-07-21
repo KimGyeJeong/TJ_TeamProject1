@@ -11,6 +11,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
+	if(UID != null){
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
 	String b_bid = request.getParameter("b_bidding");
@@ -21,7 +22,16 @@
 	int b_bidding = Integer.parseInt(b_bid);
 	BeomSuDAO dao = new BeomSuDAO();
 	userDTO = dao.userCheck(UID);
-	int result = dao.userMoneyCheck(p_no, UID, userDTO.getUser_money());
+	int result = 0;
+	if(p_status == 0){
+		result = dao.userMoneyCheck(p_no, UID, userDTO.getUser_money());
+	}else{
+		if((userDTO.getUser_money() - b_bidding) > 0){
+			result = 1;
+		}else{
+			result = -1;
+		}
+	}
 	int proResult = 0;
 	
 %>
@@ -52,6 +62,12 @@
 			alert("에?러");
 			window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
 		</script>
+<%	}
+	}else{%>
+	<script>
+		alert("로그인 후 이용해 주세요!");
+		window.location.assign("../Login/Login.jsp");
+	</script>
 <%	}
 %>
 </body>

@@ -10,6 +10,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
+	if(UID != null){
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	
 	BeomSuDAO dao = new BeomSuDAO();
@@ -30,6 +31,12 @@
 			alert("작성실패");
 			window.close();
 		</script>
+<%	}
+	}else{%>
+	<script>
+		alert("로그인 후 이용해 주세요!");
+		window.location.assign("../Login/Login.jsp");
+	</script>
 <%	}
 %>
 

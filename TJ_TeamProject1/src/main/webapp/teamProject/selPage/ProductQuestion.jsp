@@ -18,6 +18,7 @@
 	String p_title = request.getParameter("p_title");
 %>
 <body>
+<%	if(UID != null){ %>
 	<form action="ProductQuestionPro.jsp" method="post">
 	<input type="hidden" name="p_no" value="<%=p_no%>"/>
 		<table>
@@ -41,5 +42,11 @@
 			</tr>
 		</table>
 	</form>
+<% }else{%>
+		<script>
+			alert("로그인 후 이용해 주세요!");
+			window.location.assign("../Login/Login.jsp");
+		</script>
+<%	} %>
 </body>
 </html>
