@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -395,6 +397,37 @@ public class InstanceDAO {
 	
 	
 	
+	// a_no , comment값 주고 배송요청사항 수정 
+	public void setAddressComment(int ano,String comment) {
+		int result=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "update address set a_comment=? where a_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, comment);
+			pstmt.setInt(2, ano);
+			result = pstmt.executeUpdate();
+			if(result==0) {
+				System.out.println("setAddressComment() result==0");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+	}
+	
+	// a_no[] , HashMap<Integer,String> a_comment 주고 모든 배송요청사항 수정
+	public int setAddressAllComment(Integer [] ano,Map<Integer,String> a_comment) {
+		int result=0; 
+		for(int i=0 ; i<ano.length ; i++) {
+			if(!a_comment.get(ano[i]).equals("")) {
+				setAddressComment(ano[i],a_comment.get(ano[i]));
+			}
+		}
+		return result;
+	}
 	
 	
 	
@@ -406,10 +439,26 @@ public class InstanceDAO {
 	
 	
 	
-	
-	
-	
-	
+	//	ano ono 주고 ano 수정
+	public void setAddressNum(int ano,int ono) {
+		int result=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "update address set a_no=? where o_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ano);
+			pstmt.setInt(2, ono);
+			result = pstmt.executeUpdate();
+			if(result==0) {
+				System.out.println("setAddressComment() result==0");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+	}
 	
 	
 	
