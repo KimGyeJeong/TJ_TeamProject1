@@ -7,7 +7,7 @@
 <title>Main</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 <%
-if(session.getAttribute("u_id") == null){ // 로그인 안했을때 
+if(session.getAttribute("UID") == null){ // 로그인 안했을때 
 	
 	// 쿠키가 있는지 검사 
 	String id = null, pw = null, auto = null; 
@@ -37,12 +37,12 @@ if(session.getAttribute("u_id") == null){ // 로그인 안했을때
 </head>
 <body>
 <h1>메인</h1>
-<%String id=(String)session.getAttribute("u_id"); 
+<%String id=(String)session.getAttribute("UID"); 
 System.out.println("id :"+id);
 %>
 <h3 align="right"> 사용자: <%=id %></h3>
 
-<%if(session.getAttribute("u_id") != null){%>
+<%if(session.getAttribute("UID") != null){%>
 <input  type="button" value="로그아웃" onclick="window.location='Login/Logout.jsp'" style="float: right;"/>
 <%}else{%>
 	<script>
