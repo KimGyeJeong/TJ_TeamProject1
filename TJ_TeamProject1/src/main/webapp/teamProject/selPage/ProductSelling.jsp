@@ -17,7 +17,10 @@
 	List<CategoryDTO> category = dao.getCategory(); 
 %>
 <body>
-<%	if(p_status == 1){ %>
+<%
+if(UID != null){
+
+if(p_status == 1){ %>
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
@@ -142,6 +145,12 @@
 			</tr>
 		</table>
 	</form>
+<%	}
+}else{%>
+		<script>
+			alert("로그인 후 이용해 주세요!");
+			window.location.assign("../Login/Login.jsp");
+		</script>
 <%	} %>
 </body>
 </html>

@@ -19,7 +19,9 @@
 	
 %>
 <body>
+
 <%
+if(UID != null){
 	if(result == 1){%>
 		<script>
 			alert("문의글 작성 완료!");
@@ -33,6 +35,12 @@
 			window.close();
 		</script>
 <%	}
-%>
+}else{%>
+	<script>
+		alert("로그인 후 이용해 주세요!");
+		window.location.assign("../Login/Login.jsp");
+	</script>
+<%	} %>
+
 </body>
 </html>
