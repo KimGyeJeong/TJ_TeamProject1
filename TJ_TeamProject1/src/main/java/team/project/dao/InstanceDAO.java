@@ -478,15 +478,13 @@ public class InstanceDAO {
 	
 	
 	//	addressDTO 주고 address레코드 insert
-	public int setAddress(AddressDTO dto) {
+	public int setAddress(AddressDTO dto ,String sql) {
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "insert into address(a_no, a_tag, a_name, a_address, a_zipcode, a_address2 ,a_comment,user_id , a_usereg) "
-					+ "values(address_seq.nextval,?,?,?,?,?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getA_tag());
 			pstmt.setString(2, dto.getA_name());
@@ -505,8 +503,53 @@ public class InstanceDAO {
 		return result;
 	}
 	
+	// addressDTO 주고 update address 레코드
+	public int modifyAddress(AddressDTO dto ,String sql) {
+		int result=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getA_tag());
+			pstmt.setString(2, dto.getA_name());
+			pstmt.setString(3, dto.getA_address());
+			pstmt.setInt(4, dto.getA_zipCode());
+			pstmt.setString(5, dto.getA_address2());
+			pstmt.setString(6, dto.getA_comment());
+			pstmt.setString(7, dto.getUser_id());
+			pstmt.setInt(8, dto.getA_no());
+			result = pstmt.executeUpdate(); 
+			if(result==0) {
+				System.out.println("modifyAddress() result==0");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return result;
+	}
 	
-	
+	//	a_no 주고 deleteAddress 
+	public int deleteAddress(int ano) {
+		int result=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "delete from address where a_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ano);
+			result = pstmt.executeUpdate(); 
+			if(result==0) {
+				System.out.println("deleteAddress() result==0");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return result;
+	}
 	
 	
 	
