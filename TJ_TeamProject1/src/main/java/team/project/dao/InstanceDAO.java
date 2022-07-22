@@ -17,6 +17,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
+import team.project.model.BiddingDTO;
 import team.project.model.CategoryDTO;
 import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
@@ -295,7 +296,6 @@ public class InstanceDAO {
 	
 	// ono 주고 상품정보 가져오기
 		public OrderListDTO  getOrder(String o_no) {
-			OrderListDTO order = null;
 			OrderListDTO dto = null;
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -323,7 +323,7 @@ public class InstanceDAO {
 			}catch (Exception e) {
 				e.printStackTrace();
 			}finally {closeConnection(rs,pstmt, conn);}
-			return order;
+			return dto;
 		}
 	
 	
@@ -370,7 +370,7 @@ public class InstanceDAO {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "select a_no from address where user_id=? order by a_usereg desc";
+			String sql = "select a_no from address where user_id=? and a_delete=0 order by a_usereg desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, uid);
 			rs = pstmt.executeQuery();
@@ -478,13 +478,15 @@ public class InstanceDAO {
 	
 	
 	//	addressDTO 주고 address레코드 insert
-	public int setAddress(AddressDTO dto ,String sql) {
+	public int setAddress(AddressDTO dto) {
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
+			String sql = "insert into address(a_no, a_tag, a_name, a_address, a_zipcode, a_address2 ,a_comment,user_id , a_usereg) "
+					+ "values(address_seq.nextval,?,?,?,?,?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getA_tag());
 			pstmt.setString(2, dto.getA_name());
@@ -504,13 +506,14 @@ public class InstanceDAO {
 	}
 	
 	// addressDTO 주고 update address 레코드
-	public int modifyAddress(AddressDTO dto ,String sql) {
+	public int modifyAddress(AddressDTO dto) {
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
+			String sql = "update address set a_tag=?, a_name=?, a_address=?, a_zipcode=?, a_address2=? ,a_comment=?,user_id=? where a_no=? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getA_tag());
 			pstmt.setString(2, dto.getA_name());
@@ -531,14 +534,15 @@ public class InstanceDAO {
 	}
 	
 	//	a_no 주고 deleteAddress 
-	public int deleteAddress(int ano) {
+	public int deleteAddress(String a_no) {
+		int ano = Integer.parseInt(a_no);
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "delete from address where a_no=?";
+			String sql = "update address set a_delete=1 where a_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ano);
 			result = pstmt.executeUpdate(); 
@@ -551,6 +555,7 @@ public class InstanceDAO {
 		return result;
 	}
 	
+	// uid 주고 최신 주소 갖고오기 2
 	
 	
 	
@@ -564,8 +569,34 @@ public class InstanceDAO {
 	
 	
 	
-	
-	
+	//	p_no 주고 bidding dto갖고 오기
+	public BiddingDTO getBidding(int pno) {
+		System.out.println(pno+"=pno");
+		BiddingDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "select * from bidding where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				dto = new BiddingDTO();
+				dto.setB_no(rs.getInt("b_no"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setB_bidding(rs.getInt("b_bidding"));
+				dto.setB_status(rs.getInt("b_status"));
+				dto.setB_reg(rs. getTimestamp("b_reg"));
+				System.out.println("완료");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return dto;
+	}
 	
 	
 	

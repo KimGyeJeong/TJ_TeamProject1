@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function pageReload() {
+	window.location.reload();
+}
+</script>
 </head>
 <%
 
@@ -14,10 +19,11 @@
 	String uid = (String)session.getAttribute("UID");
 	uid = "qwe8246";	//////////////////////////////////////////////////임시!
 	int result=0;
+	int deleteResult=0;
 	InstanceDAO dao = new InstanceDAO();
 	String deleteAno = request.getParameter("deleteAno");
 	if(deleteAno !=null){
-		result = dao.deleteAddress(Integer.parseInt(deleteAno)); 
+		deleteResult = dao.deleteAddress(deleteAno); 
 	}else{
 		String a_no = request.getParameter("ano");
 		String a_tag = request.getParameter("aTag");
@@ -34,29 +40,26 @@
 		address.setA_address2(a_address2);
 		address.setA_comment(a_comment);
 		address.setUser_id(uid);
-		String sql;
 		if(a_no != null){
 			address.setA_no(Integer.parseInt(a_no));
-			sql = "update address set a_tag=?, a_name=?, a_address=?, a_zipcode=?, a_address2=? ,a_comment=?,user_id=? where a_no=? ";
-			result = dao.modifyAddress(address,sql);
+			result = dao.modifyAddress(address);
 		}else{
-			sql = "insert into address(a_no, a_tag, a_name, a_address, a_zipcode, a_address2 ,a_comment,user_id , a_usereg) "
-					+ "values(address_seq.nextval,?,?,?,?,?,?,?,sysdate)";
-			result = dao.setAddress(address,sql);
+			result = dao.setAddress(address);
 		}
-%>
+	}%>
+
 <body>
-<% if(result == 1){ %>
-<script type="text/javascript">
-opener.location.reload();
-window.close();
-</script>
-<% } 
-}%>
-<%if(result == 1){ %>
-<script type="text/javascript">
-	window.location.reload();
-</script>
-<% }%>
+	<% 	if(result == 1){ %>
+			<script type="text/javascript">
+			opener.location.reload();
+			window.close();
+			</script>
+	<%	} %>
+	<% 	if(deleteResult == 1){ %>
+			<script type="text/javascript">
+			window.location=document.referrer;
+			</script>
+	<%	} %>
 </body>
+
 </html>

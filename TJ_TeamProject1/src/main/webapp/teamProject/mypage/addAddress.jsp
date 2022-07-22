@@ -11,7 +11,10 @@
 <% 
 String ano = request.getParameter("modifyAno");
 InstanceDAO dao = new InstanceDAO();
-AddressDTO address = dao.getaddress(Integer.parseInt(ano));
+AddressDTO address=null;
+if(ano!=null){
+address = dao.getaddress(Integer.parseInt(ano));
+}
 %>
 <body>
 <h1>배송지 추가하기</h1>
