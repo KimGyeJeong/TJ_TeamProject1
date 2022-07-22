@@ -75,8 +75,8 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	
 	%>
 	<div style="display: block; margin: 10px 20% 10px;" align="right" >
-		<a href="Login/Login.jsp"  width: 50px; height: 20px;" >로그인 </a> &nbsp;
-		<a href="SignUp/SignUpForm.jsp"  width: 50px; height: 20px; " >회원가입 </a>&nbsp;
+		<a href="Login/Login.jsp"   style=" width: 50px; height: 20px;" >로그인 </a> &nbsp;
+		<a href="SignUp/SignUpForm.jsp" style=" width: 50px; height: 20px; " >회원가입 </a>&nbsp;
 		<a href="Notification/notificationList.jsp" style="width:50px; height: 20px; " >알림</a>
 								
 	</div>

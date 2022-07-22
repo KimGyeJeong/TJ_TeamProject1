@@ -120,8 +120,11 @@
 					</td>
 					<td><%=dto.getP_reg()%></td>
 					<td><%=dto.getP_delete()%></td>
-					<td><%=dto.getP_sellerId()%></td>
-					<td><%=dto.getP_buyerId()%></td>
+					<td><a
+						href="AdminShowUser.jsp?user_id=<%=dto.getP_sellerId() %>"><%=dto.getP_sellerId()%></a>
+					</td>
+					<td><a
+						href="AdminShowUser.jsp?user_id=<%=dto.getP_buyerId() %>"><%=dto.getP_buyerId()%></a>
 					<td><%=dto.getP_start()%></td>
 					<td><%=dto.getP_end()%></td>
 					<td><%=dto.getP_status()%></td>
@@ -163,7 +166,7 @@
 					%>
 			<a class="pageNum"
 				href="AdminProductList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;&gt;</a>
-					<%
+			<%
 				}
 			}
 			%>
@@ -272,7 +275,7 @@
 					%>
 			<a class="pageNum"
 				href="AdminProductList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;&gt;</a>
-					<%
+			<%
 				}
 			}
 			%>
