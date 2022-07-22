@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="oracle.net.aso.c"%>
 <%@page import="team.project.dao.LeeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -30,12 +31,20 @@
 	LeeDAO dao = new LeeDAO();
 	int result = dao.idpwChkUser(id,pw);
 	System.out.println("result idpw:"+result);
-	if(result < 1){%>
+	if(result == 3){%>
 	<script>
-		alert("존재하지 않는 id 또는 pw 입니다...");
+		alert("삭제된 계정입니다...");
 		window.location="../Main.jsp";
 	</script>
-<%}else{
+  <%}else if(result ==2){
+  	LeeDAO dao2 = new LeeDAO();
+  	Timestamp date =dao2.getReg(id);
+  	%>
+	  <script>
+		alert("<%=date%>까지 정지된 계정입니다...");
+		window.location="../Main.jsp";
+	</script>	
+	<%}else if(result ==1){
 	//로그인 처리!!
 	session.setAttribute("UID", id);
 	//쿠키처리
