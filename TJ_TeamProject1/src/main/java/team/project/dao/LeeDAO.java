@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +115,7 @@ public class LeeDAO {
 	}
 	
 	public int idpwChkUser(String id, String pw) {
+		//result =2 정지된 아이디 result =3 삭제된 아이디
 		int result =-1;
 		Connection conn = null; 
 		PreparedStatement pstmt = null; 
@@ -121,8 +123,29 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection();
-
-			String sql = "select count(*) from userlist where user_id = ? and user_pw = ?";
+			
+			String sql="select user_delete from userlist where user_id=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1)==1) {
+					return result =3;
+				}
+			}
+			
+			sql ="select user_report from userlist where user_id=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1)==1) {
+					return result =2;//정지된계정
+				}
+			}
+			
+			 sql = "select count(*) from userlist where user_id = ? and user_pw = ?";
+			
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -142,6 +165,38 @@ public class LeeDAO {
 		}
 
 		return result;
+	}
+	
+	public Timestamp getReg(String id) {
+		Timestamp date=null;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn=getConnection();
+			String sql="select user_activereg from userlist where user_id=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				date=rs.getTimestamp(1);
+			}
+					
+			
+		}catch(Exception e) {
+			System.out.println("LEE DAO getReg ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+			
+		}
+		
+		
+		
+		
+		return date;
 	}
 	
 	public int insertinquiry(UserQuestionDTO inquiry ) {

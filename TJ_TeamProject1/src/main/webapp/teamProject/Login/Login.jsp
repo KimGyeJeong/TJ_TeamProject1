@@ -58,8 +58,8 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<%  }%>
 	<h1 align="center"> 로그인페이지</h1>
 	<form action="LoginPro.jsp" method="post" name="loginForm" onsubmit="return checkField()">
-	<table>
-		<tr>			
+	<table >
+		<tr align="center">			
 			<td>아이디</td>
 			<td><input type="text" name="id"/></td>
 		</tr>
