@@ -103,7 +103,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 						CategoryDTO dto = category.get(j);
 						if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
 							%>
-								<option value="../selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
+								<option value="selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
 							<%
 						}
 					}
