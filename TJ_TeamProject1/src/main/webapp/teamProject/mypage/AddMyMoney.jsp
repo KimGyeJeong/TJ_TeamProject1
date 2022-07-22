@@ -72,10 +72,12 @@
 						<button id="iamportPayment" type="button">결제하기</button>
 					</td>
 				</tr>
+				<%-- 
 				<tr>
 					<td><input type="text" value="충전된금액" id="aftermoney"
 						name="aftermoney"></td>
 				</tr>
+				--%>
 			</table>
 		</form>
 	</div>

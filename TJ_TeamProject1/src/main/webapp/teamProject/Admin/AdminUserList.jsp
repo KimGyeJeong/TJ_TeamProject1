@@ -13,6 +13,10 @@
 </head>
 <body>
 	<%
+	
+	//TODO 0722
+	//검색결과가 null인경우 500에러 발생
+	
 	request.setCharacterEncoding("UTF-8");
 
 	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd a HH:mm:ss");
