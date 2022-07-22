@@ -43,6 +43,7 @@ for(int i=0 ; i<addresslist.size() ; i++){
 <body>
 <% if(result == 2){ %>
 <script type="text/javascript">
+window.opener.alert("배송지가 변경되었습니다.");
 window.close();
 </script>
 <% } %>
