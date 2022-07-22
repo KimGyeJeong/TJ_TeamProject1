@@ -29,6 +29,7 @@
 <body>
 
 <%
+if(UID != null){
 	if(p_status == 1){
 		b_bidding = Integer.parseInt(request.getParameter("b_bidding"));
 		if(!dto.getP_sellerId().equals(UID)){
@@ -50,7 +51,7 @@
 			</script>	
 <%		}
 	}
-	if(UID != null){
+	
 		if(result == 1){
 			if(p_status == 1){%>
 			<script>
