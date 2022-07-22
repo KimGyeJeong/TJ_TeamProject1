@@ -232,7 +232,6 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, UID);
 			pstmt.setInt(2, p_no);
-			pstmt.setString(3, UID);
 			result = pstmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -416,30 +415,22 @@ public class BeomSuDAO {
 	}
 	
 	
-	public int productBuy(int p_no) {
-		int result = -1;
+	public void productBuy(int p_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		try {
 			conn = getConn();
-			String sql = "select p_finish from Product where p_no=?";
+			String sql = "update Product set p_finish=1 where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				sql = "update product set p_finish=1";
-				result = pstmt.executeUpdate();
-			}
+			pstmt.executeUpdate();
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
 			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
 			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
 		}
-		
-		return result;
 	}
 	
 	public List<CategoryDTO>  getCategory() {
@@ -575,5 +566,27 @@ public class BeomSuDAO {
 		}
 		
 		return result;
+	}
+	
+	public void orderList(int p_no, String p_sellerId, String p_buyerId, int a_no, int p_status) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into OrderList(O_NO, P_NO, P_STATUS, A_NO, O_SELLERID, O_BUYERID, O_PRO, O_TRACKINGNO) ";
+			sql += "values(OrderList_seq.nextval, ?, ?, ?, ?, ?, 0, null)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setInt(2, p_status);
+			pstmt.setInt(3, a_no);
+			pstmt.setString(4, p_sellerId);
+			pstmt.setString(5, p_buyerId);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
 	}
 }
