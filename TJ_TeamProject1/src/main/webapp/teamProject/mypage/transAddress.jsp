@@ -36,10 +36,10 @@
 	}
 	#modify{
 		position: relative;
-		left: 15px;
+		left: -20px;
 		display: inline;
 	}
-	
+	`
 </style>
 <script type="text/javascript">
 function addAddress(uri) {
@@ -56,16 +56,7 @@ uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<AddressDTO> address = dao.getaddressList(uid);
 %>
-<script type="text/javascript">
-function confirmation(tag,ano){
-	let confirmValue = confirm(tag+" 를 삭제하시겠습니까?");
-	console.log(confirmValue);
-	if(confirmValue==true){ 
-	window.location="addAddressPro.jsp?deleteAno="+ano;
-	location.reload();
-	}
-}
-</script>
+
 </head>
 
 <body>
@@ -95,6 +86,7 @@ function confirmation(tag,ano){
 		
 		<input type="text" name="<%= dto.getA_no() %>" value="<% if(dto.getA_comment()!=null){%><%= dto.getA_comment() %> <%} %>" placeholder="배송시 요청사항"> <br>
 		</fieldset>
+		<br>
 <% 	} %>
 	</form>
 <div id="wrapper"> <div style="display: block; width: 100% ; height: 7.5%;">
@@ -113,5 +105,12 @@ function confirmation(tag,ano){
 			}
 		}
 	}
-</script>	
+function confirmation(tag,ano){
+	let confirmValue = confirm(tag+" 를 삭제하시겠습니까?");
+	console.log(confirmValue);
+	if(confirmValue==true){ 
+	window.location="addAddressPro.jsp?deleteAno="+ano;
+	}
+}
+</script>
 </html>
