@@ -34,6 +34,7 @@
 		p_minPrice = "0";
 	}
 	String p_start = mr.getParameter("p_start");
+	System.out.println(mr.getParameter("p_start"));
 	p_start += " 00:00:00";
 	
 	String p_end = mr.getParameter("p_end");

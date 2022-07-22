@@ -51,7 +51,7 @@ if(p_status == 1){ %>
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
-				<input type="date" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" required/></td>
+				<input type="date" id="p_start" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" id="p_end" required/></td>
 			</tr>
 			<tr>
 				<td>카테고리 선택<br/>
@@ -114,7 +114,7 @@ if(p_status == 1){ %>
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
-				<input type="date" name="p_start" min="" required/>&nbsp;~&nbsp;<input type="date" name="p_end" id="p_end" required/></td>
+				<input type="date" id="p_start" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" id="p_end" required/></td>
 			</tr>
 			<tr>
 				<td>카테고리 선택<br/>
@@ -147,14 +147,26 @@ if(p_status == 1){ %>
 			</tr>
 		</table>
 	</form>
+	
+<%	}%>
 	<script>
-	let dateElement = document.getElementById('dateTimeLocal');
+	let dateElement = document.getElementById('p_start');
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
     dateElement.value = date;
     dateElement.setAttribute("min", date);
+    let dateElement1 = document.getElementById('p_start');
+    let date1 = new Date(new Date().getTime()+604800000 - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
+    dateElement1.value = date1;
+    dateElement1.setAttribute("max", date1);
+    let dateElement2 = document.getElementById('p_end');
+    dateElement2.value = date1;
+    dateElement2.setAttribute("min", date1);
+    let dateElement3 = document.getElementById('p_end');
+    let date2 = new Date(new Date().getTime()+(604800000*2) - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
+    dateElement3.value = date2;
+    dateElement3.setAttribute("max", date2);
 	</script>
-<%	}
-}else{%>
+<%	}else{%>
 		<script>
 			alert("로그인 후 이용해 주세요!");
 			window.location.assign("../Login/Login.jsp");

@@ -65,7 +65,7 @@ request.setCharacterEncoding("utf-8");
 		<input type="hidden" name="p_status" value="<%=dto.getP_status()%>" />
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
-			<td align="left">희망 입찰가 : <input type="text" name="b_bidding" /></td>
+			<td align="left">희망 입찰가 : <input type="number" name="b_bidding" min="<%=dto.getP_minPrice() %>", max="<%=dto.getP_maxPrice() %>" /></td>
 			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
 		</tr>
