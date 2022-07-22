@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class ContentDTO {
 	private int c_no;  
 	private String c_title; 
-	private String ser_id; 
+	private String user_id; 
 	private String c_content; 
 	private Timestamp c_reg; 
 	private int c_readcount;
@@ -22,11 +22,11 @@ public class ContentDTO {
 	public void setC_title(String c_title) {
 		this.c_title = c_title;
 	}
-	public String getSer_id() {
-		return ser_id;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setSer_id(String ser_id) {
-		this.ser_id = ser_id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 	public String getC_content() {
 		return c_content;

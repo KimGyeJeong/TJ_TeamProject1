@@ -52,7 +52,7 @@
 		search = "";
 	*/
 
-	//이름으로 검색
+	//유저 ID로 찾기
 
 	if (search == null) {
 		userCount = dao.getUserCount();
@@ -165,6 +165,14 @@
 		}
 		%>
 
+	</div>
+	
+	<%-- select만들기.. --%>
+	<div>
+		<form action="AdminUserList.jsp">
+			<input type="text" name="search" placeholder="유저ID로 찾기">
+			<input type="submit" value="검색"> 
+		</form>
 	</div>
 </body>
 </html>

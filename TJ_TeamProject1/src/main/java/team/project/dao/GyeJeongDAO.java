@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
+import team.project.model.ContentDTO;
 import team.project.model.NoticeDTO;
 import team.project.model.ProductDTO;
 import team.project.model.UserListDTO;
@@ -802,5 +803,156 @@ public class GyeJeongDAO {
 		return result;
 	}
 	//new method here
+	public int resetYellowCard(String id) {
+		result = 0;
+		try {
+			conn=getConnection();
+			
+			sql="Update userlist\r\n"
+					+ "  SET USER_ACTIVEREG=NULL, user_report=0 "
+					+ "WHERE user_id = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			result=pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.resetYellowCard(String id) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
+	public List<ProductDTO> getUserProductList(String user_id){
+		List<ProductDTO> list = null;
+		ProductDTO dto = null;
+		
+		try {
+			conn=getConnection();
+			
+			sql = "select b.* from\r\n"
+					+ "(select ROWNUM r, a.* from\r\n"
+					+ "(select * from PRODUCT where P_SELLERID = ? order by P_REG desc)A)B";
+			//sql문 수정... rownum 필요없음.. 그러면 아래 dto set 명령어도 수정해야함
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list = new ArrayList<ProductDTO>();
+				do {
+					dto = new ProductDTO();
+					
+					dto.setP_no(rs.getInt(2));
+					dto.setP_status(rs.getInt(3));
+					dto.setP_title(rs.getString(4));
+					dto.setP_price(rs.getInt(5));
+					dto.setP_maxPrice(rs.getInt(6));
+					dto.setP_minPrice(rs.getInt(7));
+					dto.setCa_no(rs.getInt(8));
+					dto.setP_img1(rs.getString(9));
+					dto.setP_img2(rs.getString(10));
+					dto.setP_img3(rs.getString(11));
+					dto.setP_img4(rs.getString(12));
+					dto.setP_content(rs.getString(13));
+					dto.setP_finish(rs.getInt(14));
+					dto.setP_reg(rs.getTimestamp(15));
+					dto.setP_readCount(rs.getInt(16));
+					dto.setP_delete(rs.getInt(17));
+					dto.setP_sellerId(rs.getString(18));
+					dto.setP_buyerId(rs.getString(19));
+					dto.setP_start(rs.getTimestamp(20));
+					dto.setP_end(rs.getTimestamp(21));
+
+					list.add(dto);
+				}while(rs.next());
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getUserProductList(user_id) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	public List<ContentDTO> getUserContentList(String user_id){
+		List<ContentDTO> list = null;
+		ContentDTO dto = null;
+		
+		try {
+			conn=getConnection();
+			
+			sql="SELECT * from CONTENT where USER_ID=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list = new ArrayList<ContentDTO>();
+				do {
+					dto = new ContentDTO();
+					
+					dto.setC_no(rs.getInt(1));
+					dto.setC_title(rs.getString(2));
+					dto.setUser_id(rs.getString(3));
+					dto.setC_content(rs.getString(4));
+					dto.setC_reg(rs.getTimestamp(5));
+					dto.setC_readcount(rs.getInt(6));
+					dto.setC_img(rs.getString(7));
+					
+					list.add(dto);
+				}while(rs.next());
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getUserContentList(user_id) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	//new method here
+	public int addMyMoney(String id, String aftermoney) {
+		int money = Integer.parseInt(aftermoney);
+		result = 0;
+		
+		try {
+			conn=getConnection();
+			
+			sql="Update userlist\r\n"
+					+ "  SET USER_MONEY=user_money+?,\r\n"
+					+ "  USER_USEMONEY=USER_USEMONEY+?\r\n"
+					+ "WHERE user_id = ?";
+			
+			pstmt= conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, money);
+			pstmt.setInt(2, money);
+			pstmt.setString(3, id);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.addMyMoney(id, aftermoney) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
 
 }

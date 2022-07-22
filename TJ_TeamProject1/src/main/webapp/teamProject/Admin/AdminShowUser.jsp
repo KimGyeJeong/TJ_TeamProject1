@@ -1,3 +1,5 @@
+<%@page import="team.project.model.ContentDTO"%>
+<%@page import="team.project.model.ProductDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="team.project.model.AddressDTO"%>
 <%@page import="java.util.List"%>
@@ -22,11 +24,19 @@
 	String search = request.getParameter("search");
 	String user_id = request.getParameter("user_id");
 
+	int listSize = 0; //판매글, 게시글 3개 이하로만 노출시키기 위해 사용
+
 	GyeJeongDAO dao = new GyeJeongDAO();
 	UserListDTO dto = dao.getUserProfile(user_id);
 
 	List<AddressDTO> list = dao.getUserAddress(user_id);
 	AddressDTO dto_a = null;
+
+	List<ProductDTO> list_product = dao.getUserProductList(user_id);
+	ProductDTO dto_p = null;
+
+	List<ContentDTO> list_content = dao.getUserContentList(user_id);
+	ContentDTO dto_c = null;
 	//address 에러 --> 해당 아이디에 주소가 없으면 500에러 발생
 	%>
 
@@ -45,7 +55,8 @@
 				<input type="button" value="경고해제" onclick="">--> <input
 					type="button" value="활동정지 및 계정정지"
 					onclick="openChild('buttonClick/YellowCard.jsp')"> <input
-					type="button" value="활동정지 및 계정정지 해제" onclick=""></td>
+					type="button" value="활동정지 및 계정정지 해제"
+					onclick="openChild('buttonClick/ResetYellowCard.jsp')"></td>
 			</tr>
 		</table>
 
@@ -175,20 +186,95 @@
 				<tr>
 					<td align="left">
 						<div id="sellList" align="left">
-							<table>
-								<tr>
-									<td>판매글 리스트</td>
-								</tr>
-							</table>
+							<form>
+								<table>
+									<%
+									if (list_product != null) {
+										if (list_product.size() > 3){
+											listSize = 3;
+										}else
+											listSize = list_product.size();
+									%>
+									<tr style="display: none">
+										<td><input type="hidden" value="<%=dto.getUser_id()%>"
+											name="user_id"></td>
+									</tr>
+									<tr>
+										<td>판매글 리스트
+										<% if(list_product.size()>3){%>
+											<button style="width: 60pt" type="submit"
+												formaction="buttonClick/MoreProductList.jsp"
+												formmethod="post">+더보기</button>
+												<% }%>
+										</td>
+									</tr>
+									<%
+									for (int i = 0; i < listSize; i++) {
+										dto_p = list_product.get(i);
+									%>
+									<tr>
+										<td><a
+											href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto_p.getP_no()%>&ca_no=<%=dto_p.getCa_no()%>"><%=dto_p.getP_title()%></a>
+										</td>
+									</tr>
+									<%
+									}
+									} else {
+									%>
+									<tr>
+										<td>판매글이 없습니다.</td>
+									</tr>
+									<%
+									}
+									%>
+								</table>
+							</form>
 						</div>
 					</td>
 					<td align="right">
 						<div id="contextList" align="right">
-							<table>
-								<tr>
-									<td>게시판 글 리스트</td>
-								</tr>
-							</table>
+							<form>
+								<table>
+									<%
+									listSize = 0;
+									if (list_content != null) {
+										if (list_content.size() > 3){
+											listSize = 3;
+										}else
+											listSize = list_content.size();
+									%>
+									<tr style="display: none">
+										<td><input type="hidden" value="<%=dto.getUser_id()%>"
+											name="user_id"></td>
+									</tr>
+									<tr>
+										<td>게시글 리스트
+										<% if(list_content.size()>3){ %>
+											<button style="width: 60pt" type="submit"
+												formaction="buttonClick/MoreContentList.jsp"
+												formmethod="post">+더보기</button>
+												<% }%>
+										</td>
+									</tr>
+									<%
+									for (int i = 0; i < listSize; i++) {
+										dto_c = list_content.get(i);
+									%>
+									<tr>
+										<td><a href=""><%=dto_c.getC_title()%></a></td>
+									</tr>
+									<%
+									}
+									} else {
+									%>
+									<tr>
+										<td>게시글이 없습니다.</td>
+									</tr>
+									<%
+									}
+									%>
+								</table>
+							</form>
 						</div>
 					</td>
 				</tr>
@@ -207,5 +293,8 @@
 		}
 	</script>
 
+	<div align="left">
+		<input type="button" value="go main" onclick="location.href='AdminMain.jsp'">
+	</div>
 </body>
 </html>
