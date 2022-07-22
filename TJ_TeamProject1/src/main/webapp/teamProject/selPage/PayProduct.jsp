@@ -18,7 +18,6 @@
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
 	String b_bid = request.getParameter("b_bidding");
-	UID = "18";
 	String a_n = request.getParameter("a_no");
 	int a_no = 0;
 	if(b_bid == null){
@@ -62,7 +61,8 @@
 	<form action="PayProductPro.jsp" method="post">
 	<input type="hidden" name="p_no" value="<%=p_no %>" />
 	<input type="hidden" name="p_status" value="<%=p_status %>" />
-	<input type="hidden" name="a_no" value="<%=addDTO.getA_no() %>" />
+	<%-- <input type="hidden" name="a_no" value="<%=addDTO.getA_no() %>" /> --%>
+	<input type="text" name="ano" id="ano" value="<%=addDTO.getA_no() %>" />
 		<table>
 			<tr>
 				<td>상품 제목 : <%=proDTO.getP_title() %></td>

@@ -17,10 +17,12 @@
 	List<CategoryDTO> category = dao.getCategory(); 
 %>
 <body>
+
 <%
 if(UID != null){
 
 if(p_status == 1){ %>
+
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
@@ -112,7 +114,7 @@ if(p_status == 1){ %>
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
-				<input type="date" name="p_start" required/>&nbsp;~&nbsp;<input type="date" name="p_end" required/></td>
+				<input type="date" name="p_start" min="" required/>&nbsp;~&nbsp;<input type="date" name="p_end" id="p_end" required/></td>
 			</tr>
 			<tr>
 				<td>카테고리 선택<br/>
@@ -145,6 +147,12 @@ if(p_status == 1){ %>
 			</tr>
 		</table>
 	</form>
+	<script>
+	let dateElement = document.getElementById('dateTimeLocal');
+    let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
+    dateElement.value = date;
+    dateElement.setAttribute("min", date);
+	</script>
 <%	}
 }else{%>
 		<script>
