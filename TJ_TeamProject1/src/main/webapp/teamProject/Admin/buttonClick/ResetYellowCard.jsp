@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>YellowCard</title>
+<title>ResetYellowCard</title>
 <link href="../../style.css" rel="stylesheet" type="text/css">
 </head>
 <body onload="getValue()">
@@ -21,16 +21,13 @@
 	</script>
 
 	<div>
-		<form action="YellowCardPro.jsp" method="post">
+		<form action="ResetYellowCardPro.jsp" method="post">
 			<table>
 				<tr>
 					<td>현재 ID : <input type="text" id="cInput" name="user_id" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<td>정지일 <input type="radio" name="day" value="7"
-						checked="checked">7일 <input type="radio" name="day"
-						value="14">14일 <input type="radio" name="day" value="21">21일
-						<input type="radio" name="day" value="99">10년
+					<td>정지해제 하시겠습니까?
 					</td>
 				</tr>
 				<tr>
