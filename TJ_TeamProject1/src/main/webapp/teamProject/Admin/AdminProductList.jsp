@@ -34,14 +34,19 @@
 
 	int productCount = 0;
 
-	productCount = dao.getProductCount();
+	String search = request.getParameter("search");
+
+	if (search == null)
+		productCount = dao.getProductCount();
+	else
+		productCount = dao.getProductSearchCount(search);
 
 	//productNumber 는 필요 없을듯..?	
 	int productNumber = productCount - (currentPage - 1) * pageSize;
 
 	//대분류 이름 가져오기
 	String catBig = "";
-	//소분유 이름 가져오기
+	//소분류 이름 가져오기
 	String catSmall = "";
 	%>
 
@@ -63,7 +68,13 @@
 
 	<div id="recent" style="display: block;">
 		<%
-		list = dao.getProductRecent(startRow, endRow);
+		if (search == null) {
+			if (productCount > 0)
+				list = dao.getProductRecent(startRow, endRow);
+		} else {
+			if (productCount > 0)
+				list = dao.getProductSearchRecent(startRow, endRow, search);
+		}
 		%>
 		<form>
 			<table>
@@ -89,6 +100,9 @@
 				</tr>
 
 				<%
+				//TODO 0723
+				//만약 list가 null이면 500 에러
+
 				for (int i = 0; i < list.size(); i++) {
 					dto = list.get(i);
 				%>
@@ -121,10 +135,10 @@
 					<td><%=dto.getP_reg()%></td>
 					<td><%=dto.getP_delete()%></td>
 					<td><a
-						href="AdminShowUser.jsp?user_id=<%=dto.getP_sellerId() %>"><%=dto.getP_sellerId()%></a>
+						href="AdminShowUser.jsp?user_id=<%=dto.getP_sellerId()%>"><%=dto.getP_sellerId()%></a>
 					</td>
 					<td><a
-						href="AdminShowUser.jsp?user_id=<%=dto.getP_buyerId() %>"><%=dto.getP_buyerId()%></a>
+						href="AdminShowUser.jsp?user_id=<%=dto.getP_buyerId()%>"><%=dto.getP_buyerId()%></a>
 					<td><%=dto.getP_start()%></td>
 					<td><%=dto.getP_end()%></td>
 					<td><%=dto.getP_status()%></td>
@@ -150,32 +164,44 @@
 
 				if (endPage > pageCount)
 					endPage = pageCount;
-				if(startPage>pageNumSize){
-					%>
+				if (startPage > pageNumSize) {
+			%>
 			<a class="pageNum"
-				href="AdminProductList.jsp?pageNum=<%=startPage-1 %>">&lt;&nbsp;</a>
+				href="AdminProductList.jsp?pageNum=<%=startPage - 1%>">&lt;&nbsp;</a>
 			<%
-				}
-				for(int i=startPage; i<endPage+1;i++){
-					%>
+			}
+			for (int i = startPage; i < endPage + 1; i++) {
+			%>
 			<a class="pageNum" href="AdminProductList.jsp?pageNum=<%=i%>">&nbsp;<%=i%>&nbsp;
 			</a>
 			<%
-				}
-				if(endPage < pageCount){
-					%>
+			}
+			if (endPage < pageCount) {
+			%>
 			<a class="pageNum"
 				href="AdminProductList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;&gt;</a>
 			<%
-				}
+			}
 			}
 			%>
+		</div>
+		<div>
+			<form action="AdminProductList.jsp">
+				<input type="text" name="search" placeholder="유저ID로 찾기"> <input
+					type="submit" value="검색">
+			</form>
 		</div>
 	</div>
 
 	<div id="view" style="display: none;">
 		<%
-		list = dao.getProductView(startRow, endRow);
+		if (search == null) {
+			if (productCount > 0)
+				list = dao.getProductView(startRow, endRow);
+		} else {
+			if (productCount > 0)
+				list = dao.getProductSearchView(startRow, endRow, search);
+		}
 		%>
 		<form>
 			<table>
@@ -259,27 +285,31 @@
 
 				if (endPage > pageCount)
 					endPage = pageCount;
-				if(startPage>pageNumSize){
-					%>
+				if (startPage > pageNumSize) {
+			%>
 			<a class="pageNum"
-				href="AdminProductList.jsp?pageNum=<%=startPage-1 %>">&lt;&nbsp;</a>
+				href="AdminProductList.jsp?pageNum=<%=startPage - 1%>">&lt;&nbsp;</a>
 			<%
-				}
-				for(int i=startPage; i<endPage+1;i++){
-					%>
+			}
+			for (int i = startPage; i < endPage + 1; i++) {
+			%>
 			<a class="pageNum" href="AdminProductList.jsp?pageNum=<%=i%>">&nbsp;<%=i%>&nbsp;
 			</a>
 			<%
-				}
-				if(endPage < pageCount){
-					%>
+			}
+			if (endPage < pageCount) {
+			%>
 			<a class="pageNum"
 				href="AdminProductList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;&gt;</a>
 			<%
-				}
+			}
 			}
 			%>
 		</div>
+		<form action="AdminProductList.jsp">
+			<input type="text" name="search" placeholder="유저ID로 찾기"> <input
+				type="submit" value="검색">
+		</form>
 	</div>
 
 </body>

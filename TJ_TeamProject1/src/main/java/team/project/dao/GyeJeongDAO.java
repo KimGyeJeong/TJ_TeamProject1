@@ -563,7 +563,6 @@ public class GyeJeongDAO {
 		return list;
 	}
 
-	// TODO
 	public List<ProductDTO> getProductView(int startRow, int endRow) {
 		List<ProductDTO> list = null;
 		ProductDTO dto = null;
@@ -613,6 +612,145 @@ public class GyeJeongDAO {
 		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.getProductView(startRow, endRow) ERR");
 			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	// TODO productList search 검색
+	public int getProductSearchCount(String search) {
+		result = 0;
+
+		try {
+			conn = getConnection();
+
+			sql = "select count(*) from product where p_sellerid like '%" + search + "%'";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getProductSearchCount(search) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
+
+	public List<ProductDTO> getProductSearchRecent(int startRow, int endRow, String search) {
+		List<ProductDTO> list = null;
+		ProductDTO dto = null;
+
+		try {
+			conn = getConnection();
+
+			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* FROM(\r\n"
+					+ "select * from PRODUCT where p_sellerid like '%" + search + "%' ORDER BY p_reg desc)a)b\r\n"
+					+ "where r>=? and r<=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				list = new ArrayList<ProductDTO>();
+				do {
+					dto = new ProductDTO();
+
+					dto.setP_no(rs.getInt(2));
+					dto.setP_status(rs.getInt(3));
+					dto.setP_title(rs.getString(4));
+					dto.setP_price(rs.getInt(5));
+					dto.setP_maxPrice(rs.getInt(6));
+					dto.setP_minPrice(rs.getInt(7));
+					dto.setCa_no(rs.getInt(8));
+					dto.setP_img1(rs.getString(9));
+					dto.setP_img2(rs.getString(10));
+					dto.setP_img3(rs.getString(11));
+					dto.setP_img4(rs.getString(12));
+					dto.setP_content(rs.getString(13));
+					dto.setP_finish(rs.getInt(14));
+					dto.setP_reg(rs.getTimestamp(15));
+					dto.setP_readCount(rs.getInt(16));
+					dto.setP_delete(rs.getInt(17));
+					dto.setP_sellerId(rs.getString(18));
+					dto.setP_buyerId(rs.getString(19));
+					dto.setP_start(rs.getTimestamp(20));
+					dto.setP_end(rs.getTimestamp(21));
+
+					list.add(dto);
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	public List<ProductDTO> getProductSearchView(int startRow, int endRow, String search) {
+		List<ProductDTO> list = null;
+		ProductDTO dto = null;
+
+		try {
+			conn = getConnection();
+
+			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* from\r\n"
+					+ "(select * from PRODUCT where p_sellerid like '%"+search+"%' order by P_READCOUNT DESC)a)b\r\n" + "where r>=? and r<=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				list = new ArrayList<ProductDTO>();
+				do {
+					dto = new ProductDTO();
+
+					dto.setP_no(rs.getInt(2));
+					dto.setP_status(rs.getInt(3));
+					dto.setP_title(rs.getString(4));
+					dto.setP_price(rs.getInt(5));
+					dto.setP_maxPrice(rs.getInt(6));
+					dto.setP_minPrice(rs.getInt(7));
+					dto.setCa_no(rs.getInt(8));
+					dto.setP_img1(rs.getString(9));
+					dto.setP_img2(rs.getString(10));
+					dto.setP_img3(rs.getString(11));
+					dto.setP_img4(rs.getString(12));
+					dto.setP_content(rs.getString(13));
+					dto.setP_finish(rs.getInt(14));
+					dto.setP_reg(rs.getTimestamp(15));
+					dto.setP_readCount(rs.getInt(16));
+					dto.setP_delete(rs.getInt(17));
+					dto.setP_sellerId(rs.getString(18));
+					dto.setP_buyerId(rs.getString(19));
+					dto.setP_start(rs.getTimestamp(20));
+					dto.setP_end(rs.getTimestamp(21));
+
+					list.add(dto);
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
@@ -1030,7 +1168,7 @@ public class GyeJeongDAO {
 		try {
 			conn = getConnection();
 
-			sql = "select count(*) FROM REPORT where "+searchOpt+" LIKE '%" + search + "%' ";
+			sql = "select count(*) FROM REPORT where " + searchOpt + " LIKE '%" + search + "%' ";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -1048,32 +1186,30 @@ public class GyeJeongDAO {
 
 		return result;
 	}
-	
-	//TODO
-	public List<ReportDTO> getSearchReport(int startRow, int endRow, String search, String searchOpt){
+
+	// TODO
+	public List<ReportDTO> getSearchReport(int startRow, int endRow, String search, String searchOpt) {
 		List<ReportDTO> list = null;
 		ReportDTO dto = null;
-		
+
 		try {
-			conn=getConnection();
-			//"+searchOpt+"
-			sql ="select B.* from (select rownum r, A.* from "
-					+ "(select * from report where "+searchOpt+" like '%"+search+"%'"
-					+ " order by RP_REG desc) A) B "
-					+ "where r >= ? and r <= ?";
+			conn = getConnection();
+			// "+searchOpt+"
+			sql = "select B.* from (select rownum r, A.* from " + "(select * from report where " + searchOpt
+					+ " like '%" + search + "%'" + " order by RP_REG desc) A) B " + "where r >= ? and r <= ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				list = new ArrayList<ReportDTO>();
-				
+
 				do {
 					dto = new ReportDTO();
-					
+
 					dto.setRp_no(rs.getInt(2));
 					dto.setRp_reason(rs.getString(3));
 					dto.setRp_title(rs.getString(4));
@@ -1085,19 +1221,58 @@ public class GyeJeongDAO {
 					dto.setRp_reg(rs.getTimestamp(10));
 
 					list.add(dto);
-					
-				}while(rs.next());
+
+				} while (rs.next());
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.getSearchReport(startRow, endRow, search, searchOpt) ERR");
 			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+	// new method here
+	public UserQuestionDTO getOneUserQuestion(int uq_no) {
+		UserQuestionDTO dto = null;
+		
+		try {
+			conn=getConnection();
+			
+			sql="select * from USERQUESTION where UQ_NO = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, uq_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new UserQuestionDTO();
+				
+				dto.setUq_no(rs.getInt(1));
+				dto.setP_no(rs.getInt(2));
+				dto.setUser_id(rs.getString(3));
+				dto.setUq_title(rs.getString(4));
+				dto.setUq_content(rs.getString(5));
+				dto.setUq_cat(rs.getString(6));
+				dto.setUq_img1(rs.getString(7));
+				dto.setUq_img2(rs.getString(8));
+				dto.setUq_img3(rs.getString(9));
+				dto.setUq_reg(rs.getTimestamp(10));
+				dto.setUqa_content(rs.getString(11));
+				dto.setUqa_reg(rs.getTimestamp(12));
+			}
+
+			
+		}catch(Exception e) {
+			
 		}finally {
 			closeConnection(rs, pstmt, conn);
 		}
 		
-		return list;
+		return dto;
 	}
-	//new method here
-
 }
