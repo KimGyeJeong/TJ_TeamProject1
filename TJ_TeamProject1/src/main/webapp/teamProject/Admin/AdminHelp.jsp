@@ -15,11 +15,13 @@
 	String uq_no = request.getParameter("uq_no");
 
 	GyeJeongDAO dao = new GyeJeongDAO();
-	UserQuestionDTO dto = null;
+	UserQuestionDTO dto = dao.getOneUserQuestion(Integer.parseInt(uq_no));
 	%>
 
 	<h4><%=uq_no%></h4>
+	<h4><%=dto.getUq_title() %></h4>
 	<%-- 답변하기 --%>
+	
 
 </body>
 </html>
