@@ -14,11 +14,12 @@ import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
 import team.project.model.NotificationDTO;
+import team.project.model.ProductDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
 
-
+ 
 public class LeeDAO {
 	private void closeConnection(PreparedStatement pstmt, Connection conn) {
 		if (pstmt != null) {
@@ -695,6 +696,80 @@ public class LeeDAO {
 		return list;
 	}
 	
+	
+	public List recentProductList() {
+		List list =null;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product order by p_reg desc) A) B WHERE R>= 1 AND R<=8";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+	
+					ProductDTO dto = new ProductDTO();
+					dto.setP_title(rs.getString("P_TITLE"));
+					dto.setP_img1(rs.getString("P_IMG1"));
+					dto.setP_no(rs.getInt("P_NO"));
+					list.add(dto);
+					
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.recentProductList ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		return list;
+	}
+	
+	public List viewsProductList() {
+		List list =null;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product order by teamid.product.p_readcount desc) A) B WHERE R>= 1 AND R<=8";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
+				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				do {
+	
+					ProductDTO dto = new ProductDTO();
+					dto.setP_title(rs.getString("P_TITLE"));
+					dto.setP_img1(rs.getString("P_IMG1"));
+					dto.setP_no(rs.getInt("P_NO"));
+					list.add(dto);
+					
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LEEDAO.recentProductList ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		return list;
+	}
 	
 	
 	

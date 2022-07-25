@@ -107,7 +107,7 @@
 				<img src="../save/<%=dto.getP_img4() %>" /><br/>
 				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
-		</tr>       
+		</tr>
 <%		}else{ %>
 		<tr>
 			<td colspan="3">
