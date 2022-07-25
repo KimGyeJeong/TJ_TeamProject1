@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.LeeDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.model.CategoryDTO"%>
@@ -89,6 +90,17 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	List<CategoryDTO> category = dao.getCategory(); 
 	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+	
+	
+	
+	//상품리스트,이미지 불러오기
+	LeeDAO daoL = new LeeDAO();
+	List recentProductList = daoL.recentProductList(); 
+	List viewsProductList =daoL.viewsProductList();
+	
+	
+	
+	
 	
 	%>
 
@@ -196,21 +208,40 @@ function showDivs(n) {
 </script>
 
 <div style = "padding: 20px 300px 20px 300px;"><!-- 상품리스트 시작 -->
-<table >
-	
+<table border="1" >
 	<tr>
-		상품-조회순
-		<td><img src="logo.png" width="200px" height="200px" ></td>
-		<td><img src="logo.png" width="200px" height="200px" ></td>
-		<td><img src="logo.png" width="200px" height="200px" ></td>
-		<td><img src="logo.png" width="200px" height="200px" ></td>
-		<td><img src="logo.png" width="200px" height="200px" ></td>
-	</tr>
-	
+		<td><h3>상품-조회수</h3></td></tr>
+		<tr>
+		<%
+			for(int i=0; i < recentProductList.size(); i++){
+					ProductDTO dto = (ProductDTO)viewsProductList.get(i);
+			
+			if(i%4==0){%>
+				<tr>
+			<%} %>
+			<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+		<%
+			
+		}%>	
+</table>
+<br/>
+<br/>
+<table border="1" >
 	<tr>
-		<td>상품이름</td>
-	</tr>
-	
+		<td><h3>상품-최신순</h3></td></tr>
+		<tr>
+		<%
+			for(int i=0; i < recentProductList.size(); i++){
+					ProductDTO dto = (ProductDTO)recentProductList.get(i);
+			
+			if(i%4==0){%>
+				<tr>
+			<%} %>
+			<td><a href="window.location='selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>'"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+		<%
+			
+		}%>
+		
 </table>	
 </div><!-- 상품리스트 끝 -->
 
