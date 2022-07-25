@@ -66,7 +66,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
-		#mypagelist {
+		#mypagelist { 
 			list-style: none;
 			display: inline-block;
 		}
