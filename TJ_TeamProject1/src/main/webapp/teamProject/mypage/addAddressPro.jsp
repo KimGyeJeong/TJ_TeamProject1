@@ -44,7 +44,7 @@ function pageReload() {
 			address.setA_no(Integer.parseInt(a_no));
 			result = dao.modifyAddress(address);
 		}else{
-			result = dao.setAddress(address);
+			result = dao.insertAddress(address);
 		}
 	}%>
 

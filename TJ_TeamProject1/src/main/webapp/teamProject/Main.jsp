@@ -89,7 +89,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		</form>
 		
 		<button onclick="window.location.href='selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
-		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
 		<button onclick="window.location.href=" style="width:60px;  " >게시판</button>
 		<div style=" margin-right: 300px;">
 	<form action="" name="ca">

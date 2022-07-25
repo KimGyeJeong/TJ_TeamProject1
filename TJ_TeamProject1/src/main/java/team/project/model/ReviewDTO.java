@@ -1,5 +1,7 @@
 package team.project.model;
 
+import java.sql.Timestamp;
+
 public class ReviewDTO {
 	
 	int re_no;
@@ -8,6 +10,7 @@ public class ReviewDTO {
     String re_content;
     int re_delete;
     String re_reportedUid;
+    Timestamp re_reg;
     
     
 	public int getRe_no() {
@@ -46,5 +49,12 @@ public class ReviewDTO {
 	public void setRe_reportedUid(String re_reportedUid) {
 		this.re_reportedUid = re_reportedUid;
 	}
+	public Timestamp getRe_reg() {
+		return re_reg;
+	}
+	public void setRe_reg(Timestamp re_reg) {
+		this.re_reg = re_reg;
+	}
     
+	
 }
