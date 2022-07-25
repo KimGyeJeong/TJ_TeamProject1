@@ -17,7 +17,7 @@
 <link href="/TJ_TeamProject1/teamProject/style.css" rel="stylesheet" type="text/css" />
 </head>
 <%
-request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("utf-8");
 	LocalDateTime now = LocalDateTime.now();
 	Date today = Timestamp.valueOf(now);
 	System.out.println(today);
@@ -59,7 +59,7 @@ request.setCharacterEncoding("utf-8");
 <%if(dto.getP_finish() == 0){ %>	
 	<table>
 		<tr>
-			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
@@ -82,7 +82,7 @@ request.setCharacterEncoding("utf-8");
 		<input type="hidden" name="p_status" value="<%=dto.getP_status()%>" />
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
-			<td align="left">희망 입찰가 : <input type="number" name="b_bidding" min="<%=dto.getP_minPrice() %>", max="<%=dto.getP_maxPrice() %>" /></td>
+			<td align="left">희망 입찰가 : <input type="number" name="b_bidding" min="<%=dto.getP_minPrice() %>", max="<%=dto.getP_maxPrice() %>" required /></td>
 			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
 		</tr>
@@ -96,13 +96,15 @@ request.setCharacterEncoding("utf-8");
 		<tr>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductModifyForm.jsp?p_no=<%=p_no%>'">상품 수정</button></td>
+
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="3">
-				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
+				<img src="../save/<%=dto.getP_img2() %>" />
+				<img src="../save/<%=dto.getP_img3() %>" />
+				<img src="../save/<%=dto.getP_img4() %>" /><br/>
 				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
@@ -135,7 +137,7 @@ request.setCharacterEncoding("utf-8");
 <%}else if(dto.getP_finish() == 1){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매완료)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
@@ -176,9 +178,9 @@ request.setCharacterEncoding("utf-8");
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="3">
-				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
+				<img src="../save/<%=dto.getP_img2() %>" />
+				<img src="../save/<%=dto.getP_img3() %>" />
+				<img src="../save/<%=dto.getP_img4() %>" /><br/>
 				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
@@ -211,7 +213,7 @@ request.setCharacterEncoding("utf-8");
 <%}else if(dto.getP_finish() == 2){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(거래중지 상품)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
@@ -252,9 +254,9 @@ request.setCharacterEncoding("utf-8");
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="3">
-				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
+				<img src="../save/<%=dto.getP_img2() %>" />
+				<img src="../save/<%=dto.getP_img3() %>" />
+				<img src="../save/<%=dto.getP_img4() %>" /><br/>
 				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
@@ -287,7 +289,7 @@ request.setCharacterEncoding("utf-8");
 <%}else if(dto.getP_finish() == 3){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매 준비중인 상품입니다!)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %></td>
@@ -328,9 +330,9 @@ request.setCharacterEncoding("utf-8");
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="3">
-				<img src="/teamProject/save/<%=dto.getP_img2() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img3() %>" />
-				<img src="/teamProject/save/<%=dto.getP_img4() %>" /><br/>
+				<img src="../save/<%=dto.getP_img2() %>" />
+				<img src="../save/<%=dto.getP_img3() %>" />
+				<img src="../save/<%=dto.getP_img4() %>" /><br/>
 				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>

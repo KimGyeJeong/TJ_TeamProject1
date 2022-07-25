@@ -44,8 +44,9 @@ if(p_status == 1){ %>
 			</tr>
 			<tr>
 				<td>상한가, 하한가 입력<br/>
-				<input type="number" name="p_maxPrice" value="상한가 입력" required/>&nbsp;~&nbsp;<input type="number" name="p_minPrice" value="하한가 입력" required/></td>
+				상한가<input type="number" name="p_maxPrice" id="p_maxPrice" required/>&nbsp;~&nbsp;하한가<input type="number" name="p_minPrice" id="p_minPrice"required/></td>
 			</tr>
+			
 			<tr>
 				<td><textarea rows="20" cols="100" name="p_content" required></textarea></td>
 			</tr>
@@ -150,6 +151,7 @@ if(p_status == 1){ %>
 	
 <%	}%>
 	<script>
+	
 	let dateElement = document.getElementById('p_start');
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
     dateElement.value = date;
@@ -158,6 +160,7 @@ if(p_status == 1){ %>
     let date1 = new Date(new Date().getTime()+604800000 - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
     dateElement1.value = date1;
     dateElement1.setAttribute("max", date1);
+    document.getElementById('p_start').value = new Date().toISOString().substring(0, 10);
     let dateElement2 = document.getElementById('p_end');
     dateElement2.value = date1;
     dateElement2.setAttribute("min", date1);
@@ -165,6 +168,7 @@ if(p_status == 1){ %>
     let date2 = new Date(new Date().getTime()+(604800000*2) - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
     dateElement3.value = date2;
     dateElement3.setAttribute("max", date2);
+
 	</script>
 <%	}else{%>
 		<script>

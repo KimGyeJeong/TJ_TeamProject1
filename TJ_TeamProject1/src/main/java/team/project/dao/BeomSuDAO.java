@@ -421,7 +421,7 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "update Product set p_finish=1 where p_no=?";
+			String sql = "update Product set p_finish=1 , p_end=sysdate where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
@@ -695,5 +695,44 @@ public class BeomSuDAO {
 		}
 		
 		return dto;
+	}
+	
+	public int productModify(ProductDTO dto, int p_no) {
+		int result = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_status=? , p_title=? , p_price=? , p_maxPrice=? , p_minPrice=? , ca_no=? , p_img1=? , p_img2=? , p_img3=? , p_img4=? ";
+			sql += ", p_content=? , p_sellerId=? , p_start=? , p_end=? where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getP_status());
+			pstmt.setString(2, dto.getP_title());
+			pstmt.setInt(3, dto.getP_price());
+			pstmt.setInt(4, dto.getP_maxPrice());
+			pstmt.setInt(5, dto.getP_minPrice());
+			pstmt.setInt(6, dto.getCa_no());
+			pstmt.setString(7, dto.getP_img1());
+			pstmt.setString(8, dto.getP_img2());
+			pstmt.setString(9, dto.getP_img3());
+			pstmt.setString(10, dto.getP_img4());
+			pstmt.setString(11, dto.getP_content());
+			pstmt.setString(12, dto.getP_sellerId());
+			pstmt.setTimestamp(13, dto.getP_start());
+			pstmt.setTimestamp(14, dto.getP_end());
+			pstmt.setInt(15, p_no);
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+			System.out.println(result);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+		 
 	}
 }
