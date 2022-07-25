@@ -28,7 +28,7 @@ if(auto != null && id != null && pw != null){
 <%id=(String)session.getAttribute("UID"); %>
 	<h3 align="right"> 사용자: <%=id %></h3>
 	
-	<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
+	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
   		alert("로그인 후 사용가능한 서비스입니다.");
   		history.go(-1);

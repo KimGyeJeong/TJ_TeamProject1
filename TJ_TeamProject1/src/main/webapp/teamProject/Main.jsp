@@ -66,6 +66,10 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
+		td{
+			width: 150px;
+			align:"center";
+		}
 		table{
 			margin: auto;
 			width: 80%;
@@ -120,7 +124,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		
 		<button onclick="window.location.href='selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
 		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
-		<button onclick="window.location.href=" style="width:60px;  " >게시판</button>
+		<button onclick="window.location.href='help/Help.jsp'" style="width:60px;  " >고객센터</button>
 		<div style=" margin-right: 300px;">
 	<form action="" name="ca">
 		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
@@ -223,8 +227,8 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; 
-				<img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/>
+			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+				<img align="center" src="save/<%=dto.getP_img1()%>" width="250px"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
 		<%
@@ -245,8 +249,8 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a href="window.location='selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>'"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; 
-				<img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/>
+			<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+				<img align="center" src="save/<%=dto.getP_img1()%>" width="300"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
 		<%
