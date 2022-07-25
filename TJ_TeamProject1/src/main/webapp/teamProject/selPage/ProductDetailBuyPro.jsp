@@ -20,11 +20,6 @@
 	ProductDTO dto = null;
 	dto = dao.productDetailBuy(p_no);
 	
-		
-	
-	
-	
-	
 %>
 <body>
 

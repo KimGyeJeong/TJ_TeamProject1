@@ -37,7 +37,7 @@
 <%
 				ProductDTO dto = (ProductDTO)list.get(i);%>
 				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=ca_no%>">
-				<img src="/teamProject/save/<%=dto.getP_img1() %>" /><br/>
+				<img src="../save/<%=dto.getP_img1() %>" /><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
