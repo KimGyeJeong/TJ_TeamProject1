@@ -697,7 +697,7 @@ public class BeomSuDAO {
 		return dto;
 	}
 	
-	public int productModify(ProductDTO dto, int p_no) {
+	public int productModify(ProductDTO dto, int p_no) {          
 		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
