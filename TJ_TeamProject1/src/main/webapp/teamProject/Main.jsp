@@ -219,7 +219,8 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+			
 		<%
 			
 		}%>	
@@ -238,6 +239,7 @@ function showDivs(n) {
 				<tr>
 			<%} %>
 			<td><a href="window.location='selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>'"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+			<img alt="장물아비" src="logo.png" width="250px">
 		<%
 			
 		}%>
