@@ -66,6 +66,10 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
+		table{
+			margin: auto;
+			width: 80%;
+		}
 		#mypagelist {
 			list-style: none;
 			display: inline-block;
@@ -219,7 +223,9 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; 
+				<img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/>
+			</a></td>
 			
 		<%
 			
@@ -227,7 +233,8 @@ function showDivs(n) {
 </table>
 <br/>
 <br/>
-<table border="1" >
+<table border="1"  >
+
 	<tr>
 		<td><h3>상품-최신순</h3></td></tr>
 		<tr>
@@ -238,7 +245,9 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a href="window.location='selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>'"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; <%=dto.getP_img1()%></a></td>
+			<td><a href="window.location='selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>'"><%=dto.getP_title()%> &nbsp; &nbsp; &nbsp; &nbsp; 
+				<img src="/teamProject/save/<%=dto.getP_img1()%>" width="300"/>
+			</a></td>
 			
 		<%
 			
