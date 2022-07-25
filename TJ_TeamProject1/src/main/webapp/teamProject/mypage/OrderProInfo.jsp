@@ -26,7 +26,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH시 mm분");
 if(order.getP_status()==1){
 	bidding = dao.getBidding(order.getP_no());
 	System.out.println(bidding);
-	
 }
 %>
 <body>

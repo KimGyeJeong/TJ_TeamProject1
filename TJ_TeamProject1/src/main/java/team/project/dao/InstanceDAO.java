@@ -1,5 +1,6 @@
 package team.project.dao;
 
+import java.sql.Timestamp;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +22,8 @@ import team.project.model.BiddingDTO;
 import team.project.model.CategoryDTO;
 import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
+import team.project.model.ReviewDTO;
+import team.project.model.WishListDTO;
 public class InstanceDAO {
 	
 
@@ -145,8 +148,9 @@ public class InstanceDAO {
 	
 	
 	
-	//	orderlist 구매확정 하기
-	public void updateOrderConfirmation(int Ono) {
+	//	orderlist o_pro=3 구매확정 하기
+	public int updateOrderConfirmation(int Ono) {
+		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -154,10 +158,11 @@ public class InstanceDAO {
 			String sql = "update orderlist set o_pro=3 where o_no=?";
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, Ono);
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {closeConnection(pstmt, conn);}
+		return result;
 	}
 	
 	
@@ -398,7 +403,7 @@ public class InstanceDAO {
 	
 	
 	// a_no , comment값 주고 배송요청사항 수정 
-	public void setAddressComment(int ano,String comment) {
+	public int setAddressComment(int ano,String comment) {
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -416,11 +421,11 @@ public class InstanceDAO {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {closeConnection(rs,pstmt, conn);}
+		return result;
 	}
 	
 	// a_no[] , HashMap<Integer,String> a_comment 주고 모든 배송요청사항 수정
 	public void setAddressAllComment(Integer [] ano,Map<Integer,String> a_comment) {
-		int result=0; 
 		for(int i=0 ; i<ano.length ; i++) {
 			if(!a_comment.get(ano[i]).equals("")) {
 				setAddressComment(ano[i],a_comment.get(ano[i]));
@@ -478,7 +483,7 @@ public class InstanceDAO {
 	
 	
 	//	addressDTO 주고 address레코드 insert
-	public int setAddress(AddressDTO dto) {
+	public int insertAddress(AddressDTO dto) {
 		int result=0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -590,13 +595,244 @@ public class InstanceDAO {
 				dto.setB_bidding(rs.getInt("b_bidding"));
 				dto.setB_status(rs.getInt("b_status"));
 				dto.setB_reg(rs. getTimestamp("b_reg"));
-				System.out.println("완료");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {closeConnection(rs,pstmt, conn);}
 		return dto;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//	produect p_delete on 1 로 수정(삭제됨으로 수정)
+	public int deleteProduct(String p_no) {
+		int pno= Integer.parseInt(p_no);
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn= getConnection();
+			String sql = "update product set p_delete=1 where p_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(pstmt, conn);}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//	produect p_delete on 1 로 수정(삭제됨으로 수정)
+	public int getBiddingNum(int pno) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		try {
+			conn= getConnection();
+			String sql = "select * from bidding where p_no=? and b_bidding=1";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			rs = pstmt.executeQuery();
+			if(!rs.next()) {
+				sql = "select count(*) from bidding where p_no=?";
+				pstmt= conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			}else {
+				count = -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return count;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//	uid 로 wish list 갖고오기
+	public List<WishListDTO> getWishList(String uid) {
+		List<WishListDTO> list = null;
+		WishListDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql = "select * from wishlist where user_id=? order by w_reg desc";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList<WishListDTO>();
+				do {
+					dto = new WishListDTO();
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setUser_id(rs.getString("user_id")); 
+					dto.setW_reg(rs.getTimestamp("w_reg"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//	delete wishlist 레코드 1개 삭제
+	public int deleteWishList(int pno,String uid) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn= getConnection();
+			String sql = "delete from wishlist where user_id=? and p_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setInt(2, pno);
+			result= pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(pstmt, conn);}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//  이 유저가 평가한 리뷰 갖고오기
+	public List<ReviewDTO> getReportReview(String uid) {
+		List<ReviewDTO> list =null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql = "select * from review where re_reportUid=? and re_delete=0";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList<ReviewDTO>();
+				do {
+					ReviewDTO dto = new ReviewDTO();
+					dto.setRe_no(rs.getInt("re_no"));
+					dto.setRe_stars(rs.getInt("re_stars"));
+					dto.setRe_content(rs.getString("re_content"));
+					dto.setRe_reportUid(rs.getString("re_reportuid"));
+					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
+					dto.setRe_delete(rs.getInt("re_delete"));
+					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					list.add(dto);
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return list;
+	}
+	
+	
+	
+	
+	//  이 유저가 평가 당한 리뷰 갖고오기	
+	public List<ReviewDTO> getReportedReview(String uid) {
+		List<ReviewDTO> list =null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ReviewDTO dto= null;
+		try {
+			conn= getConnection();
+			String sql = "select * from review where re_reportedUid=? and re_delete=0 order by re_reg desc";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				System.out.println("왔냐");
+				list = new ArrayList<ReviewDTO>();
+				do {
+					dto = new ReviewDTO();
+					dto.setRe_no(rs.getInt("re_no"));
+					System.out.println("됐냐");
+					dto.setRe_stars(rs.getInt("re_stars"));
+					dto.setRe_content(rs.getString("re_content"));
+					dto.setRe_reportUid(rs.getString("re_reportuid"));
+					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
+					dto.setRe_delete(rs.getInt("re_delete"));
+					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					list.add(dto);
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return list;
+	} 
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

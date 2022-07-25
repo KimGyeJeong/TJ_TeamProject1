@@ -37,7 +37,7 @@
 	String uid = (String)session.getAttribute("UID");
 	
 	
-	uid = "17"; 		//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	uid = "qwe8246"; 		//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	InstanceDAO dao = new InstanceDAO();
 	List<CategoryDTO> category = dao.getCategory(); 
 	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
@@ -91,7 +91,7 @@
 <ul id="mypagelist">
   <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
   <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
-  <li><a href="WishList.jsp"> 찜 </a></li>
+  <li><a href="MyWishList.jsp"> 찜 </a></li>
   <li><a href="MyReview.jsp"> 나의 후기 </a></li>
   <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
   <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
@@ -113,9 +113,22 @@
 			<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
 			<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
 			<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
-			<form action="ProductCancel.jsp" method="post">
-				<input type="hidden" name="P_no" value="<%= product.getP_no() %>">
-				<input type="submit" value="등록취소"> 
+			<% if(product.getP_status() == 1){ %> 
+			<p>경매 : 
+				<% if(dao.getBiddingNum(product.getP_no())==-1){ %>
+				입찰완료
+				<% }else{ %>
+				<%= dao.getBiddingNum(product.getP_no()) %>
+				<% } %> 
+			</p> 
+			<% } %>
+			<form action="ProductCancelPro.jsp" onSubmit="return deleteProductCheck()" method="post">
+				<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
+				<input type="submit" value="등록취소">
+			</form>
+			<form action="ProductModifyForm.jsp" method="post">
+				<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
+				<input type="submit" value="수정하기">
 			</form>
 		</div>
 <%		}
@@ -123,6 +136,12 @@
 	<div></div>
 </fieldset>
 </div>
-	
+<script type="text/javascript">
+function deleteProductCheck(){
+	let confirmValue = confirm("등록된 상품을 취소하시겠습니까?");
+	console.log(confirmValue);
+	return confirmValue;
+}
+</script>
 </body>
 </html>
