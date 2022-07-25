@@ -19,9 +19,67 @@
 	%>
 
 	<h4><%=uq_no%></h4>
-	<h4><%=dto.getUq_title() %></h4>
+	<h4><%=dto.getUq_title()%></h4>
 	<%-- 답변하기 --%>
-	
+	<table>
+		<tr>
+			<td>고객문의 고유번호</td>
+			<td><%=dto.getUq_no()%></td>
+		</tr>
+		<tr>
+			<td>상품 고유번호</td>
+			<td><%=dto.getP_no()%></td>
+		</tr>
+		<tr>
+			<td>등록자</td>
+			<td><%=dto.getUser_id()%></td>
+		</tr>
+		<tr>
+			<td>문의 제목</td>
+			<td><%=dto.getUq_title()%></td>
+		</tr>
+		<tr>
+			<td>문의 카테고리</td>
+			<td><%=dto.getUq_cat()%></td>
+		</tr>
+		<tr>
+			<td>문의 내용</td>
+			<td><%=dto.getUq_content()%></td>
+		</tr>
+		<tr>
+			<td>등록날짜</td>
+			<td><%=dto.getUq_reg()%></td>
+		</tr>
+
+		<%
+		//필요한것. 답변 내용
+		// 등록날짜랑 답변날짜 같으면 등록 안했다고 처리?
+		%>
+		<tr>
+			<td>답변하기</td>
+			<td>
+				<form action="AdminHelpPro.jsp" method="post">
+					<input type="hidden" name="uq_no" value="<%=dto.getUq_no()%>">
+					<textarea rows="" cols="" name="uqa_content"><%=dto.getUqa_content() %></textarea>
+					<input type="submit" value="답변 완료">
+				</form>
+
+			</td>
+		</tr>
+		<tr>
+			<td>답변 상태</td>
+			<td>
+				<%
+			if(dto.getUq_reg().equals(dto.getUqa_reg())){
+				%> 답변 미완료 <%
+			}else{
+				%> 답변 완료. 완료시각(<%=dto.getUqa_reg() %>) <%
+			}
+			%>
+			</td>
+		</tr>
+	</table>
+
 
 </body>
 </html>
