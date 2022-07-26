@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>장물아비 메인페이지</title>
+<jsp:include page='floatingAdvertisement.jsp'/>
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <%String id=(String)session.getAttribute("UID"); 
@@ -66,7 +67,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
-		td{
+		#special{
 			width: 150px;
 			align:"center";
 		}
@@ -174,10 +175,10 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 </div>
  <div style = "padding: 5px 1px 2px 3px;"></div>
 
-<div class="w3-content w3-display-container" style="max-width:800px; padding: 15px 30px 30px 30px;" >
-  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_nature_wide.jpg" style="width:100%"></a>
-  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_snow_wide.jpg" style="width:100%"></a>
-  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_mountains_wide.jpg" style="width:100%"></a>
+<div class="w3-content w3-display-container"  >
+  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_nature_wide.jpg" ></a>
+  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_snow_wide.jpg" ></a>
+  <a href="selPage/ProductList.jsp"><img class="mySlides" src="img_mountains_wide.jpg" ></a>
   <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
     <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
     <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
@@ -220,7 +221,7 @@ function showDivs(n) {
 <div style = "padding: 20px 300px 20px 300px;"><!-- 상품리스트 시작 -->
 <table border="1" >
 	<tr>
-		<td><h3>상품-조회수</h3></td></tr>
+		<td  ><h3>상품-조회수</h3></td></tr>
 		<tr>
 		<%
 			for(int i=0; i < recentProductList.size(); i++){
@@ -229,7 +230,7 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+			<td id="special" ><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
 				<img align="center" src="save/<%=dto.getP_img1()%>" width="250px"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
@@ -239,6 +240,7 @@ function showDivs(n) {
 </table>
 <br/>
 <br/>
+
 <table border="1"  >
 
 	<tr>
@@ -251,7 +253,7 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+			<td id="special" ><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
 				<img align="center" src="save/<%=dto.getP_img1()%>" width="300"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
@@ -269,7 +271,7 @@ function showDivs(n) {
 
 
 
-
+<%@ include file="Footer.jsp" %>
 </body>
 
 </html> 

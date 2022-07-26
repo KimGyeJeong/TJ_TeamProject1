@@ -7,7 +7,8 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
@@ -74,10 +75,12 @@ if(auto != null && id != null && pw != null){
  	count = dao.notificationListCount(id);
  
  	
- 	
+ 	System.out.println("김계정님과함께1:"+startRow+ endRow+ id);
  	
  	if(count >0){
  		NotificationList=dao.getNotificationList(startRow, endRow, id);
+ 		
+ 		System.out.println("김계정님과함께2:"+NotificationList);
  	}
  
  	
@@ -92,7 +95,10 @@ if(auto != null && id != null && pw != null){
 
 </head>
 <body>
-	
+
+<br />
+<br />
+<br />
 	<div>
 	
 	<% if(count == 0){ // 글이 없으면  %>
@@ -192,7 +198,15 @@ if(auto != null && id != null && pw != null){
 	</div>
 	
 	
+<br/>
+<br/>
+<br/>
 
+
+
+
+
+<%@ include file="../Footer.jsp" %>
 
 
 

@@ -29,12 +29,18 @@
 
 body { height: 2000px; }
 
+
+table{
+			margin: auto;
+			width: 80%;
+		}
+
 .sideBanner {
   align-content: center;
   position: absolute ;
   width: 150px;
   height: 200px;
-  top: 50px;
+  top: 120px;
   background-color: azure;
   color: black;
   right: 0;
