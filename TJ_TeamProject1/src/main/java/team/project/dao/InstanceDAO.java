@@ -805,12 +805,10 @@ public class InstanceDAO {
 			pstmt.setString(1, uid);
 			rs= pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("왔냐");
 				list = new ArrayList<ReviewDTO>();
 				do {
 					dto = new ReviewDTO();
 					dto.setRe_no(rs.getInt("re_no"));
-					System.out.println("됐냐");
 					dto.setRe_stars(rs.getInt("re_stars"));
 					dto.setRe_content(rs.getString("re_content"));
 					dto.setRe_reportUid(rs.getString("re_reportuid"));
@@ -845,3 +843,4 @@ public class InstanceDAO {
 	
 	
 }
+

@@ -53,12 +53,12 @@
 	<div align="center">
 		<a href="../Main.jsp"><img alt="장물아비" src="image/logo.png" width="50px"></a>
 		<h1 style="display: inline-block;">장물아비</h1>
-		<form action="../MainSearchPro.jsp" style="display: inline-block;">
+		<form action="../MainSearchPro.jsp" style="display: inline-block;" method="post">
 			<input type="text" name="searchword">
 			<input type="image" name="submit" src="image/logo.png" alt="검색" width="30px" height="30px" />
 		</form>
 		<button onclick="window.location.href='../ProductSellSelect.jsp'" style="width:45px; height: 40px;" >판매하기</button>
-		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
 		<button onclick="window.location.href=" style="width:45px; height: 40px; font-size: 8.5px;" >게시판</button>
 		<div style=" margin-right: 300px;">
 	<form action="" name="ca">
@@ -101,38 +101,43 @@
 <div id="mypagebody" >
 <fieldset>
 	<legend>나의 판매중인 상품</legend>
+	<% 	if(sellerProduct != null){ %>
 		<div id="seller">
 			<p>상품</a></p>
 			<p>가격</p>
 			<p>판매기간</p>
 		</div>
-	<% 	for(int i =0 ; i<sellerProduct.size() ; i++){
-		ProductDTO product = sellerProduct.get(i); %>
-		<div id="seller">
-			<p> <img src="<%= product.getP_img1() %>"> </p>
-			<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
-			<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
-			<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
-			<% if(product.getP_status() == 1){ %> 
-			<p>경매 : 
-				<% if(dao.getBiddingNum(product.getP_no())==-1){ %>
-				입찰완료
-				<% }else{ %>
-				<%= dao.getBiddingNum(product.getP_no()) %>
-				<% } %> 
-			</p> 
-			<% } %>
-			<form action="ProductCancelPro.jsp" onSubmit="return deleteProductCheck()" method="post">
-				<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
-				<input type="submit" value="등록취소">
-			</form>
-			<form action="ProductModifyForm.jsp" method="post">
-				<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
-				<input type="submit" value="수정하기">
-			</form>
-		</div>
-<%		}
-		%>
+	
+		<%	for(int i =0 ; i<sellerProduct.size() ; i++){
+			ProductDTO product = sellerProduct.get(i); %>
+			<div id="seller">
+				<p> <img src="<%= product.getP_img1() %>"> </p>
+				<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
+				<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
+				<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
+				<% if(product.getP_status() == 1){ %> 
+				<p>경매 : 
+					<% if(dao.getBiddingNum(product.getP_no())==-1){ %>
+					입찰완료
+					<% }else{ %>
+					<%= dao.getBiddingNum(product.getP_no()) %>
+					<% } %> 
+				</p> 
+				<% } %>
+				<form action="ProductCancelPro.jsp" onSubmit="return deleteProductCheck()" method="post">
+					<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
+					<input type="submit" value="등록취소">
+				</form>
+				<form action="ProductModifyForm.jsp" method="post">
+					<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
+					<input type="submit" value="수정하기">
+				</form>
+			</div>
+	<%		}
+		}else{ %>
+			<h3>등록된 상품이 없습니다</h3>
+			<h3> <button onclick="window.location='../selPage/ProductSellSelect.jsp'"> 등록하러가기</button> </h3>
+	<% 	} %>
 	<div></div>
 </fieldset>
 </div>

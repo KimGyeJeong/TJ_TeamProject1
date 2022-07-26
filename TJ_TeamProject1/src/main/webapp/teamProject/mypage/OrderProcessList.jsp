@@ -60,10 +60,10 @@
 			<input type="image" name="submit" src="image/logo.png" alt="검색" width="30px" height="30px" />
 		</form>
 		<button onclick="window.location.href='../ProductSellSelect.jsp'" style="width:45px; height: 40px;" >판매하기</button>
-		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
 		<button onclick="window.location.href=" style="width:45px; height: 40px; font-size: 8.5px;" >게시판</button>
 		<div style=" margin-right: 300px;">
-	<form action="" name="ca">
+	<form action="" name="ca" method="post">
 		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
 			<option>카테고리</option>
 		<%	for(int i = 0; i<category.size() ; i++){
