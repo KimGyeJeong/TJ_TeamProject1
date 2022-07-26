@@ -23,6 +23,7 @@
 	LocalDateTime now = LocalDateTime.now();
 	Date today = Timestamp.valueOf(now);
 	int result = today.compareTo(proDTO.getP_end());
+	List bidList = dao.biddingGet(p_no);
 %>
 <body>
 
@@ -30,6 +31,7 @@
 if(result < 0){
 	
 if(UID.equals(proDTO.getP_sellerId())){
+	if(bidList == null){
 
 if(proDTO.getP_status() == 1){ %>
 
@@ -205,7 +207,13 @@ if(proDTO.getP_status() == 1){ %>
     dateElement3.setAttribute("max", date2);
 
 	</script>
-<%	}else{%>
+<%		}else{ %>
+			<script>
+				alert("입찰자가 1명이라도 있으면 수정할 수 없습니다! 고객센터에 문의해주세요!");
+				window.location.assign("../help/Help.jsp");
+			</script>
+<%		}
+	}else{%>
 		<script>
 			alert("권한이 없습니다!");
 			window.location.assign("../Main.jsp");

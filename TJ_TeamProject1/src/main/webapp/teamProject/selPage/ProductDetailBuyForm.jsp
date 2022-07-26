@@ -1,3 +1,4 @@
+<%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.sql.Timestamp"%>
@@ -23,6 +24,7 @@
 	System.out.println(today);
 	String UID = (String)session.getAttribute("UID");
 	String pageNum = (String)request.getParameter("pageNum");
+	int ca_no = Integer.parseInt(request.getParameter("ca_no"));
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
@@ -52,6 +54,7 @@
 			dto = dao.ProductDateCheck2(p_no);
 		}
 	}
+	CategoryDTO caDTO = dao.getCategoryName(ca_no);
 	
 %>
 <body>
@@ -62,11 +65,13 @@
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
-			<td>작성 일자 : <%=dto.getP_reg() %></td>
+			<td>작성 일자 : <%=dto.getP_reg() %><br/>
+			판매 시작 일자 : <%=dto.getP_start() %><br/>
+			판매 종료 일자 : <%=dto.getP_end() %></td>
 		</tr>
 		<tr>
-			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>카테고리 : <%=caDTO.getCa_name() %></td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -101,11 +106,11 @@
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<img src="../save/<%=dto.getP_img2() %>" />
 				<img src="../save/<%=dto.getP_img3() %>" />
 				<img src="../save/<%=dto.getP_img4() %>" /><br/>
-				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>       
 <%		}else{ %>
@@ -140,11 +145,13 @@
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매완료)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
-			<td>작성 일자 : <%=dto.getP_reg() %></td>
+			<td>작성 일자 : <%=dto.getP_reg() %><br/>
+			판매 시작 일자 : <%=dto.getP_start() %><br/>
+			판매 종료 일자 : <%=dto.getP_end() %></td>
 		</tr>
 		<tr>
-			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>카테고리 : <%=caDTO.getCa_name() %></td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -177,11 +184,11 @@
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<img src="../save/<%=dto.getP_img2() %>" />
 				<img src="../save/<%=dto.getP_img3() %>" />
 				<img src="../save/<%=dto.getP_img4() %>" /><br/>
-				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
 <%		}else{ %>
@@ -216,11 +223,13 @@
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(거래중지 상품)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
-			<td>작성 일자 : <%=dto.getP_reg() %></td>
+			<td>작성 일자 : <%=dto.getP_reg() %><br/>
+			판매 시작 일자 : <%=dto.getP_start() %><br/>
+			판매 종료 일자 : <%=dto.getP_end() %></td>
 		</tr>
 		<tr>
-			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>카테고리 : <%=caDTO.getCa_name() %></td>
 			<td><button onclick="window.open('ReportForm.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">신고하기</button></td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -253,11 +262,11 @@
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<img src="../save/<%=dto.getP_img2() %>" />
 				<img src="../save/<%=dto.getP_img3() %>" />
 				<img src="../save/<%=dto.getP_img4() %>" /><br/>
-				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
 <%		}else{ %>
@@ -292,11 +301,13 @@
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" width="300"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매 준비중인 상품입니다!)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
-			<td>작성 일자 : <%=dto.getP_reg() %></td>
+			<td>작성 일자 : <%=dto.getP_reg() %><br/>
+			판매 시작 일자 : <%=dto.getP_start() %><br/>
+			판매 종료 일자 : <%=dto.getP_end() %></td>
 		</tr>
 		<tr>
-			<td>판매자 : <%=dto.getP_sellerId() %></td>
-			<td>별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>
+			<td>카테고리 : <%=caDTO.getCa_name() %></td>
 			<td>판매 준비중인 상품입니다!</td>
 		</tr>
 <% 			if(dto.getP_status() == 0){%>
@@ -329,11 +340,11 @@
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<img src="../save/<%=dto.getP_img2() %>" />
 				<img src="../save/<%=dto.getP_img3() %>" />
 				<img src="../save/<%=dto.getP_img4() %>" /><br/>
-				<textarea rows="50" cols="200" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
 <%		}else{ %>
