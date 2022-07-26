@@ -620,13 +620,13 @@ public class GyeJeongDAO {
 	}
 
 	// TODO productList search 검색
-	public int getProductSearchCount(String search) {
+	public int getProductSearchCount(String search, String searchOpt) {
 		result = 0;
 
 		try {
 			conn = getConnection();
 
-			sql = "select count(*) from product where p_sellerid like '%" + search + "%'";
+			sql = "select count(*) from product where "+searchOpt+" like '%" + search + "%'";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -642,11 +642,11 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-
+		System.out.println("GyeJeongDAO.getProductSearchCount.value " + result);
 		return result;
 	}
 
-	public List<ProductDTO> getProductSearchRecent(int startRow, int endRow, String search) {
+	public List<ProductDTO> getProductSearchRecent(int startRow, int endRow, String search, String searchOpt) {
 		List<ProductDTO> list = null;
 		ProductDTO dto = null;
 
@@ -654,7 +654,7 @@ public class GyeJeongDAO {
 			conn = getConnection();
 
 			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* FROM(\r\n"
-					+ "select * from PRODUCT where p_sellerid like '%" + search + "%' ORDER BY p_reg desc)a)b\r\n"
+					+ "select * from PRODUCT where "+searchOpt+" like '%" + search + "%' ORDER BY p_reg desc)a)b\r\n"
 					+ "where r>=? and r<=?";
 			pstmt = conn.prepareStatement(sql);
 
@@ -698,7 +698,10 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-
+		//test Null TODO 외않되?
+		if(list==null )
+			System.out.println("GyeJeongDAO.SearchRecent list is null");
+		
 		return list;
 	}
 
@@ -754,6 +757,11 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
+		//test Null TODO 외않되?
+		if( list==null )
+			System.out.println("GyeJeongDAO.SearchRecent list is null");
+		
+
 
 		return list;
 	}
@@ -1275,4 +1283,92 @@ public class GyeJeongDAO {
 		
 		return dto;
 	}
+	//new method here
+	public int checkProductDelete(int pno) {
+		try {
+			conn=getConnection();
+			
+			sql="select * from PRODUCT where P_NO = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				//0이면 노출
+				sql = "select * from PRODUCT where P_NO = ? and P_DELETE=0";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next())
+					result = 0;	//현재 노출중인 게시글
+				else
+					result = 1;	//현재 숨김중인 게시글
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.checkProductDelete(int pno) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	public int invertProductDelete(int getNoInt ,int result) {
+		
+		try {
+			conn=getConnection();
+			
+			sql="update PRODUCT\r\n"
+					+ "  set P_DELETE=?\r\n"
+					+ "where P_NO = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, result);
+			pstmt.setInt(2, getNoInt);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.dao.invertProductDelete(getNoInt , result) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
+	//new method here
+	public int updateUserQuestion(int uq_no, String text) {
+		result = 0;
+		try {
+			conn = getConnection();
+			
+			sql="Update USERQUESTION\r\n"
+					+ "  SET UQA_CONTENT=?, UQA_REG = sysdate "
+					+ "WHERE uq_no = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, text);
+			pstmt.setInt(2, uq_no);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.updateUserQuestion(uq_no, text) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
+	//new method here
+
+	
 }
