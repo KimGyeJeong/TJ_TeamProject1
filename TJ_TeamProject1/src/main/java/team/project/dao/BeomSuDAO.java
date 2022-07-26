@@ -11,9 +11,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import oracle.jdbc.proxy.annotation.Pre;
 import team.project.model.AddressDTO;
 import team.project.model.BiddingDTO;
 import team.project.model.CategoryDTO;
+import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
 import team.project.model.UserListDTO;
@@ -319,6 +321,7 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
+			
 			String sql = "update Bidding set b_bidding=? where user_id=? and p_no=? and b_bidding=0 and b_status=0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_bidding);
@@ -393,7 +396,7 @@ public class BeomSuDAO {
 			if(rs.next()) {
 				priceMoney = rs.getInt(1);
 				if(priceMoney <= money) {
-					sql = "update UserList set user_money=? where user_id=?";
+					sql = "update UserList set user_usemoney=? where user_id=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, money-priceMoney);
 					pstmt.setString(2, UID);
@@ -735,4 +738,363 @@ public class BeomSuDAO {
 		return result;
 		 
 	}
+	
+	public CategoryDTO  getCategoryName(int ca_no) {
+		CategoryDTO dto = null; 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql ="select * from category where ca_no=?"; 
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ca_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+					dto = new CategoryDTO();
+					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setCa_name(rs.getString("ca_name"));
+					dto.setCa_level(rs.getInt("ca_level"));
+					dto.setCa_grp(rs.getInt("ca_grp"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return dto;
+	}
+	
+	public int setAddressNum(String a_no) {
+		int ano=Integer.parseInt(a_no);
+		int result=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update address set a_usereg=sysdate where a_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ano);
+			result = pstmt.executeUpdate(); 
+			if(result==0) {
+				System.out.println("setAddressNum() result==0");
+			}else if(result==1) {
+				System.out.println("setAddressNum() result==1");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return result;
+	}
+	
+	public int updateOrderConfirmation(int Ono) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn= getConn();
+			String sql = "update orderlist set o_pro=3 where o_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, Ono);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return result;
+	}
+	
+	public OrderListDTO orderListGet(int o_no) {
+		OrderListDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from Orderlist where o_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, o_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new OrderListDTO();
+				dto.setO_no(o_no);
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_status(rs.getInt("p_status"));
+				dto.setA_no(rs.getInt("a_no"));
+				dto.setO_sellerId(rs.getString("o_sellerId"));
+				dto.setO_buyerId(rs.getString("o_buyerId"));
+				dto.setO_pro(rs.getInt("o_pro"));
+				dto.setO_reg(rs.getTimestamp("o_reg"));
+				dto.setO_review(rs.getInt("o_review"));
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return dto;
+	}
+	
+	public int userMoneyUpdate(int p_price,String p_sellerId) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update UserList set user_usemoney=user_usemoney+? where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_price);
+			pstmt.setString(2, p_sellerId);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public BiddingDTO biddingGet(int p_no,String UID) {
+		BiddingDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "Select * from Bidding where p_no=? and user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new BiddingDTO();
+				dto.setB_no(rs.getInt("b_no"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setB_bidding(rs.getInt("b_bidding"));
+				dto.setUser_id(UID);
+				dto.setB_reg(rs.getTimestamp("b_reg"));
+				dto.setB_status(rs.getInt("b_status"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return dto;
+	}
+	
+	public List biddingGet(int p_no) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "Select * from Bidding where p_no=? order by b_bidding desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					BiddingDTO dto = new BiddingDTO();
+					dto.setB_no(rs.getInt("b_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setB_bidding(rs.getInt("b_bidding"));
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setB_reg(rs.getTimestamp("b_reg"));
+					dto.setB_status(rs.getInt("b_status"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
+	
+	public BiddingDTO ConfirmationBidding(int b_no) {
+		BiddingDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "Select * from Bidding where b_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new BiddingDTO();
+				dto.setB_no(rs.getInt("b_no"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setB_bidding(rs.getInt("b_bidding"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setB_reg(rs.getTimestamp("b_reg"));
+				dto.setB_status(rs.getInt("b_status"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return dto;
+	}
+	
+	public int confirmation(int b_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update bidding set b_status=1 where b_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public int biddingStatusSet(int p_no, int b_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update bidding set b_status=2 where p_no=? and b_no!=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setInt(2, b_no);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public List completionBidding(int p_no, int b_no) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "Select * from Bidding where p_no=? and b_no!=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setInt(2, p_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					BiddingDTO dto = new BiddingDTO();
+					dto.setB_no(rs.getInt("b_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setB_bidding(rs.getInt("b_bidding"));
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setB_reg(rs.getTimestamp("b_reg"));
+					dto.setB_status(rs.getInt("b_status"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
+	
+	public void userMoneyReturn(String user_id, int bidding) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update UserList set user_usemoney='user_usemoney'+? where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bidding);
+			pstmt.setString(2, user_id);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+	}
+	
+	public int biddingModify(String UID, int b_bidding, int p_no) {
+		int bid = 0;
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select b_bidding from bidding where user_id=? and p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, UID);
+			pstmt.setInt(2, p_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				bid = rs.getInt("b_bidding");
+				sql = "update bidding set b_bidding=? where user_id=? and p_no=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, b_bidding);
+				pstmt.setString(2, UID);
+				pstmt.setInt(3, p_no);
+				result = pstmt.executeUpdate();
+				if(result == 1) {
+					sql = "update UserList set user_usemoney=user_usemoney+? where user_id=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, bid-b_bidding);
+					pstmt.setString(2, UID);
+					result = pstmt.executeUpdate();
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
 }

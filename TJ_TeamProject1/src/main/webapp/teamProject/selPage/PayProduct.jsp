@@ -18,12 +18,13 @@
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
 	String b_bid = request.getParameter("b_bidding");
-	String a_n = request.getParameter("a_no");
-	int a_no = 0;
 	if(b_bid == null){
 		b_bid = "0";
 	}
 	int b_bidding = Integer.parseInt(b_bid);
+	String a_n = request.getParameter("a_no");
+	int a_no = 0;
+	
 	ProductDTO proDTO = null;
 	AddressDTO addDTO = null;
 	
@@ -41,7 +42,7 @@
 	<table>
 		<tr>
 			<td>주문결제</td>
-			<td><button onclick="window.open('../mypage/transAddress.jsp', '배송지 변경', 'width=500, height=500, location=no, left=100, top=200')">배송지 변경</button></td>
+			<td><button onclick="window.open('transAddress.jsp?p_no=<%=p_no %>&p_status=<%=p_status %>&b_bidding=<%=b_bidding %>', '배송지 변경', 'width=500, height=500, location=no, left=100, top=200')">배송지 변경</button></td>
 		</tr>
 		<tr>
 			<td>구매하시는 분 : <%=proDTO.getP_buyerId() %></td>

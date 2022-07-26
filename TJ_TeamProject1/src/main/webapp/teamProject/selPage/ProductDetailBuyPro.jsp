@@ -19,6 +19,7 @@
 	int result = 0;
 	ProductDTO dto = null;
 	dto = dao.productDetailBuy(p_no);
+	ProductDTO proDTO = dao.productDetailBuy(p_no);
 	
 %>
 <body>
@@ -28,11 +29,16 @@ if(UID != null){
 	if(p_status == 1){
 		b_bidding = Integer.parseInt(request.getParameter("b_bidding"));
 		if(!dto.getP_sellerId().equals(UID)){
-			result = dao.productBiddingSet(p_no, UID);
+			BiddingDTO bidDTO = dao.biddingGet(p_no, UID);
+			if(bidDTO == null){
+				result = dao.productBiddingSet(p_no, UID);
+			}else{
+				result = 1;
+			}
 		}else{%>
 			<script>
 				alert("본인이 등록한 상품은 입찰할 수 없습니다!");
-				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
 			</script>	
 <%		}
 		
@@ -42,27 +48,27 @@ if(UID != null){
 		}else{%>
 			<script>
 				alert("본인이 등록한 상품은 구매할 수 없습니다!");
-				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
 			</script>	
 <%		}
 	}
 	
-		if(result == 1){
-			if(p_status == 1){%>
-			<script>
-				window.location.assign("PayProduct.jsp?p_no="+<%=p_no%>+"&p_status="+<%=p_status%>+"&b_bidding="+<%=b_bidding%>);
-			</script>
-<%			}else{ %>
-			<script>
-				window.location.assign("PayProduct.jsp?p_no="+<%=p_no%>+"&p_status="+<%=p_status%>);
-			</script>
-<%			} %>
+	if(result == 1){
+		if(p_status == 1){%>
+		<script>
+			window.location.assign("PayProduct.jsp?p_no="+<%=p_no%>+"&p_status="+<%=p_status%>+"&b_bidding="+<%=b_bidding%>);
+		</script>
 <%		}else{ %>
-			<script>
-				alert("문제발생!!");
-				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
-			</script>
-<%		} 
+		<script>
+			window.location.assign("PayProduct.jsp?p_no="+<%=p_no%>+"&p_status="+<%=p_status%>);
+		</script>
+<%		} %>
+<%	}else{ %>
+		<script>
+			alert("문제발생!!");
+			window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
+		</script>
+<%	} 
 	}else{%>
 		<script>
 			alert("로그인 후 이용해 주세요!");
