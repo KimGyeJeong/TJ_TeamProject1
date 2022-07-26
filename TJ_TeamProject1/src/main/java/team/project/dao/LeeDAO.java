@@ -277,9 +277,11 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select * from(select ROWNUM r, A.* FROM (select * from userquestion  ORDER BY UQ_REG DESC) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from userquestion where user_id=?  ORDER BY UQ_REG DESC) A) B where r>=? and r<=? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
 				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
@@ -407,9 +409,11 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification  ORDER BY NOT_REG DESC) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where user_id=? ORDER BY NOT_REG DESC ) A) B where r>=? and r <=? " ;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
 				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)

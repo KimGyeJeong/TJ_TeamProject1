@@ -39,30 +39,40 @@ if(auto != null && id != null && pw != null){
   		
     <%}%>
     
-    
+  	<style>
+  	td{
+  		size: 150px;
+  	}
+  	
+  	</style>
 </head>
 <body>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<br />
+<br />
 <br />
 <h2 align="center">고객센터</h2>
 <h2 align="center">무엇을 도와드릴까요?</h2>
-
-<table>
+<br />
+<br />
+<table border="1">
 	<tr>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg.jpg" width='150'/>
+		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg.jpg" width='200px'/>
 		
 		</td>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='150'/>
+		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='200px'/>
 		
 		</td>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/QnA.jsp'" src="helpimg3.png" width='150'/>
+		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/QnA.jsp'" src="helpimg3.png" width='200px'/>
 		
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td  width="150">
 		1:1문의하기
 		</td>
 		<td>
@@ -72,9 +82,15 @@ if(auto != null && id != null && pw != null){
 		Q n A
 		</td>
 	</tr>
-	
+
 </table>
-	
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<%@ include file="../Footer.jsp" %>
 
 </body>
 </html>
