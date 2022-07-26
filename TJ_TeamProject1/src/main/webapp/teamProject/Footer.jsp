@@ -45,7 +45,7 @@ td{
 		</td>
 		<td id="stupid">&nbsp;</td>
 		<td>
-			회사정보 <br/>
+				회사정보 <br/>
 				상호 : 장물아비 <br/>
 				대표 : 김영준 <br/>
 				주소 : 서울 성동구 성덕정 5길 10, 1층 <br/>
@@ -72,7 +72,7 @@ td{
 	<input type="button"  value="회사소개" onclick="location.href='Main.jsp'"> |
 	<input type="button"  value="쇼핑가이드" onclick="location.href='Main.jsp'"> |
 	<input type="button"  value="개인정보보호정책" onclick="location.href='/TJ_TeamProject1/teamProject/Header.jsp'"> |
-	<input type="button"  value="이용약관" onclick="location.href='TJ_TeamProject1/teamProject/Main.jsp'">
+	<input type="button"  value="이용약관" onclick="location.href='/TJ_TeamProject1/teamProject/Admin/AdminMain.jsp'">
 	</div>
 
 		
