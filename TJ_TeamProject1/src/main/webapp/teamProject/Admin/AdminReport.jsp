@@ -44,7 +44,7 @@
 		</tr>
 		<tr>
 			<td>신고내용</td>
-			<td><textarea rows="" cols=""><%=dto.getRp_content()%></textarea>
+			<td><textarea rows="" cols="" readonly="readonly"><%=dto.getRp_content()%></textarea>
 			</td>
 		</tr>
 		<tr>

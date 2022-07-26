@@ -1443,5 +1443,31 @@ public class GyeJeongDAO {
 		return dto;
 	}
 	// new method here
+	public int updateReportPro(int rp_no, int rp_pro) {
+		result = 0;
+		try {
+			conn = getConnection();
+			
+			sql="update REPORT\r\n"
+					+ "  set RP_PRO=?\r\n"
+					+ "WHERE RP_NO=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rp_pro);
+			pstmt.setInt(2, rp_no);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.updateReportPro(int rp_no, int rp_pro) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
+	//new method here
 
 }

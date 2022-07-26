@@ -172,9 +172,6 @@
 			게시글</button>
 
 	</div>
-<%
-System.out.println("AdminReport.Foot.Valye dto.rpno : " + dto.getRp_no());
-%>
 
 
 </body>
