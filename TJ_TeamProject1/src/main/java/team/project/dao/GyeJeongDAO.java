@@ -626,7 +626,7 @@ public class GyeJeongDAO {
 		try {
 			conn = getConnection();
 
-			sql = "select count(*) from product where "+searchOpt+" like '%" + search + "%'";
+			sql = "select count(*) from product where " + searchOpt + " like '%" + search + "%'";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -653,16 +653,15 @@ public class GyeJeongDAO {
 		try {
 			conn = getConnection();
 
-			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* FROM(\r\n"
-					+ "select * from PRODUCT where "+searchOpt+" like '%" + search + "%' ORDER BY p_reg desc)a)b\r\n"
-					+ "where r>=? and r<=?";
+			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* FROM(\r\n" + "select * from PRODUCT where " + searchOpt
+					+ " like '%" + search + "%' ORDER BY p_reg desc)a)b\r\n" + "where r>=? and r<=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				list = new ArrayList<ProductDTO>();
 				do {
@@ -698,10 +697,10 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-		//test Null TODO 외않되?
-		if(list==null )
+		// test Null TODO 외않되?
+		if (list == null)
 			System.out.println("GyeJeongDAO.SearchRecent list is null");
-		
+
 		return list;
 	}
 
@@ -713,7 +712,8 @@ public class GyeJeongDAO {
 			conn = getConnection();
 
 			sql = "select b.* from\r\n" + "(select ROWNUM r, a.* from\r\n"
-					+ "(select * from PRODUCT where p_sellerid like '%"+search+"%' order by P_READCOUNT DESC)a)b\r\n" + "where r>=? and r<=?";
+					+ "(select * from PRODUCT where p_sellerid like '%" + search
+					+ "%' order by P_READCOUNT DESC)a)b\r\n" + "where r>=? and r<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -721,7 +721,7 @@ public class GyeJeongDAO {
 			pstmt.setInt(2, endRow);
 
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				list = new ArrayList<ProductDTO>();
 				do {
@@ -757,11 +757,9 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-		//test Null TODO 외않되?
-		if( list==null )
+		// test Null TODO 외않되?
+		if (list == null)
 			System.out.println("GyeJeongDAO.SearchRecent list is null");
-		
-
 
 		return list;
 	}
@@ -912,29 +910,73 @@ public class GyeJeongDAO {
 	// new method here
 	public int setYellowCard(String id, int date) {
 		result = 0;
+		int temp = 0;
 		try {
 			conn = getConnection();
+			
+			sql="select count(USER_ACTIVEREG) from userlist where USER_ID=?";
+			//0이면 null 1이면 이미 값이 들어있음
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next())
+				temp = rs.getInt(1);
+			
+			System.out.println("GyeJeongDAO.yellowcard test.value temp : "+temp);
+			
+			
 
-			// date가 99이면 10년 추가
-			if (date == 99) {
-				sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=SYSDATE + (interval '99' YEAR), "
-						+ " user_report=1 " + "WHERE user_id = ?";
-				pstmt = conn.prepareStatement(sql);
+			//조건 수정하기 0726
+			if (temp !=1) {
+				//useractivereg=sysdate+date 0726
+				
+				
+				// date가 99이면 10년 추가
+				if (date == 99) {
+					sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=SYSDATE + (interval '10' YEAR), "
+							+ " user_report=1 " + "WHERE user_id = ?";
+					pstmt = conn.prepareStatement(sql);
 
-				pstmt.setString(1, id);
+					pstmt.setString(1, id);
 
-				result = pstmt.executeUpdate();
-				System.out.println("DAO.Year SUCCESS");
+					result = pstmt.executeUpdate();
+					System.out.println("DAO.Year SUCCESS");
+				} else {
+					// 그 외 date 일 추가
+					sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=SYSDATE + (interval '" + date + "' DAY), "
+							+ " user_report=1 " + "WHERE user_id = ?";
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.setString(1, id);
+
+					result = pstmt.executeUpdate();
+					System.out.println("DAO.Day SUCCESS");
+				}
 			} else {
-				// 그 외 date 일 추가
-				sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=SYSDATE + (interval '" + date + "' DAY), "
-						+ " user_report=1 " + "WHERE user_id = ?";
-				pstmt = conn.prepareStatement(sql);
+				// activereg=activereg+date 0726
+				if (date == 99) {
+					sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=USER_ACTIVEREG + (interval '10' YEAR), "
+							+ " user_report=1 " + "WHERE user_id = ?";
+					pstmt = conn.prepareStatement(sql);
 
-				pstmt.setString(1, id);
+					pstmt.setString(1, id);
 
-				result = pstmt.executeUpdate();
-				System.out.println("DAO.Day SUCCESS");
+					result = pstmt.executeUpdate();
+					System.out.println("DAO.Year SUCCESS");
+				} else {
+					// 그 외 date 일 추가
+					sql = "Update USERLIST\r\n" + "  SET USER_ACTIVEREG=USER_ACTIVEREG + (interval '" + date + "' DAY), "
+							+ " user_report=1 " + "WHERE user_id = ?";
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.setString(1, id);
+
+					result = pstmt.executeUpdate();
+					System.out.println("DAO.Day SUCCESS else,else value.result : " +result);
+				}
 			}
 
 		} catch (Exception e) {
@@ -1242,24 +1284,24 @@ public class GyeJeongDAO {
 
 		return list;
 	}
+
 	// new method here
 	public UserQuestionDTO getOneUserQuestion(int uq_no) {
 		UserQuestionDTO dto = null;
-		
+
 		try {
-			conn=getConnection();
-			
-			sql="select * from USERQUESTION where UQ_NO = ?";
-			
+			conn = getConnection();
+
+			sql = "select * from USERQUESTION where UQ_NO = ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, uq_no);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				dto = new UserQuestionDTO();
-				
+
 				dto.setUq_no(rs.getInt(1));
 				dto.setP_no(rs.getInt(2));
 				dto.setUser_id(rs.getString(3));
@@ -1274,93 +1316,151 @@ public class GyeJeongDAO {
 				dto.setUqa_reg(rs.getTimestamp(12));
 			}
 
-			
-		}catch(Exception e) {
-			
-		}finally {
+		} catch (Exception e) {
+
+		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-		
+
 		return dto;
 	}
-	//new method here
+
+	// new method here
 	public int checkProductDelete(int pno) {
 		try {
-			conn=getConnection();
-			
-			sql="select * from PRODUCT where P_NO = ?";
-			
+			conn = getConnection();
+
+			sql = "select * from PRODUCT where P_NO = ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, pno);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				//0이면 노출
+
+			if (rs.next()) {
+				// 0이면 노출
 				sql = "select * from PRODUCT where P_NO = ? and P_DELETE=0";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, pno);
 				rs = pstmt.executeQuery();
-				
-				if(rs.next())
-					result = 0;	//현재 노출중인 게시글
+
+				if (rs.next())
+					result = 0; // 현재 노출중인 게시글
 				else
-					result = 1;	//현재 숨김중인 게시글
+					result = 1; // 현재 숨김중인 게시글
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.checkProductDelete(int pno) ERR");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-		
+
 		return result;
 	}
-	public int invertProductDelete(int getNoInt ,int result) {
-		
+
+	public int invertProductDelete(int getNoInt, int result) {
+
 		try {
-			conn=getConnection();
-			
-			sql="update PRODUCT\r\n"
-					+ "  set P_DELETE=?\r\n"
-					+ "where P_NO = ?";
-			
+			conn = getConnection();
+
+			sql = "update PRODUCT\r\n" + "  set P_DELETE=?\r\n" + "where P_NO = ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, result);
 			pstmt.setInt(2, getNoInt);
-			
+
 			result = pstmt.executeUpdate();
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.dao.invertProductDelete(getNoInt , result) ERR");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeConnection(pstmt, conn);
 		}
-		
+
 		return result;
 	}
-	//new method here
+
+	// new method here
 	public int updateUserQuestion(int uq_no, String text) {
 		result = 0;
 		try {
 			conn = getConnection();
-			
-			sql="Update USERQUESTION\r\n"
-					+ "  SET UQA_CONTENT=?, UQA_REG = sysdate "
-					+ "WHERE uq_no = ?";
-			
+
+			sql = "Update USERQUESTION\r\n" + "  SET UQA_CONTENT=?, UQA_REG = sysdate " + "WHERE uq_no = ?";
 			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setString(1, text);
 			pstmt.setInt(2, uq_no);
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.updateUserQuestion(uq_no, text) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+
+		return result;
+	}
+
+	// new method here
+	public ReportDTO getReport(int rp_no) {
+		ReportDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select * from REPORT where RP_NO=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, rp_no);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new ReportDTO();
+
+				dto.setRp_no(rs.getInt(1));
+				dto.setRp_reason(rs.getString(2));
+				dto.setRp_title(rs.getString(3));
+				dto.setRp_content(rs.getString(4));
+				dto.setRp_reportUid(rs.getString(5));
+				dto.setRp_reportedUid(rs.getString(6));
+				dto.setRp_pro(rs.getInt(7));
+				dto.setP_no(rs.getInt(8));
+				dto.setRp_reg(rs.getTimestamp(9));
+			}
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getReport(Integer.parseInt(rp_no)) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return dto;
+	}
+	// new method here
+	public int updateReportPro(int rp_no, int rp_pro) {
+		result = 0;
+		try {
+			conn = getConnection();
+			
+			sql="update REPORT\r\n"
+					+ "  set RP_PRO=?\r\n"
+					+ "WHERE RP_NO=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rp_pro);
+			pstmt.setInt(2, rp_no);
 			
 			result = pstmt.executeUpdate();
 			
 		}catch(Exception e) {
-			System.out.println("GyeJeongDAO.updateUserQuestion(uq_no, text) ERR");
+			System.out.println("GyeJeongDAO.updateReportPro(int rp_no, int rp_pro) ERR");
 			e.printStackTrace();
 		}finally {
 			closeConnection(pstmt, conn);
@@ -1370,5 +1470,4 @@ public class GyeJeongDAO {
 	}
 	//new method here
 
-	
 }
