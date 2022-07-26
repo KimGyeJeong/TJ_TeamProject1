@@ -1,6 +1,3 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="team.project.model.UserListDTO"%>
-<%@page import="team.project.dao.GyeJeongDAO"%>
 <%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.dao.InstanceDAO"%>
@@ -8,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link href="../style.css" rel="stylesheet" type="text/css" />
@@ -40,10 +37,6 @@ String uid = (String)session.getAttribute("UID");
 uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<CategoryDTO> category = dao.getCategory();  
-GyeJeongDAO gjdao = new GyeJeongDAO();
-UserListDTO profile = gjdao.getUserProfile(uid);
-SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-
 
 %>
 <div style="display: block; margin: 10px 20% 10px;" align="right" >
@@ -100,43 +93,21 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	  <li><a href="MyHelp.jsp"> 고객센터 </a></li>
 	</ul>
 <div id="mypagebody" >
-<fieldset>
+	
 	<table>
 		<tr>
-			<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
+			<td>비밀번호확인</td>
 		</tr>
 		<tr>
-			<td>이름 : </td> <td> <%= profile.getUser_name() %> <img src="<%= profile.getUser_img() %>"></td>  
+			<td>
+				<form action="PasswordConfirmPro.jsp" method="post">
+					<input type="password" name="pw"> <br>
+					<input type="submit" value="확인">
+					<button type="button" onclick="history.go(-1)">돌아가기</button>
+				</form>
+			</td>
 		</tr>
-		<tr>
-			<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>
-		</tr>
-		<tr>
-			<td>평점 : </td> <td> <%= profile.getUser_stars() %> / 5</td>
-		</tr>
-		<tr>
-			<td>E-Mail : </td> <td> <%= profile.getUser_email() %> </td>
-		</tr>
-		<tr>
-			<td>전화번호 : </td> <td> <%= profile.getUser_phone() %> </td>
-		</tr>
-		<tr>
-			<td>가입일 : </td> <td> <%= sdf.format(profile.getUser_reg())  %> </td>
-		</tr>
-	<% 	if(profile.getUser_report()==1){ %>
-		<tr>
-			<td>상태 : 활동정지</td> <td> 
-		</tr>
-		<tr>
-			<td>기간 : </td> <td><%= sdf.format(profile.getUser_activeReg()) %></td> 
-		</tr>
-	<% 	} %>
-	</table> 
-	<br>
-	<div>
-		<button type="button" onclick="location='PasswordConfirm.jsp'">정보수정</button>
-	</div>
-</fieldset>
+	</table>
 </div>
 </body>
 </html>

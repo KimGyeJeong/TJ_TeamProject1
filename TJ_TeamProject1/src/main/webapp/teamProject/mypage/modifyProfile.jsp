@@ -101,42 +101,33 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	</ul>
 <div id="mypagebody" >
 <fieldset>
-	<table>
-		<tr>
-			<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
-		</tr>
-		<tr>
-			<td>이름 : </td> <td> <%= profile.getUser_name() %> <img src="<%= profile.getUser_img() %>"></td>  
-		</tr>
-		<tr>
-			<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>
-		</tr>
-		<tr>
-			<td>평점 : </td> <td> <%= profile.getUser_stars() %> / 5</td>
-		</tr>
-		<tr>
-			<td>E-Mail : </td> <td> <%= profile.getUser_email() %> </td>
-		</tr>
-		<tr>
-			<td>전화번호 : </td> <td> <%= profile.getUser_phone() %> </td>
-		</tr>
-		<tr>
-			<td>가입일 : </td> <td> <%= sdf.format(profile.getUser_reg())  %> </td>
-		</tr>
-	<% 	if(profile.getUser_report()==1){ %>
-		<tr>
-			<td>상태 : 활동정지</td> <td> 
-		</tr>
-		<tr>
-			<td>기간 : </td> <td><%= sdf.format(profile.getUser_activeReg()) %></td> 
-		</tr>
-	<% 	} %>
-	</table> 
+	<form action="modifyProfilePro.jsp" method="get">
+	
+		ID : <%= profile.getUser_id() %>  <br> <br> 
+		<details id="detail">
+			<summary> <button type="button" onclick="modify()">비밀번호 변경</button></summary>
+	  		<p>
+			비밀번호  <input type="password" name="modifyPW" value="">  <br><br>
+			비밀번호 확인  <input type="text" name="modifyPWcheck" value="">  <br><br>
+	  		</p>
+		</details>
+		이름  <input type="text" name="username" value="<%= profile.getUser_name() %>"> <img src="<%= profile.getUser_img() %>"> <br><br>  
+		E-Mail  <input type="text" name="email" value="<%= profile.getUser_email() %>"> <br><br>
+		전화번호  <input type="text" name="phone" value="<%= profile.getUser_phone() %>"> <br><br>
 	<br>
-	<div>
-		<button type="button" onclick="location='PasswordConfirm.jsp'">정보수정</button>
-	</div>
+		<input type="submit" value="수정하기">
+	</form>	
+		<button type="button" onclick="">회원탈퇴</button>
 </fieldset>
 </div>
+<script type="text/javascript">
+function modify() {
+	if(document.getElementById("detail").open===true){
+		document.getElementById("detail").open = false;
+	}else{
+		document.getElementById("detail").open = true;
+	}
+}
+</script>
 </body>
 </html>

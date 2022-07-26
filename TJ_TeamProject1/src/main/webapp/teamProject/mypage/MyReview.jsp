@@ -100,7 +100,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 	</ul>
 <div id="mypagebody" >
 	<fieldset>
-	<h3><%= uid %>님과의 거래경험담</h3>
+	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %>님과의 최근 거래경험담</h3> <a href =""  style=" margin-left : 180px; ">더보기</a> </div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
@@ -114,7 +114,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 	</table>
 	</fieldset>
 	<fieldset>
-	<h3><%= uid %>님이 쓰신 거래경험담</h3>
+	<div><h3 style="display: inline;"><%= uid %>님이 쓰신 최근 거래경험담</h3><a href =""  style=" margin-left : 180px; ">더보기</a> </div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>

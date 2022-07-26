@@ -143,17 +143,11 @@
 							case 3: %>
 								<td>주문확정</td> 
 								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
-									<script type="text/javascript">
-									function confirmation(){
-										let confirmValue = confirm("주문을 완료하시겠습니까?");
-										console.log(confirmValue);
-										if(confirmValue==true){ 
-										<%	dao.updateOrderConfirmation(order.getO_no()); %>
-										location.reload();
-										}
-									}
-									</script>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+									<form action="../selPage/AddPayProductPro.jsp" method="post">
+										<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+										<input type="submit" value="주문확정">
+									</form> 
 								</td>
 							<%	break;
 							case 4: %>
