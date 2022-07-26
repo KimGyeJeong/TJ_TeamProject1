@@ -72,7 +72,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		</tr>
 		<tr>			
 			<td colspan="2"><input type="submit" value="로그인"/>
-							<input type="button" value="회원가입" onclick="window.location='../SignUp/SignUpForm.jsp'"/></td>
+							<input type="button" value="회원가입" onclick="window.location='../SignUp/Agecheck.jsp'"/></td>
 		</tr>
 		</table>
 		</form>

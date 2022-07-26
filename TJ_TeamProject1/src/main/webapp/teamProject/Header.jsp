@@ -56,6 +56,7 @@ System.out.println("id :"+id);
 <input  type="button" value="알림" onclick="window.location='/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'" style="float: right;"/>
 <%}else{%>
 <input  type="button" value="로그인" onclick="window.location='/TJ_TeamProject1/teamProject/Login/Login.jsp'" style="float: right;"/>	
+<input  type="button" value="회원가입" onclick="window.location='/TJ_TeamProject1/teamProject/SignUp/Agecheck.jsp'" style="float: right;"/>	
 <%}%>
 <%
 String uid = null;
