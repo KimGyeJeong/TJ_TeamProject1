@@ -60,10 +60,10 @@
 			<input type="image" name="submit" src="image/logo.png" alt="검색" width="30px" height="30px" />
 		</form>
 		<button onclick="window.location.href='../ProductSellSelect.jsp'" style="width:45px; height: 40px;" >판매하기</button>
-		<button onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
 		<button onclick="window.location.href=" style="width:45px; height: 40px; font-size: 8.5px;" >게시판</button>
 		<div style=" margin-right: 300px;">
-	<form action="" name="ca">
+	<form action="" name="ca" method="post">
 		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
 			<option>카테고리</option>
 		<%	for(int i = 0; i<category.size() ; i++){
@@ -143,17 +143,11 @@
 							case 3: %>
 								<td>주문확정</td> 
 								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
-									<script type="text/javascript">
-									function confirmation(){
-										let confirmValue = confirm("주문을 완료하시겠습니까?");
-										console.log(confirmValue);
-										if(confirmValue==true){ 
-										<%	dao.updateOrderConfirmation(order.getO_no()); %>
-										location.reload();
-										}
-									}
-									</script>
+									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+									<form action="../selPage/AddPayProductPro.jsp" method="post">
+										<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+										<input type="submit" value="주문확정">
+									</form> 
 								</td>
 							<%	break;
 							case 4: %>

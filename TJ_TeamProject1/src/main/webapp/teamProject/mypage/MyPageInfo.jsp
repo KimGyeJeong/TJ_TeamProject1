@@ -1,13 +1,13 @@
-<%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="team.project.model.ReviewDTO"%>
+<%@page import="team.project.model.UserListDTO"%>
+<%@page import="team.project.dao.GyeJeongDAO"%>
+<%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.dao.InstanceDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
@@ -40,9 +40,10 @@ String uid = (String)session.getAttribute("UID");
 uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<CategoryDTO> category = dao.getCategory();  
-List<ReviewDTO> ReportReviewList = dao.getReportReview(uid);	//	이 유저가 한 평가	
-List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid);	//	이 유저에 대한 평가
-SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
+GyeJeongDAO gjdao = new GyeJeongDAO();
+UserListDTO profile = gjdao.getUserProfile(uid);
+SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+
 
 %>
 <div style="display: block; margin: 10px 20% 10px;" align="right" >
@@ -99,35 +100,43 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 	  <li><a href="MyHelp.jsp"> 고객센터 </a></li>
 	</ul>
 <div id="mypagebody" >
-	<fieldset>
-	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %>님과의 최근 거래경험담</h3> <a href =""  style=" margin-left : 180px; ">더보기</a> </div>
+<fieldset>
 	<table>
 		<tr>
-			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
+			<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
 		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); %>
 		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
+			<td>이름 : </td> <td> <%= profile.getUser_name() %> <img src="<%= profile.getUser_img() %>"></td>  
+		</tr>
+		<tr>
+			<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>
+		</tr>
+		<tr>
+			<td>평점 : </td> <td> <%= profile.getUser_stars() %> / 5</td>
+		</tr>
+		<tr>
+			<td>E-Mail : </td> <td> <%= profile.getUser_email() %> </td>
+		</tr>
+		<tr>
+			<td>전화번호 : </td> <td> <%= profile.getUser_phone() %> </td>
+		</tr>
+		<tr>
+			<td>가입일 : </td> <td> <%= sdf.format(profile.getUser_reg())  %> </td>
+		</tr>
+	<% 	if(profile.getUser_report()==1){ %>
+		<tr>
+			<td>상태 : 활동정지</td> <td> 
+		</tr>
+		<tr>
+			<td>기간 : </td> <td><%= sdf.format(profile.getUser_activeReg()) %></td> 
 		</tr>
 	<% 	} %>
-	</table>
-	</fieldset>
-	<fieldset>
-	<div><h3 style="display: inline;"><%= uid %>님이 쓰신 최근 거래경험담</h3><a href =""  style=" margin-left : 180px; ">더보기</a> </div>
-	<table>
-		<tr>
-			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>
-		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); 
-			System.out.println(dto);%>
-		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
-		</tr>
-	<% 	} %>
-	</table>
-	</fieldset>
+	</table> 
+	<br>
+	<div>
+		<button type="button" onclick="location='PasswordConfirm.jsp'">정보수정</button>
+	</div>
+</fieldset>
 </div>
 </body>
 </html>

@@ -23,6 +23,7 @@ import team.project.model.CategoryDTO;
 import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ReviewDTO;
+import team.project.model.UserListDTO;
 import team.project.model.WishListDTO;
 public class InstanceDAO {
 	
@@ -764,7 +765,8 @@ public class InstanceDAO {
 		ResultSet rs = null;
 		try {
 			conn= getConnection();
-			String sql = "select * from review where re_reportUid=? and re_delete=0";
+			String sql = "select * from (select rownum r , A.* from (select * from review where re_reportUid=? and re_delete=0"
+					+ " order by re_reg desc) A) B where r <=20";
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, uid);
 			rs= pstmt.executeQuery();
@@ -800,17 +802,16 @@ public class InstanceDAO {
 		ReviewDTO dto= null;
 		try {
 			conn= getConnection();
-			String sql = "select * from review where re_reportedUid=? and re_delete=0 order by re_reg desc";
+			String sql = "select * from (select rownum r , A.* from (select * from review where re_reportedUid=? and re_delete=0"
+					+ " order by re_reg desc) A) B where r <=20";
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, uid);
 			rs= pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("왔냐");
 				list = new ArrayList<ReviewDTO>();
 				do {
 					dto = new ReviewDTO();
 					dto.setRe_no(rs.getInt("re_no"));
-					System.out.println("됐냐");
 					dto.setRe_stars(rs.getInt("re_stars"));
 					dto.setRe_content(rs.getString("re_content"));
 					dto.setRe_reportUid(rs.getString("re_reportuid"));
@@ -835,6 +836,63 @@ public class InstanceDAO {
 	
 	
 	
+	// 마이페이지 유저 테이블 수정하기
+	public int updateUser(UserListDTO dto) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql ="";
+		try {
+			conn = getConnection();
+			if(dto.getUser_pw().isEmpty()) {
+				sql = "update userlist set user_name=? , user_email=? , user_phone=? where user_id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, dto.getUser_name());
+				pstmt.setString(2, dto.getUser_email());
+				pstmt.setString(3, dto.getUser_phone());
+				pstmt.setString(4, dto.getUser_id());
+				result = pstmt.executeUpdate();
+			}else {
+				sql = "update userlist set user_name=? , user_email=? , user_phone=? , user_pw=? where user_id=?";
+				System.out.println("sql pw not null");
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, dto.getUser_name());
+				pstmt.setString(2, dto.getUser_email());
+				pstmt.setString(3, dto.getUser_phone());
+				pstmt.setString(4, dto.getUser_pw());
+				pstmt.setString(5, dto.getUser_id());
+				result = pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getUserProfile(String user_id) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -845,3 +903,4 @@ public class InstanceDAO {
 	
 	
 }
+
