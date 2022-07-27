@@ -34,6 +34,9 @@
 			display: inline-block;
 			width: 500px;	
 		}	
+		#paging * {
+			text-decoration: none;
+		}
 	</style>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -64,7 +67,7 @@ List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataN
 	</ul>
 <div id="mypagebody" >
 	<fieldset>
-	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %>님과의 최근 거래경험담</h3> <a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
+	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %> 받은 후기</h3><a href ="ReportReviewList.jsp"  style=" margin-left : 150px; ">작성한 후기로</a></div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
@@ -77,12 +80,23 @@ List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataN
 	<% 	} %>
 	</table>
 	</fieldset>
-<% 	if(paging.getIsfirst() != 1){ %>
-	<a href="location='ReprotedReviewList.jsp?p=<%= paging.getIsfirst()-1 %>'"></a>
-<%	}	%>
-<% 	if(paging.getIslast() != 1){ %>
-	<a href="location='ReprotedReviewList.jsp?p=<%= paging.getIsfirst()-1 %>'"></a>
-<%	}	%>
+	<div id="paging" align="center">
+	<br>
+<% 	if(paging.getIslast() > paging.getTotalPage()){
+		paging.setIslast(paging.getTotalPage()); 
+	}
+	if( 1 != paging.getPageN()){ %>
+	<a href="ReportedReviewList.jsp?p=<%= paging.getPageN()-1 %>"> < &nbsp; </a>
+<%	}	
+	for(int i=paging.getIsfirst(); i<=paging.getIslast() ; i++) {
+		%>&nbsp;<a href="ReportedReviewList.jsp?p=<%= i %>"><%= i %></a>&nbsp;
+<% 	} %>
+<% 	if(paging.getTotalPage() != paging.getPageN()){
+		if(paging.getIsfirst() != paging.getIslast()){%>
+			<a href="ReportedReviewList.jsp?p=<%= paging.getPageN()+1 %>"> &nbsp; >  </a>
+<%		}
+	}	%>
+	</div>
 </div>
 <jsp:include page="../Footer.jsp"></jsp:include>
 </body>

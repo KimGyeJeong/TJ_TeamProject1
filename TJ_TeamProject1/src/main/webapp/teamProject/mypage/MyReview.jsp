@@ -62,7 +62,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 	</ul>
 <div id="mypagebody" >
 	<fieldset>
-	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %>님과의 최근 거래경험담</h3> <a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
+	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %> 받은 후기</h3> <a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
@@ -76,13 +76,13 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 	</table>
 	</fieldset>
 	<fieldset>
-	<div><h3 style="display: inline;"><%= uid %>님이 쓰신 최근 거래경험담</h3><a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
+	<div><h3 style="display: inline;"><%= uid %> 작성한 후기</h3><a href ="ReportReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>
 		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); %>
+	<%	for(int i=0 ; i<ReportReviewList.size() ; i++){ 
+			ReviewDTO dto = ReportReviewList.get(i); %>
 		<tr>
 			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
 		</tr>

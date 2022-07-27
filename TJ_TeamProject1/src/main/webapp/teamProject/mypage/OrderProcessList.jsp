@@ -74,7 +74,7 @@
 				
 				<tr>
 					<td><%= sdf.format(order.getO_reg())  %></td>
-					<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="<%= product.getP_img1() %>"></a></td>
+					<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>"></a></td>
 					<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
 					<% 	switch(order.getO_pro()) {
 							case 0: %>

@@ -843,29 +843,33 @@ public class InstanceDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql ="";
+		int n = 4;
 		try {
 			conn = getConnection();
-			if(dto.getUser_pw().isEmpty()) {
-				sql = "update userlist set user_name=? , user_email=? , user_phone=? where user_id=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, dto.getUser_name());
-				pstmt.setString(2, dto.getUser_email());
-				pstmt.setString(3, dto.getUser_phone());
-				pstmt.setString(4, dto.getUser_id());
-				result = pstmt.executeUpdate();
-			}else {
-				sql = "update userlist set user_name=? , user_email=? , user_phone=? , user_pw=? where user_id=?";
-				System.out.println("sql pw not null");
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, dto.getUser_name());
-				pstmt.setString(2, dto.getUser_email());
-				pstmt.setString(3, dto.getUser_phone());
-				pstmt.setString(4, dto.getUser_pw());
-				pstmt.setString(5, dto.getUser_id());
-				result = pstmt.executeUpdate();
+				sql = "update userlist set user_name=? , user_email=? , user_phone=?";
+				if(!dto.getUser_pw().isEmpty()) {
+					sql = sql+" , user_pw=?";
+				}
+				if(dto.getUser_img()!=null) {
+					sql = sql+" , user_img=?";
+				}
+				sql = sql+" where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getUser_name());
+			pstmt.setString(2, dto.getUser_email());
+			pstmt.setString(3, dto.getUser_phone());
+			if(!dto.getUser_pw().isEmpty()) {
+				pstmt.setString(n, dto.getUser_pw());
+				n=n+1;
 			}
+			if(dto.getUser_img()!=null){
+				pstmt.setString(n , dto.getUser_img());
+				n=n+1;
+			}
+			pstmt.setString(n, dto.getUser_id());
+			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("GyeJeongDAO.getUserProfile(String user_id) ERR");
+			System.out.println("InstanceDAO.updateUser(UserListDTO dto) ERR");
 			e.printStackTrace();
 		} finally {
 			closeConnection(rs, pstmt, conn);
@@ -972,7 +976,52 @@ public class InstanceDAO {
 	
 	
 	//  이 유저가 평가 당한 리뷰 갖고오기	
-		public List<ReviewDTO> getReportedReview(String uid, int StartP , int EndP) {
+	public List<ReviewDTO> getReportedReview(String uid, int StartP , int EndP) {
+		List<ReviewDTO> list =null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ReviewDTO dto= null;
+		try {
+			conn= getConnection();
+			String sql = "select * from (select rownum r , A.* from (select * from review where re_reportedUid=? and re_delete=0"
+					+ " order by re_reg desc) A) B where r >=? and r <=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setInt(2, StartP);
+			pstmt.setInt(3, EndP);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList<ReviewDTO>();
+				do {
+					dto = new ReviewDTO();
+					dto.setRe_no(rs.getInt("re_no"));
+					dto.setRe_stars(rs.getInt("re_stars"));
+					dto.setRe_content(rs.getString("re_content"));
+					dto.setRe_reportUid(rs.getString("re_reportuid"));
+					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
+					dto.setRe_delete(rs.getInt("re_delete"));
+					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					list.add(dto);
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return list;
+	} 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		//	이 유저가 작성한 평가	
+		public List<ReviewDTO> getReportReview(String uid, int StartP , int EndP) {
 			List<ReviewDTO> list =null;
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -980,7 +1029,7 @@ public class InstanceDAO {
 			ReviewDTO dto= null;
 			try {
 				conn= getConnection();
-				String sql = "select * from (select rownum r , A.* from (select * from review where re_reportedUid=? and re_delete=0"
+				String sql = "select * from (select rownum r , A.* from (select * from review where re_reportUid=? and re_delete=0"
 						+ " order by re_reg desc) A) B where r >=? and r <=?";
 				pstmt= conn.prepareStatement(sql);
 				pstmt.setString(1, uid);
