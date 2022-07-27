@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>AddMyMoney</title>
-<link href="../style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 <body>

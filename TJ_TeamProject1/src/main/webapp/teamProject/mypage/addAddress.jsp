@@ -7,7 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 <% 
 String ano = request.getParameter("modifyAno");
 InstanceDAO dao = new InstanceDAO();
