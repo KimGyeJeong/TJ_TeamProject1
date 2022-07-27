@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <%
-String id = (String) session.getAttribute("u_id");
+String id = (String) session.getAttribute("UID");
 %>
 <h3 align="right">
 	사용자:
 	<%=id%></h3>
 
 <%
-if (session.getAttribute("u_id") != null) {
+if (session.getAttribute("UID") != null) {
 %>
 <input type="button" value="로그아웃"
 	onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
