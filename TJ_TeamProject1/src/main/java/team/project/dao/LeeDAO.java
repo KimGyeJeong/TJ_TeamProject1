@@ -776,9 +776,76 @@ public class LeeDAO {
 		return list;
 	}
 	
+	public int getProductListCount() {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConnection();
+			String sql="select count(*) from product";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+
+		return result;
+	}
 	
-	
-	
+	public List categorySelect(int start, int end) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from product ORDER BY P_REG DESC) A) B where r>=? and r<=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					ProductDTO dto = new ProductDTO();
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setP_status(rs.getInt("p_status"));
+					dto.setP_title(rs.getString("p_title"));
+					dto.setP_price(rs.getInt("p_price"));
+					dto.setP_minPrice(rs.getInt("p_minPrice"));
+					dto.setP_maxPrice(rs.getInt("p_maxPrice"));
+					dto.setP_img1(rs.getString("p_img1"));
+					dto.setP_finish(rs.getInt("p_finish"));
+					dto.setP_readCount(rs.getInt("p_readCount"));
+					dto.setP_finish(rs.getInt("p_finish"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
 	
 	
 	

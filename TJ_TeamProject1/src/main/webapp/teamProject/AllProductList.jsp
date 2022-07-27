@@ -1,5 +1,4 @@
 <%@page import="team.project.model.ProductDTO"%>
-<%@page import="team.project.dao.BeomSuDAO"%>
 <%@page import="team.project.model.UserQuestionDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
@@ -32,7 +31,7 @@
  	
  	int count=0;
  	List list = null;
- 	BeomSuDAO dao = new BeomSuDAO();
+ 	LeeDAO dao = new LeeDAO();
  	String sel = request.getParameter("sel");
  	//제목 , 글 본문 내용으로 검색기능
  	String search = request.getParameter("search");
@@ -42,9 +41,9 @@
  			
  		}
  	}else{ //일반게시판 
- 		count = dao.getProductListCount(ca_no);
+ 		count = dao.getProductListCount();
  		if(count >0){
- 			list =dao.categorySelect(startRow, endRow, ca_no);
+ 			list =dao.categorySelect(startRow, endRow);
  		}
  	}
 	int number = count - (currentPage - 1) * pageSize;
@@ -57,11 +56,11 @@
 
 </head>
 <body>
-<jsp:include page='../Header.jsp'/>
-<jsp:include page='../floatingAdvertisement.jsp'/>
+<jsp:include page='Header.jsp'/>
+<jsp:include page='floatingAdvertisement.jsp'/>
 	
 	<br />
-	<h1 align="center">상품 리스트</h1>
+	<h1 align="center">전체 상품 리스트</h1>
 	<br />
 
 	<br />
@@ -74,8 +73,8 @@
 				if(i%5==0){%>
 					<tr>
 <%				} %>
-				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
-				<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">
+				<img src="save/<%=dto.getP_img1() %>" width="250px"/><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
@@ -99,18 +98,18 @@
 				if(endPage > pageCount){ endPage = pageCount;}
 				
 				if(startPage > pageNumSize){%>
-		<a class="pageNums" href="ProductList.jsp?pageNum=<%=startPage-1%>&ca_no=<%=ca_no%>">
+		<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage-1%>">
 			&lt; &nbsp; </a>
 		<%}
 				for(int l = startPage; l <= endPage; l++){ %>
-		<a class="pageNums" href="ProductList.jsp?pageNum=<%=l%>&ca_no=<%=ca_no%>"> &nbsp;
+		<a class="pageNums" href="AllProductList.jsp?pageNum=<%=l%>"> &nbsp;
 			<%=l%> &nbsp;
 		</a>
 		<%}
 			
 				if(endPage < pageCount) { %>
 		<a class="pageNums"
-			href="ProductList.jsp?pageNum=<%=startPage+pageNumSize%>&ca_no=<%=ca_no%>"> &nbsp;
+			href="AllProductList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp;
 			&gt; </a>
 		<%}
 	}%>
@@ -120,6 +119,6 @@
 	
 	<br/>
 	<br/>
-<%@ include file="../Footer.jsp" %>
+<%@ include file="Footer.jsp" %>
 </body>
 </html>

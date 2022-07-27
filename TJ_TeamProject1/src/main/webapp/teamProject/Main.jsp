@@ -13,24 +13,7 @@
 <title>장물아비 메인페이지</title>
 <jsp:include page='floatingAdvertisement.jsp'/>
 
-<%String id=(String)session.getAttribute("UID"); 
-if((String)session.getAttribute("UID")!=null){%>
-	<h3 align="right"> 사용자: <%=id %></h3>
-<%}
-System.out.println("id :"+id);
-
-%>
-
-
-<%if(session.getAttribute("UID") != null){%>
-<input  type="button" value="로그아웃" onclick="window.location='Login/Logout.jsp'" style="float: right;"/>
-<input  type="button" value="mypage" onclick="window.location='mypage/MyProductNow.jsp'" style="float: right;"/>
-<input  type="button" value="알림" onclick="window.location='Notification/notificationList.jsp'" style="float: right;"/>
-<%}else{%>
-<input  type="button" value="로그인" onclick="window.location='Login/Login.jsp'" style="float: right;"/>	
-<input  type="button" value="회원가입" onclick="window.location='/TJ_TeamProject1/teamProject/SignUp/Agecheck.jsp'" style="float: right;"/>
-<%}%>
-<%
+<% 
 String uid = null;
 
 
@@ -113,45 +96,10 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	%>
 
 								
-	</div>
-	<div align="center">
-		<a href="Main.jsp"><img alt="장물아비" src="logo.png" width="250px"></a>
-		<h1 style="display: inline-block;"></h1>
-		<form action="../MainSearchPro.jsp" style="display: inline-block;">
-			<input type="text" name="searchword" >
-			<input type="image" name="submit" src="mypage/image/logo.png" alt="검색" width="40px"  />
-		</form>
-		
-		<button onclick="window.location.href='selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
-
-		<button onclick="window.location.href='mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
-		<button onclick="window.location.href='help/Help.jsp'" style="width:60px;  " >고객센터</button>
-
-		<div style=" margin-right: 300px;">
-	<form action="" name="ca">
-		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
-			<option>카테고리</option>
-		<%	for(int i = 0; i<category.size() ; i++){
-				CategoryDTO ca = category.get(i);
-				if(ca.getCa_level()==0){ %>
-					<optgroup label="<%= ca.getCa_name() %>"></optgroup>
-				<%	for(int j = 0; j<category.size(); j++){
-						CategoryDTO dto = category.get(j);
-						if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
-							%>
-								<option value="selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
-							<%
-						}
-					}
-				}
-			}
-		%>
-		</select>
-	</form>
-		</div>
-	</div>
+	
+	
 </head>
-
+<jsp:include page='Header.jsp'/>
 
 
 
