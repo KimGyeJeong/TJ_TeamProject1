@@ -107,8 +107,8 @@
 		</form>
 <%			} %>
 		<tr>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
 			<td><button onclick="window.location='ProductModifyForm.jsp?p_no=<%=p_no%>'">상품 수정</button></td>
 
 		</tr>
@@ -123,17 +123,23 @@
 		</tr>       
 <%		}else{ %>
 		<tr>
-			<td colspan="3">
+			<td colspan="4" align="left">
 <%			if(list != null){
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
-					<h6><%=que_dto.getPq_title() %></h6>
-					<textarea rows="10" cols="100"><%=que_dto.getPq_content() %></textarea>
-					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
+					<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(que_dto.getPq_answer() == null){ %>
+					<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+<%					} %>
+					</h6>
+					
+					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+					<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
-							<h6>답변 시간 : <%=que_dto.getPq_answerReg() %></h6>
+							<h6>답변내용</h6>
+							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
 <%						} %>
 <%				}%>
 <%			}else{%>
@@ -187,8 +193,8 @@
 		</form>
 <%			} %>
 		<tr>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
@@ -206,12 +212,12 @@
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
-					<h6><%=que_dto.getPq_title() %></h6>
-					<textarea rows="10" cols="100"><%=que_dto.getPq_content() %></textarea>
-					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
+					<h6>제목 : <%=que_dto.getPq_title() %></h6>
+					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
-							<h6>답변 시간 : <%=que_dto.getPq_answerReg() %></h6>
+							<h6>답변내용</h6>
+							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
 <%						} %>
 <%				}%>
 <%			}else{%>
@@ -265,8 +271,8 @@
 		</form>
 <%			} %>
 		<tr>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
@@ -284,12 +290,12 @@
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
-					<h6><%=que_dto.getPq_title() %></h6>
-					<textarea rows="10" cols="100"><%=que_dto.getPq_content() %></textarea>
-					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
+					<h6>제목 : <%=que_dto.getPq_title() %></h6>
+					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
-							<h6>답변 시간 : <%=que_dto.getPq_answerReg() %></h6>
+							<h6>답변내용</h6>
+							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
 <%						} %>
 <%				}%>
 <%			}else{%>
@@ -343,8 +349,8 @@
 		</form>
 <%			} %>
 		<tr>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>'">상품 정보</button></td>
-			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>'">상품 문의</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
+			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
@@ -362,12 +368,12 @@
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
-					<h6><%=que_dto.getPq_title() %></h6>
-					<textarea rows="10" cols="100"><%=que_dto.getPq_content() %></textarea>
-					<h6>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></h6>
+					<h6>제목 : <%=que_dto.getPq_title() %></h6>
+					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							&nbsp;&nbsp;<textarea rows="20" cols="200" readonly><%=que_dto.getPq_answer() %></textarea>
-							<h6>답변 시간 : <%=que_dto.getPq_answerReg() %></h6>
+							<h6>답변내용</h6>
+							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
 <%						} %>
 <%				}%>
 <%			}else{%>

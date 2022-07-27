@@ -10,21 +10,21 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
-	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
-	String pq_title = request.getParameter("pq_title");
-	String pq_content = request.getParameter("pq_content");
-	
+	Integer pq_no = Integer.parseInt(request.getParameter("pq_no"));
+	String pq_answer = request.getParameter("pq_answer");
+	String p_sellerId = request.getParameter("p_sellerId");
 	BeomSuDAO dao = new BeomSuDAO();
-	int result = dao.ProductQuestionAdd(p_no, UID, pq_title, pq_content);
+	
+	int result = dao.ProductAnswerAdd(pq_no, pq_answer);
 	
 %>
 <body>
 
 <%
-if(UID != null){
+if(UID.equals(p_sellerId)){
 	if(result == 1){%>
 		<script>
-			alert("문의글 작성 완료!");
+			alert("답변글 작성 완료!");
 			opener.parent.location.reload();
 			window.close();
 			
@@ -37,11 +37,12 @@ if(UID != null){
 <%	}
 }else{%>
 	<script>
-		alert("로그인 후 이용해 주세요!");
-		opener.parent.location='../Login/Login.jsp';
+		alert("권한이 없습니다!");
+		opener.parent.location='../Main.jsp';
 		window.close();
 	</script>
 <%	} %>
+
 
 </body>
 </html>

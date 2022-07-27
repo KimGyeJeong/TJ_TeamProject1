@@ -35,7 +35,8 @@
 	}else{%>
 	<script>
 		alert("로그인 후 이용해 주세요!");
-		window.location.assign("../Login/Login.jsp");
+		opener.parent.location='../Login/Login.jsp';
+		window.close();
 	</script>
 <%	}
 %>
