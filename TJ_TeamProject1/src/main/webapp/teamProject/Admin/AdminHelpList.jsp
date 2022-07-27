@@ -49,7 +49,7 @@
 	<div>
 		<table>
 			<tr>
-				<td>게시판번호</td>
+				<td>문의게시판번호</td>
 				<td>문의고유번호</td>
 				<td>상품번호</td>
 				<td>아이디</td>
@@ -65,7 +65,19 @@
 				%>
 				<td><%=userQuestionNumber--%></td>
 				<td><%=dto.getUq_no()%></td>
-				<td><%=dto.getP_no()%></td>
+				<td>
+				<%
+				if(dto.getP_no()==0){
+				%>
+					-
+				<%
+				}else{
+				%>
+					<%=dto.getP_no() %>
+				<%
+				}
+				%>
+				</td>
 				<td>
 				<a href="AdminShowUser.jsp?user_id=<%=dto.getUser_id()%>">
 				<%=dto.getUser_id()%>
@@ -78,7 +90,19 @@
 				</td>
 				<td><%=dto.getUq_cat()%></td>
 				<td><%=dto.getUq_reg()%></td>
-				<td><%=dto.getUqa_reg()%></td>
+				<td>
+				<%
+				if(dto.getUq_reg().equals(dto.getUqa_reg())){
+					%>
+					-
+					<%
+				}else{
+					%>
+					<%=dto.getUqa_reg() %>
+					<%
+				}
+				%>
+				</td>
 			</tr>
 			<%
 			}
