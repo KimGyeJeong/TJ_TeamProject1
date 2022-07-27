@@ -3,6 +3,7 @@ package team.project.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
 import team.project.model.UserListDTO;
+import team.project.model.UserQuestionDTO;
 
 public class BeomSuDAO {
 	private Connection getConn() throws Exception {
@@ -29,18 +31,20 @@ public class BeomSuDAO {
 		return ds.getConnection();
 	}
 	
-	public List categorySelect(int ca_no) {
-		List list = null;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+	public List categorySelect(int start, int end , int ca_no) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
 		ResultSet rs = null;
 		
 		try {
-			conn = getConn();
-			String sql = "select * from product where ca_no=?";
+			conn = getConn(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from product where ca_no=?  ORDER BY P_REG DESC) A) B where r>=? and r<=? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ca_no);
-			rs = pstmt.executeQuery();
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs = pstmt.executeQuery(); 
 			if(rs.next()) {
 				list = new ArrayList();
 				do {
@@ -51,7 +55,7 @@ public class BeomSuDAO {
 					dto.setP_price(rs.getInt("p_price"));
 					dto.setP_minPrice(rs.getInt("p_minPrice"));
 					dto.setP_maxPrice(rs.getInt("p_maxPrice"));
-					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setCa_no(ca_no);
 					dto.setP_img1(rs.getString("p_img1"));
 					dto.setP_finish(rs.getInt("p_finish"));
 					dto.setP_readCount(rs.getInt("p_readCount"));
@@ -59,15 +63,46 @@ public class BeomSuDAO {
 					list.add(dto);
 				}while(rs.next());
 			}
-		}catch (Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
 		}
 		
+		
 		return list;
+	}
+	
+	public int getProductListCount(int ca_no) {
+		int result=0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+
+		try {
+			conn = getConn();
+			String sql="select count(*) from product where ca_no=?";
+	
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, ca_no);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+
+		return result;
 	}
 	
 	public ProductDTO productDetailBuy(int p_no) {
@@ -513,13 +548,14 @@ public class BeomSuDAO {
 		ResultSet rs = null;
 		try {
 			conn = getConn();
-			String sql = "select p_no from Product where p_img1=?";
+			String sql = "select * from Product where p_img1=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, P_img1);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				dto = new ProductDTO();
-				dto.setP_no(rs.getInt(1));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setCa_no(rs.getInt("ca_no"));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -752,7 +788,7 @@ public class BeomSuDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 					dto = new CategoryDTO();
-					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setCa_no(ca_no);
 					dto.setCa_name(rs.getString("ca_name"));
 					dto.setCa_level(rs.getInt("ca_level"));
 					dto.setCa_grp(rs.getInt("ca_grp"));
@@ -1003,6 +1039,26 @@ public class BeomSuDAO {
 		return result;
 	}
 	
+	public int biddingStatusSet(int p_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update bidding set b_status=2 where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
 	public List completionBidding(int p_no, int b_no) {
 		List list = null;
 		Connection conn = null;
@@ -1013,7 +1069,41 @@ public class BeomSuDAO {
 			String sql = "Select * from Bidding where p_no=? and b_no!=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
-			pstmt.setInt(2, p_no);
+			pstmt.setInt(2, b_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					BiddingDTO dto = new BiddingDTO();
+					dto.setB_no(rs.getInt("b_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setB_bidding(rs.getInt("b_bidding"));
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setB_reg(rs.getTimestamp("b_reg"));
+					dto.setB_status(rs.getInt("b_status"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
+	
+	public List completionBidding(int p_no) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "Select * from Bidding where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				list = new ArrayList();

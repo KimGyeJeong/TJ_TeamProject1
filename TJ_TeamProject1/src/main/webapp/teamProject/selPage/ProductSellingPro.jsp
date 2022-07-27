@@ -1,3 +1,5 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.io.Writer"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="team.project.dao.BeomSuDAO"%>
 <%@page import="java.sql.Timestamp"%>
@@ -17,6 +19,7 @@
 	String UID = (String)session.getAttribute("UID");
 	if(UID != null){	
 	String path = request.getRealPath("teamProject/save"); 
+	int  result = 1;
 	System.out.println(path);
 	int max = 1024*1024*5; 
 	String enc = "UTF-8"; 
@@ -35,19 +38,23 @@
 		p_minPrice = 0;
 	}
 	if(p_maxPrice < p_minPrice){
-		response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter alert = response.getWriter();
-	    out.println("<script>alert('상한가가 하한가보다 낮을 수 없습니다!'); history.go(-1);</script>");
-	    out.flush();
+		result = 0;
+	    Writer outWriter = response.getWriter();
+	    String message = URLEncoder.encode("상한가가 하한가보다 낮을 수 없습니다!.","UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
+	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
+	    outWriter.flush();
 	    response.flushBuffer();
-	    out.close();
+	    outWriter.close();
 	}else if(p_maxPrice != 0 && p_maxPrice == p_minPrice){
-		response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter alert = response.getWriter();
-	    out.println("<script>alert('상한가와 하한가가 같을 수 없습니다!'); history.go(-1);</script>");
-	    out.flush();
+		result = 0;
+		Writer outWriter = response.getWriter();
+	    String message = URLEncoder.encode("상한가와 하한가가 같을 수 없습니다!.","UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
+	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
+	    outWriter.flush();
 	    response.flushBuffer();
-	    out.close();
+	    outWriter.close();
 	}
 	String p_start = mr.getParameter("p_start");
 	System.out.println(mr.getParameter("p_start"));
@@ -57,12 +64,14 @@
 	p_end += " 00:00:00";
 	String ca_no = mr.getParameter("ca_no");
 	if(ca_no.equals("카테고리")){
-		response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter alert = response.getWriter();
-	    out.println("<script>alert('카테고리를 선택해 주세요!'); history.go(-1);</script>");
-	    out.flush();
+		result = 0;
+		Writer outWriter = response.getWriter();
+	    String message = URLEncoder.encode("카테고리를 선택해 주세요!.","UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
+	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
+	    outWriter.flush();
 	    response.flushBuffer();
-	    out.close();
+	    outWriter.close();
 	}
 	ProductDTO dto = new ProductDTO();
 	ProductDTO p_dto = new ProductDTO();
@@ -84,16 +93,17 @@
 	dto.setP_end(Timestamp.valueOf(p_end));
 	
 	BeomSuDAO dao = new BeomSuDAO();
-	int result = dao.productSelling(dto);
+	
 	
 %>
 <body>
-<%	if(result == 1){ 
+<%	if(result == 1){
+		dao.productSelling(dto);
 		p_dto = dao.getP_no(dto.getP_img1());
 %>
 		<script>
 			alert("상품 등록 완료!");
-			 window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_dto.getP_no()%>); 
+			 window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_dto.getP_no()%>+"&ca_no="+<%=p_dto.getCa_no()%>); 
 		</script>
 <%	}else{ %>
 		<script>

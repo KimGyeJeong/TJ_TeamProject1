@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="team.project.model.CategoryDTO"%>
 <%@page import="team.project.model.BiddingDTO"%>
 <%@page import="java.sql.Timestamp"%>
@@ -50,8 +51,8 @@
 			if(bidDTO.getB_bidding() == 0){
 				dao.biddingInput(UID, b_bidding, p_no);	
 			}else{
-				int rrr = dao.biddingModify(UID, b_bidding, p_no);
-				System.out.println(rrr);
+				dao.biddingModify(UID, b_bidding, p_no);
+
 			}
 			%>
 			<script>
@@ -61,6 +62,17 @@
 <%		}else{
 			dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), a_no, p_status);
 			dao.productBuy(p_no);
+			
+			List bidList = dao.completionBidding(p_no);
+			
+			if(bidList != null){
+				dao.biddingStatusSet(p_no);
+				for(int i = 0; i<bidList.size(); i++){
+					bidDTO = (BiddingDTO)bidList.get(i);
+					userDTO = dao.userCheck(bidDTO.getUser_id());
+					dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
+				}
+			}
 %>
 			<script>
 				alert("구매가 완료 되었습니다!");
