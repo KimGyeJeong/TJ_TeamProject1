@@ -16,6 +16,7 @@ import team.project.model.AddressDTO;
 import team.project.model.ContentDTO;
 import team.project.model.NoticeDTO;
 import team.project.model.ProductDTO;
+import team.project.model.QnADTO;
 import team.project.model.ReportDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
@@ -1468,6 +1469,149 @@ public class GyeJeongDAO {
 		
 		return result;
 	}
+	//TODO 0727
 	//new method here
+	public int getQnACount() {
+		result = 0;
+		try {
+			conn=getConnection();
+			
+			sql="select count(*) from qna";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				result=rs.getInt(1);
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getQnACount() ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	
+	public List<QnADTO> getQnA(int start, int end){
+		List<QnADTO> list = null;
+		QnADTO dto = null;
+		
+		try {
+			conn=getConnection();
+			
+			sql="select b.* from(\r\n"
+					+ "  select ROWNUM r, a.* from(\r\n"
+					+ "    select * from qna order by Q_REG desc\r\n"
+					+ "  )a\r\n"
+					+ ")b where r>=? and r<=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list = new ArrayList<QnADTO>();
+				
+				do {
+					dto = new QnADTO();
+					
+					dto.setQ_no(rs.getInt(1));
+					dto.setQ_title(rs.getString(2));
+					dto.setQ_questionContent(rs.getString(3));
+					dto.setQ_answerContent(rs.getString(4));
+					dto.setQ_reg(rs.getTimestamp(5));
+					
+					list.add(dto);
+					
+				}while(rs.next());
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getQnA(int start, int end) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	
+	public int getSearchQnACount(String search) {
+		result = 0;
+		try {
+			conn=getConnection();
+			
+			sql="select count(*) from qna where q_title like '%"+search+"%'";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				result=rs.getInt(1);
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getSearchQnACount(String search) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	
+	public List<QnADTO> getSearchQnA(int start, int end, String search){
+		List<QnADTO> list = null;
+		QnADTO dto = null;
+		
+		try {
+			conn=getConnection();
+			
+			sql="select b.* from(\r\n"
+					+ "  select ROWNUM r, a.* from(\r\n"
+					+ "    select * from qna where q_title like '%"+search+"%' order by Q_REG desc\r\n"
+					+ "  )a\r\n"
+					+ ")b where r>=? and r<=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list = new ArrayList<QnADTO>();
+				
+				do {
+					dto = new QnADTO();
+					
+					dto.setQ_no(rs.getInt(1));
+					dto.setQ_title(rs.getString(2));
+					dto.setQ_questionContent(rs.getString(3));
+					dto.setQ_answerContent(rs.getString(4));
+					dto.setQ_reg(rs.getTimestamp(5));
+					
+					list.add(dto);
+					
+				}while(rs.next());
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getSearchQnA(int start, int end, String search) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return list;
+		
+	}
 
 }
