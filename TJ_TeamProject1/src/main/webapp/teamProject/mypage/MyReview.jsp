@@ -10,8 +10,11 @@
 <head>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>나의 후기들</title>
+	<jsp:include page="../UIDcheck.jsp"></jsp:include>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<jsp:include page="../Header.jsp"></jsp:include>
+	<jsp:include page='../floatingAdvertisement.jsp'/>
 	<style type="text/css">
 		#mypagelist {
 			list-style: none;
@@ -44,7 +47,6 @@ List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid);	//	이 유저�
 SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 
 %>
-<jsp:include page="../Header.jsp"></jsp:include>
 </head>
 <body>
 	<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
@@ -56,8 +58,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
 	  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
 	  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-	  <li><a href=""> 나의 문의사항 </a></li>
-	  <li><a href="MyHelp.jsp"> 고객센터 </a></li>
+	  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
+	  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
 	</ul>
 <div id="mypagebody" >
 	<fieldset>
@@ -81,8 +83,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>
 		</tr>
 	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); 
-			System.out.println(dto);%>
+			ReviewDTO dto = ReportedReviewList.get(i); %>
 		<tr>
 			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
 		</tr>
