@@ -10,10 +10,10 @@
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <br/>
 <h1 align="center"> 문의-상세페이지</h1>
-	<% String id=(String)session.getAttribute("u_id"); %>
+	<% String id=(String)session.getAttribute("UID"); %>
 		<h3 align="right"> 사용자: <%=id %></h3>
 	
-	<%if(session.getAttribute("u_id") != null){%>
+	<%if(session.getAttribute("UID") != null){%>
 		<input  type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;"/>
     <%}else{%>
   		<script>
@@ -40,12 +40,20 @@
  		<td><%=dto.getUq_title()%> </td>
  	</tr>
  	<tr>
+ 		<td>사진</td>
+ 	</tr>
+ 	<tr>
+ 		<td><img src="../save/<%=dto.getUq_img1()%>"/> </td> 
+ 		
+ 	</tr>
+ 	<tr>
  		<td>문의 내용 </td>
  	</tr>
  	<tr>
  		<td><%=dto.getUq_content() %> </td>
  		
  	</tr>
+ 	
 
  </table>
  

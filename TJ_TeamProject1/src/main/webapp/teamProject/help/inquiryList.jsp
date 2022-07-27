@@ -7,6 +7,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<br />
+<br />
+<br />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
@@ -29,12 +34,12 @@ if(auto != null && id != null && pw != null){
 %>
 
 <%request.setCharacterEncoding("UTF-8"); %>
-<%  id=(String)session.getAttribute("u_id"); %>
+<%  id=(String)session.getAttribute("UID"); %>
 <h3 align="right">
 	사용자:
 	<%=id %></h3>
 
-<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
+<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 <script>
   		alert("로그인 후 사용가능한 서비스입니다.");
   		location.href="../Main.jsp";
@@ -170,7 +175,15 @@ if(auto != null && id != null && pw != null){
 
 
 	<%}%>
+<br/>
+<br/>
+<br/>
 
+
+
+
+
+<%@ include file="../Footer.jsp" %>
 
 </body>
 </html>

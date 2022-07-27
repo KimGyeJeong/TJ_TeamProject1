@@ -117,7 +117,7 @@
 			</tr>
 			<tr>
 				<td>photo*</td>
-				<td><input type="file" name="photo" /></td>
+				<td><input type="file" name="photo" value="File Upload" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="회원 가입" /> <input

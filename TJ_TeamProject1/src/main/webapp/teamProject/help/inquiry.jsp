@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <%
-String id = (String) session.getAttribute("u_id");
+String id = (String) session.getAttribute("UID");
 %>
 <h3 align="right">
 	사용자:
 	<%=id%></h3>
 
 <%
-if (session.getAttribute("u_id") != null) {
+if (session.getAttribute("UID") != null) {
 %>
 <input type="button" value="로그아웃"
 	onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
@@ -29,6 +29,10 @@ if (session.getAttribute("u_id") != null) {
 }
 %>
 </head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<br/>
+<br/>
 <body>
 	<br />
 	<h2 align="center">문의신청</h2>
@@ -73,5 +77,10 @@ if (session.getAttribute("u_id") != null) {
 
 		</table>
 	</form>
+<br/>
+<br/>
+<br/>
+
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>
