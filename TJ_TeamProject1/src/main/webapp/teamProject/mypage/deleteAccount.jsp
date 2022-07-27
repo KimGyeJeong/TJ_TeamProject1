@@ -15,7 +15,6 @@
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 
-uid = "qwe8246"; //	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 %>
 <style>

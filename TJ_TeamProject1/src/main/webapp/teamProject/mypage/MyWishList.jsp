@@ -20,7 +20,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<WishListDTO> wList = dao.getWishList(uid);
 SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");

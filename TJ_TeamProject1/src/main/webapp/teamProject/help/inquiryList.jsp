@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
 <%
 String id = null, pw = null, auto = null; 
 Cookie[] coos = request.getCookies(); 
@@ -29,12 +29,12 @@ if(auto != null && id != null && pw != null){
 %>
 
 <%request.setCharacterEncoding("UTF-8"); %>
-<%  id=(String)session.getAttribute("u_id"); %>
+<%  id=(String)session.getAttribute("UID"); %>
 <h3 align="right">
 	사용자:
 	<%=id %></h3>
 
-<%if(session.getAttribute("u_id") == null || session.getAttribute("u_id") == "null" || session.getAttribute("u_id") ==""){%>
+<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 <script>
   		alert("로그인 후 사용가능한 서비스입니다.");
   		location.href="../Main.jsp";

@@ -38,7 +38,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<CategoryDTO> category = dao.getCategory();  
 GyeJeongDAO gjdao = new GyeJeongDAO();

@@ -13,7 +13,6 @@
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 String pw = request.getParameter("pw");
-uid = "qwe8246";
 LeeDAO dao = new LeeDAO();
 int result = dao.idpwChkUser(uid, pw);
 if(result>0){

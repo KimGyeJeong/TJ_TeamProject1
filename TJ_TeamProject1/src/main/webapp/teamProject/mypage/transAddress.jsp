@@ -54,7 +54,6 @@ function addAddress(uri) {
 String ono = request.getParameter("ono");	
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<AddressDTO> address = dao.getaddressList(uid);
 %>

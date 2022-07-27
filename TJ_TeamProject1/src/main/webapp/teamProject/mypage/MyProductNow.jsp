@@ -40,7 +40,6 @@
 	String uid = (String)session.getAttribute("UID");
 	
 	
-	uid = "qwe8246"; 		//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	InstanceDAO dao = new InstanceDAO();
 	List<CategoryDTO> category = dao.getCategory(); 
 	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);

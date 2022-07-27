@@ -37,7 +37,6 @@
 	</style> 
 	<% 
 	String uid = (String)session.getAttribute("UID");
-	uid = "18"; 					//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
 	InstanceDAO dao = new InstanceDAO();

@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>
+</title>
 <script type="text/javascript">
 function pageReload() {
 	window.location.reload();
@@ -19,7 +20,6 @@ function pageReload() {
 
 	request.setCharacterEncoding("UTF-8");
 	String uid = (String)session.getAttribute("UID");
-	uid = "qwe8246";	//////////////////////////////////////////////////임시!
 	int result=0;
 	int deleteResult=0;
 	InstanceDAO dao = new InstanceDAO();

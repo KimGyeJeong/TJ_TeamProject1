@@ -40,7 +40,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<ReviewDTO> ReportReviewList = dao.getReportReview(uid);	//	이 유저가 한 평가	
 List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid);	//	이 유저에 대한 평가

@@ -12,7 +12,6 @@
 <% 
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 int pno = Integer.parseInt(request.getParameter("p_no")); 
 InstanceDAO dao = new InstanceDAO();
 int result = dao.deleteWishList(pno, uid);

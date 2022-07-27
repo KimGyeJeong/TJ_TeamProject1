@@ -16,7 +16,6 @@
 <% 
 request.setCharacterEncoding("UTF-8");
 String uid= (String)session.getAttribute("UID");
-uid = "qwe8246";
 int result = -100;
 String ano = request.getParameter("ano");
 String ono = request.getParameter("ono");
