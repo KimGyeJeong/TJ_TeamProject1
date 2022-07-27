@@ -11,7 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="../style.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style type="text/css">
 		#mypagelist {
 			list-style: none;
@@ -46,45 +46,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 
 
 %>
-<div style="display: block; margin: 10px 20% 10px;" align="right" >
-		<a href="window.location.href='Login.jsp'" style="width:50px; height: 20px;" >로그인 </a> &nbsp;
-		<a href="window.location.href=" style="width:50px; height: 20px; " >회원가입 </a>&nbsp;
-		<a href="" style="width:50px; height: 20px; " >알림</a>
-								
-	</div>
-	<div align="center">
-		<a href="../Main.jsp"><img alt="장물아비" src="image/logo.png" width="50px"></a>
-		<h1 style="display: inline-block;">장물아비</h1>
-		<form action="../MainSearchPro.jsp" style="display: inline-block;">
-			<input type="text" name="searchword">
-			<input type="image" name="submit" src="image/logo.png" alt="검색" width="30px" height="30px" />
-		</form>
-		<button onclick="window.location.href='../ProductSellSelect.jsp'" style="width:45px; height: 40px;" >판매하기</button>
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:45px; height: 40px; font-size: 8.5px;" >내정보</button>
-		<button onclick="window.location.href=" style="width:45px; height: 40px; font-size: 8.5px;" >게시판</button>
-		<div style=" margin-right: 300px;">
-	<form action="" name="ca" method="post">
-		<select name = "cano" onchange="window.location.href=document.ca.cano.value" style="width: 150px;">
-			<option>카테고리</option>
-		<%	for(int i = 0; i<category.size() ; i++){
-				CategoryDTO ca = category.get(i);
-				if(ca.getCa_level()==0){ %>
-					<optgroup label="<%= ca.getCa_name() %>"></optgroup>
-				<%	for(int j = 0; j<category.size(); j++){
-						CategoryDTO dto = category.get(j);
-						if(dto.getCa_level()==1 && dto.getCa_grp()==ca.getCa_grp()){
-							%>
-								<option value="../selPage/ProductList.jsp?ca_no=<%= dto.getCa_no() %>"><%= dto.getCa_name() %></option>
-							<%
-						}
-					}
-				}
-			}
-		%>
-		</select>
-	</form>
-		</div>
-	</div>
+<jsp:include page="../Header.jsp"></jsp:include>
 </head>
 <body>
 	<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
@@ -138,5 +100,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	</div>
 </fieldset>
 </div>
+<jsp:include page="../Footer.jsp"></jsp:include>
 </body>
 </html>

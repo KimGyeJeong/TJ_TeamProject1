@@ -11,8 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../style.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<jsp:include page="../Header.jsp"></jsp:include>
 </head>
 
 <%
@@ -89,5 +89,6 @@ function deleteProductCheck(){
 	return confirmValue;
 }
 </script>
+<jsp:include page="../Footer.jsp"></jsp:include>
 </body>
 </html>

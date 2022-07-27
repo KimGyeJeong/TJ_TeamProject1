@@ -12,7 +12,6 @@
 <meta charset="UTF-8">
 <title>장물아비 메인페이지</title>
 <jsp:include page='floatingAdvertisement.jsp'/>
-<link href="style.css" rel="stylesheet" type="text/css" />
 
 <%String id=(String)session.getAttribute("UID"); 
 if((String)session.getAttribute("UID")!=null){%>
@@ -66,7 +65,6 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		#special{
 			width: 150px;
