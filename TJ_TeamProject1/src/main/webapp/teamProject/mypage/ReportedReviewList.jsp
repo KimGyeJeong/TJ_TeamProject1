@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.Paging"%>
 <%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="team.project.model.ReviewDTO"%>
@@ -10,7 +11,7 @@
 <head>
 <head>
 	<meta charset="UTF-8">
-	<title>나의 후기들</title>
+	<title>내가 작성한 후기들</title>
 	<jsp:include page="../UIDcheck.jsp"></jsp:include>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<jsp:include page="../Header.jsp"></jsp:include>
@@ -29,9 +30,6 @@
 			left: 50px;
 			display:inline-block;
 		}
-		#seller p {
-			display: inline;
-		}
 		fieldset {
 			display: inline-block;
 			width: 500px;	
@@ -40,11 +38,15 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
+String pageNum = request.getParameter("p");
+if(pageNum==null){
+	pageNum = "1";
+}
 InstanceDAO dao = new InstanceDAO();
-List<ReviewDTO> ReportReviewList = dao.getRecentReportReview(uid);	//	이 유저가 한 평가
-List<ReviewDTO> ReportedReviewList = dao.getRecentReportedReview(uid);	//	이 유저에 대한 평가
 SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
-
+int totalData = dao.getReportedReviewCount(uid);
+Paging paging = new Paging(totalData, 10, 10, pageNum);
+List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataNumberStart() , paging.getDataNumberEnd());	//	이 유저에 대한 평가
 %>
 </head>
 <body>
@@ -75,20 +77,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 	<% 	} %>
 	</table>
 	</fieldset>
-	<fieldset>
-	<div><h3 style="display: inline;"><%= uid %>님이 쓰신 최근 거래경험담</h3><a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
-	<table>
-		<tr>
-			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>
-		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); %>
-		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
-		</tr>
-	<% 	} %>
-	</table>
-	</fieldset>
+<% 	if(paging.getIsfirst() != 1){ %>
+	<a href="location='ReprotedReviewList.jsp?p=<%= paging.getIsfirst()-1 %>'"></a>
+<%	}	%>
+<% 	if(paging.getIslast() != 1){ %>
+	<a href="location='ReprotedReviewList.jsp?p=<%= paging.getIsfirst()-1 %>'"></a>
+<%	}	%>
 </div>
 <jsp:include page="../Footer.jsp"></jsp:include>
 </body>
