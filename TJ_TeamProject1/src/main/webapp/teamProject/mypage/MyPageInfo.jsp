@@ -59,7 +59,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
 	  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
 	  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-	  <li><a href=""> 나의 문의사항 </a></li>
+	  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
 	  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
 	</ul>
 <div id="mypagebody" >
