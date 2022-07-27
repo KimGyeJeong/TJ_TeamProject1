@@ -11,7 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="../style.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style type="text/css">
 		#mypagelist {
 			list-style: none;
@@ -104,20 +104,23 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	<form action="modifyProfilePro.jsp" method="get">
 	
 		ID : <%= profile.getUser_id() %>  <br> <br> 
-		<details id="detail">
+		<details id="detail">  
 			<summary> <button type="button" onclick="modify()">비밀번호 변경</button></summary>
 	  		<p>
 			비밀번호  <input type="password" name="modifyPW" value="">  <br><br>
-			비밀번호 확인  <input type="text" name="modifyPWcheck" value="">  <br><br>
+			비밀번호 확인  <input type="text" name="modifyPWcheck" value="">  <br>
 	  		</p>
-		</details>
+		</details> <br>
 		이름  <input type="text" name="username" value="<%= profile.getUser_name() %>"> <img src="<%= profile.getUser_img() %>"> <br><br>  
 		E-Mail  <input type="text" name="email" value="<%= profile.getUser_email() %>"> <br><br>
 		전화번호  <input type="text" name="phone" value="<%= profile.getUser_phone() %>"> <br><br>
 	<br>
 		<input type="submit" value="수정하기">
 	</form>	
-		<button type="button" onclick="">회원탈퇴</button>
+		<button type="button" onclick="window.location = 'MyPageInfo.jsp'">돌아가기</button>
+		<div align="right" style="display: inline-block; ">
+		<button type="button" onclick="location='deleteAccount.jsp'">회원탈퇴</button>
+		</div>
 </fieldset>
 </div>
 <script type="text/javascript">

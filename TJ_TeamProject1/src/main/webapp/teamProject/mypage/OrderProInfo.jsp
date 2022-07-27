@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>OrderProInfo.jsp</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <%
 request.setCharacterEncoding("UTF-8");

@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../style.css" rel="stylesheet" type="text/css" />
 <script>
 function checkField() {
 	let inputs = document.loginForm; 

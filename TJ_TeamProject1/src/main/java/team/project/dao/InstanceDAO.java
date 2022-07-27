@@ -617,7 +617,7 @@ public class InstanceDAO {
 	
 	
 	
-	//	produect p_delete on 1 로 수정(삭제됨으로 수정)
+	//	produect p_delete = 1 로 수정(삭제됨으로 수정)
 	public int deleteProduct(String p_no) {
 		int pno= Integer.parseInt(p_no);
 		int result = 0;
@@ -651,7 +651,7 @@ public class InstanceDAO {
 	
 	
 	
-	//	produect p_delete on 1 로 수정(삭제됨으로 수정)
+	//	bidding 테이블에서 경매중인(b_bidding=1) 상품(p_no)의 참여자수 갖고오기
 	public int getBiddingNum(int pno) {
 		int count = 0;
 		Connection conn = null;
@@ -872,6 +872,45 @@ public class InstanceDAO {
 		}
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 마이페이지 유저 테이블 수정하기
+		public int deleteUser(String uid) {
+			int result = 0;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			try {
+				conn = getConnection();
+				String sql = "update userlist set user_delete=1 where user_id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1,uid);
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeConnection(pstmt, conn);
+			}
+			return result;
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

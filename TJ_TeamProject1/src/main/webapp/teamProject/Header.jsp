@@ -96,7 +96,6 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="../style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		td{
 			width: 150px;
@@ -135,7 +134,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		
 		<button onclick="window.location.href='selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
 
-		<button onclick="window.location.href='mypage/MyProductNow.jsp'" style="width:60px;  " >내정보</button>
+		<button onclick="window.location.href='mypage/OrderProcessList.jsp'" style="width:60px;  " >내정보</button>
 		<button onclick="window.location.href='help/Help.jsp'" style="width:60px;  " >고객센터</button>
 
 		<div style=" margin-right: 300px;">
