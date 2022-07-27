@@ -35,6 +35,10 @@
 			<td><a onclick="location.href='AdminProductList.jsp'">상품 확인</a>
 			</td>
 		</tr>
+		<tr>
+			<td><a onclick="location.href='AdminQnAList.jsp'">자주하는질문</a>
+			</td>
+		</tr>		
 	</table>
 
 
