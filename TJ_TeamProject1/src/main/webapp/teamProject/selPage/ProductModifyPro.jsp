@@ -17,7 +17,7 @@
 	String UID = (String)session.getAttribute("UID");
 	
 	if(UID != null){	
-	String path = request.getRealPath("teamProject/save"); 
+	String path = request.getRealPath("TJ_TeamProject1/teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5; 
 	String enc = "UTF-8"; 
@@ -87,8 +87,8 @@
 	dto.setP_start(Timestamp.valueOf(p_start));
 	dto.setP_end(Timestamp.valueOf(p_end));
 	
-	
-	int result = dao.productModify(dto, p_no);
+	 
+	int result = dao.productModify(dto, p_no);   
 	
 %>
 <body>

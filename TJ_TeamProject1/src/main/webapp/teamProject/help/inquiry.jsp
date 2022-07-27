@@ -29,6 +29,10 @@ if (session.getAttribute("UID") != null) {
 }
 %>
 </head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<br/>
+<br/>
 <body>
 	<br />
 	<h2 align="center">문의신청</h2>
@@ -73,5 +77,10 @@ if (session.getAttribute("UID") != null) {
 
 		</table>
 	</form>
+<br/>
+<br/>
+<br/>
+
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>

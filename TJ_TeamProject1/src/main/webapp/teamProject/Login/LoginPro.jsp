@@ -83,6 +83,13 @@
 	
 	</script>
 	
-<%}%>
+<%}else{%>
+		<script>
+		alert("id혹은pw가 맞지 않습니다..");
+		history.back();
+	</script>
+	
+<%
+}%>
 </body>
 </html>

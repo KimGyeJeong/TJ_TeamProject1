@@ -7,6 +7,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<br />
+<br />
+<br />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
@@ -170,7 +175,15 @@ if(auto != null && id != null && pw != null){
 
 
 	<%}%>
+<br/>
+<br/>
+<br/>
 
+
+
+
+
+<%@ include file="../Footer.jsp" %>
 
 </body>
 </html>

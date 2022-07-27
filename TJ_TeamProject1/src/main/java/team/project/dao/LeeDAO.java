@@ -757,6 +757,7 @@ public class LeeDAO {
 					dto.setP_title(rs.getString("P_TITLE"));
 					dto.setP_img1(rs.getString("P_IMG1"));
 					dto.setP_no(rs.getInt("P_NO"));
+					dto.setCa_no(rs.getInt("ca_no"));
 					list.add(dto);
 					
 					

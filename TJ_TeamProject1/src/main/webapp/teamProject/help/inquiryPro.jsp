@@ -1,3 +1,4 @@
+<%@page import="team.project.model.UserQuestionDTO"%>
 <%@page import="team.project.dao.LeeDAO"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -19,14 +20,15 @@
 	String enc = "UTF-8";
 	DefaultFileRenamePolicy dp =new DefaultFileRenamePolicy();
 	MultipartRequest mr =new MultipartRequest(request, path, max, enc, dp);
-
-	inquiry.setUser_id((String)session.getAttribute("u_id")); 
+	
+	inquiry.setUser_id((String)session.getAttribute("UID")); 
 	inquiry.setUq_title(mr.getParameter("subject"));
 	inquiry.setUq_cat(mr.getParameter("category"));
 	inquiry.setUq_content(mr.getParameter("content"));
-	inquiry.setUq_img1(mr.getParameter("img1"));
-	inquiry.setUq_img2(mr.getParameter("img2"));
-	inquiry.setUq_img3(mr.getParameter("img3"));
+	System.out.println("김범수와에러잡기:"+mr.getFilesystemName("img1"));
+	inquiry.setUq_img1(mr.getFilesystemName("img1"));
+	inquiry.setUq_img2(mr.getFilesystemName("img2"));
+	inquiry.setUq_img3(mr.getFilesystemName("img3"));
 	
 	LeeDAO dao = new LeeDAO();
 	int result =dao.insertinquiry(inquiry); 

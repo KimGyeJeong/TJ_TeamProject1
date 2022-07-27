@@ -42,10 +42,17 @@
 	System.out.println("result:"+result);
 	
 	
-	
+	if(result ==1){%>
+		<script>
+			alert("회원가입이 완료되었습니다!");
+			window.location="../Main.jsp";
+		</script>
+		<%
+		
+	}
 	
 
-	response.sendRedirect("../Main.jsp");
+	
 	
 	
 %>

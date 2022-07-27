@@ -58,12 +58,16 @@
 
 </head>
 <body>
-
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br />
+	<h1 align="center">상품 리스트</h1>
+	<br />
 
 	<br />
-	<h4>추천 상품</h4>
-		<table>
-			<tr>
+		<table align="center" >
+			<tr >
 		<%
 		if(list != null){
 			for(int i = 0; i<list.size(); i++){
@@ -72,7 +76,7 @@
 					<tr>
 <%				} %>
 				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
-				<img src="../save/<%=dto.getP_img1() %>" /><br/>
+				<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
@@ -111,8 +115,12 @@
 			&gt; </a>
 		<%}
 	}%>
-
+	<br/>
+	<br/>
 	</div>
-<%%>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>
