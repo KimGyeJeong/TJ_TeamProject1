@@ -24,9 +24,9 @@
 		<table>
 			<tr>
 				<td>상품 정보</td>
-				<td><textarea rows="2" cols="24" readonly>문의할 글의 제목 : <%=p_title %>
-				</textarea>
-				<textarea rows="2" cols="22" readonly>판매자 : <%=p_sellerId %></textarea></td>
+				<td><text readonly>문의할 글의 제목 : <%=p_title %>
+				</text><br/>
+				<text readonly>판매자 : <%=p_sellerId %></text></td>
 			</tr>
 			<tr>
 				<td>문의 제목</td>
@@ -45,7 +45,8 @@
 <% }else{%>
 		<script>
 			alert("로그인 후 이용해 주세요!");
-			window.location.assign("../Login/Login.jsp");
+			opener.parent.location='../Login/Login.jsp';
+			window.close();
 		</script>
 <%	} %>
 </body>

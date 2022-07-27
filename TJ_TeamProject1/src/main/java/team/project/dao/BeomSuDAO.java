@@ -189,6 +189,40 @@ public class BeomSuDAO {
 		return list;
 	}
 	
+	public ProductQuestionDTO ProductQuestionList2(int pq_no) {
+		ProductQuestionDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from ProductQuestion where pq_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pq_no);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new ProductQuestionDTO();
+				dto.setPq_no(rs.getInt("pq_no"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setPq_title(rs.getString("pq_title"));
+				dto.setPq_content(rs.getString("pq_content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setPq_writeReg(rs.getTimestamp("pq_writeReg"));
+				dto.setPq_answer(rs.getString("pq_answer"));
+				dto.setPq_answerReg(rs.getTimestamp("pq_answerReg"));
+				dto.setPq_delete(rs.getInt("pq_delete"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		return dto;
+	}
+	
 	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content) {
 		int result = -1;
 		Connection conn = null;
@@ -1180,6 +1214,27 @@ public class BeomSuDAO {
 			e.printStackTrace();
 		}finally {
 			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public int ProductAnswerAdd(int pq_no, String pq_answer) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update ProductQuestion set pq_answer=? , pq_answerReg=sysdate where pq_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pq_answer);
+			pstmt.setInt(2, pq_no);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
 			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
 			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
 		}
