@@ -231,7 +231,7 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td id="special" ><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+			<td id="special" ><a  href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>"> 
 				<img align="center" src="save/<%=dto.getP_img1()%>" width="250px"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
@@ -254,7 +254,7 @@ function showDivs(n) {
 			if(i%4==0){%>
 				<tr>
 			<%} %>
-			<td id="special" ><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"> 
+			<td id="special" ><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>"> 
 				<img align="center" src="save/<%=dto.getP_img1()%>" width="300"/><br/><%=dto.getP_title()%>
 			</a></td>
 			
