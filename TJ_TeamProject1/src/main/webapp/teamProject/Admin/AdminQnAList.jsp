@@ -79,18 +79,23 @@
 				<td><%=qnaNumber--%></td>
 				<td><%=dto.getQ_no()%></td>
 				<td><a
-					href="javascript:goPage('AdminQnA.jsp', <%=dto.getQ_no()%>)"><%=dto.getQ_title()%></a>
+					href="javascript:goPage('AdminQnA.jsp',<%=dto.getQ_no()%>)"><%=dto.getQ_title()%></a>
 
 				</td>
 				<td><%=dto.getQ_reg()%></td>
 				<td><input type="button" value="삭제"
-					onclick="goPage('AdminQnADelete.jsp',<%=dto.getQ_no()%>)">
+					onclick="check(<%=dto.getQ_no()%>)">
 				</td>
 			</tr>
 			<%
 			}
 			} else {
 			//list == null
+			%>
+			<tr>
+			<td colspan="5">등록된 글이 없습니다.</td>
+			</tr>
+			<%
 			}
 			%>
 
@@ -163,6 +168,15 @@
 
 
 	<script type="text/javascript">
+	
+	function check(q_no){
+		let checkDelete = confirm("자주하는 질문 게시글을 삭제하겠습니까?");
+		if(checkDelete){
+			goPage('AdminQnADelete.jsp', q_no);
+		}else{
+			history.go(0);
+		}
+	}
 	
 		function goPage(uri, q_no) {
 			let f = document.createElement('form');
