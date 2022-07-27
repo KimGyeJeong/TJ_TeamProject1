@@ -25,6 +25,7 @@
 	String UID = (String)session.getAttribute("UID");
 	String pageNum = (String)request.getParameter("pageNum");
 	int ca_no = Integer.parseInt(request.getParameter("ca_no"));
+	System.out.println(ca_no);
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
@@ -52,6 +53,13 @@
 		}
 		if(result2 > 0){
 			dto = dao.ProductDateCheck2(p_no);
+			List bidList = dao.biddingGet(p_no);
+			if(bidList != null){
+				for(int i = 0; i<bidList.size(); i++){
+					BiddingDTO bidDTO = (BiddingDTO)bidList.get(i);
+					dao.userMoneyReturn(bidDTO.getUser_id(), bidDTO.getB_bidding());
+				}
+			}
 		}
 	}
 	CategoryDTO caDTO = dao.getCategoryName(ca_no);

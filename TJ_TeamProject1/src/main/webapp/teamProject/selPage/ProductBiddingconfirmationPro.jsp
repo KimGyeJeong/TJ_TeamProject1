@@ -17,7 +17,6 @@
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	if(UID != null && b_no != null && p_no != null){
 	BeomSuDAO dao = new BeomSuDAO();
-	dao.biddingStatusSet(p_no, b_no);
 	int result = dao.confirmation(b_no);
 	
 	
@@ -26,11 +25,13 @@
 <%	if(result == 1){ 
 		
 		List bidList = dao.completionBidding(p_no, b_no);
+		dao.biddingStatusSet(p_no, b_no);
 		for(int i = 0; i<bidList.size(); i++){
 			BiddingDTO bidDTO = (BiddingDTO)bidList.get(i);
 			UserListDTO userDTO = dao.userCheck(bidDTO.getUser_id());
 			dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
 		}
+		dao.productBuy(p_no);
 %>
 		<script type="text/javascript">
 			alert("낙찰을 완료했습니다!!");
