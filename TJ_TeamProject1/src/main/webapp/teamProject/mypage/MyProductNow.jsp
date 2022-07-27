@@ -12,7 +12,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>판매중인 상품</title>
+	<jsp:include page="../UIDcheck.jsp"></jsp:include>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<jsp:include page="../Header.jsp"></jsp:include>
+	<jsp:include page='../floatingAdvertisement.jsp'/>
 	<style type="text/css">
 		#mypagelist {
 			list-style: none;
@@ -37,14 +40,12 @@
 	String uid = (String)session.getAttribute("UID");
 	
 	
-	uid = "qwe8246"; 		//	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	InstanceDAO dao = new InstanceDAO();
 	List<CategoryDTO> category = dao.getCategory(); 
 	List<ProductDTO> sellerProduct = dao.getSellerProduct(uid);
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 	
 	%>
-<jsp:include page="../Header.jsp"></jsp:include>
 </head>
 
 <body>
@@ -57,8 +58,8 @@
   <li><a href="MyReview.jsp"> 나의 후기 </a></li>
   <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
   <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-  <li><a href=""> 나의 문의사항 </a></li>
-  <li><a href="MyHelp.jsp"> 고객센터 </a></li>
+  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
+  <li><a href="../hlep/Help.jsp"> 고객센터 </a></li>
 </ul>
 <div id="mypagebody" >
 <fieldset>

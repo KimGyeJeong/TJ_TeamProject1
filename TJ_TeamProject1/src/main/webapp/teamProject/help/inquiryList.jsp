@@ -14,7 +14,7 @@
 <br />
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
 <%
 String id = null, pw = null, auto = null; 
 Cookie[] coos = request.getCookies(); 

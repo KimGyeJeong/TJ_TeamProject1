@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddMyMoneyPro</title>
+<title></title>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 </head>
 <body>
 <%

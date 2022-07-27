@@ -7,12 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 </head>
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246"; //	임시!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 String pw = request.getParameter("pw");
 String confirm = request.getParameter("confirm");
 GyeJeongDAO gjdao = new GyeJeongDAO();

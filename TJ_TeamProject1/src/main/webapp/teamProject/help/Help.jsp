@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 	<title>고객센터문의 페이지</title>
-	<link href="../style.css" rel="stylesheet" type="text/css" />
-	
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
 <%
 String id = null, pw = null, auto = null; 
 Cookie[] coos = request.getCookies(); 
@@ -59,15 +58,15 @@ if(auto != null && id != null && pw != null){
 <table border="1">
 	<tr>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg.jpg" width='200px'/>
+		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg.jpg" width='200px'/>
 		
 		</td>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='200px'/>
+		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='200px'/>
 		
 		</td>
 		<td>
-		<img onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/QnA.jsp'" src="helpimg3.png" width='200px'/>
+		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/QnA.jsp'" src="helpimg3.png" width='200px'/>
 		
 		</td>
 	</tr>

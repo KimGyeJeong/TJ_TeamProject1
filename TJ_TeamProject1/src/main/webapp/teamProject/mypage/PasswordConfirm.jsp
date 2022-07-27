@@ -7,7 +7,8 @@
 <html>
 <head> 
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>확인</title>
+	<jsp:include page="../UIDcheck.jsp"></jsp:include>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
 	<style type="text/css">
 		#mypagelist {
@@ -34,7 +35,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<CategoryDTO> category = dao.getCategory();  
 

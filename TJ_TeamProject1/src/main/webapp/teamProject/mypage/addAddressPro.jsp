@@ -6,18 +6,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>
+</title>
 <script type="text/javascript">
 function pageReload() {
 	window.location.reload();
 }
 </script>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 </head>
+
 <%
 
 	request.setCharacterEncoding("UTF-8");
 	String uid = (String)session.getAttribute("UID");
-	uid = "qwe8246";	//////////////////////////////////////////////////임시!
 	int result=0;
 	int deleteResult=0;
 	InstanceDAO dao = new InstanceDAO();

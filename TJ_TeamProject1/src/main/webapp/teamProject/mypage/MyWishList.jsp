@@ -10,15 +10,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>찜한 상품들</title>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <jsp:include page="../Header.jsp"></jsp:include>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 </head>
 
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
-uid = "qwe8246";
 InstanceDAO dao = new InstanceDAO();
 List<WishListDTO> wList = dao.getWishList(uid);
 SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
@@ -38,8 +39,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
   <li><a href="MyReview.jsp"> 나의 후기 </a></li>
   <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
   <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-  <li><a href=""> 나의 문의사항 </a></li>
-  <li><a href="MyHelp.jsp"> 고객센터 </a></li>
+  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
+  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
 </ul>
 <div id="mypagebody" >
 <fieldset>

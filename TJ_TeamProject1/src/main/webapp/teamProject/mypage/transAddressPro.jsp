@@ -10,12 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 </head>
 <% 
 request.setCharacterEncoding("UTF-8");
 String uid= (String)session.getAttribute("UID");
-uid = "qwe8246";
 int result = -100;
 String ano = request.getParameter("ano");
 String ono = request.getParameter("ono");
