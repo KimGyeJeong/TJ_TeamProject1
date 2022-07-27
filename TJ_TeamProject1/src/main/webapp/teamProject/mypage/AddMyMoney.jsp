@@ -6,11 +6,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddMyMoney</title>
+<title>충전하기</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+<jsp:include page="../Header.jsp"></jsp:include>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
+<style type="text/css">
+		#content {
+			display: inline-block;
+		}
+		#mypagelist {
+			list-style: none;
+			display: inline-block;
+		}
+		#mypagelist li{
+			margin: 20px;
+			font-size: 18px;
+		}
+		#mypagebody{
+			position: relative;
+			left: 50px;
+			display:inline-block;
+		}
+	</style> 
 </head>
 <body>
+<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
+
+<ul id="mypagelist">
+  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
+  <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
+  <li><a href="MyWishList.jsp"> 찜 </a></li>
+  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
+  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
+  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
+	<li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
+  <li><a href="../help/MyHelp.jsp"> 고객센터 </a></li>
+</ul>
 	<%
 	//이 페이지는 로그인 한사람만 들어와야함.
 	//1. 세션값or 쿠키값 확인
@@ -31,7 +62,7 @@
 		src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript"
 		src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
+<div id="mypagebody">
 <h2><%=dto.getUser_id() %></h2>
 
 	<div id="addMoney">
@@ -155,5 +186,7 @@
 		<%
 	}
 	%>
+</div>
+<jsp:include page="../Footer.jsp"></jsp:include>
 </body>
 </html>

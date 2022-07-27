@@ -6,13 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
 <script type="text/javascript">
 function pageReload() {
 	window.location.reload();
 }
 </script>
+<jsp:include page="../UIDcheck.jsp"></jsp:include>
 </head>
+
 <%
 
 	request.setCharacterEncoding("UTF-8");
