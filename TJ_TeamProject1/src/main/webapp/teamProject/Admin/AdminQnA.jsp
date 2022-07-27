@@ -30,7 +30,7 @@
 		dto.setQ_answerContent("");
 	}
 	%>
-	<form action="AdminQnAPro.jsp" method="post">
+	<form name="QnAForm">
 		<table>
 			<tr style="display: none">
 				<td><input type="hidden" name="q_no" value="<%=dto.getQ_no()%>">
@@ -63,14 +63,20 @@
 				%> </td>
 			</tr>
 			<tr>
-				<td>
+				<td colspan="2">
 					<%
 			if(q_no!=null){
-				%> <input type="submit" value="수정"> <%
+				%> 
+				<button type="submit" formaction="AdminQnAPro.jsp" formmethod="post">수정</button>
+				 <%
 			}else{
-				%> <input type="submit" value="작성"> <%
+				%> 
+				<button type="submit" formaction="AdminQnAPro.jsp" formmethod="post">작성</button>
+ 				<%
 			}
 			%>
+			<button type="submit" formaction="AdminQnADelete.jsp" formmethod="post">삭제</button>
+
 				</td>
 			</tr>
 		</table>

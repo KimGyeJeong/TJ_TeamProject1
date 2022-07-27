@@ -1675,4 +1675,28 @@ public class GyeJeongDAO {
 		return result;
 	}
 
+	public int deleteQnA(int q_no) {
+		result = 0;
+		try {
+			conn = getConnection();
+			
+			sql = "DELETE FROM  QNA\r\n"
+					+ "WHERE Q_NO = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, q_no);
+			
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.deleteQnA(int q_no) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+
+		return result;
+	}
+
 }

@@ -41,10 +41,11 @@
 	//검색
 	// 유저 이름으로 검색
 	String search = request.getParameter("search");
-	System.out.println("AdminReportList.value search " + search);
+	//System.out.println("AdminQnAList.value search 44" + search);
 
 	if (search == null) {
 		qnaCount = dao.getQnACount();
+		//System.out.println("QnAList.value 48. qnaCount : "+qnaCount);
 		if (qnaCount > 0)
 			list = dao.getQnA(startRow, endRow);
 	} else {
@@ -53,44 +54,117 @@
 			list = dao.getSearchQnA(startRow, endRow, search);
 
 	}
+	int qnaNumber = qnaCount - (currentPage - 1) * pageSize;
 	%>
-	<table>
-		<tr>
-			<td align="right" colspan="4"> <input type="button" onclick="location.href='AdminQnA.jsp'"
-				value="작성"></td>
-		</tr>
-		<tr>
-			<td>자주하는 질문 게시판 번호</td>
-			<td>QnA고유번호</td>
-			<td>QnA제목</td>
-			<td>QnA작성시간</td>
-		</tr>
-		
-		<%
-		if(list!=null){
-			for(int i=0;i<list.size();i++){
-				dto = list.get(i);
-				%>
-				<tr>
-				<td><%=qnaCount-- %></td>
-				<td><%= dto.getQ_no()%></td>
-				<td>
-				<a href="javascript:goPage(<%=dto.getQ_no()%>)"><%= dto.getQ_title() %></a>
-				
+	<div>
+		<table>
+			<tr>
+				<td align="right" colspan="4"><input type="button"
+					onclick="location.href='AdminQnA.jsp'" value="작성"></td>
+			</tr>
+			<tr>
+				<td>자주하는 질문 게시판 번호</td>
+				<td>QnA고유번호</td>
+				<td>QnA제목</td>
+				<td>QnA작성시간</td>
+				<td>-</td>
+			</tr>
+
+			<%
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					dto = list.get(i);
+			%>
+			<tr>
+				<td><%=qnaNumber--%></td>
+				<td><%=dto.getQ_no()%></td>
+				<td><a
+					href="javascript:goPage('AdminQnA.jsp', <%=dto.getQ_no()%>)"><%=dto.getQ_title()%></a>
+
 				</td>
-				<td><%= dto.getQ_reg() %></td>
-				</tr>
-		<%
+				<td><%=dto.getQ_reg()%></td>
+				<td><input type="button" value="삭제"
+					onclick="goPage('AdminQnADelete.jsp',<%=dto.getQ_no()%>)">
+				</td>
+			</tr>
+			<%
 			}
-		}else{
+			} else {
 			//list == null
+			}
+			%>
+
+		</table>
+	</div>
+
+	<%-- pageNum --%>
+	<div align="center">
+		<%
+		if (qnaCount > 0) {
+			int pageNumSize = 5;
+			int pageCount = qnaCount / pageSize + (qnaCount % pageNumSize == 0 ? 0 : 1);
+			int startPage = (int) ((currentPage - 1) / pageNumSize) * pageNumSize + 1;
+			int endPage = startPage + pageNumSize - 1;
+
+			if (endPage > pageCount)
+				endPage = pageCount;
+
+			if (startPage > pageNumSize) {
+				if (search != null) {
+		%>
+		<a class="pageNum"
+			href="AdminQnAList.jsp?pageNum=<%=startPage - 1%>&search=<%=search%>">&lt;&nbsp;</a>
+		<%
+		} else {
+		%>
+		<a class="pageNum" href="AdminQnAList.jsp?pageNum=<%=startPage - 1%>">&lt;&nbsp;</a>
+		<%
+		}
+		}
+		for (int i = startPage; i < endPage + 1; i++) {
+		//System.out.println("AdminQnAList.value 페이지for 117 i=" + i);
+		if (search != null) {
+		%>
+		<a class="pageNum"
+			href="AdminQnAList.jsp?pageNum=<%=i%>&search=<%=search%>">&nbsp;<%=i%>&nbsp;
+		</a>
+		<%
+		} else {
+		%>
+		<a class="pageNum" href="AdminQnAList.jsp?pageNum=<%=i%>">&nbsp;<%=i%>&nbsp;
+		</a>
+		<%
+		}
+		}
+		if (endPage < pageCount) {
+		if (search != null) {
+		%>
+		<a class="pageNum"
+			href="AdminQnAList.jsp?pageNum=<%=startPage + pageNumSize%>&search=<%=search%>">&nbsp;&gt;</a>
+		<%
+		} else {
+		%>
+		<a class="pageNum"
+			href="AdminQnAList.jsp?pageNum=<%=startPage + pageNumSize%>">&nbsp;&gt;</a>
+		<%
+		}
+		}
 		}
 		%>
-		
-	</table>
+	</div>
+
+	<div align="center">
+		<form action="AdminQnAList.jsp">
+			<input type="text" name="search" placeholder="검색"> <input
+				type="submit" value="검색">
+		</form>
+	</div>
+
+
+
 	<script type="text/javascript">
 	
-		function goPage(q_no) {
+		function goPage(uri, q_no) {
 			let f = document.createElement('form');
 
 			let no;
@@ -101,8 +175,8 @@
 
 			f.appendChild(no);
 			f.setAttribute('method', 'post');
-			f.setAttribute('action', 'AdminQnA.jsp');
-
+			f.setAttribute('action', uri );
+			
 			document.body.appendChild(f);
 			f.submit();
 		}
