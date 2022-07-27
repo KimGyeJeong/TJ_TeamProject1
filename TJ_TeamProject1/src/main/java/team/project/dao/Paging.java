@@ -1,14 +1,19 @@
 package team.project.dao;
 public class Paging{
-	Paging(){}
-	Paging(int totalData,int pageSize , int dataLimit , String page){
+	
+	public Paging(){
+		
+	}
+	
+	public Paging(int totalData,int pageSize , int dataLimit , String page){
 		this.totalData = totalData;
 		this.pageSize = pageSize;
 		this.dataLimit = dataLimit;
 		this.page = page;
-		this.totalPage = totalData/dataLimit;
-		this.dataNumber[0] = (this.pageN*dataLimit)-(dataLimit-1);
-		this.dataNumber[1] = this.pageN*dataLimit;
+		this.pageN = Integer.parseInt(page);
+		this.totalPage = (totalData/dataLimit) +1;
+		this.dataNumber[0] = (pageN*dataLimit)-(dataLimit-1);
+		this.dataNumber[1] = pageN*dataLimit;
 		this.isfirst = (((pageN-1)/pageSize)*pageSize)+1;
 		this.islast = (this.isfirst+pageSize)-1;
 	}
@@ -22,7 +27,7 @@ public class Paging{
 	private int islast;
 	private int dataLimit;
 	private int[] dataNumber = new int [2];
-	private int pageN = Integer.parseInt(page);
+	private int pageN;
 	
 	
 	
@@ -31,6 +36,7 @@ public class Paging{
 		this.pageSize = pageSize;
 		this.dataLimit = dataLimit;
 		this.page = page;
+		this.pageN = Integer.parseInt(page);
 		this.totalPage = totalData/dataLimit;
 		this.dataNumber[0] = (this.pageN*dataLimit)-(dataLimit-1);
 		this.dataNumber[1] = this.pageN*dataLimit;
@@ -42,13 +48,15 @@ public class Paging{
 		this.pageSize = pageSize;
 		this.dataLimit = dataLimit;
 		this.page = ""+pageN;
-		this.totalPage = totalData/dataLimit;
+		this.totalPage = (totalData/dataLimit) +1;
 		this.dataNumber[0] = (pageN*dataLimit)-(dataLimit-1);
 		this.dataNumber[1] = pageN*dataLimit;
 		this.isfirst = (((pageN-1)/pageSize)*pageSize)+1;
 		this.islast = (this.isfirst+pageSize)-1;
 	}
-	
+	public void setIslast(int islast) {
+		this.islast=islast;
+	}
 	
 	
 	
@@ -85,6 +93,9 @@ public class Paging{
 	}
 	public int getDataNumberEnd() {
 		return dataNumber[1];
+	}
+	public int getPageN() {
+		return pageN;
 	}
 	
 	

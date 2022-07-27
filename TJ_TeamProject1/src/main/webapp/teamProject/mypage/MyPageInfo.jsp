@@ -68,7 +68,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 			<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
 		</tr>
 		<tr>
-			<td>이름 : </td> <td> <%= profile.getUser_name() %> <img src="<%= profile.getUser_img() %>"></td>  
+			<td>이름 : </td> <td> <%= profile.getUser_name() %> <img src="../save/<%= profile.getUser_img() %>"></td>  
 		</tr>
 		<tr>
 			<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>

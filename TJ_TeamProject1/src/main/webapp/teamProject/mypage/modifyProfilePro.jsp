@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="team.project.model.UserListDTO"%>
 <%@page import="team.project.dao.InstanceDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,12 +16,16 @@ request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 
 
-String pw = request.getParameter("modifyPW");
-String pwcheck = request.getParameter("modifyPWcheck");
-String username = request.getParameter("username");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
+String path = request.getRealPath("teamProject/save");
+int size = 1024*1024*10;
 
+MultipartRequest mr = new MultipartRequest(request, path,size,"UTF-8",new DefaultFileRenamePolicy());
+String pw = mr.getParameter("modifyPW");
+String pwcheck = mr.getParameter("modifyPWcheck");
+String username = mr.getParameter("username");
+String email = mr.getParameter("email");
+String phone = mr.getParameter("phone");
+String profileIMG = mr.getFilesystemName("profileIMG");
 
 InstanceDAO dao = new InstanceDAO();
 UserListDTO dto = new UserListDTO();
@@ -32,6 +38,9 @@ dto.setUser_email(email);
 dto.setUser_phone(phone);
 
 
+	if(profileIMG != null){
+		dto.setUser_img(profileIMG);		
+	}
 	if(pw!=null && pwcheck!=null){
 		if(pw.equals(pwcheck)){
 			dto.setUser_pw(pw);

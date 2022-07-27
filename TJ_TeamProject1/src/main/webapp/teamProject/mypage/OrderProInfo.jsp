@@ -40,7 +40,7 @@ if(order.getP_status()==1){
 (<%= address.getA_zipCode() %>)<%= address.getA_address()%>&nbsp;<%= address.getA_address2() %>
 <div>배송시 요청사항 : &nbsp;<% if(address.getA_comment()!=null){ %> <%= address.getA_comment() %> <% } %> </div>
 	<div>
-		<p> <img src="<%= product.getP_img1() %>"> </p>
+		<p> <img src="../save/<%= product.getP_img1() %>"> </p>
 		<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
 		<% if(order.getP_status() == 1) {%>
 		<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>

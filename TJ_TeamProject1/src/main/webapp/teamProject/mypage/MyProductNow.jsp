@@ -74,7 +74,7 @@
 		<%	for(int i =0 ; i<sellerProduct.size() ; i++){
 			ProductDTO product = sellerProduct.get(i); %>
 			<div id="seller">
-				<p> <img src="<%= product.getP_img1() %>"> </p>
+				<p> <img src="../save/<%= product.getP_img1() %>"> </p>
 				<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
 				<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
 				<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
@@ -91,7 +91,7 @@
 					<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
 					<input type="submit" value="등록취소">
 				</form>
-				<form action="ProductModifyForm.jsp" method="post">
+				<form action="../selPage/ProductModifyForm.jsp" method="post">
 					<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
 					<input type="submit" value="수정하기">
 				</form>

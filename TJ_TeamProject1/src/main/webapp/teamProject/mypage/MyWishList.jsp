@@ -55,7 +55,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 		for(int i =0 ; i<wList.size() ; i++){
 		ProductDTO product = dao.getProduct(wList.get(i).getP_no());  %>
 		<div id="seller">
-			<p> <img src="<%= product.getP_img1() %>"> </p>
+			<p> <img src="../save/<%= product.getP_img1() %>"> </p>
 			<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
 			<% if(product.getP_status() == 1){ %>
 			<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
