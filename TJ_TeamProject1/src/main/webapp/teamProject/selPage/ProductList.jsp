@@ -70,16 +70,20 @@
 		<%
 		if(list != null){
 			for(int i = 0; i<list.size(); i++){
+				int num = i;
 				ProductDTO dto = (ProductDTO)list.get(i);
 				if(i%5==0){%>
-					<tr>
+				<tr>
 <%				} %>
-				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
-				<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
-				<%=dto.getP_title() %>
-				</a>
-				</td>
-			<%}
+<%				if(dto.getP_delete() == 0){ %>
+					
+					<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
+					<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+					<%=dto.getP_title() %>
+					</a>
+					</td>
+<%				}
+			}
 		}else{%>
 		<h4>해당 카테고리에 상품이 없습니다!</h4>
 <%		} %>

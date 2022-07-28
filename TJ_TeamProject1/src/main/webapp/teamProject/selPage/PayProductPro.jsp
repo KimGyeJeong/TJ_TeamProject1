@@ -81,6 +81,7 @@
 <%		}
 	}else if(result == -1){%>
 		<script>
+			
 			var con_test = confirm("현재 충전된 잔액이 부족합니다! 충전하러 가시겠습니까?");
 			if(con_test == true){
 				window.location.assign("../mypage/AddMyMoney.jsp");	
