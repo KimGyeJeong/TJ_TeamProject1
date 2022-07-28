@@ -18,6 +18,10 @@
 	
 	
 	 <style type="text/css">
+	 	#bodylist * {
+	 		width : 80px;
+	 		align:"center";
+	 	}
 		#mypagelist {
 			list-style: none;
 			display: inline-block;
@@ -27,12 +31,16 @@
 			font-size: 18px;
 		}
 		#mypagebody{
+			width: 480px;
 			position: relative;
 			left: 50px;
 			display:inline-block;
 		}
 		#seller p {
 			display: inline;
+		}
+		#ordertable {
+			margin: 10px;
 		}
 	</style> 
 	<% 
@@ -50,7 +58,7 @@
 
 <ul id="mypagelist">
   <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-  <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
+  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
   <li><a href="MyWishList.jsp"> 찜 </a></li>
   <li><a href="MyReview.jsp"> 나의 후기 </a></li>
   <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
@@ -62,12 +70,12 @@
 	<fieldset>
 	<legend>구입한 상품</legend>
 	<div>
-	<table>
-		<tr>
+	<table id=ordertable>
+		<tr id=bodylist>
+	<%	if(orderlist != null){ %>
 			<td> 날짜 </td><td colspan="2">상품정보</td>  <td>상태</td> <td>상세</td>
 		</tr>
-	<%	if(orderlist != null){ 
-			for(int i=0; i<productlist.size() ; i++){
+		<%	for(int i=0; i<productlist.size() ; i++){
 				OrderListDTO order = orderlist.get(i);
 				ProductDTO product = productlist.get(i); %>
 				
@@ -95,18 +103,16 @@
 								<td>배송완료</td> 
 								<td> 
 									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									
-									<a onclick="confirmation()"><button>주문확정</button></a>
+									<form action="../selPage/AddPayProductPro.jsp" method="post">
+										<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+										<input type="submit" value="주문확정">
+									</form> 
 								</td>
 							<%	break;
 							case 3: %>
 								<td>주문확정</td> 
 								<td> 
 									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<form action="../selPage/AddPayProductPro.jsp" method="post">
-										<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
-										<input type="submit" value="주문확정">
-									</form> 
 								</td>
 							<%	break;
 							case 4: %>
@@ -139,9 +145,9 @@
 				</tr>
 		<%	}%>
 	<%	}else{ %>
-		<p> 저 그런 상품 아닙니다 </p>	
-	<%	}%>
 	</table>
+		<p> 구매한 상품이 없습니다. </p>	
+	<%	}%>
 	</div>
 	</fieldset>
 </div>

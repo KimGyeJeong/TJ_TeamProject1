@@ -108,7 +108,7 @@ public class InstanceDAO {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "select * from product where p_status=1 and p_finish=0 and p_sellerid=? and p_delete=0 order by p_reg desc";
+			String sql = "select * from product where p_sellerid=? and p_delete=0 order by p_reg desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, uid);
 			rs = pstmt.executeQuery();
@@ -886,7 +886,7 @@ public class InstanceDAO {
 	
 	
 	
-	// 마이페이지 유저 테이블 수정하기
+	// 마이페이지 유저 테이블 삭제처리로 변경하기
 		public int deleteUser(String uid) {
 			int result = 0;
 			Connection conn = null;
@@ -975,8 +975,8 @@ public class InstanceDAO {
 	
 	
 	
-	//  이 유저가 평가 당한 리뷰 갖고오기	
-	public List<ReviewDTO> getReportedReview(String uid, int StartP , int EndP) {
+	//  이 유저가 평가 당한 리뷰 페이지에 넣어줄만큼 갖고오기 역순으로	
+	public List<ReviewDTO> getReportedReview(String uid, int StartPage , int EndPage) {
 		List<ReviewDTO> list =null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -988,8 +988,8 @@ public class InstanceDAO {
 					+ " order by re_reg desc) A) B where r >=? and r <=?";
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, uid);
-			pstmt.setInt(2, StartP);
-			pstmt.setInt(3, EndP);
+			pstmt.setInt(2, StartPage);
+			pstmt.setInt(3, EndPage);
 			rs= pstmt.executeQuery();
 			if(rs.next()) {
 				list = new ArrayList<ReviewDTO>();
@@ -1020,8 +1020,8 @@ public class InstanceDAO {
 	
 	
 	
-		//	이 유저가 작성한 평가	
-		public List<ReviewDTO> getReportReview(String uid, int StartP , int EndP) {
+		//	이 유저가 작성한 평가 페이지에 넣어줄만큼 갖고오기
+		public List<ReviewDTO> getReportReview(String uid, int StartPage , int EndPage) {
 			List<ReviewDTO> list =null;
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -1033,8 +1033,8 @@ public class InstanceDAO {
 						+ " order by re_reg desc) A) B where r >=? and r <=?";
 				pstmt= conn.prepareStatement(sql);
 				pstmt.setString(1, uid);
-				pstmt.setInt(2, StartP);
-				pstmt.setInt(3, EndP);
+				pstmt.setInt(2, StartPage);
+				pstmt.setInt(3, EndPage);
 				rs= pstmt.executeQuery();
 				if(rs.next()) {
 					list = new ArrayList<ReviewDTO>();
@@ -1065,14 +1065,63 @@ public class InstanceDAO {
 	
 	
 	
+	public OrderListDTO getOrderList(int p_no , String sellerId , String buyerId) {
+		OrderListDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "select * from orderlist where p_no=? and o_sellerid=? and o_buyerid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, sellerId);
+			pstmt.setString(3, buyerId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new OrderListDTO();
+				dto.setO_no(rs.getInt("o_no"));
+				dto.setP_no(p_no);
+				dto.setP_status(rs.getInt("p_status"));
+				dto.setA_no(rs.getInt("a_no"));
+				dto.setO_buyerId(buyerId);
+				dto.setO_sellerId(sellerId);
+				dto.setO_pro(rs.getInt("o_pro"));
+				dto.setO_reg(rs.getTimestamp("o_reg"));
+				dto.setO_trackingNo(rs.getInt("o_trackingNo"));
+				dto.setO_review(rs.getInt("o_review"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return dto;
+	}
 	
 	
 	
 	
 	
 	
-	
-	
+	public int setFedex(String o_fedexName , String o_trackingNo , String o_no) {
+		int trackingNo = Integer.parseInt(o_trackingNo);
+		int ono = Integer.parseInt(o_no);
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "update orderlist set o_fedexName=? , o_trackingNo=? , o_pro=1 where o_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, o_fedexName); 
+			pstmt.setInt(2,trackingNo);
+			pstmt.setInt(3,ono);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs,pstmt, conn);}
+		return result;
+	}
 	
 	
 	
