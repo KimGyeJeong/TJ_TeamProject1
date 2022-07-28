@@ -110,7 +110,16 @@
 		<tr>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
 			<td><button onclick="window.location='ProductModifyForm.jsp?p_no=<%=p_no%>'">상품 수정</button></td>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
 
 		</tr>
 <%		if(pageNum.equals("0")){%>
@@ -443,6 +452,16 @@
 		<tr>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=0&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 정보</button></td>
 			<td><button onclick="window.location='ProductDetailBuyForm.jsp?pageNum=1&p_no=<%=p_no%>&ca_no=<%=ca_no%>'">상품 문의</button></td>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
+			<td><button onclick="window.location='ProductModifyForm.jsp?p_no=<%=p_no%>'">상품 수정</button></td>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
 		</tr>
 <%		if(pageNum.equals("0")){%>
 		<tr>
