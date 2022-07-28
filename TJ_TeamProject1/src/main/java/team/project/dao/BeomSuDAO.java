@@ -61,6 +61,7 @@ public class BeomSuDAO {
 					dto.setP_finish(rs.getInt("p_finish"));
 					dto.setP_readCount(rs.getInt("p_readCount"));
 					dto.setP_finish(rs.getInt("p_finish"));
+					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 					list.add(dto);
 				}while(rs.next());
 			}
@@ -140,6 +141,7 @@ public class BeomSuDAO {
 				dto.setP_start(rs.getTimestamp("p_start"));
 				dto.setP_status(rs.getInt("p_status"));
 				dto.setP_title(rs.getString("p_title"));
+				dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -727,6 +729,7 @@ public class BeomSuDAO {
 					dto.setP_start(rs.getTimestamp("p_start"));
 					dto.setP_status(rs.getInt("p_status"));
 					dto.setP_title(rs.getString("p_title"));
+					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
 			
@@ -780,6 +783,7 @@ public class BeomSuDAO {
 					dto.setP_start(rs.getTimestamp("p_start"));
 					dto.setP_status(rs.getInt("p_status"));
 					dto.setP_title(rs.getString("p_title"));
+					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
 			
@@ -833,6 +837,7 @@ public class BeomSuDAO {
 					dto.setP_start(rs.getTimestamp("p_start"));
 					dto.setP_status(rs.getInt("p_status"));
 					dto.setP_title(rs.getString("p_title"));
+					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
 			
@@ -1344,4 +1349,61 @@ public class BeomSuDAO {
 		return result;
 	}
 	
+	
+	public int cancelPurchase(int p_price, String UID) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update UserList set user_usemoney=user_usemoney+? where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_price);
+			pstmt.setString(2, UID);
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public void productCancelPurchase(int p_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_finish=0 , p_end=sysdate where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public void endDateUpdate(int p_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_tempReg=sysdate where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
 }

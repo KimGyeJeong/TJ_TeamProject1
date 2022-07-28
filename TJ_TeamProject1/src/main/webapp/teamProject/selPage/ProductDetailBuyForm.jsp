@@ -192,7 +192,7 @@
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %><br/>
 			판매 시작 일자 : <%=dto.getP_start() %><br/>
-			판매 종료 일자 : <%=dto.getP_end() %></td>
+			판매 종료 일자 : <%=dto.getP_tempReg() %></td>
 		</tr>
 		<tr>
 			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>

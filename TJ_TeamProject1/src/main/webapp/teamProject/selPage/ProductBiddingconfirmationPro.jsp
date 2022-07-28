@@ -36,6 +36,7 @@
 			dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
 		}
 		dao.productBuy(p_no);
+		dao.endDateUpdate(p_no);
 %>
 		<script type="text/javascript">
 			alert("낙찰을 완료했습니다!!");
