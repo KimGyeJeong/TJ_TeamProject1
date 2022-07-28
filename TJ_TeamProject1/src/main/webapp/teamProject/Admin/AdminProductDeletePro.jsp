@@ -35,4 +35,4 @@ response.sendRedirect("AdminProductList.jsp");
 <h4><%=getNo %></h4>
 
 </body>
-</html>
+</html> 

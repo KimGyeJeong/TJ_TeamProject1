@@ -24,4 +24,4 @@ response.sendRedirect("AdminHelpList.jsp");
 <h4><%=text %></h4>
 
 </body>
-</html>
+</html> 

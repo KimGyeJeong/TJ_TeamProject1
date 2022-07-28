@@ -134,6 +134,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
     <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
   </div>
 </div>
+<div align="center"><button onclick="window.location.href='/TJ_TeamProject1/teamProject/Notice.jsp'" style="width:120px;  " >공지사항</button></div>
 
 <script>
 <%--슬라이드쇼 자바스크립트부분--%>

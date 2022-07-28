@@ -128,12 +128,13 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		<a href="/TJ_TeamProject1/teamProject/Main.jsp"><img alt="장물아비" src="/TJ_TeamProject1/teamProject/logo.png" width="250px"></a>
 		<h1 style="display: inline-block;"></h1>
 		<form action="/TJ_TeamProject1/teamProject/AllProductList.jsp" style="display: inline-block;">
-			<select>
-				<option value="content" selected>내용</option> 
-				<option value="writer">작성자</option>
+			<select name="sel">
+				<option value="P_TITLE" selected>제목</option> 
+				<option value="P_CONTENT">글내용</option>
+				<option value="p_SELLERID">작성자</option>
 			</select>
 			<input type="text" name="search" >
-			<input type="image" name="submit" src="/TJ_TeamProject1/teamProject/mypage/image/logo.png" alt="검색" width="40px"  />
+			<input type="submit" value="검색"  />
 		</form>
 		
 		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
