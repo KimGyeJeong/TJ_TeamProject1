@@ -48,6 +48,32 @@
 			<td>문의 내용</td>
 			<td><%=dto.getUq_content()%></td>
 		</tr>
+		<%-- 문의 사진 3장 --%>
+		<%
+			for(int i=1;i<3;i++){
+				if(dto.getUq_img1()!=null){
+					%>
+					<tr>
+					<td><img  src="../save/<%=dto.getUq_img1()%>" width="250px"/></td>
+					</tr>
+					<%
+				}
+				if(dto.getUq_img2()!=null){
+					%>
+					<tr>
+					<td><img  src="../save/<%=dto.getUq_img2()%>" width="250px"/></td>
+					</tr>
+					<%
+				}
+				if(dto.getUq_img3()!=null){
+					%>
+					<tr>
+					<td><img  src="../save/<%=dto.getUq_img3()%>" width="250px"/></td>
+					</tr>
+					<%
+				}
+			}
+		%>
 		<tr>
 			<td>등록날짜</td>
 			<td><%=dto.getUq_reg()%></td>
