@@ -24,8 +24,6 @@
 	System.out.println(today);
 	String UID = (String)session.getAttribute("UID");
 	String pageNum = (String)request.getParameter("pageNum");
-	int ca_no = Integer.parseInt(request.getParameter("ca_no"));
-	System.out.println(ca_no);
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
@@ -40,6 +38,7 @@
 	ProductDTO dto = null;
 	List list = null;
 	dto = dao.productDetailBuy(p_no);
+	int ca_no = dto.getCa_no();
 	dao.readCountUp(p_no);
 	list = dao.ProductQuestionList(p_no);
 	UserListDTO userDTO = dao.userCheck(dto.getP_sellerId());
@@ -47,9 +46,11 @@
 	System.out.println(dto.getP_start());
 	System.out.println(dto.getP_end());
 	int result2 = today.compareTo(dto.getP_end());
-	if(dto.getP_finish() == 0){
+	if(dto.getP_finish() == 0 || dto.getP_finish() == 3){
 		if(result < 0){
 			dto = dao.ProductDateCheck(p_no);
+		}else if (result > 0){
+			dto = dao.ProductDateCheck3(p_no);
 		}
 		if(result2 > 0){
 			dto = dao.ProductDateCheck2(p_no);
@@ -127,12 +128,20 @@
 <%			if(list != null){
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
-				%>
+					if(UID == null){
+						UID ="";
+					}
+					if(que_dto.getPq_secret() == 1){ 
+						if(que_dto.getUser_id().equals(UID) || UID.equals(dto.getP_sellerId())){%>
+					
+					
 					<h6>제목 : <%=que_dto.getPq_title() %>
-<%					if(que_dto.getPq_answer() == null){ %>
-					<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '상품 신고', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
-<%					} %>
-					</h6>
+<%					if(UID != null){
+						if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
+						<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+<%						}
+					}%>
+						</h6>
 					
 					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
 					<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
@@ -140,8 +149,30 @@
 							<h6>답변내용</h6>
 							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
 							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
-<%						} %>
-<%				}%>
+				
+<%					}	}
+					}else{%>
+	
+							<h6>제목 : <%=que_dto.getPq_title() %>
+		<%					if(UID != null){
+								if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
+								<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+		<%						}
+							}%>
+							</h6>
+						
+							<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+							<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+	<%						if(que_dto.getPq_answer() != null){%>
+								<h6>답변내용</h6>
+								&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+								<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>	
+	<%						}
+					} %>
+	<%			if(UID.equals("")){
+					UID = null;
+				}
+			}%>
 <%			}else{%>
 				<h3>작성된 문의글이 없습니다!</h3>
 <%			} %>
@@ -209,16 +240,47 @@
 		<tr>
 			<td colspan="3">
 <%			if(list != null){
-				for(int i = 0; i<list.size(); i++){
-					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
-				%>
-					<h6>제목 : <%=que_dto.getPq_title() %></h6>
-					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+	for(int i = 0; i<list.size(); i++){
+		ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
+		if(UID == null){
+			UID ="";
+		}
+		if(que_dto.getPq_secret() == 1){ 
+			if(que_dto.getUser_id().equals(UID) || UID.equals(dto.getP_sellerId())){%>
+		
+		
+		<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+		}%>
+			</h6>
+		
+		<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+		<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							<h6>답변내용</h6>
-							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
-							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
-<%						} %>
+				<h6>답변내용</h6>
+				&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+				<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
+	
+<%					}	}
+		}else{%>
+
+				<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+					
+				}%>
+				</h6>
+			
+				<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+				<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+<%						if(que_dto.getPq_answer() != null){%>
+					<h6>답변내용</h6>
+					&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+					<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>	
+<%						}
+		} %>
+<%			if(UID.equals("")){
+		UID = null;
+	} %>
 <%				}%>
 <%			}else{%>
 				<h3>작성된 문의글이 없습니다!</h3>
@@ -287,16 +349,46 @@
 		<tr>
 			<td colspan="3">
 <%			if(list != null){
-				for(int i = 0; i<list.size(); i++){
-					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
-				%>
-					<h6>제목 : <%=que_dto.getPq_title() %></h6>
-					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+	for(int i = 0; i<list.size(); i++){
+		ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
+		if(UID == null){
+			UID ="";
+		}
+		if(que_dto.getPq_secret() == 1){ 
+			if(que_dto.getUser_id().equals(UID) || UID.equals(dto.getP_sellerId())){%>
+		
+		
+		<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+		}%>
+			</h6>
+		
+		<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+		<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							<h6>답변내용</h6>
-							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
-							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
-<%						} %>
+				<h6>답변내용</h6>
+				&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+				<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
+	
+<%					}	}
+		}else{%>
+
+				<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+				}%>
+				</h6>
+			
+				<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+				<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+<%						if(que_dto.getPq_answer() != null){%>
+					<h6>답변내용</h6>
+					&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+					<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>	
+<%						}
+		} %>
+<%			if(UID.equals("")){
+		UID = null;
+	} %>
 <%				}%>
 <%			}else{%>
 				<h3>작성된 문의글이 없습니다!</h3>
@@ -368,8 +460,16 @@
 				for(int i = 0; i<list.size(); i++){
 					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
 				%>
-					<h6>제목 : <%=que_dto.getPq_title() %></h6>
-					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea><text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+					<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+						if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
+						<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+<%						}
+					}%>
+						</h6>
+					
+					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+					<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 							<h6>답변내용</h6>
 							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>

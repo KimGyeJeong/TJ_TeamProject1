@@ -37,6 +37,11 @@
 				<td><textarea rows="10" cols="50" name="pq_content"></textarea></td>
 			</tr>
 			<tr>
+				<td></td>
+				<td>공개글로 작성<input type="radio" name="pq_secret" value="0" checked />
+				비밀글로 작성<input type="radio" name="pq_secret" value="1" /></td>
+			</tr>
+			<tr>
 				<td>주의사항</td>
 				<td><input type="submit" value="문의 작성" /></td>
 			</tr>

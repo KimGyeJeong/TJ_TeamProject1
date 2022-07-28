@@ -19,6 +19,7 @@ import team.project.model.CategoryDTO;
 import team.project.model.OrderListDTO;
 import team.project.model.ProductDTO;
 import team.project.model.ProductQuestionDTO;
+import team.project.model.ReviewDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
@@ -175,6 +176,7 @@ public class BeomSuDAO {
 					dto.setPq_answer(rs.getString("pq_answer"));
 					dto.setPq_answerReg(rs.getTimestamp("pq_answerReg"));
 					dto.setPq_delete(rs.getInt("pq_delete"));
+					dto.setPq_secret(rs.getInt("pq_secret"));
 					list.add(dto);
 				}while(rs.next());
 			}
@@ -223,19 +225,20 @@ public class BeomSuDAO {
 		return dto;
 	}
 	
-	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content) {
+	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content, int pq_secret) {
 		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "insert into ProductQuestion(pq_no, p_no, pq_title, pq_content, user_id, pq_writeReg, pq_answer, pq_answerReg, pq_delete) ";
-			sql += "values(ProductQuestion_seq.nextval,?,?,?,?,sysdate,null,null,0)";
+			String sql = "insert into ProductQuestion(pq_no, p_no, pq_title, pq_content, user_id, pq_writeReg, pq_answer, pq_answerReg, pq_delete, pq_secret) ";
+			sql += "values(ProductQuestion_seq.nextval,?,?,?,?,sysdate,null,null,0,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.setString(2, pq_title);
 			pstmt.setString(3, pq_content);
 			pstmt.setString(4, UID);
+			pstmt.setInt(5, pq_secret);
 			result = pstmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -279,10 +282,10 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "insert into WishList values(?, ?)";
+			String sql = "insert into WishList(user_id, p_no) values(?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, p_no);
-			pstmt.setString(2, UID);
+			pstmt.setString(1, UID);
+			pstmt.setInt(2, p_no);
 			result = pstmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -664,6 +667,27 @@ public class BeomSuDAO {
 		}
 	}
 	
+	public void orderList(int p_no, String p_sellerId, String p_buyerId, int a_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into OrderList(O_NO, P_NO, P_STATUS, A_NO, O_SELLERID, O_BUYERID, O_PRO, O_TRACKINGNO) ";
+			sql += "values(OrderList_seq.nextval, ?, 1, ?, ?, ?, 0, null)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setInt(2, a_no);
+			pstmt.setString(3, p_sellerId);
+			pstmt.setString(4, p_buyerId);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
 	public ProductDTO ProductDateCheck(int p_no) {
 		int result = -1;
 		ProductDTO dto = null;
@@ -726,6 +750,59 @@ public class BeomSuDAO {
 		try {
 			conn = getConn();
 			String sql = "update Product set p_finish=2 where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			result = pstmt.executeUpdate();
+			if(result == 1) {
+				sql = "select * from Product where p_no=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, p_no);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					dto = new ProductDTO();
+					dto.setP_img1(rs.getString("p_img1"));
+					dto.setP_img2(rs.getString("p_img2"));
+					dto.setP_img3(rs.getString("p_img3"));
+					dto.setP_img4(rs.getString("p_img4"));
+					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setP_content(rs.getString("p_content"));
+					dto.setP_finish(rs.getInt("p_finish"));
+					dto.setP_buyerId(rs.getString("p_buyerId"));
+					dto.setP_delete(rs.getInt("p_delete"));
+					dto.setP_end(rs.getTimestamp("p_end"));
+					dto.setP_price(rs.getInt("p_price"));
+					dto.setP_maxPrice(rs.getInt("p_maxPrice"));
+					dto.setP_minPrice(rs.getInt("p_minPrice"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setP_readCount(rs.getInt("p_readCount"));
+					dto.setP_reg(rs.getTimestamp("p_reg"));
+					dto.setP_sellerId(rs.getString("p_sellerId"));
+					dto.setP_start(rs.getTimestamp("p_start"));
+					dto.setP_status(rs.getInt("p_status"));
+					dto.setP_title(rs.getString("p_title"));
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return dto;
+	}
+	
+	public ProductDTO ProductDateCheck3(int p_no) {
+		int result = -1;
+		ProductDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_finish=0 where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
@@ -1232,6 +1309,31 @@ public class BeomSuDAO {
 			pstmt.setString(1, pq_answer);
 			pstmt.setInt(2, pq_no);
 			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public int reviewAdd(ReviewDTO reDTO) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "insert into Review(RE_NO, RE_STARS, RE_REPORTUID, RE_CONTENT, RE_REPORTEDUID) ";
+			sql += "value(Review_seq.nextval, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reDTO.getRe_stars());
+			pstmt.setString(2, reDTO.getRe_reportUid());
+			pstmt.setString(3, reDTO.getRe_content());
+			pstmt.setString(4, reDTO.getRe_reportedUid());
+			result = pstmt.executeUpdate();
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {

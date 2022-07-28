@@ -13,9 +13,9 @@
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	String pq_title = request.getParameter("pq_title");
 	String pq_content = request.getParameter("pq_content");
-	
+	int pq_secret = Integer.parseInt(request.getParameter("pq_secret"));
 	BeomSuDAO dao = new BeomSuDAO();
-	int result = dao.ProductQuestionAdd(p_no, UID, pq_title, pq_content);
+	int result = dao.ProductQuestionAdd(p_no, UID, pq_title, pq_content, pq_secret);
 	
 %>
 <body>

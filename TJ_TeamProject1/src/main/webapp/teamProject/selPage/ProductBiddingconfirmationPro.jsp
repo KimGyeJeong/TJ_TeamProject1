@@ -1,3 +1,5 @@
+<%@page import="team.project.model.AddressDTO"%>
+<%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.model.UserListDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.BiddingDTO"%>
@@ -18,16 +20,18 @@
 	if(UID != null && b_no != null && p_no != null){
 	BeomSuDAO dao = new BeomSuDAO();
 	int result = dao.confirmation(b_no);
-	
-	
+	BiddingDTO bidDTO = dao.ConfirmationBidding(b_no);
+	AddressDTO addDTO = dao.addressCheck(UID);
 %>
 <body>
 <%	if(result == 1){ 
 		
 		List bidList = dao.completionBidding(p_no, b_no);
 		dao.biddingStatusSet(p_no, b_no);
+		ProductDTO proDTO = dao.productDetailBuy(p_no);
+		dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), addDTO.getA_no());
 		for(int i = 0; i<bidList.size(); i++){
-			BiddingDTO bidDTO = (BiddingDTO)bidList.get(i);
+			bidDTO = (BiddingDTO)bidList.get(i);
 			UserListDTO userDTO = dao.userCheck(bidDTO.getUser_id());
 			dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
 		}
@@ -48,7 +52,7 @@
 <%}else{ %>
 	<script>
 		alert("잘못된 접근입니다!");
-		window.location.assign("../Main.jsp");
+		window.close();
 	</script>
 <%} %>
 </body>

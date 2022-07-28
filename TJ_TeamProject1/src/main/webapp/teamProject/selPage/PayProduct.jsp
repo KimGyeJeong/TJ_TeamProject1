@@ -69,19 +69,26 @@
 				<td>상품 제목 : <%=proDTO.getP_title() %></td>
 			</tr>
 			<tr>
-				<td><%=proDTO.getP_img1() %></td>
+				<td><img src="../save/<%=proDTO.getP_img1()%>" width="300"/></td>
 			</tr>
 			<tr>
 <%			if(p_status == 1){ %>
 				<td>희망 입찰가<br/>
-				<input type="text" name="b_bidding" value="<%=b_bidding %>"></td>
+				<input type="text" name="b_bidding" value="<%=b_bidding %>" disabled></td>
+				<input type="hidden" name="b_bidding" value="<%=b_bidding %>" />
 			</tr>
 			<tr>
 				<td><input type="submit" value="입찰하기" /></td>
 			</tr>
 <%			}else{ %>
 			<td>희망 구매가<br/>
-				<input type="text" name="p_price" value="<%=proDTO.getP_price() %>" readonly></td>
+<%			if(proDTO.getP_price() != 0){ %>
+				<input type="text" name="p_price" value="<%=proDTO.getP_price() %>" disabled></td>
+				<input type="hidden" name="p_price" value="<%=proDTO.getP_price() %>" />
+<%			}else if(proDTO.getP_price() == 0){ %>
+				<input type="text" name="p_price" value="<%=proDTO.getP_maxPrice() %>" disabled></td>
+				<input type="hidden" name="p_price" value="<%=proDTO.getP_maxPrice() %>" />
+<%			} %>
 			</tr>
 			<tr>
 				<td><input type="submit" value="구매하기" /></td>
