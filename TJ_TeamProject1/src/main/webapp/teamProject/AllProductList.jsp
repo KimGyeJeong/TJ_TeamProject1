@@ -60,7 +60,7 @@
 <jsp:include page='floatingAdvertisement.jsp'/>
 	
 	<br />
-	<h1 align="center">전체 상품 리스트</h1>
+	<h1 align="center"> 상품 리스트</h1>
 	<br />
 
 	<br />

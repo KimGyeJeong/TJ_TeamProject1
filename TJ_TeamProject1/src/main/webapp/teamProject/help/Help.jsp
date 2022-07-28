@@ -17,7 +17,7 @@ if(coos != null){
 		if(c.getName().equals("autoCh")) auto = c.getValue();
 		System.out.println(id + pw + auto +"쿠키확인");
 	}	
-}
+} 
 
 if(auto != null && id != null && pw != null){
 	response.sendRedirect("Login/LoginPro.jsp");
@@ -27,17 +27,7 @@ if(auto != null && id != null && pw != null){
 <%id=(String)session.getAttribute("UID"); %>
 	<h3 align="right"> 사용자: <%=id %></h3>
 	
-	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
-		<script>
-  		alert("로그인 후 사용가능한 서비스입니다.");
-  		history.go(-1);
-  		</script>
-		
-    <%}else{%>
-    	<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;"/>
-  		
-    <%}%>
-    
+	
   	<style>
   	td{
   		size: 150px;
