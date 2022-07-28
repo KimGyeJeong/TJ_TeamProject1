@@ -16,7 +16,7 @@
 		
 		}
 		td{
-			width: 150px;
+			width: 200px;
 			align:"center";
 		}
 		table{
@@ -52,7 +52,7 @@ System.out.println("id :"+id);
 
 <%if(session.getAttribute("UID") != null){%>
 <input  type="button" value="로그아웃" onclick="window.location='/TJ_TeamProject1/teamProject/Login/Logout.jsp'" style="float: right;"/>
-<input  type="button" value="mypage" onclick="window.location='/TJ_TeamProject1/teamProject/mypage/MyProductNow.jsp'" style="float: right;"/>
+<input  type="button" value="mypage" onclick="window.location='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="float: right;"/>
 <input  type="button" value="알림" onclick="window.location='/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'" style="float: right;"/>
 <%}else{%>
 <input  type="button" value="로그인" onclick="window.location='/TJ_TeamProject1/teamProject/Login/Login.jsp'" style="float: right;"/>	

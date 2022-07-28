@@ -37,7 +37,7 @@ public class Paging{
 		this.dataLimit = dataLimit;
 		this.page = page;
 		this.pageN = Integer.parseInt(page);
-		this.totalPage = totalData/dataLimit;
+		this.totalPage = ((totalData-1)/dataLimit) +1;
 		this.dataNumber[0] = (this.pageN*dataLimit)-(dataLimit-1);
 		this.dataNumber[1] = this.pageN*dataLimit;
 		this.isfirst = (((pageN-1)/pageSize)*pageSize)+1;
@@ -48,7 +48,7 @@ public class Paging{
 		this.pageSize = pageSize;
 		this.dataLimit = dataLimit;
 		this.page = ""+pageN;
-		this.totalPage = (totalData/dataLimit) +1;
+		this.totalPage = ((totalData-1)/dataLimit) +1;
 		this.dataNumber[0] = (pageN*dataLimit)-(dataLimit-1);
 		this.dataNumber[1] = pageN*dataLimit;
 		this.isfirst = (((pageN-1)/pageSize)*pageSize)+1;

@@ -12,9 +12,17 @@ public class OrderListDTO {
 	private String o_buyerId; 
 	private int o_pro;
 	private Timestamp o_reg; 
+	private String o_fedexName;
 	private int o_trackingNo;
 	private int o_review;
 	
+	
+	public String getO_fedexName() {
+		return o_fedexName;
+	}
+	public void setO_fedexName(String o_fedexName) {
+		this.o_fedexName = o_fedexName;
+	}
 	public int getO_no() {
 		return o_no;
 	}
