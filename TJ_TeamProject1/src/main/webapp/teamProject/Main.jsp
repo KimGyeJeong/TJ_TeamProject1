@@ -11,6 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <title>장물아비 메인페이지</title>
+
+<%-- 최근본상품 보여주는 페이지 --%>
 <jsp:include page='floatingAdvertisement.jsp' />
 
 <%
@@ -255,16 +257,16 @@ function showDivs(n) {
         function setSession(pno) {
             window.i++;
 
-            sessionStorage.setItem('First', key);
-            sessionStorage.setItem('Second', pno);
+            localStorage.setItem('First', key);
+            localStorage.setItem('Second', pno);
 
             var Product = {
                 p_no: pno,
                 testNum: window.i
             }
 
-            recentView.push(Product);
-            sessionStorage.setItem('Third', JSON.stringify(recentView));
+            recentView.unshift(Product);
+            localStorage.setItem('Third', JSON.stringify(recentView));
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
             
