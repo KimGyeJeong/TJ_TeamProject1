@@ -36,14 +36,14 @@
  	//제목 , 글 본문 내용으로 검색기능
  	String search = request.getParameter("search");
  	if(sel != null && search != null){//검색게시판
- 		
+ 		count = dao.getProductListSearchCount(sel, search);
  		if(count >0){
- 			
+ 			list =dao.categorySearchSelect(startRow, endRow, sel, search);
  		}
  	}else{ //일반게시판 
  		count = dao.getProductListCount();
  		if(count >0){
- 			list =dao.categorySelect(startRow, endRow);
+ 			list =dao.categorySelect(startRow, endRow); 
  		}
  	}
 	int number = count - (currentPage - 1) * pageSize;
@@ -73,14 +73,14 @@
 				if(i%5==0){%>
 					<tr>
 <%				} %>
-				<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">
+				<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">
 				<img src="save/<%=dto.getP_img1() %>" width="250px"/><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
 			<%}
 		}else{%>
-		<h4>해당 카테고리에 상품이 없습니다!</h4>
+		<h4 align="center"> 검색하신 "<%=search %>"의 해당 검색어 관련 상품이 없습니다!</h4>
 <%		} %>
 			
 		</table>
@@ -97,21 +97,36 @@
 				
 				if(endPage > pageCount){ endPage = pageCount;}
 				
-				if(startPage > pageNumSize){%>
-		<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage-1%>">
-			&lt; &nbsp; </a>
-		<%}
-				for(int l = startPage; l <= endPage; l++){ %>
-		<a class="pageNums" href="AllProductList.jsp?pageNum=<%=l%>"> &nbsp;
-			<%=l%> &nbsp;
-		</a>
-		<%}
+				
+				
 			
-				if(endPage < pageCount) { %>
-		<a class="pageNums"
-			href="AllProductList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp;
-			&gt; </a>
-		<%}
+				
+				
+				if(startPage > pageNumSize) { 
+					if(sel != null && search != null) { %>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage-1%>&sel=<%=sel%>&search=<%=search%>"> &lt; &nbsp; </a>
+					<%}else{%>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage-1%>"> &lt; &nbsp; </a>
+					<%}
+				}
+				
+				for(int i = startPage; i <= endPage; i++) { 
+					if(sel != null && search != null) { %>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=i%>&sel=<%=sel%>&search=<%=search%>"> &nbsp; <%= i %> &nbsp; </a>
+					<%}else{ %>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=i%>"> &nbsp; <%= i %> &nbsp; </a> 
+					<%} 
+				}
+				
+				if(endPage < pageCount) { 
+					if(sel != null && search != null) { %>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage+pageNumSize%>&sel=<%=sel%>&search=<%=search%>"> &nbsp; &gt; </a>
+				<%	}else{ %>
+						<a class="pageNums" href="AllProductList.jsp?pageNum=<%=startPage+pageNumSize%>"> &nbsp; &gt; </a>
+				<%	}
+				} 		
+				
+				
 	}%>
 	<br/>
 	<br/>
