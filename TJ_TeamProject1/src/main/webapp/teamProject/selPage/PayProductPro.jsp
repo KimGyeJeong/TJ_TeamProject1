@@ -62,7 +62,7 @@
 <%		}else{
 			dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), a_no, p_status);
 			dao.productBuy(p_no);
-			
+			dao.endDateUpdate(p_no);
 			List bidList = dao.completionBidding(p_no);
 			
 			if(bidList != null){

@@ -23,6 +23,14 @@ public class ProductDTO {
 	private String p_buyerId;
 	private Timestamp p_start;
 	private Timestamp p_end;
+	private Timestamp p_tempReg;
+	
+	public Timestamp getP_tempReg() {
+		return p_tempReg;
+	}
+	public void setP_tempReg(Timestamp p_tempReg) {
+		this.p_tempReg = p_tempReg;
+	}
 	public int getP_no() {
 		return p_no;
 	}
