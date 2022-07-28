@@ -1088,6 +1088,7 @@ public class InstanceDAO {
 				dto.setO_sellerId(sellerId);
 				dto.setO_pro(rs.getInt("o_pro"));
 				dto.setO_reg(rs.getTimestamp("o_reg"));
+				dto.setO_fedexName(rs.getString("o_fedexName"));
 				dto.setO_trackingNo(rs.getInt("o_trackingNo"));
 				dto.setO_review(rs.getInt("o_review"));
 			}
@@ -1127,6 +1128,23 @@ public class InstanceDAO {
 	
 	
 	
+	//	o_pro = 받은 값으로 변경하기
+	public int updateO_pro(int Ono , int o_pro) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn= getConnection();
+			String sql = "update orderlist set o_pro=? where o_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, o_pro);
+			pstmt.setInt(2, Ono);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(pstmt, conn);}
+		return result;
+	}
 	
 	
 	

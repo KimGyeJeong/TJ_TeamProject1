@@ -138,7 +138,7 @@
 								택배 준비
 								<form name="Fedex" id="Fedex" action="setFedex.jsp" target="Fedex" method="post">
 									<input type="hidden" value="<%= order.getO_no() %>" name="o_no" />
-									<input type="hidden" value="<%= address.getA_no() %>" name="a_no" />
+									<input type="hidden" value="<%= address.getA_no() %>" name="a_no" /> 
 									<input type="submit" value="운송장 번호입력" onClick="setFedex()">
 								</form>
 						<% 	}else if(order.getO_pro()<2){ %>
@@ -153,14 +153,27 @@
 								반송중
 						<%	}else if(order.getO_pro()<7){ %>
 								반송완료
-								<% 	BeomSuDAO bsdao = new BeomSuDAO();
-									// bsdao.cancel(p_price seller uid);
-								%>
+								<button type="button" onclick="cancel()" value="환불하기" />
+								<% 	BeomSuDAO bsdao = new BeomSuDAO(); %>
+								<script type="text/javascript">
+								function cancel() {
+								<%	if(order.getP_status()==1){
+										//	경매 입찰
+										bsdao.cancelPurchase(dao.getBidding(product.getP_no()).getB_bidding(), order.getO_buyerId());
+										dao.updateO_pro(order.getO_no(), 7);
+									}else{
+										//	일반구매
+										bsdao.cancelPurchase( product.getP_price() , order.getO_buyerId());
+										dao.updateO_pro(order.getO_no(), 7);
+									}	%>
+								}
+								</script>
 						<%	}else if(order.getO_pro()<8){ %>
 								환불완료
 						<% 	} %>
 						</td> 
 					<tr>
+					<% if( order.getO_pro()<=0 && order.getO_pro()<3 ) %>
 					<td colspan="5">
 					<details name="detail">  
 						<summary> <button type="button" onclick="modify(<%= n++ %>)">배송지 정보</button></summary>
@@ -168,15 +181,20 @@
 						받는분 : <%= address.getA_name() %> <br>
 						주소 : (<%= address.getA_zipCode() %>)<%= address.getA_address() %> <br>
 						상세 주소 : <%= address.getA_address2() %> <br>
-						배송시 요청사항 : <% if(address.getA_comment() != null){%><%= address.getA_comment() %><% } %> <br>
+						배송시 요청사항 : 
+						<% 	if(address.getA_comment() != null){%><%= address.getA_comment() %><% } %> <br>
+						
 						<% 	if(order.getO_trackingNo() != 0){ %>
-						택배사 : <%= order.getO_fedexName() %>
-						운송장번호 : <%= order.getO_trackingNo() %>
+								택배사 : <%= order.getO_fedexName() %> <br>
+								운송장번호 : <%= order.getO_trackingNo() %>
 						<% 	} %>
 				  		</p>
 					</details>
-			<%		
-				} %>
+			<%	}else if(product.getP_finish() == 2){ %>
+					판매중지
+			<%	}else if(product.getP_finish() == 3){ %>
+					판매준비
+			<%	} %>
 				</td>
 			</tr>
 			</div>
@@ -207,6 +225,7 @@ function setFedex() {
 	properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
   	window.open("","Fedex",properties);
 }
+
 </script>
 <jsp:include page="../Footer.jsp" />
 </body>
