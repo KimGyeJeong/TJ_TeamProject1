@@ -29,27 +29,22 @@
 	if(p_price == null){
 		p_price = "0";
 	}
-	Integer p_maxPrice = Integer.parseInt(mr.getParameter("p_maxPrice"));
-	if(p_maxPrice == null){
-		p_maxPrice = 0;
+	String p_maxPri = mr.getParameter("p_maxPrice");
+	if(p_maxPri == null){
+		p_maxPri = "0";
 	}
-	Integer p_minPrice = Integer.parseInt(mr.getParameter("p_minPrice"));
-	if(p_minPrice == null){
-		p_minPrice = 0;
+	System.out.println(p_maxPri);
+	String p_minPri = mr.getParameter("p_minPrice");
+	if(p_minPri == null){
+		p_minPri = "0";
 	}
-	if(p_maxPrice < p_minPrice){
+	int p_maxPrice = Integer.parseInt(p_maxPri);
+	int p_minPrice = Integer.parseInt(p_minPri);
+	System.out.println(p_minPri);
+	if(p_maxPrice <= p_minPrice){
 		result = 0;
 	    Writer outWriter = response.getWriter();
-	    String message = URLEncoder.encode("상한가가 하한가보다 낮을 수 없습니다!.","UTF-8");
-	    response.setContentType("text/html; charset=UTF-8");
-	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
-	    outWriter.flush();
-	    response.flushBuffer();
-	    outWriter.close();
-	}else if(p_maxPrice != 0 && p_maxPrice == p_minPrice){
-		result = 0;
-		Writer outWriter = response.getWriter();
-	    String message = URLEncoder.encode("상한가와 하한가가 같을 수 없습니다!.","UTF-8");
+	    String message = URLEncoder.encode("상한가가 하한가보다 낮거나 같을 수 없습니다!.","UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
 	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
 	    outWriter.flush();

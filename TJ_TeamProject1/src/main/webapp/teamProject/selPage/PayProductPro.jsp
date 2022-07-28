@@ -81,8 +81,14 @@
 <%		}
 	}else if(result == -1){%>
 		<script>
-			alert("현재 충전된 잔액이 부족합니다!");
-			window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
+			var con_test = confirm("현재 충전된 잔액이 부족합니다! 충전하러 가시겠습니까?");
+			if(con_test == true){
+				window.location.assign("../mypage/AddMyMoney.jsp");	
+			}else if(con_test == false){
+				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
+			}
+			
+			
 		</script>
 <%	}else{%>
 		<script>

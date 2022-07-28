@@ -20,7 +20,6 @@
 	
 %>
 <body>
-<form action="">
 	<table>
 		<tr>
 				<td>상품 제목</td>
@@ -50,6 +49,5 @@
 		</script>
 <%	} %>
 	</table>
-</form>
 </body>
 </html>

@@ -44,7 +44,7 @@ if(p_status == 1){ %>
 			</tr>
 			<tr>
 				<td>상한가, 하한가 입력<br/>
-				상한가<input type="number" name="p_maxPrice" id="p_maxPrice" required/>&nbsp;~&nbsp;하한가<input type="number" name="p_minPrice" id="p_minPrice"required/></td>
+				하한가<input type="number" name="p_minPrice" id="p_minPrice" required/>&nbsp;~&nbsp;상한가<input type="number" name="p_maxPrice" id="p_maxPrice"required/></td>
 			</tr>
 			
 			<tr>

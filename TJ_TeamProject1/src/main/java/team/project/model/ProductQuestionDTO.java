@@ -12,6 +12,14 @@ public class ProductQuestionDTO {
 	private String pq_answer;
 	private Timestamp pq_answerReg;
 	private int pq_delete;
+	private int pq_secret;
+	
+	public int getPq_secret() {
+		return pq_secret;
+	}
+	public void setPq_secret(int pq_secret) {
+		this.pq_secret = pq_secret;
+	}
 	public int getPq_no() {
 		return pq_no;
 	}
