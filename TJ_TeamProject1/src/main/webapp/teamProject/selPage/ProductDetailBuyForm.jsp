@@ -38,6 +38,7 @@
 	ProductDTO dto = null;
 	List list = null;
 	dto = dao.productDetailBuy(p_no);
+	if(dto.getP_delete() == 0){
 	int ca_no = dto.getCa_no();
 	dao.readCountUp(p_no);
 	list = dao.ProductQuestionList(p_no);
@@ -190,7 +191,28 @@
 <%		} %>
 		<tr>
 			<td colspan="2"><button onclick="window.open('ProductQuestion.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>&p_title=<%=dto.getP_title() %>', '상품 문의', 'width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
-			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button></td>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
+			<button onclick="func_prompt()" value="confirm">삭제하기</button>
+			<script>
+			function func_prompt() {
+				var con_test = confirm("게시글은 한번 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?");
+				if(con_test == true){
+					window.location.assign("ProductDeletePro.jsp?p_no="+<%=p_no%>);	
+				}else if(con_test == false){
+					window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				}
+			}
+			</script>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
+			</td>
 		</tr>
 	</table>	
 <%}else if(dto.getP_finish() == 1){ %>
@@ -299,7 +321,28 @@
 <%		} %>
 		<tr>
 			<td colspan="2">판매가 완료된 상품입니다!</td>
-			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button></td>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
+			<button onclick="func_prompt()" value="confirm">삭제하기</button>
+			<script>
+			function func_prompt() {
+				var con_test = confirm("게시글은 한번 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?");
+				if(con_test == true){
+					window.location.assign("ProductDeletePro.jsp?p_no="+<%=p_no%>);	
+				}else if(con_test == false){
+					window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				}
+			}
+			</script>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
+			</td>
 		</tr>
 	</table>
 <%}else if(dto.getP_finish() == 2){ %>
@@ -407,7 +450,28 @@
 <%		} %>
 		<tr>
 			<td colspan="2">거래가 중지된 상품입니다!</td>
-			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button></td>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
+			<button onclick="func_prompt()" value="confirm">삭제하기</button>
+			<script>
+			function func_prompt() {
+				var con_test = confirm("게시글은 한번 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?");
+				if(con_test == true){
+					window.location.assign("ProductDeletePro.jsp?p_no="+<%=p_no%>);	
+				}else if(con_test == false){
+					window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				}
+			}
+			</script>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
+			</td>
 		</tr>
 	</table>
 <%}else if(dto.getP_finish() == 3){ %>
@@ -503,10 +567,37 @@
 <%		} %>
 		<tr>
 			<td colspan="2"><button onclick="window.open('ProductQuestion.jsp?p_no=<%=p_no%>&p_sellerId=<%=dto.getP_sellerId()%>&p_title=<%=dto.getP_title() %>', '상품 문의', 'width=500, height=500, location=no, left=100, top=200')">상품 문의하기</button></td>
-			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button></td>
+			<td colspan="2"><button onclick="window.location='ProductList.jsp?ca_no=<%=dto.getCa_no() %>'">뒤로 가기</button>
+<%		if(UID == null){ 
+			UID = " ";
+		}%>
+<%		if(UID.equals(dto.getP_sellerId())){ %>
+			<button onclick="func_prompt()" value="confirm">삭제하기</button>
+			<script>
+			function func_prompt() {
+				var con_test = confirm("게시글은 한번 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?");
+				if(con_test == true){
+					window.location.assign("ProductDeletePro.jsp?p_no="+<%=p_no%>);	
+				}else if(con_test == false){
+					window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>);
+				}
+			}
+			</script>
+<%		}
+		if(UID.equals(" ")){
+			UID = null;
+		}
+		%>
+			</td>
 		</tr>
 	</table>
-<%} %>	
+<%		}
+	}else{%>
+		<script type="text/javascript">
+			alert("삭제된 게시물 입니다!");
+			window.location.assign("../Main.jsp");
+		</script>
+<%	} %>	
 <br />
 </body>
 </html>
