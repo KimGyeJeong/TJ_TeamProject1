@@ -202,7 +202,7 @@ function showDivs(n) {
 				}
 				%>
 				<td id="special"><a id="idAtag" href="#"
-					onclick="setSession(<%=dto.getP_no()%>)"
+					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
 						align="center" src="save/<%=dto.getP_img1()%>" width="250px" /><br /><%=dto.getP_title()%>
 				</a></td>
@@ -232,7 +232,7 @@ function showDivs(n) {
 				}
 				%>
 				<td id="special"><a id="idAtag" href="#"
-					onclick="setSession(<%=dto.getP_no()%>)"
+					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
 						align="center" src="save/<%=dto.getP_img1()%>" width="300" /><br /><%=dto.getP_title()%>
 				</a></td>
@@ -254,7 +254,7 @@ function showDivs(n) {
 
         var recentView = [];	//배열
 
-        function setSession(pno) {
+        function setSession(pno, img) {
             window.i++;
 
             localStorage.setItem('First', key);
@@ -262,7 +262,9 @@ function showDivs(n) {
 
             var Product = {
                 p_no: pno,
-                testNum: window.i
+                testNum: window.i,
+                expire : Date.now() + 3600000,
+                imglink : img
             }
 
             recentView.unshift(Product);

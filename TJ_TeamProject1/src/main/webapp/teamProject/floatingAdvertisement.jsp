@@ -16,6 +16,13 @@
 		
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
+		for(let i = 0; i<localStorage.length;i++){
+			let objArrString = new Array();
+			objArrString[i] = window.localStorage.getItem(i);
+		}
+		
+		const objString = window.localStorage.getItem();
+		
 		function getStoragevalue(){
 			
 		}
@@ -26,7 +33,7 @@
 		<table>
 			<tr>
 				<td><a>
-						<div>여기에 사진들어감</div>
+						<div> <img alt="" src=""> </div>
 						<div>여기에 이름들어감</div>
 				</a></td>
 			</tr>
