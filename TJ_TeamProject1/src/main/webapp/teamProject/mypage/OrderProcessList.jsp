@@ -59,6 +59,7 @@
 
 <ul id="mypagelist">
   <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
+  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
   <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
   <li><a href="MyWishList.jsp"> 찜 </a></li>
   <li><a href="MyReview.jsp"> 나의 후기 </a></li>
@@ -121,12 +122,14 @@
 						<td>거래완료</td> 
 						<td> 
 							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+							
 						<% 	if(dao.writeReview(order.getP_no())<1){ %>
-								<form name ="writeReview" id ="writeReview" action="/TJ_TeamProject1/teamProject/selPage/Review.jsp" target="writeReview" method="post">
+								<form name ="writeReview" id ="writeReview" action="../selPage/Review.jsp" target="writeReview" method="post" >
 									<input type="hidden" value="<%= order.getP_no() %>" name="p_no" />
-									<input type="submit" value="리뷰작성" onClick="writeReview()">
+									<input type="submit" value="리뷰작성" onClick="writeReview()" />
 								</form>
-								<a onclick="detail('/TJ_TeamProject1/teamProject/selPage/Review.jsp?p_no=<%= order.getP_no()%>')"><button>리뷰작성</button></a> <br> 
+								
+								<a onclick="detail('../selPage/Review.jsp?p_no=<%= order.getP_no()%>')"><button>리뷰작성</button></a> <br> 
 						<%	}	%>
 						</td>
 					<%	break;
@@ -162,7 +165,7 @@
 	
 	<%	}else{ %>
 		<p> 구매한 상품이 없습니다. </p>	
-	<%	}%>
+	<%	} %>
 	</table>
 	</div>
 	</fieldset>
@@ -182,8 +185,8 @@
 		}
 		function writeReview() {
 			let property = "top=100 , left=300 , width=1000, height=800, "; 
-			property += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-		  	window.open("",form.target,property);
+			property += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no ";
+		  	window.open('_blank',"writeReview",property);
 		}
 </script>
 
