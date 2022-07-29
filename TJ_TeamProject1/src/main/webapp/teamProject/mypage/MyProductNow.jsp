@@ -84,7 +84,7 @@
 			<tr>
 			<div id="seller">
 				<td> 
-					<img src="../save/<%= product.getP_img1() %>"> 
+					<img src="../save/<%= product.getP_img1() %>" width="150px"> 
 					<%= product.getP_no() %> <a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>">
 					<%= product.getP_title() %></a> 
 				</td>
@@ -135,28 +135,30 @@
 			<%	}else if(product.getP_finish() == 1){ %>
 					<% OrderListDTO order = dao.getOrderList(product.getP_no(), product.getP_sellerId(), product.getP_buyerId()); %>
 					<% AddressDTO address = dao.getaddress(order.getA_no()); %>
-						<% 	if(order.getO_pro()<1){ %>
+						<% 	if(order.getO_pro()==0){ %>
 								택배 준비
 								<form name="Fedex" id="Fedex" action="setFedex.jsp" target="Fedex" method="post">
 									<input type="hidden" value="<%= order.getO_no() %>" name="o_no" />
 									<input type="hidden" value="<%= address.getA_no() %>" name="a_no" /> 
 									<input type="submit" value="운송장 번호입력" onClick="setFedex()">
 								</form>
-						<% 	}else if(order.getO_pro()<2){ %>
+						<% 	}else if(order.getO_pro()==1){ %>
 								배송중
 								<form action="FinishFedex.jsp">
 									<input type="hidden" name="o_no" value="<%= order.getO_no() %>">
+									<input type="hidden" name="o_pro" value="2">
 									<input type="submit" value="배송완료">
 								</form>
-						<%	}else if(order.getO_pro()<3){ %>
+						<%	}else if(order.getO_pro()==2){ %>
 								배송완료
-						<%	}else if(order.getO_pro()<4){ %>
+								
+						<%	}else if(order.getO_pro()==3){ %>
 								주문완료
-						<%	}else if(order.getO_pro()<5){ %>
+						<%	}else if(order.getO_pro()==4){ %>
 								반품수거
-						<%	}else if(order.getO_pro()<6){ %>
+						<%	}else if(order.getO_pro()==5){ %>
 								반송중
-						<%	}else if(order.getO_pro()<7){ %>
+						<%	}else if(order.getO_pro()==6){ %>
 								반송완료
 								<button type="button" onclick="cancel()" value="환불하기" />
 								<% 	BeomSuDAO bsdao = new BeomSuDAO(); %>
@@ -173,7 +175,7 @@
 									}	%>
 								}
 								</script>
-						<%	}else if(order.getO_pro()<8){ %>
+						<%	}else if(order.getO_pro()==7){ %>
 								환불완료
 						<% 	} %>
 						</td> 
