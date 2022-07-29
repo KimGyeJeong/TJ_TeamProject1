@@ -43,7 +43,7 @@
 				<td><%=bidDTO.getB_reg() %></td>
 			</tr>
 			<tr>
-				<td><button onclick="opener.parent.location='ProductBiddingconfirmationPro.jsp?b_no<%=b_no%>&p_no=<%=p_no %>', window.close()">낙찰 확정</button></td>
+				<td><button onclick="opener.parent.location='ProductBiddingconfirmationPro.jsp?b_no=<%=b_no%>&p_no=<%=p_no %>', window.close()">낙찰 확정</button></td>
 				<td><button onclick="opener.parent.location.reload(), window.close()">낙찰 취소</button></td>
 			</tr>
 		</table>

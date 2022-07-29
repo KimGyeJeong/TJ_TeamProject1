@@ -75,13 +75,32 @@
 				if(i%5==0){%>
 				<tr>
 <%				} %>
-<%				if(dto.getP_delete() == 0){ %>
-					
-					<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
-					<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
-					<%=dto.getP_title() %>
-					</a>
-					</td>
+<%				if(dto.getP_delete() == 0){
+					if(dto.getP_finish() == 0){%>
+						<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
+						<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+						<%=dto.getP_title() %>
+						</a>
+						</td>
+				<%	}else if(dto.getP_finish() == 1){ %>
+						<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
+						<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+						<%=dto.getP_title() %>&nbsp;(이미 팔린 상품!)
+						</a>
+						</td>
+				<%	}else if(dto.getP_finish() == 2){ %>
+						<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
+						<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+						<%=dto.getP_title() %>&nbsp;(판매 중지된 상품!)
+						</a>
+						</td>
+				<%	}else{ %>
+						<td><a href="ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>&ca_no=<%=dto.getCa_no()%>">
+						<img src="../save/<%=dto.getP_img1() %>" width="250px"/><br/>
+						<%=dto.getP_title() %>&nbsp;(판매 준비중인 상품!)
+						</a>
+						</td>
+				<%	} %>
 <%				}
 			}
 		}else{%>

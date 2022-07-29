@@ -15,13 +15,15 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
+	System.out.println(UID);
 	Integer b_no = Integer.parseInt(request.getParameter("b_no"));
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	if(UID != null && b_no != null && p_no != null){
 	BeomSuDAO dao = new BeomSuDAO();
 	int result = dao.confirmation(b_no);
 	BiddingDTO bidDTO = dao.ConfirmationBidding(b_no);
-	AddressDTO addDTO = dao.addressCheck(UID);
+	AddressDTO addDTO = dao.addressCheck(bidDTO.getUser_id());
+	System.out.println(addDTO);
 %>
 <body>
 <%	if(result == 1){ 
@@ -30,12 +32,14 @@
 		dao.biddingStatusSet(p_no, b_no);
 		ProductDTO proDTO = dao.productDetailBuy(p_no);
 		dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), addDTO.getA_no());
-		for(int i = 0; i<bidList.size(); i++){
-			bidDTO = (BiddingDTO)bidList.get(i);
-			UserListDTO userDTO = dao.userCheck(bidDTO.getUser_id());
-			dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
+		if(bidList != null){
+			for(int i = 0; i<bidList.size(); i++){
+				bidDTO = (BiddingDTO)bidList.get(i);
+				UserListDTO userDTO = dao.userCheck(bidDTO.getUser_id());
+				dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
+			}
 		}
-		dao.productBuy(p_no);
+		dao.productBuy(p_no, bidDTO.getUser_id());
 		dao.endDateUpdate(p_no);
 %>
 		<script type="text/javascript">
