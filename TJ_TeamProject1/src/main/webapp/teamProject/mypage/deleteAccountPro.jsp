@@ -40,7 +40,8 @@ UserListDTO dto = gjdao.getUserProfile(uid);
 <%	} 
 	if(ok==2){
 		int result = dao.deleteUser(uid);
-		if(result==1){ %>
+		if(result==1){ 
+			session.invalidate();%>
 			<script type="text/javascript">
 				window.location="../Main.jsp";
 				alert("탈퇴처리 되었습니다.");

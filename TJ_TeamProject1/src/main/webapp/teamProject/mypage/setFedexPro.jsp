@@ -19,7 +19,6 @@ int result = dao.setFedex(fedexName, trackingNo , ono);
 
 
 %>
-<%= trackingNo %>
 <body>
 <%
 	if(result == 1){ %>

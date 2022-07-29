@@ -1,3 +1,4 @@
+<%@page import="team.project.model.UserListDTO"%>
 <%@page import="team.project.model.BiddingDTO"%>
 <%@page import="team.project.model.AddressDTO"%>
 <%@page import="team.project.model.ProductDTO"%>
@@ -28,7 +29,7 @@
 	ProductDTO proDTO = null;
 	AddressDTO addDTO = null;
 	
-	BeomSuDAO dao = new BeomSuDAO();
+	BeomSuDAO dao = new BeomSuDAO();	
 	proDTO = dao.productDetailBuy(p_no);
 	if(a_n == null){
 		a_n = "0";
@@ -37,6 +38,12 @@
 		a_no = Integer.parseInt(a_n);
 		addDTO = dao.addressCheck(UID, a_no);
 	}
+	if(addDTO == null){%>
+		<script type="text/javascript">
+			alert("주소를 먼저 설정해 주세요!");
+			window.location.assign("../mypage/addAddress.jsp");
+		</script>
+	<%}
 %>
 <body>
 	<table>
@@ -45,9 +52,9 @@
 			<td><button onclick="window.open('transAddress.jsp?p_no=<%=p_no %>&p_status=<%=p_status %>&b_bidding=<%=b_bidding %>', '배송지 변경', 'width=500, height=500, location=no, left=100, top=200')">배송지 변경</button></td>
 		</tr>
 		<tr>
-			<td>구매하시는 분 : <%=proDTO.getP_buyerId() %></td>
+			<td>구매하시는 분 : <%=UID %></td>
 <%			if(a_n.equals("0")){ %>
-				<td>받으시는 분 : <%=proDTO.getP_buyerId() %></td>
+				<td>받으시는 분 : <%=UID %></td>
 <%			}else{ %>
 				<td>받으시는 분 : <%=addDTO.getA_name() %></td>
 <%			} %>
