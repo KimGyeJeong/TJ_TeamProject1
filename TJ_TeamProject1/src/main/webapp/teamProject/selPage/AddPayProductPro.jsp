@@ -33,8 +33,10 @@
 		int result2 = dao.userMoneyUpdate(proDTO.getP_price(), proDTO.getP_sellerId());
 		if(result2 == 1){%>
 			<script type="text/javascript">
+
 				alert("구매가 확정되었습니다!");
 				window.location.assign("../mypage/OrderProcessList.jsp");
+
 			</script>
 <%		}else{%>
 			<script type="text/javascript">
@@ -48,7 +50,7 @@
 		int result3 = dao.userMoneyUpdate(bidDTO.getB_bidding(), proDTO.getP_sellerId());
 		if(result3 == 1){%>
 		<script type="text/javascript">
-			alert("구매가 확정되었습니다!");
+			alert("거래가 완료되었습니다!");
 			window.location.assign("../mypage/OrderProcessList.jsp);
 		</script>
 <%		}else{%>

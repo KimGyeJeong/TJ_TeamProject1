@@ -11,8 +11,15 @@ public class ReviewDTO {
     int re_delete;
     String re_reportedUid;
     Timestamp re_reg;
+    int p_no;
     
     
+	public int getP_no() {
+		return p_no;
+	}
+	public void setP_no(int p_no) {
+		this.p_no = p_no;
+	}
 	public int getRe_no() {
 		return re_no;
 	}

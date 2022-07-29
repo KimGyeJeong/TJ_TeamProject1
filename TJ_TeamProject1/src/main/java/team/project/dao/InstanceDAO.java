@@ -781,6 +781,7 @@ public class InstanceDAO {
 					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
 					dto.setRe_delete(rs.getInt("re_delete"));
 					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					dto.setP_no(rs.getInt("p_no"));
 					list.add(dto);
 				} while (rs.next());
 			}
@@ -818,6 +819,7 @@ public class InstanceDAO {
 					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
 					dto.setRe_delete(rs.getInt("re_delete"));
 					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					dto.setP_no(rs.getInt("p_no"));
 					list.add(dto);
 				} while (rs.next());
 			}
@@ -1002,6 +1004,7 @@ public class InstanceDAO {
 					dto.setRe_reportedUid(rs.getString("re_reporteduid"));
 					dto.setRe_delete(rs.getInt("re_delete"));
 					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					dto.setP_no(rs.getInt("p_no"));
 					list.add(dto);
 				} while (rs.next());
 			}
@@ -1047,6 +1050,7 @@ public class InstanceDAO {
 						dto.setRe_reportedUid(rs.getString("re_reporteduid"));
 						dto.setRe_delete(rs.getInt("re_delete"));
 						dto.setRe_reg(rs.getTimestamp("re_reg"));
+						dto.setP_no(rs.getInt("p_no"));
 						list.add(dto);
 					} while (rs.next());
 				}
@@ -1145,6 +1149,39 @@ public class InstanceDAO {
 		}finally {closeConnection(pstmt, conn);}
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	//	review 작성 카운트
+	public int writeReview(int p_no) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql = "select count(*) from review where p_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs, pstmt, conn);}
+		return count;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

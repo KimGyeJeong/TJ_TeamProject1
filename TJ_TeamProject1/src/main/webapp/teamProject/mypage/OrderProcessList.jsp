@@ -110,12 +110,24 @@
 								<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
 								<input type="submit" value="주문확정">
 							</form> 
+							<form action="FinishFedex.jsp" method="post">
+								<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+								<input type="hidden" value="4" name="o_pro">
+								<input type="submit" value="반품하기">
+							</form>
 						</td>
 					<%	break;
 					case 3: %>
-						<td>주문완료</td> 
+						<td>거래완료</td> 
 						<td> 
 							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+						<% 	if(dao.writeReview(order.getP_no())<1){ %>
+								<form name ="writeReview" id ="writeReview" action="/TJ_TeamProject1/teamProject/selPage/Review.jsp" target="writeReview" method="post">
+									<input type="hidden" value="<%= order.getP_no() %>" name="p_no" />
+									<input type="submit" value="리뷰작성" onClick="writeReview()">
+								</form>
+								<a onclick="detail('/TJ_TeamProject1/teamProject/selPage/Review.jsp?p_no=<%= order.getP_no()%>')"><button>리뷰작성</button></a> <br> 
+						<%	}	%>
 						</td>
 					<%	break;
 					case 4: %>
@@ -167,6 +179,11 @@
 			let properties = "top=100 , left=600 , width=1000, height=800, "; 
 				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
 			window.open(uri,"OrderProInfo",properties);
+		}
+		function writeReview() {
+			let property = "top=100 , left=300 , width=1000, height=800, "; 
+			property += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+		  	window.open("",form.target,property);
 		}
 </script>
 

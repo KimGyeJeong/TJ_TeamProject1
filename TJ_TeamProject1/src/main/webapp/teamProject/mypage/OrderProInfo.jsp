@@ -23,7 +23,7 @@ ProductDTO product = dao.getProduct(order.getP_no());
 AddressDTO address = dao.getaddress(order.getA_no());
 BiddingDTO bidding = null;
 
-SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH시 mm분");
+SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 if(order.getP_status()==1){
 	bidding = dao.getBidding(order.getP_no());
 	System.out.println(bidding);
@@ -33,7 +33,7 @@ if(order.getP_status()==1){
 <h1>주문 상세</h1>
 주문번호 : <%= ono %> <br>
 <div> <% if(order.getP_status()==1){ %><%= sdf.format(bidding.getB_reg()) %><%}else{%><%= sdf.format(order.getO_reg()) %><%} %>&nbsp;구입 </div>
-결재금액 : <% if(order.getP_status()==1){ %><%= bidding.getB_bidding() %><%}else{%><%= product.getP_price() %><%} %> &nbsp;원
+결제금액 : <% if(order.getP_status()==1){ %><%= bidding.getB_bidding() %><%}else{%><%= product.getP_price() %><%} %> &nbsp;원
 <br> <br>
 <h3><%= address.getA_tag() %></h3>
 <h4> 받는분 :&nbsp;<%= address.getA_name() %></h4>
@@ -41,65 +41,67 @@ if(order.getP_status()==1){
 <div>배송시 요청사항 : &nbsp;<% if(address.getA_comment()!=null){ %> <%= address.getA_comment() %> <% } %> </div>
 	<div>
 		<p> <img src="../save/<%= product.getP_img1() %>"> </p>
-		<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
+		<p> 상품 번호 : <a href="../selPage/ProductDetailBuyForm.jsp?<%= order.getP_no() %>"><%= product.getP_no() %> </p>  
+		<p> <%= product.getP_title() %></a></p>
 		<% if(order.getP_status() == 1) {%>
-		<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
+		<p>  <%= dao.getBidding(order.getP_no()).getB_bidding() %></p>
 		<% }else{ %>
-		<p>  <%= product.getP_price() %></p>
+		<p> 구입가격 : <%= product.getP_price() %> 원</p>
 		<% } %>
-		<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
+		<p> 판매기간 :  <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
 	</div>
-	<tr>
+	<tr> 상태 : 
 	<% 	switch(order.getO_pro()) {
 			case 0: %>
-				<td>주문확인</td> 
-				<td>
-					<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
-					
-					<button>구입취소</button> 	<%-- 방치중!!!!!!!!!!!! --%>
-				</td>
-			<%	break; 
-			case 1: %>
-				<td>배송중</td>
-				<td> 
-				</td>
-			<%	break; 
-			case 2: %>
-				<td>배송완료</td> 
-				<td> 
-					<a onclick="confirmation()"><button>주문확정</button></a>
-				</td>
-			<%	break;
-			case 3: %>
-				<td>주문확정</td> 
-				<td> 
-					<script type="text/javascript">
-					function confirmation(){
-						let confirmValue = confirm("주문을 완료하시겠습니까?");
-						console.log(confirmValue);
-						if(confirmValue==true){ 
-						<%	dao.updateOrderConfirmation(order.getO_no()); %>
-						location.reload();
-						}
-					}
-					</script>
-				</td>
-			<%	break;
-			case 4: %>
-				<td>반품수거</td> 
-				<td> 
-					<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a>
-				</td>
-			<%	break; 
-			case 5: %>
-				<td>반송중</td> 
-			<%	break;
-			case 6: %>
-				<td>반송완료</td> 
-			<%	break;
-			case 7: %>
-				<td>환불완료</td> 
-			<%	break;
+			<td>주문확인</td>  <br>
+			<td>
+				<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+				<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
+				<form action="../selPage/CancelPurchase.jsp" method="post">
+					<input type="hidden" name="o_no" value="<%= order.getO_no()  %>">
+					<input type="submit" value="취소하기">
+				</form>
+			</td>
+		<%	break; 
+		case 1: %>
+			<td>배송중</td>
+			<td> 
+				<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+			</td>
+		<%	break; 
+		case 2: %>
+			<td>배송완료</td> 
+			<td> 
+				<form action="../selPage/AddPayProductPro.jsp" method="post">
+					<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+					<input type="submit" value="거래완료">
+				</form> 
+				<form action="FinishFedex.jsp" method="post">
+					<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+					<input type="hidden" value="4" name="o_pro">
+					<input type="submit" value="반품하기">
+				</form> 
+			</td>
+		<%	break;
+		case 3: %>
+			<td>거래완료</td> 
+		<%	break;
+		case 4: %>
+			<td>반품수거</td> 
+			<td> 
+				<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">수거지 변경</button> </a>
+			</td>
+			
+		<%	break; 
+		case 5: %>
+			<td>반송중</td> 
+		<%	break;
+		case 6: %>
+			<td>반송완료</td> 
+		<%	break;
+		case 7: %>
+			<td>환불완료</td> 
+		<%	break;
 		} %>
 	</tr>
 	<script type="text/javascript">
