@@ -57,10 +57,10 @@
 		}*/
 		
 		//
-
+		let goProductNo = JSON.parse(localStorage.getItem("Test"));
 		function goProduct(){
-			let getp_no = document.getElementById('nameHere').value;
-			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+getp_no,'_blank');
+			//let getp_no = document.getElementById('nameHere').value;
+			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
 		}
 			
 		</script>
@@ -80,8 +80,8 @@
 <tr>
 <td> 
 <a href="javascript:goProduct()">
-<img id="nameHerePlz" alt="" src=""></a>
-상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"> </td>
+<img id="nameHerePlz" alt="" src="">
+상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"></a> </td>
 
 </tr>
 </table>
