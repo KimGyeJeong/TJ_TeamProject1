@@ -39,7 +39,7 @@
 				dao.userMoneyReturn(userDTO.getUser_id(), bidDTO.getB_bidding());
 			}
 		}
-		dao.productBuy(p_no);
+		dao.productBuy(p_no, bidDTO.getUser_id());
 		dao.endDateUpdate(p_no);
 %>
 		<script type="text/javascript">
