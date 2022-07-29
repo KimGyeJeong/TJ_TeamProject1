@@ -59,11 +59,14 @@
 			if(bidList != null){
 				for(int i = 0; i<bidList.size(); i++){
 					BiddingDTO bidDTO = (BiddingDTO)bidList.get(i);
+					if(bidDTO.getB_status() == 0){
 					dao.userMoneyReturn(bidDTO.getUser_id(), bidDTO.getB_bidding());
+					}
 				}
 			}
 		}
 	}
+	
 	CategoryDTO caDTO = dao.getCategoryName(ca_no);
 	
 %>
@@ -98,8 +101,8 @@
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
 			<td align="left">희망 입찰가 : <input type="number" name="b_bidding" min="<%=dto.getP_minPrice() %>", max="<%=dto.getP_maxPrice() %>" required /></td>
-			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
+			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 		</tr>
 		<tr>
 			<td><input type="button" onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')" value="찜하기"/></td>
@@ -153,7 +156,7 @@
 					}%>
 						</h6>
 					
-					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+					<textarea rows="2" cols="50" readonly><%=que_dto.getPq_content() %></textarea>
 					<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 							<h6>답변내용</h6>
@@ -171,7 +174,7 @@
 							}%>
 							</h6>
 						
-							<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+							<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
 							<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 	<%						if(que_dto.getPq_answer() != null){%>
 								<h6>답변내용</h6>
@@ -244,8 +247,8 @@
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
 			<td align="left">판매가 완료된 상품입니다!</td>
-			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
+			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 		</tr>
 		<tr>
 			<td>판매가 완료된 상품입니다!</td>
@@ -285,7 +288,7 @@
 		}%>
 			</h6>
 		
-		<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+		<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
 		<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 				<h6>답변내용</h6>
@@ -301,7 +304,7 @@
 				}%>
 				</h6>
 			
-				<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+				<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
 				<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 					<h6>답변내용</h6>
@@ -374,8 +377,8 @@
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
 			<td align="left">거래가 중지된 상품입니다!</td>
-			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
+			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 		</tr>
 		<tr>
 			<td>거래가 중지된 상품입니다!</td>
@@ -415,7 +418,7 @@
 		}%>
 			</h6>
 		
-		<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+		<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
 		<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 				<h6>답변내용</h6>
@@ -430,7 +433,7 @@
 				}%>
 				</h6>
 			
-				<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
+				<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
 				<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
 					<h6>답변내용</h6>
@@ -503,8 +506,8 @@
 		<input type="hidden" name="p_no" value="<%=dto.getP_no()%>" />
 		<tr>
 			<td align="left">판매 준비중인 상품입니다!</td>
-			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 			<td align="left">하한가 : <%=dto.getP_minPrice() %></td>
+			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 		</tr>
 		<tr>
 			<td><input type="button" onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')" value="찜하기"/></td>
@@ -540,25 +543,53 @@
 		<tr>
 			<td colspan="3">
 <%			if(list != null){
-				for(int i = 0; i<list.size(); i++){
-					ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
-				%>
-					<h6>제목 : <%=que_dto.getPq_title() %>
+	for(int i = 0; i<list.size(); i++){
+		ProductQuestionDTO que_dto = (ProductQuestionDTO)list.get(i);
+		if(UID == null){
+			UID ="";
+		}
+		if(que_dto.getPq_secret() == 1){ 
+			if(que_dto.getUser_id().equals(UID) || UID.equals(dto.getP_sellerId())){%>
+		
+		
+		<h6>제목 : <%=que_dto.getPq_title() %>
 <%					if(UID != null){
-						if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
-						<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+			if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
+			<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
 <%						}
-					}%>
-						</h6>
-					
-					<textarea rows="2" cols="50"><%=que_dto.getPq_content() %></textarea>
-					<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+		}%>
+			</h6>
+		
+		<textarea rows="2" cols="50" readonly><%=que_dto.getPq_content() %></textarea>
+		<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
 <%						if(que_dto.getPq_answer() != null){%>
-							<h6>답변내용</h6>
-							&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
-							<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
-<%						} %>
-<%				}%>
+				<h6>답변내용</h6>
+				&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+				<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>
+	
+<%					}	}
+		}else{%>
+
+				<h6>제목 : <%=que_dto.getPq_title() %>
+<%					if(UID != null){
+					if(que_dto.getPq_answer() == null && UID.equals(dto.getP_sellerId())){ %>
+					<button onclick="window.open('ProductAnswer.jsp?p_no=<%=p_no%>&pq_no=<%=que_dto.getPq_no() %>&p_sellerId=<%=dto.getP_sellerId() %>', '문의 답변', 'width=500, height=500, location=no, left=100, top=200')">답변하기</button>
+<%						}
+				}%>
+				</h6>
+			
+				<textarea rows="2" cols="50"readonly><%=que_dto.getPq_content() %></textarea>
+				<text readonly>작성자 : <%=que_dto.getUser_id() %> &nbsp; 작성 시간 : <%=que_dto.getPq_writeReg() %></text><br/>
+<%						if(que_dto.getPq_answer() != null){%>
+					<h6>답변내용</h6>
+					&nbsp;&nbsp;&nbsp;<textarea rows="2" cols="50" readonly><%=que_dto.getPq_answer() %></textarea>
+					<text readonly>답변 시간 : <%=que_dto.getPq_answerReg() %></text>	
+<%						}
+		} %>
+<%			if(UID.equals("")){
+		UID = null;
+	}
+}%>
 <%			}else{%>
 				<h3>작성된 문의글이 없습니다!</h3>
 <%			} %>

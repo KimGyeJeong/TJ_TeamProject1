@@ -41,7 +41,7 @@
 	int p_maxPrice = Integer.parseInt(p_maxPri);
 	int p_minPrice = Integer.parseInt(p_minPri);
 	System.out.println(p_minPri);
-	if(p_maxPrice <= p_minPrice){
+	if(p_maxPrice != 0 && p_maxPrice <= p_minPrice){
 		result = 0;
 	    Writer outWriter = response.getWriter();
 	    String message = URLEncoder.encode("상한가가 하한가보다 낮거나 같을 수 없습니다!.","UTF-8");

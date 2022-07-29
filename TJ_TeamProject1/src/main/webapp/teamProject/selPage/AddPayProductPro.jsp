@@ -34,13 +34,14 @@
 		if(result2 == 1){%>
 			<script type="text/javascript">
 				alert("구매가 확정되었습니다!");
-				window.location.assign("../mypage/OrderProcessList.jsp);
+				window.location.assign("../mypage/OrderProcessList.jsp");
 			</script>
 <%		}else{%>
 			<script type="text/javascript">
 				alert("에러발생!");
 				window.location.assign("../Main.jsp");
 			</script>
+			
 <%		} %>
 <% 	}else if(result == 1 && orderDTO.getP_status() == 1){
 		BiddingDTO bidDTO = dao.biddingGet(orderDTO.getP_no(), UID);

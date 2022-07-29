@@ -30,6 +30,7 @@
 		
 		List bidList = dao.completionBidding(p_no, b_no);
 		dao.biddingStatusSet(p_no, b_no);
+		dao.buyerSet(p_no, bidDTO.getUser_id());
 		ProductDTO proDTO = dao.productDetailBuy(p_no);
 		dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), addDTO.getA_no());
 		if(bidList != null){
