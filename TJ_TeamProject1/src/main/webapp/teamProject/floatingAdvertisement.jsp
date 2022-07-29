@@ -16,8 +16,25 @@
 		
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
-		for(let getStorage = 0; getStorage<newAray.length;getStorage++){
+		/*
+		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+		for(let webfor = 0; webfor < Object.keys(getWebStorage).length; webfor++){
+			let objp_no = getWebStorage[webfor].p_no;
+			let objimg = getWebStorage[webfor].imglink;
+			
+			console.log("Float.jsp Value : ", objp_no);
+			console.log("Float.jsp Value : ", objimg);
+			
+			document.getElementById('nameHere').value=objp_no;
+			document.getElementById('nameHerePlz').value=objimg;
+		}*/
+		
+		/*
+		for(let getStorage = 0; getStorage<newArray.length;getStorage++){
 			console.log("float Test.value : ",recentView.length);
+		//	let objp_no = get("Test")[arrRecent].p_no;
+		//	let objimg = get("Test")[arrRecent].imglink;
+		
 			let objp_no = get("Test")[arrRecent].p_no;
 			let objimg = get("Test")[arrRecent].imglink;
 			
@@ -27,7 +44,7 @@
 			document.getElementById('nameHere').value=objp_no;
 			document.getElementById('nameHerePlz').value=objp_no;
 			location.reload;
-		}
+		}*/
 		
 		const objString = window.localStorage.getItem();
 		
@@ -42,13 +59,13 @@
 			<tr>
 				<td><a>
 						<div> <img alt="" src=""> </div>
-						<div id="nameHere">  </div>
+						<div id="nameHere"> 333 </div>
 				</a></td>
 			</tr>
 		</table>
-<input type="text" readonly="readonly" id="nameHerePlz" name="nameHerePlz">
-<input type="text" readonly="readonly" id="nameHere" name="nameHere">
-<input type="text" readonly="readonly" value="testText">
+<%-- 상품번호1:<input type="text" readonly="readonly" id="nameHere" name="nameHere">--%>
+사진:<input type="text" readonly="readonly" id="nameHerePlz" name="nameHerePlz">
+상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest">
 
 	</div>
 </body>

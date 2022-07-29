@@ -13,8 +13,7 @@
 <title>장물아비 메인페이지</title>
 
 <%-- 최근본상품 보여주는 페이지 --%>
-<%-- <jsp:include page='floatingAdvertisement.jsp' />--%>
-<%@include file="floatingAdvertisement.jsp" %>
+ <jsp:include page='floatingAdvertisement.jsp' />
 
 <%
 String uid = null;
@@ -254,6 +253,7 @@ function showDivs(n) {
         var i = 0;
 
         var recentView = [];	//배열
+        var newArray=[];
 
         function setSession(pno, img) {
             window.i++;
@@ -277,7 +277,7 @@ function showDivs(n) {
             }
 
             //배열 정리. 중복된값 있으면 삭제해줌
-            var newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
+             newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
                 if (acc.findIndex(({ p_no }) => p_no === current.p_no) === -1) {
                     acc.push(current);
                 }
@@ -298,10 +298,26 @@ function showDivs(n) {
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
             location.reload;
             
+            //Temp
+    		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+    		for(let webfor = 0; webfor < Object.keys(getWebStorage).length; webfor++){
+    			let objp_no = getWebStorage[webfor].p_no;
+    			let objimg = getWebStorage[webfor].imglink;
+    			
+    			console.log("Float.jsp Value pno : ", objp_no);
+    			console.log("Float.jsp Value img : ", objimg);
+    			
+    		//	document.getElementById('nameHere').value=objp_no;
+    			document.getElementById('nameTest').value=objp_no;
+    			
+    			document.getElementById('nameHerePlz').value=objimg;
+    		}
+            
              
         }
         </script>
 
+	
 
 
 
