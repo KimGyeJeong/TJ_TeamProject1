@@ -520,6 +520,25 @@ public class BeomSuDAO {
 		}
 	}
 	
+	public void productBuy(int p_no, String UID) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_finish=1 , p_end=sysdate , p_buyerId where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
 	public List<CategoryDTO>  getCategory() {
 		List<CategoryDTO> list = null; 
 		Connection conn = null;
