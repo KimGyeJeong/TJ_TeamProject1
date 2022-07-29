@@ -12,7 +12,7 @@
 <body>
   <div class="sideBanner">
     <span class="txt-label">
-      최근본 상품   
+      최근본 상품
     </span>
     <tabe>
             

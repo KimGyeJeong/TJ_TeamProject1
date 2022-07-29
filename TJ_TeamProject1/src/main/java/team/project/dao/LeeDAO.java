@@ -711,7 +711,7 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 order by p_reg desc) A) B WHERE R>= 1 AND R<=8";
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 and P_FINISH =0 order by p_reg desc) A) B WHERE R>= 1 AND R<=8";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
@@ -748,7 +748,7 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 order by teamid.product.p_readcount desc) A) B WHERE R>= 1 AND R<=8";
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0  and P_FINISH =0 order by teamid.product.p_readcount desc) A) B WHERE R>= 1 AND R<=8";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
