@@ -8,12 +8,22 @@
 </head>
 <body>
 
+
 	<script type="text/javascript"
 		src="http://code.jquery.com/jquery-2.1.4.js"></script>
-<body>
+
 	<div class="sideBanner">
 		<span class="txt-label"> 최근본 상품 </span>
+		<a href="javascript:goProductTest()">
+		<input type="text" id="nameTest" value="before">
+		<script type="text/javascript">
+		function goProductTest(){
+			let getp_noT = JSON.parse(localStorage.getItem("Test"));
+			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+getp_noT[0].p_no,'_blank');
 		
+		}
+		</script>
+		</a>
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
 		/*
@@ -46,12 +56,12 @@
 			location.reload;
 		}*/
 		
-		const objString = window.localStorage.getItem();
-		
-		function getStoragevalue(){
-			
+		//
+
+		function goProduct(){
+			let getp_no = document.getElementById('nameHere').value;
+			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+getp_no,'_blank');
 		}
-		//document.getElementById('FirstImg').value = recentView[0].p_no;
 			
 		</script>
 
@@ -64,8 +74,17 @@
 			</tr>
 		</table>
 <%-- 상품번호1:<input type="text" readonly="readonly" id="nameHere" name="nameHere">--%>
-사진:<input type="text" readonly="readonly" id="nameHerePlz" name="nameHerePlz">
-상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest">
+
+
+<table>
+<tr>
+<td> 
+<a href="javascript:goProduct()">
+<img id="nameHerePlz" alt="" src="">
+상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"></a> </td>
+
+</tr>
+</table>
 
 	</div>
 </body>

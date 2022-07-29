@@ -13,7 +13,8 @@
 <title>장물아비 메인페이지</title>
 
 <%-- 최근본상품 보여주는 페이지 --%>
- <jsp:include page='floatingAdvertisement.jsp' />
+<%-- 원래 위치--%>
+ <%--<jsp:include page='floatingAdvertisement.jsp' /> --%>
 
 <%
 String uid = null;
@@ -300,6 +301,14 @@ function showDivs(n) {
             
             //Temp
     		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+            
+			let objp_no = getWebStorage[0].p_no;
+			let objimg = getWebStorage[0].imglink;
+			document.getElementById('nameTest').value=objp_no;
+			
+			document.getElementById('nameHerePlz').value=objimg;
+			document.getElementById('nameHerePlz').src=objimg;
+            /*
     		for(let webfor = 0; webfor < Object.keys(getWebStorage).length; webfor++){
     			let objp_no = getWebStorage[webfor].p_no;
     			let objimg = getWebStorage[webfor].imglink;
@@ -311,7 +320,7 @@ function showDivs(n) {
     			document.getElementById('nameTest').value=objp_no;
     			
     			document.getElementById('nameHerePlz').value=objimg;
-    		}
+    		}*/
             
              
         }
@@ -322,8 +331,10 @@ function showDivs(n) {
 
 
 
+ <jsp:include page='floatingAdvertisement.jsp' />
 
-	<%@ include file="Footer.jsp"%>
+<%--  	<%@ include file="Footer.jsp"%> --%>
+<jsp:include page="Footer.jsp"/>
 </body>
 
 </html>
