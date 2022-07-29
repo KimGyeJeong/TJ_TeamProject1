@@ -256,22 +256,41 @@ function showDivs(n) {
 
         function setSession(pno, img) {
             window.i++;
-
-            localStorage.setItem('First', key);
-            localStorage.setItem('Second', pno);
+            console.log("out Function.value i : ", i);
 
             var Product = {
                 p_no: pno,
                 testNum: window.i,
-                expire : Date.now() + 3600000,
+                expire: Date.now() + 30000,
                 imglink : img
             }
 
             recentView.unshift(Product);
-            localStorage.setItem('Third', JSON.stringify(recentView));
-            
-            for (let test = 0; test < recentView.length; test++) {
-                console.log("recentView배열 값 보기.. ", recentView[test].p_no);
+            localStorage.setItem('First', JSON.stringify(recentView));
+
+            function save(name, val) {
+                localStorage.setItem(name, JSON.stringify(val));
+            }
+            function get(name) {
+                return JSON.parse(localStorage.getItem(name));
+            }
+
+            var newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
+                if (acc.findIndex(({ p_no }) => p_no === current.p_no) === -1) {
+                    acc.push(current);
+                }
+                return acc;
+            }, []);
+            save("Test", newArray);
+
+            for (let arrRecent = 0; arrRecent < newArray.length; arrRecent++) {
+                console.log("for2문 recentView.length Value : ", recentView.length);
+                console.log("for2문 arrRecent 값 보기 recentView[arrRecent].p_no.. : ", recentView[arrRecent].p_no);
+                console.log("for2문 arrRecent 값 보기 get(Test).. : ", get("Test"));
+                console.log("for2문 arrRecent 값 보기 get(Test)[arrRecent].p_no.. : ", get("Test")[arrRecent].p_no);
+
+                let getObj = get("Test");
+                console.log("for2문 arrRecent 값 보기 Object.. : ", getObj[arrRecent].p_no);
             }
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');

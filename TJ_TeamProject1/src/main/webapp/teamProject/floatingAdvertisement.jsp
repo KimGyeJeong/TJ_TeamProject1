@@ -16,10 +16,17 @@
 		
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
-		for(let getStorage = 0; getStorage<recentView.length;getStorage++){
+		for(let getStorage = 0; getStorage<newAray.length;getStorage++){
 			console.log("float Test.value : ",recentView.length);
-			let objp_no = recentView[getStorage].p_no;
-			let objimg = recentView[getStorage].img;
+			let objp_no = get("Test")[arrRecent].p_no;
+			let objimg = get("Test")[arrRecent].imglink;
+			
+			console.log("FloatValue objp_no : ",objp_no);
+			console.log("FloatValue objimg : ",objimg);
+			
+			document.getElementById('nameHere').value=objp_no;
+			document.getElementById('nameHerePlz').value=objp_no;
+			location.reload;
 		}
 		
 		const objString = window.localStorage.getItem();
@@ -35,11 +42,11 @@
 			<tr>
 				<td><a>
 						<div> <img alt="" src=""> </div>
-						<div>여기에 이름들어감</div>
+						<div id="nameHere">  </div>
 				</a></td>
 			</tr>
 		</table>
-
+<input type="text" readonly="readonly" id="nameHerePlz" name="nameHerePlz">
 
 	</div>
 </body>
