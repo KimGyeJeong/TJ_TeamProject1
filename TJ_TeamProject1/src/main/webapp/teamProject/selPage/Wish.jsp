@@ -24,7 +24,7 @@
 		<script>
 		opener.parent.location.reload();
 		</script>
-		<button onclick="opener.parent.location='../mypage/WishList.jsp', window.close()">찜한상품 보러가기</button>
+		<button onclick="opener.parent.location='../mypage/MyWishList.jsp', window.close()">찜한상품 보러가기</button>
 		<button onclick="window.close()">계속해서 쇼핑하기</button>
 <%	}else{%>
 		<script>

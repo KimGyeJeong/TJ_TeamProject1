@@ -1,3 +1,5 @@
+<%@page import="team.project.model.UserListDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="team.project.model.ReviewDTO"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.dao.BeomSuDAO"%>
@@ -13,6 +15,7 @@
 	request.setCharacterEncoding("utf-8");
 	String UID = (String)session.getAttribute("UID");
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
+	String p_sellerId = request.getParameter("p_sellerId");
 	BeomSuDAO dao = new BeomSuDAO();
 	ProductDTO proDTO = dao.productDetailBuy(p_no);
 	if(UID.equals(proDTO.getP_buyerId())){
@@ -26,7 +29,20 @@
 	int result = dao.reviewAdd(reDTO);
 %>
 <body>
-<%	if(result == 1){ %>
+<%	if(result == 1){ 
+		List list = dao.getReview(proDTO.getP_sellerId());
+		int stars = 0;
+		if(list != null){
+			for(int i = 0; i<list.size(); i++){
+				reDTO = (ReviewDTO)list.get(i);
+				stars += reDTO.getRe_stars();
+			}
+			stars /= list.size();
+		}else{
+			stars = re_stars;
+		}
+		dao.userStarsAdd(proDTO.getP_sellerId(), stars);
+%>
 	<script type="text/javascript">
 		alert("리뷰를 작성했습니다!");
 		window.close();
