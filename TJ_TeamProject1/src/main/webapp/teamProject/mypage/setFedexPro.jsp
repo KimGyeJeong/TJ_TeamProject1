@@ -25,6 +25,7 @@ int result = dao.setFedex(fedexName, trackingNo , ono);
 	if(result == 1){ %>
 		<script type="text/javascript">
 			alert("배송시작");
+			opener.location.reload();
 			window.close();
 		</script>
 <%	}

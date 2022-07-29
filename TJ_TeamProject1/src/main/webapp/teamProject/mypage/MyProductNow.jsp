@@ -143,10 +143,14 @@
 								</form>
 						<% 	}else if(order.getO_pro()<2){ %>
 								배송중
+								<form action="FinishFedex.jsp">
+									<input type="hidden" name="o_no" value="<%= order.getO_no() %>">
+									<input type="submit" value="배송완료">
+								</form>
 						<%	}else if(order.getO_pro()<3){ %>
 								배송완료
 						<%	}else if(order.getO_pro()<4){ %>
-								주문확정
+								주문완료
 						<%	}else if(order.getO_pro()<5){ %>
 								반품수거
 						<%	}else if(order.getO_pro()<6){ %>

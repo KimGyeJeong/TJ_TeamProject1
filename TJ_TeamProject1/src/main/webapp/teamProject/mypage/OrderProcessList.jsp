@@ -70,8 +70,8 @@
 	<fieldset>
 	<legend>구입한 상품</legend>
 	<div>
-	<table id=ordertable>
-		<tr id=bodylist>
+	<table id="ordertable" >
+		<tr id=bodylist >
 	<%	if(orderlist != null){ %>
 			<td> 날짜 </td><td colspan="2">상품정보</td>  <td>상태</td> <td>상세</td>
 		</tr>
@@ -79,80 +79,83 @@
 				OrderListDTO order = orderlist.get(i);
 				ProductDTO product = productlist.get(i); %>
 				
-				<tr>
-					<td><%= sdf.format(order.getO_reg())  %></td>
-					<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>"></a></td>
-					<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
-					<% 	switch(order.getO_pro()) {
-							case 0: %>
-								<td>주문확인</td> 
-								<td>
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
-									
-									<button>구입취소</button> 	<%-- 방치중!!!!!!!!!!!! --%>
-								</td>
-							<%	break; 
-							case 1: %>
-								<td>배송중</td>
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-								</td>
-							<%	break; 
-							case 2: %>
-								<td>배송완료</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<form action="../selPage/AddPayProductPro.jsp" method="post">
-										<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
-										<input type="submit" value="주문확정">
-									</form> 
-								</td>
-							<%	break;
-							case 3: %>
-								<td>주문확정</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-								</td>
-							<%	break;
-							case 4: %>
-								<td>반품수거</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a>
-								</td>
-								
-							<%	break; 
-							case 5: %>
-								<td>반송중</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
-								</td>
-							<%	break;
-							case 6: %>
-								<td>반송완료</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-								</td>
-							<%	break;
-							case 7: %>
-								<td>환불완료</td> 
-								<td> 
-									<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-								</td>
-							<%	break;
-						} %>
+			<tr>
+				<td><%= sdf.format(order.getO_reg())  %></td>
+				<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>"></a></td>
+				<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
+			<% 	switch(order.getO_pro()) {
+					case 0: %>
+						<td>주문확인</td> 
+						<td>
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+							<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
+							<form action="../selPage/CancelPurchase.jsp" method="post">
+								<input type="hidden" name="o_no" value="<%= order.getO_no()  %>">
+								<input type="submit" value="취소하기">
+							</form>
+						</td>
+					<%	break; 
+					case 1: %>
+						<td>배송중</td>
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+						</td>
+					<%	break; 
+					case 2: %>
+						<td>배송완료</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+							<form action="../selPage/AddPayProductPro.jsp" method="post">
+								<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+								<input type="submit" value="주문확정">
+							</form> 
+						</td>
+					<%	break;
+					case 3: %>
+						<td>주문완료</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+						</td>
+					<%	break;
+					case 4: %>
+						<td>반품수거</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+							<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">수거지 변경</button> </a>
+						</td>
+						
+					<%	break; 
+					case 5: %>
+						<td>반송중</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
+						</td>
+					<%	break;
+					case 6: %>
+						<td>반송완료</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+						</td>
+					<%	break;
+					case 7: %>
+						<td>환불완료</td> 
+						<td> 
+							<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+						</td>
+					<%	break;
+				} %>
 				</tr>
 		<%	}%>
+	
 	<%	}else{ %>
-	</table>
 		<p> 구매한 상품이 없습니다. </p>	
 	<%	}%>
+	</table>
 	</div>
 	</fieldset>
 </div>
-<jsp:include page='../Footer.jsp'/>
 </body>
+
 <script type="text/javascript">
 		function address(uri){
 			let properties = "top=100 , left=600 , width=500, height=800, "; 
@@ -165,4 +168,6 @@
 			window.open(uri,"OrderProInfo",properties);
 		}
 </script>
+
+<jsp:include page='../Footer.jsp'/>
 </html>
