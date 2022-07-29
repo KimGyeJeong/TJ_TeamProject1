@@ -44,7 +44,7 @@
 	if (search == null)
 		productCount = dao.getProductCount();
 	else
-		productCount = dao.getProductSearchCount(search, searchOpt);
+		productCount = dao.getProductSearchCount(search, searchOpt); 
 
 	//productNumber 는 필요 없을듯..?	
 	int productNumber = productCount - (currentPage - 1) * pageSize;
