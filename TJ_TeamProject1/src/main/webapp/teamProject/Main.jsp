@@ -13,7 +13,8 @@
 <title>장물아비 메인페이지</title>
 
 <%-- 최근본상품 보여주는 페이지 --%>
-<jsp:include page='floatingAdvertisement.jsp' />
+<%-- <jsp:include page='floatingAdvertisement.jsp' />--%>
+<%@include file="floatingAdvertisement.jsp" %>
 
 <%
 String uid = null;

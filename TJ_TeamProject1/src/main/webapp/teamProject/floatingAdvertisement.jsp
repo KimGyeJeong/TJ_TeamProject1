@@ -47,6 +47,8 @@
 			</tr>
 		</table>
 <input type="text" readonly="readonly" id="nameHerePlz" name="nameHerePlz">
+<input type="text" readonly="readonly" id="nameHere" name="nameHere">
+<input type="text" readonly="readonly" value="testText">
 
 	</div>
 </body>
