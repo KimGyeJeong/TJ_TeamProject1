@@ -16,9 +16,10 @@
 		
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
-		for(let i = 0; i<localStorage.length;i++){
-			let objArrString = new Array();
-			objArrString[i] = window.localStorage.getItem(i);
+		for(let getStorage = 0; getStorage<recentView.length;getStorage++){
+			console.log("float Test.value : ",recentView.length);
+			let objp_no = recentView[getStorage].p_no;
+			let objimg = recentView[getStorage].img;
 		}
 		
 		const objString = window.localStorage.getItem();

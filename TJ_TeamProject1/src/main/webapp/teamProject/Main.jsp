@@ -269,8 +269,13 @@ function showDivs(n) {
 
             recentView.unshift(Product);
             localStorage.setItem('Third', JSON.stringify(recentView));
+            
+            for (let test = 0; test < recentView.length; test++) {
+                console.log("recentView배열 값 보기.. ", recentView[test].p_no);
+            }
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
+            location.reload;
             
              
         }
