@@ -276,6 +276,7 @@ function showDivs(n) {
                 return JSON.parse(localStorage.getItem(name));
             }
 
+            //배열 정리. 중복된값 있으면 삭제해줌
             var newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
                 if (acc.findIndex(({ p_no }) => p_no === current.p_no) === -1) {
                     acc.push(current);
