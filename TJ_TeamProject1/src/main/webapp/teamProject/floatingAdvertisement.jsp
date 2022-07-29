@@ -80,8 +80,8 @@
 <tr>
 <td> 
 <a href="javascript:goProduct()">
-<img id="nameHerePlz" alt="" src="">
-상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"></a> </td>
+<img id="nameHerePlz" alt="" src=""></a>
+상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"> </td>
 
 </tr>
 </table>
