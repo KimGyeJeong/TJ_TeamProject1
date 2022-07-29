@@ -125,6 +125,7 @@
 							<input type="submit" value="수정하기">
 						</form>
 					<% } %>
+					
 					<% 	if(biddingHeadCount > 0){ %>
 							<form action="../selPage/ProductBiddingconfirmation.jsp" method="post">
 								<input type="hidden" name="p_no" value="<%= product.getP_no() %>">
