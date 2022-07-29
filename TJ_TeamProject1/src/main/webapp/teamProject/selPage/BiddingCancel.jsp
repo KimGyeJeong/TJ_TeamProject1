@@ -24,8 +24,12 @@
 %>
 <body>
 <%			if(result == 1){
-				dao.userMoneyReturn(UID, b_bidding);
-			}else{ %>
+				dao.userMoneyReturn(UID, b_bidding);%>
+				<script type="text/javascript">
+					alert("입찰이 취소되었습니다!");
+					window.location.assign("../Main.jsp");
+				</script>
+<%			}else{ %>
 				<script type="text/javascript">
 					alert("에?러");
 					window.location.assign("../Main.jsp");
