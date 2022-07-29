@@ -53,6 +53,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	
 	<ul id="mypagelist">
 	  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
+	  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
 	  <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
 	  <li><a href="MyWishList.jsp"> 찜 </a></li>
 	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>

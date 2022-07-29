@@ -283,6 +283,8 @@ public class InstanceDAO {
 	
 	
 	
+	
+	
 	// List 주고 상품List 받기 
 	public List<ProductDTO> getProductList(List<OrderListDTO> orderlist) {
 		List<ProductDTO> list = null;
@@ -296,6 +298,7 @@ public class InstanceDAO {
 		}
 		return list;
 	}
+	
 
 	
 	
@@ -1179,9 +1182,49 @@ public class InstanceDAO {
 	
 	
 	
+	//	오버로딩 getProductList 
+	public List<ProductDTO> getProductList(ArrayList<BiddingDTO> biddinglist) {
+		List<ProductDTO> list = null; 
+		if(biddinglist != null) {
+			list = new ArrayList<ProductDTO>();
+			for(int i=0; i<biddinglist.size() ; i++) {
+				int pno=biddinglist.get(i).getP_no();
+				list.add(getProduct(pno));
+			}
+		}
+		return list;
+	}
 	
-	
-	
+	// getbidding 조건 feat.uid 조건 : status = 0 , reg desc(역순)
+	public List<BiddingDTO> getBiddigList(String uid) {
+		List<BiddingDTO> list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql = "select * from bidding where b_status=0 and user_id=? order by b_reg desc";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList<BiddingDTO>();
+				do {
+					BiddingDTO dto = new BiddingDTO();
+					dto.setB_no(rs.getInt(1));
+					dto.setP_no(rs.getInt(2));
+					dto.setB_bidding(rs.getInt(3));
+					dto.setUser_id(rs.getString(4));
+					dto.setB_reg(rs.getTimestamp(5));
+					dto.setB_status(rs.getInt(6));
+					list.add(dto);
+				}while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs, pstmt, conn);}
+		return list;
+	}
 	
 	
 	
