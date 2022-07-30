@@ -60,7 +60,7 @@
 		let goProductNo = JSON.parse(localStorage.getItem("Test"));
 		function goProduct(){
 			//let getp_no = document.getElementById('nameHere').value;
-			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
+			window.open('TJ_TeamProject1/teamProject/selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
 		}
 			
 		</script>
