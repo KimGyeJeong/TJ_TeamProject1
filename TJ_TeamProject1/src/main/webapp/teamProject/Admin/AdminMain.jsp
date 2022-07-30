@@ -8,6 +8,15 @@
 <link href="../style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<%
+//TEST Session.value 0730
+String ad_id = (String)session.getAttribute("adminId");
+System.out.println("AdminMain.value ad_id : "+ad_id);
+
+%>
+
+<jsp:include page='AdminSessionCheck.jsp' />
+
 	<table>
 		<tr>
 			<td>AdminPage</td>

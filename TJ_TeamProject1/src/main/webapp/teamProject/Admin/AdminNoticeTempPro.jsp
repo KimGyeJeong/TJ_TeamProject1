@@ -1,5 +1,6 @@
 <%@page import="team.project.model.NoticeDTO"%>
 <%@page import="team.project.dao.GyeJeongDAO"%>
+<%@include file="AdminSessionCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,6 +28,7 @@
 	dto.setNo_hidden(hidden);
 
 	int result = dao.insertNotice(dto);
+	System.out.println("AdminNoticeTempPro.value result : "+result);
 
 	response.sendRedirect("AdminMain.jsp");
 	%>

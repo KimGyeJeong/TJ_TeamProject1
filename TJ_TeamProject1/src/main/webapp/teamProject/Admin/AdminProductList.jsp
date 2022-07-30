@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.dao.GyeJeongDAO"%>
+<%@include file="AdminSessionCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>

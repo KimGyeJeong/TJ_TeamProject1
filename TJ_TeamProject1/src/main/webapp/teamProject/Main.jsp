@@ -104,6 +104,10 @@ List viewsProductList = daoL.viewsProductList();
 
 <body>
 
+<script type="text/javascript">
+////지우기 0730
+//alert("testFirst alert");
+</script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -257,6 +261,8 @@ function showDivs(n) {
         var newArray=[];
 
         function setSession(pno, img) {
+        	
+        	alert("Session");
             window.i++;
             console.log("out Function.value i : ", i);
 
@@ -286,7 +292,7 @@ function showDivs(n) {
             }, []);
             save("Test", newArray);
 
-            for (let arrRecent = 0; arrRecent < newArray.length; arrRecent++) {
+    /*        for (let arrRecent = 0; arrRecent < newArray.length; arrRecent++) {
                 console.log("for2문 recentView.length Value : ", recentView.length);
                 console.log("for2문 arrRecent 값 보기 recentView[arrRecent].p_no.. : ", recentView[arrRecent].p_no);
                 console.log("for2문 arrRecent 값 보기 get(Test).. : ", get("Test"));
@@ -294,10 +300,14 @@ function showDivs(n) {
 
                 let getObj = get("Test");
                 console.log("for2문 arrRecent 값 보기 Object.. : ", getObj[arrRecent].p_no);
-            }
+            }*/
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
-            location.reload;
+            location.reload;	//배열은 초기화되지않으나 float 는 새로고침이 안됨
+            //스크립트는 초기화가 아니지만, float는 새로고침이 안됨 109번 alert도 안뜸 --> 새로고침이 아님,,?
+            //history.go(0);	//float 까지 새로고침 시키려면 사용해야하나. 배열이 초기화됨
+            // 스크립트까지 초기화
+           //alert("reload!");
             
             //Temp
     		let getWebStorage = JSON.parse(localStorage.getItem("Test"));

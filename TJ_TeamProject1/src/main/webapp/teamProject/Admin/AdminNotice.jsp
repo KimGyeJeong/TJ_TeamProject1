@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="AdminSessionCheck.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,13 +32,13 @@
 					<td><textarea cols="50" rows="15" name="no_content"></textarea></td>
 				</tr>
 				<tr>
-					<td colspan="2" align="right">
-					<input type="reset" value="초기화"> 
-					<input type="button" value="작성 취소"
+					<td colspan="2" align="right"><input type="reset" value="초기화">
+						<input type="button" value="작성 취소"
 						onclick="location.href='AdminMain.jsp'">
-					<button type="submit" formaction="AdminNoticeTempPro.jsp" formmethod="post">임시저장</button>
-					<button type="submit" formaction="AdminNoticePro.jsp" formmethod="post">저장</button>
-					</td>
+						<button type="submit" formaction="AdminNoticeTempPro.jsp"
+							formmethod="post">임시저장</button>
+						<button type="submit" formaction="AdminNoticePro.jsp"
+							formmethod="post">저장</button></td>
 				</tr>
 			</table>
 		</form>

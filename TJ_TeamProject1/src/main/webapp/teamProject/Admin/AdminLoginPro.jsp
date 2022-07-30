@@ -18,8 +18,9 @@
 	int result = dao.idpwChk(id, pw);
 
 	if (result > 0) { //result == 1	>> success
-		System.out.println("SUCCESS");
+		System.out.println("AdminLoginPro. Login SUCCESS");
 		session.setAttribute("adminId", id);
+		System.out.println("AdminLoginPro. value session(adminId) : "+(String)session.getAttribute("adminId"));
 
 		response.sendRedirect("AdminMain.jsp");
 	} else if (result < 0) { //result == -1	>> DAO ERR

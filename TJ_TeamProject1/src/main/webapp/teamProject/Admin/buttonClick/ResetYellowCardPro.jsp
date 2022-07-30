@@ -1,6 +1,7 @@
 <%@page import="team.project.dao.GyeJeongDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../AdminSessionCheck.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +11,13 @@
 <body>
 	<%
 	request.setCharacterEncoding("UTF-8");
-	String id = request.getParameter("user_id");
+	String reset_id = request.getParameter("user_id");
 
 	GyeJeongDAO dao = new GyeJeongDAO();
-	int result = dao.resetYellowCard(id);
+	int result = dao.resetYellowCard(reset_id);
 	%>
 
-	<h4><%=id%></h4>
+	<h4><%=reset_id%></h4>
 	<h4><%=result%></h4>
 
 	<script type="text/javascript">
