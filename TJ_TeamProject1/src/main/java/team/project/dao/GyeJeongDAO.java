@@ -1698,5 +1698,37 @@ public class GyeJeongDAO {
 
 		return result;
 	}
+	public NoticeDTO getNotice(int no_no) {
+		NoticeDTO dto = null;
+		try {
+			conn=getConnection();
+			
+			sql="select * from notice where no_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto=new NoticeDTO();
+				
+				dto.setNo_no(rs.getInt(1));
+				dto.setNo_title(rs.getString(2));
+				dto.setNo_content(rs.getString(3));
+				dto.setNo_cat(rs.getString(4));
+				dto.setNo_hidden(rs.getInt(5));
+				dto.setNo_reg(rs.getTimestamp(6));
+			}
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.getNotice(int no_no) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(rs, pstmt, conn);
+		}
+		
+		return dto;
+	}
 
 }

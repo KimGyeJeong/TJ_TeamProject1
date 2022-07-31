@@ -42,7 +42,7 @@ if(auto != null && id != null && pw != null){
 	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
   		alert("로그인 후 사용가능한 서비스입니다.");
-  		location.href="../Main.jsp";
+  		location.href="Main.jsp";
   		</script>
 
 	<%}else{%>
