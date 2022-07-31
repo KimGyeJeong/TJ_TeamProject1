@@ -28,7 +28,15 @@
 	String pageNum = request.getParameter("pageNum");
 	LeeDAO dao = new LeeDAO();
 	UserQuestionDTO dto = dao.getContent(uq_no); 
-	
+	String shouldNotnull = null;
+	if(dto.getUqa_content() != null){
+		System.out.println("김계정킹");
+		shouldNotnull=dto.getUqa_content();
+	}else{
+		shouldNotnull="등록된 답변이 없습니다.";
+		
+		
+	}
 	
 %>
 <body>
@@ -67,7 +75,7 @@
  		<td >관리자 답변 </td>
  	</tr>
  	<tr>
- 		<td><%=dto.getUqa_content() %> </td>
+ 		<td><%=shouldNotnull %> </td>
  	</tr>
 
  </table>

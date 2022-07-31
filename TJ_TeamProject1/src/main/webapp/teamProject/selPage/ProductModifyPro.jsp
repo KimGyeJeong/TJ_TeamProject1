@@ -1,3 +1,5 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.io.Writer"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -24,6 +26,7 @@
 	DefaultFileRenamePolicy dp = new DefaultFileRenamePolicy(); 
 	MultipartRequest mr = new MultipartRequest(request, path, max, enc, dp);
 	int p_no = Integer.parseInt(mr.getParameter("p_no"));
+	int  result = 1;
 	System.out.println(p_no);
 	String ca_no = mr.getParameter("ca_no");
 	if(ca_no.equals("카테고리")){
@@ -39,28 +42,27 @@
 	if(p_price == null){
 		p_price = "0";
 	}
-	Integer p_maxPrice = Integer.parseInt(mr.getParameter("p_maxPrice"));
-	if(p_maxPrice == null){
-		p_maxPrice = 0;
+	String p_maxPri = mr.getParameter("p_maxPrice");
+	if(p_maxPri == null){
+		p_maxPri = "0";
 	}
-	Integer p_minPrice = Integer.parseInt(mr.getParameter("p_minPrice"));
-	if(p_minPrice == null){
-		p_minPrice = 0;
+	System.out.println(p_maxPri);
+	String p_minPri = mr.getParameter("p_minPrice");
+	if(p_minPri == null){
+		p_minPri = "0";
 	}
-	if(p_maxPrice < p_minPrice){
-		response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter alert = response.getWriter();
-	    out.println("<script>alert('상한가가 하한가보다 낮을 수 없습니다!'); history.go(-1);</script>");
-	    out.flush();
+	int p_maxPrice = Integer.parseInt(p_maxPri);
+	int p_minPrice = Integer.parseInt(p_minPri);
+	System.out.println(p_minPri);
+	if(p_maxPrice <= p_minPrice){
+		result = 0;
+	    Writer outWriter = response.getWriter();
+	    String message = URLEncoder.encode("상한가가 하한가보다 낮거나 같을 수 없습니다!.","UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
+	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
+	    outWriter.flush();
 	    response.flushBuffer();
-	    out.close();
-	}else if(p_maxPrice != 0 && p_maxPrice == p_minPrice){
-		response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter alert = response.getWriter();
-	    out.println("<script>alert('상한가와 하한가가 같을 수 없습니다!'); history.go(-1);</script>");
-	    out.flush();
-	    response.flushBuffer();
-	    out.close();
+	    outWriter.close();
 	}
 	String p_start = mr.getParameter("p_start");
 	System.out.println(mr.getParameter("p_start"));
@@ -88,7 +90,7 @@
 	dto.setP_end(Timestamp.valueOf(p_end));
 	
 	 
-	int result = dao.productModify(dto, p_no);   
+	result = dao.productModify(dto, p_no);   
 	
 %>
 <body>

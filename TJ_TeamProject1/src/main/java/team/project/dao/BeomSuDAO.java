@@ -40,7 +40,7 @@ public class BeomSuDAO {
 		
 		try {
 			conn = getConn(); 
-			String sql ="select * from(select ROWNUM r, A.* FROM (select * from product where ca_no=?  ORDER BY P_REG DESC) A) B where r>=? and r<=? ";
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from product where ca_no=? and p_delete=0  ORDER BY P_REG DESC) A) B where r>=? and r<=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ca_no);
 			pstmt.setInt(2, start);
@@ -50,17 +50,26 @@ public class BeomSuDAO {
 				list = new ArrayList();
 				do {
 					ProductDTO dto = new ProductDTO();
+					dto.setP_img1(rs.getString("p_img1"));
+					dto.setP_img2(rs.getString("p_img2"));
+					dto.setP_img3(rs.getString("p_img3"));
+					dto.setP_img4(rs.getString("p_img4"));
+					dto.setCa_no(rs.getInt("ca_no"));
+					dto.setP_content(rs.getString("p_content"));
+					dto.setP_finish(rs.getInt("p_finish"));
+					dto.setP_buyerId(rs.getString("p_buyerId"));
+					dto.setP_delete(rs.getInt("p_delete"));
+					dto.setP_end(rs.getTimestamp("p_end"));
+					dto.setP_price(rs.getInt("p_price"));
+					dto.setP_maxPrice(rs.getInt("p_maxPrice"));
+					dto.setP_minPrice(rs.getInt("p_minPrice"));
 					dto.setP_no(rs.getInt("p_no"));
+					dto.setP_readCount(rs.getInt("p_readCount"));
+					dto.setP_reg(rs.getTimestamp("p_reg"));
+					dto.setP_sellerId(rs.getString("p_sellerId"));
+					dto.setP_start(rs.getTimestamp("p_start"));
 					dto.setP_status(rs.getInt("p_status"));
 					dto.setP_title(rs.getString("p_title"));
-					dto.setP_price(rs.getInt("p_price"));
-					dto.setP_minPrice(rs.getInt("p_minPrice"));
-					dto.setP_maxPrice(rs.getInt("p_maxPrice"));
-					dto.setCa_no(ca_no);
-					dto.setP_img1(rs.getString("p_img1"));
-					dto.setP_finish(rs.getInt("p_finish"));
-					dto.setP_readCount(rs.getInt("p_readCount"));
-					dto.setP_finish(rs.getInt("p_finish"));
 					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 					list.add(dto);
 				}while(rs.next());
@@ -498,9 +507,28 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "update Product set p_finish=1 , p_end=sysdate where p_no=?";
+			String sql = "update Product set p_finish=1 , p_tempReg=sysdate where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public void productBuy(int p_no, String UID) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_finish=1 , p_tempReg=sysdate , p_buyerId where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			pstmt.setString(2, UID);
 			pstmt.executeUpdate();
 			
 		}catch (Exception e) {
@@ -1249,7 +1277,7 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "update UserList set user_usemoney='user_usemoney'+? where user_id=?";
+			String sql = "update UserList set user_usemoney=user_usemoney+? where user_id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bidding);
 			pstmt.setString(2, user_id);
@@ -1377,7 +1405,7 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "update Product set p_finish=0 , p_end=sysdate where p_no=?";
+			String sql = "update Product set p_finish=0 where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
@@ -1398,6 +1426,156 @@ public class BeomSuDAO {
 			String sql = "update Product set p_tempReg=sysdate where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public int productDelete(int p_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_delete=1 where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public void userMoneydelete(String UID, int b_bidding) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update userlist set user_usemoney=user_usemoney-? where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_bidding);
+			pstmt.setString(2, UID);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public int biddingDelete(int b_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "delete from bidding where b_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return result;
+	}
+	
+	public void buyerSet(int p_no, String user_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update Product set p_buyerId=? where p_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setInt(2, p_no);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+	}
+	
+	public List getReview(String p_sellerId) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConn();
+			String sql = "select * from review where RE_REPORTEDUID=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p_sellerId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					ReviewDTO dto = new ReviewDTO();
+					dto.setRe_no(rs.getInt("re_no"));
+					dto.setRe_stars(rs.getInt("re_stars"));
+					dto.setRe_reportUid(rs.getString("re_reportUid"));
+					dto.setRe_content(rs.getString("re_content"));
+					dto.setRe_delete(rs.getInt("re_delete"));
+					dto.setRe_reportedUid(rs.getString("re_reportedUid"));
+					dto.setRe_reg(rs.getTimestamp("re_reg"));
+					list.add(dto);
+				}while(rs.next());
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return list;
+	}
+	
+	public void userStarsAdd(String p_sellerId, int stars) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "update UserList set user_stars=? where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, stars);
+			pstmt.setString(2, p_sellerId);
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
+			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		}
+	}
+	
+	public void deleteOrder(int o_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConn();
+			String sql = "delete from orderList where o_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, o_no);
 			pstmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();

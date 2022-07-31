@@ -39,6 +39,7 @@ if(auto != null && id != null && pw != null){
 <%  id=(String)session.getAttribute("UID"); %>
 
 
+<
 	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
   		alert("로그인 후 사용가능한 서비스입니다.");
@@ -46,9 +47,8 @@ if(auto != null && id != null && pw != null){
   		</script>
 
 	<%}else{%>
-	
 
-	<%}%>
+	
 
 	<%
  	String pageNum = request.getParameter("pageNum");
@@ -67,7 +67,7 @@ if(auto != null && id != null && pw != null){
  	List NotificationList = null; 	
  	count = dao.noticeCount();
   
-
+ 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
  	
  	if(count >0){
  		NotificationList=dao.noticeList(startRow, endRow);
@@ -109,7 +109,6 @@ if(auto != null && id != null && pw != null){
 				<td>no.</td>
 				<td>제목</td>
 				<td>공지내용</td>
-				<td>분류</td>
 				<td>공지시간</td>
 				
 			</tr>
@@ -117,22 +116,26 @@ if(auto != null && id != null && pw != null){
 			<%
 			for(int i=0; i < NotificationList.size(); i++){
 				NoticeDTO dto = (NoticeDTO)NotificationList.get(i);
-				 
+			String 	king= null;
+			if(dto.getNo_cat().equals("notice")){
+				king="(공지사항)";
+			}else{
+				king="(이벤트)";
+			}
 				
 			%>
 			<tr>
 			
 			<td><%=number--%></td>
 			
-			<td><%=dto.getNo_title() %></td>
+			<td><%=king%><%=dto.getNo_title() %></td>
 				
 			<td><%=dto.getNo_content()%></td> 
 			
 			<%--if문으로 이미 체크되어있으면 확인함  --%>
 			
-			<td><%=dto.getNo_cat()%></td>
-			<td><%=dto.getNo_reg()%></td>
-			
+			<td><%=sdf.format(dto.getNo_reg())%></td>
+			 
 		
 			</tr>
 			

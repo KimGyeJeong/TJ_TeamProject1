@@ -52,7 +52,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 	
 	<ul id="mypagelist">
 	  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-	  <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
+	  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
+	  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
 	  <li><a href="MyWishList.jsp"> 찜 </a></li>
 	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
 	  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
@@ -67,29 +68,48 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
 		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); %>
-		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
-		</tr>
-	<% 	} %>
+	<% 	if(ReportedReviewList != null){ %>
+		<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
+				ReviewDTO dto = ReportedReviewList.get(i); %>
+			<tr>
+				<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
+			</tr>
+		<% 	} %>
+	<% 	}else{ %>
+			<tr>
+				<td>글이 없습니다.</td>
+			</tr>	
+	<% 	} %>	
 	</table>
 	</fieldset>
 	<fieldset>
-	<div><h3 style="display: inline;"><%= uid %> 작성한 후기</h3><a href ="ReportReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
+	<div><h3 style="display: inline;"><%= uid %> 작성한 거래후기</h3><a href ="ReportReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
 	<table>
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>판매자에게</td><td>작성날짜</td>
 		</tr>
-	<%	for(int i=0 ; i<ReportReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportReviewList.get(i); %>
+	<% if(ReportReviewList != null){ %>	
+		<%	for(int i=0 ; i<ReportReviewList.size() ; i++){ 
+				ReviewDTO dto = ReportReviewList.get(i); %>
+			<tr>
+				<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
+			</tr>
+		<% 	} %>
+	<% 	}else{ %>
 		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
-		</tr>
-	<% 	} %>
+			<td>글이 없습니다.</td>
+		</tr>	
+	<% 	} %>	
 	</table>
 	</fieldset>
 </div>
 <jsp:include page="../Footer.jsp"></jsp:include>
+<script type="text/javascript">
+function WriteReview(uri){
+	let properties = "top=100 , left=600 , width=1000, height=800, "; 
+	properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+	window.open(uri,"WriteReview",properties);
+}
+</script>
 </body>
 </html>

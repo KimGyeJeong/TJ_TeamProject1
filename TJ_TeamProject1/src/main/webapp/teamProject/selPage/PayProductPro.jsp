@@ -19,6 +19,11 @@
 	if(UID != null){
 	int p_status = Integer.parseInt(request.getParameter("p_status"));
 	int p_no = Integer.parseInt(request.getParameter("p_no"));
+	String p_p = request.getParameter("p_price");
+	if(p_p == null){
+		p_p = "0";
+	}
+	int p_price = Integer.parseInt(p_p);
 	
 	String b_bid = request.getParameter("b_bidding");
 	int a_no = Integer.parseInt(request.getParameter("ano"));
@@ -31,14 +36,11 @@
 	ProductDTO proDTO = dao.productDetailBuy(p_no);
 	userDTO = dao.userCheck(UID);
 	int result = 0;
-	if(p_status == 0){
-		result = dao.userMoneyCheck(p_no, UID, userDTO.getUser_usemoney());
+	
+	if((userDTO.getUser_money() - b_bidding) > 0 || (userDTO.getUser_money() - p_price) > 0){
+		result = 1;
 	}else{
-		if((userDTO.getUser_money() - b_bidding) > 0){
-			result = 1;
-		}else{
-			result = -1;
-		}
+		result = -1;
 	}
 	int proResult = 0;
 	BiddingDTO bidDTO = dao.biddingGet(p_no, UID);
@@ -49,8 +51,10 @@
 	if(result == 1){
 		if(p_status == 1){
 			if(bidDTO.getB_bidding() == 0){
+				dao.userMoneydelete(UID, b_bidding);
 				dao.biddingInput(UID, b_bidding, p_no);	
 			}else{
+				dao.userMoneydelete(UID, b_bidding);
 				dao.biddingModify(UID, b_bidding, p_no);
 
 			}
@@ -62,8 +66,8 @@
 <%		}else{
 			dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), a_no, p_status);
 			dao.productBuy(p_no);
-			dao.endDateUpdate(p_no);
 			List bidList = dao.completionBidding(p_no);
+			dao.userMoneydelete(UID, p_price);
 			
 			if(bidList != null){
 				dao.biddingStatusSet(p_no);
@@ -81,6 +85,7 @@
 <%		}
 	}else if(result == -1){%>
 		<script>
+			
 			var con_test = confirm("현재 충전된 잔액이 부족합니다! 충전하러 가시겠습니까?");
 			if(con_test == true){
 				window.location.assign("../mypage/AddMyMoney.jsp");	

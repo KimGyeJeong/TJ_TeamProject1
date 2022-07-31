@@ -41,6 +41,10 @@
 	</table>
 </form>
 <%	}else{ %>
+	<script>
+		alert("권한이 없습니다");
+		window.close();
+	</script>
 <%	} %>
 </body>
 </html>

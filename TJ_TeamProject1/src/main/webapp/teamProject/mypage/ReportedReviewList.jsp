@@ -42,13 +42,16 @@
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 String pageNum = request.getParameter("p");
+InstanceDAO dao = new InstanceDAO();
+int totalData = dao.getReportedReviewCount(uid);
 if(pageNum==null){
 	pageNum = "1";
 }
-InstanceDAO dao = new InstanceDAO();
-SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
-int totalData = dao.getReportedReviewCount(uid);
 Paging paging = new Paging(totalData, 10, 10, pageNum);
+if(paging.getPageN() > paging.getTotalPage()){
+	response.sendRedirect("/TJ_TeamProject1/teamProject/mypage/MyReview.jsp");
+}
+SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataNumberStart() , paging.getDataNumberEnd());	//	이 유저에 대한 평가
 %>
 </head>
@@ -57,7 +60,8 @@ List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataN
 	
 	<ul id="mypagelist">
 	  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-	  <li><a href="MyProductNow.jsp"> 나의 판매중인 상품 </a></li>
+	  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
+	  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
 	  <li><a href="MyWishList.jsp"> 찜 </a></li>
 	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
 	  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
@@ -72,12 +76,18 @@ List<ReviewDTO> ReportedReviewList = dao.getReportedReview(uid , paging.getDataN
 		<tr>
 			<td>COMMENT</td><td>평점</td><td>작성자</td><td>작성날짜</td>
 		</tr>
-	<%	for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
-			ReviewDTO dto = ReportedReviewList.get(i); %>
-		<tr>
-			<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
-		</tr>
-	<% 	} %>
+	<%	if(ReportedReviewList != null){
+			for(int i=0 ; i<ReportedReviewList.size() ; i++){ 
+				ReviewDTO dto = ReportedReviewList.get(i); %>
+					<tr>
+						<td><%= dto.getRe_content() %></td><td><%= dto.getRe_stars() %> / 5</td><td><%= dto.getRe_reportedUid() %></td><td><%= sdf.format(dto.getRe_reg()) %></td>
+					</tr>
+		<% 	}
+		}else{ %>
+			<tr>
+				<td>글이 없습니다.</td>
+			</tr>
+	<%	} %>
 	</table>
 	</fieldset>
 	<div id="paging" align="center">

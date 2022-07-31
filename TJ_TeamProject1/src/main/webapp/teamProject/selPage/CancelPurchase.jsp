@@ -18,22 +18,18 @@
 	OrderListDTO orDTO = dao.orderListGet(o_no);
 	if(UID.equals(orDTO.getO_buyerId())){
 		if(orDTO.getO_pro() == 0){
-			orDTO.setO_pro(7);
 			ProductDTO proDTO = dao.productDetailBuy(orDTO.getP_no());
-			if(proDTO.getP_status() == 0){
-				int result = dao.cancelPurchase(proDTO.getP_price(), UID);
-				dao.productCancelPurchase(proDTO.getP_no());
+			int result = dao.cancelPurchase(proDTO.getP_price(), UID);
+			dao.productCancelPurchase(proDTO.getP_no());
+			dao.deleteOrder(o_no);
 			
 			
 %>
 <body>
-<%			}else{%>
-				<script type="text/javascript">
-					alert("입찰한 상품은 취소할 수 없습니다!");
-					window.location.assign("../Main.jsp");
-				</script>
-<% 			} %>
-
+			<script type="text/javascript">
+				alert("성공적으로 취소했습니다!");
+				window.location.assign("../Main.jsp");
+			</script>
 <%		}else{%>
 			<script type="text/javascript">
 				alert("배송이 시작된 상품은 취소할 수 없습니다!");
