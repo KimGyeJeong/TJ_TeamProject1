@@ -1,5 +1,6 @@
 <%@page import="team.project.model.UserQuestionDTO"%>
 <%@page import="team.project.dao.GyeJeongDAO"%>
+<%@include file="AdminSessionCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
 
 </head>
 <body>
+<%-- <jsp:include page='AdminSessionCheck.jsp' /> --%>
 	<%
 	request.setCharacterEncoding("UTF-8");
 

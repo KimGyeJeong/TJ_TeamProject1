@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.dao.GyeJeongDAO"%>
+<%@include file="AdminSessionCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -127,7 +128,9 @@
 						}
 						%>
 				</td>
-				<td><%=dto.getP_title()%></td>
+				<td>
+				<a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no() %>" target="_blank">
+				<%=dto.getP_title()%></a></td>
 				<td><%=dto.getP_price()%></td>
 				<td><%=dto.getP_minPrice()%></td>
 				<td><%=dto.getP_maxPrice()%></td>
@@ -160,7 +163,7 @@
 				<td><%=dto.getP_end()%></td>
 				<td>
 					<%
-						switch (dto.getP_status()) {
+						switch (dto.getP_finish()) {
 						case 0:
 						%>판매중<%
 						break;
