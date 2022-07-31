@@ -25,7 +25,8 @@ if(session.getAttribute("adminId")==null){
 		%>
 		<script type="text/javascript">
 		alert("로그인이 필요합니다.\n로그인페이지로이동합니다.");
-		location.href="AdminLogin.jsp";
+		//location.href="AdminLogin.jsp";
+		location.href="/TJ_TeamProject1/teamProject/Admin/AdminLogin.jsp";
 		</script>
 		<%
 		//response.sendRedirect("AdminLogin.jsp");
