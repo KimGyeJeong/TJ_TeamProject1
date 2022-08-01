@@ -14,8 +14,8 @@
 
 	<div class="sideBanner">
 		<span class="txt-label"> 최근본 상품 </span>
-		<a href="javascript:goProductTest()">
-		<input type="text" id="nameTest" value="before">
+		<%--<a href="javascript:goProductTest()">
+		 <input type="text" id="nameTest" value="before">--%>
 		<script type="text/javascript">
 	/*	function goProductTest(){
 			let getp_noT = JSON.parse(localStorage.getItem("Test"));
@@ -24,11 +24,15 @@
 		}*/
 		
 		</script>
-		</a>
+		
 		
 		<a href="#" onclick="goProduct()" target="_blank">
-		<div id="demo"></div>
+		<div id="demo">
+		
+		</div>
+		
 		</a>
+		<img id="nameHerePlz" alt="" src="" width="100" height="100">
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
 		/*
@@ -62,20 +66,24 @@
 		}*/
 		
 		//
-		let goProductNo = JSON.parse(localStorage.getItem("Test"));
+		let goProductNo = JSON.parse(sessionStorage.getItem("Test"));
 		function goProduct(){
 			//let getp_no = document.getElementById('nameHere').value;
 			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
-			location.reload;
+			//location.reload;
 		}
 		
-		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+		let getWebStorage = JSON.parse(sessionStorage.getItem("Test"));
 		let text =" ";
 		
 		for(var makeTable=0; makeTable<Object.keys(getWebStorage).length; makeTable++){
-			text+=getWebStorage[makeTable].p_no + " " + getWebStorage[makeTable].imglink + "<br/>"
+			text+=getWebStorage[makeTable].p_no + " 이미지링크:" + getWebStorage[makeTable].imglink + "<br/>"
 			
 			document.getElementById("demo").innerHTML = text;
+			document.getElementById('nameHerePlz').src=getWebStorage[makeTable].imglink;
+			
+			//let img = doocument.querySelector("img");
+			//img.src = getWebStorage[makeTable].imglink;
 			
 			function goProduct2(){
 				//let getp_no = document.getElementById('nameHere').value;
@@ -83,6 +91,8 @@
 				location.reload;
 			}
 		}
+
+		
 		
 			
 		</script>
@@ -91,7 +101,7 @@
 			<tr>
 				<td><a>
 						<div> <img alt="" src=""> </div>
-						<div id="nameHere"> 333 </div>
+						<div id="nameHere"></div>
 				</a></td>
 			</tr>
 		</table>
@@ -102,8 +112,9 @@
 <tr>
 <td> 
 <a href="javascript:goProduct()">
-<img id="nameHerePlz" alt="" src="">
-상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest"></a> </td>
+<%--<img id="nameHerePlz" alt="" src="">
+ 상품번호:<input type="text" readonly="readonly" value="testText" id="nameTest">--%>
+</a> </td>
 
 </tr>
 </table>

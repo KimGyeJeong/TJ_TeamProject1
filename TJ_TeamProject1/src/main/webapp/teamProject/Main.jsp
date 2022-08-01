@@ -262,7 +262,7 @@ function showDivs(n) {
 
         function setSession(pno, img) {
         	
-        	alert("Session");
+        	alert("Main.Script 265 Session");
             window.i++;
             console.log("out Function.value i : ", i);
 
@@ -274,17 +274,17 @@ function showDivs(n) {
             }
 
             recentView.unshift(Product);
-            localStorage.setItem('First', JSON.stringify(recentView));
+            sessionStorage.setItem('First', JSON.stringify(recentView));
 
             function save(name, val) {
-                localStorage.setItem(name, JSON.stringify(val));
+            	sessionStorage.setItem(name, JSON.stringify(val));
             }
             function get(name) {
-                return JSON.parse(localStorage.getItem(name));
+                return JSON.parse(sessionStorage.getItem(name));
             }
 
             //배열 정리. 중복된값 있으면 삭제해줌
-             newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
+             newArray = JSON.parse(sessionStorage.getItem("First")).reduce(function (acc, current) {
                 if (acc.findIndex(({ p_no }) => p_no === current.p_no) === -1) {
                     acc.push(current);
                 }
@@ -310,7 +310,7 @@ function showDivs(n) {
            //alert("reload!");
             
             //Temp
-    		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+    		let getWebStorage = JSON.parse(sessionStorage.getItem("Test"));
             
 			let objp_no = getWebStorage[0].p_no;
 			let objimg = getWebStorage[0].imglink;
