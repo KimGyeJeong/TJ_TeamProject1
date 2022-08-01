@@ -7,6 +7,8 @@
 <title>옆에붕붕떠다니는 페이지임 ㅎㅎ</title>
 </head>
 <body>
+ 
+
 
 
 	<script type="text/javascript"
@@ -120,6 +122,7 @@
 </table>
 
 	</div>
+
 </body>
 
 

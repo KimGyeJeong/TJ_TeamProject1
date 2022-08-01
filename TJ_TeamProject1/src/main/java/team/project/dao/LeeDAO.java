@@ -11,15 +11,16 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import javax.swing.text.AbstractDocument.Content;
 
 import team.project.model.AddressDTO;
+import team.project.model.ContentDTO;
 import team.project.model.NoticeDTO;
 import team.project.model.NotificationDTO;
 import team.project.model.ProductDTO;
 import team.project.model.QnADTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
-
 
  
 public class LeeDAO {
@@ -711,7 +712,7 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 order by p_reg desc) A) B WHERE R>= 1 AND R<=8";
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 and P_FINISH =0 order by p_reg desc) A) B WHERE R>= 1 AND R<=8";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
@@ -748,7 +749,7 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0 order by teamid.product.p_readcount desc) A) B WHERE R>= 1 AND R<=8";
+			String sql ="select B.* FROM(Select ROWNUM R, A.* FROM(select * from TEAMID.product where p_delete=0  and P_FINISH =0 order by teamid.product.p_readcount desc) A) B WHERE R>= 1 AND R<=8";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
@@ -1055,6 +1056,237 @@ public class LeeDAO {
 		return list;
 	}
 	
+	public int insertContent(ContentDTO article ) {
+		int result =-1;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		try {
+			conn=getConnection();
+			String sql="insert into content values(CONTENT_SEQ.nextval,?,?,?,sysdate,0,?)";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, article.getC_title() );
+			pstmt.setString(2, article.getUser_id());
+			pstmt.setString(3, article.getC_content());
+			pstmt.setString(4, article.getC_img());
+			
+			
+			
+			int updateCount = pstmt.executeUpdate(); 
+			System.out.println("insertContent :"+updateCount);
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			System.out.println("LeeDAO.insertContent ERR");
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+			
+		}
+		
+		
+		
+		return result;
+	}
 	
+	public int freeContentCount() {
+		int count =0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql="select count(*) from content";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			System.out.println("LEE DAO .freeContentCount ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		return count;
+	}
+	
+	
+	public List freeContentList(int start, int end) {
+		List list = null;  
+		Connection conn = null;  
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from content  ORDER BY C_REG DESC) A) B where r>=? and r<=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					
+					
+					ContentDTO cdto =new ContentDTO();
+					cdto.setC_no(rs.getInt("C_NO"));
+					cdto.setC_title(rs.getString("C_TITLE"));
+					cdto.setUser_id(rs.getString("USER_ID"));
+					cdto.setC_content(rs.getString("C_CONTENT"));
+					cdto.setC_reg(rs.getTimestamp("C_REG"));
+					cdto.setC_readcount(rs.getInt("C_READCOUNT"));
+					cdto.setC_img(rs.getString("C_IMG"));
+					list.add(cdto);
+					
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			System.out.println("LeeDAO freeContentList ERR!");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
+	
+	public int getfreeContentListSearchCount(String sel, String search) {
+		int count =0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn=getConnection();
+			String sql="select count(*) from content where "+sel+" like '%"+search+"%'";
+			pstmt= conn.prepareStatement(sql);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println("getfreeContentListSearchCount:"+count);
+		}catch(Exception e){
+			System.out.println("LEEDAO. getfreeContentListSearchCount ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+
+		return count;
+	}
+
+	public List getfreeContentListSearchList(int start, int end, String sel, String search) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from content where "+sel+" like '%"+search+"%' ORDER BY C_REG DESC) A) B where r>=? and r<=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					
+					
+					ContentDTO cdto =new ContentDTO();
+					cdto.setC_no(rs.getInt("C_NO"));
+					cdto.setC_title(rs.getString("C_TITLE"));
+					cdto.setUser_id(rs.getString("USER_ID"));
+					cdto.setC_content(rs.getString("C_CONTENT"));
+					cdto.setC_reg(rs.getTimestamp("C_REG"));
+					cdto.setC_readcount(rs.getInt("C_READCOUNT"));
+					cdto.setC_img(rs.getString("C_IMG"));
+					list.add(cdto);
+					
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("getfreeContentListSearchList");
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
+	public void addReadcount(int cno) {
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		try {
+			conn = getConnection(); 
+			String sql = "update CONTENT set C_readcount=C_readcount+1 where c_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			
+			int result = pstmt.executeUpdate(); 
+			System.out.println("update count : " + result);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+	}
+	
+	public ContentDTO getOneContent(int cno) {
+		ContentDTO article = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection(); 
+			String sql = "select * from content where c_no =? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				article = new ContentDTO(); 
+				article.setC_no(rs.getInt("C_NO"));
+				article.setC_title(rs.getString("C_TITLE"));
+				article.setUser_id(rs.getString("USER_ID"));
+				article.setC_content(rs.getString("C_CONTENT"));
+				article.setC_readcount(rs.getInt("C_READCOUNT"));
+				article.setC_reg(rs.getTimestamp("C_REG"));
+				article.setC_img(rs.getString("C_IMG"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return article;
+	}
 	
 }
