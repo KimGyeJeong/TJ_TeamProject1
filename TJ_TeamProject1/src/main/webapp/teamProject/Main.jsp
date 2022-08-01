@@ -266,7 +266,7 @@ function showDivs(n) {
             window.i++;
             console.log("out Function.value i : ", i);
 
-            var Product = {
+            let Product = {
                 p_no: pno,
                 testNum: window.i,
                // expire: Date.now() + 30000,
