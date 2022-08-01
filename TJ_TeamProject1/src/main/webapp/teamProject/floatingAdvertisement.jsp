@@ -19,12 +19,17 @@
 		<a href="javascript:goProductTest()">
 		<input type="text" id="nameTest" value="before">
 		<script type="text/javascript">
-		function goProductTest(){
+	/*	function goProductTest(){
 			let getp_noT = JSON.parse(localStorage.getItem("Test"));
 			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+getp_noT[0].p_no,'_blank');
 		
-		}
+		}*/
+		
 		</script>
+		</a>
+		
+		<a href="#" onclick="goProduct()" target="_blank">
+		<div id="demo"></div>
 		</a>
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
@@ -63,7 +68,24 @@
 		function goProduct(){
 			//let getp_no = document.getElementById('nameHere').value;
 			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
+			location.reload;
 		}
+		
+		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+		let text =" ";
+		
+		for(var makeTable=0; makeTable<Object.keys(getWebStorage).length; makeTable++){
+			text+=getWebStorage[makeTable].p_no + " " + getWebStorage[makeTable].imglink + "<br/>"
+			
+			document.getElementById("demo").innerHTML = text;
+			
+			function goProduct2(){
+				//let getp_no = document.getElementById('nameHere').value;
+				window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
+				location.reload;
+			}
+		}
+		
 			
 		</script>
 
