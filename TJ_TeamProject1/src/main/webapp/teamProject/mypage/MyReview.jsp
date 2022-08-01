@@ -16,21 +16,11 @@
 	<jsp:include page="../Header.jsp"></jsp:include>
 	<jsp:include page='../floatingAdvertisement.jsp'/>
 	<style type="text/css">
-		#mypagelist {
-			list-style: none;
-			display: inline-block;
-		}
-		#mypagelist li{
-			margin: 20px;
-			font-size: 18px;
-		}
+		
 		#mypagebody{
 			position: relative;
 			left: 50px;
 			display:inline-block;
-		}
-		#seller p {
-			display: inline;
 		}
 		fieldset {
 			display: inline-block;
@@ -48,19 +38,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
 %>
 </head>
 <body>
-	<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
-	
-	<ul id="mypagelist">
-	  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-	  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
-	  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
-	  <li><a href="MyWishList.jsp"> 찜 </a></li>
-	  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
-	  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
-	  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-	  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
-	  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
-	</ul>
+	<jsp:include page="MyPageCategory.jsp" />
 <div id="mypagebody" >
 	<fieldset>
 	<div> <h3 style="display: inline; width: 300px;height: 20px;" ><%= uid %> 받은 후기</h3> <a href ="ReportedReviewList.jsp"  style=" margin-left : 180px; ">더보기</a> </div>
