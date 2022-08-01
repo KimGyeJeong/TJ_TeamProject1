@@ -4,7 +4,13 @@ import java.sql.Timestamp;
 
 public class ReplyDTO {
 	private String user_id; 
-	private int p_no; 
+	private int c_no; 
+	public int getC_no() {
+		return c_no;
+	}
+	public void setC_no(int c_no) {
+		this.c_no = c_no;
+	}
 	private int r_no; 
 	private String r_reply; 
 	private Timestamp r_reg; 
@@ -19,12 +25,7 @@ public class ReplyDTO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public int getP_no() {
-		return p_no;
-	}
-	public void setP_no(int p_no) {
-		this.p_no = p_no;
-	}
+	
 	public int getR_no() {
 		return r_no;
 	}
