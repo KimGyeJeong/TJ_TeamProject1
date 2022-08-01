@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>옆에붕붕떠다니는 페이지임 ㅎㅎ</title>
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 		src="http://code.jquery.com/jquery-2.1.4.js"></script>
 
 	<div class="sideBanner">
-		<span class="txt-label"> 최근본 상품 </span>
+		<span class="txt-label"> 마지막으로본 상품 </span>
 		<%--<a href="javascript:goProductTest()">
 		 <input type="text" id="nameTest" value="before">--%>
 		<script type="text/javascript">
@@ -26,7 +26,7 @@
 		</script>
 		
 		
-		<a href="#" onclick="goProduct()" target="_blank">
+		<a href="#" onclick="goProduct()">
 		<div id="demo">
 		
 		</div>
@@ -69,7 +69,7 @@
 		let goProductNo = JSON.parse(sessionStorage.getItem("Test"));
 		function goProduct(){
 			//let getp_no = document.getElementById('nameHere').value;
-			window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
+			window.open('/TJ_TeamProject1/teamProject/selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
 			//location.reload;
 		}
 		
@@ -80,14 +80,14 @@
 			text+=getWebStorage[makeTable].p_no + " 이미지링크:" + getWebStorage[makeTable].imglink + "<br/>"
 			
 			document.getElementById("demo").innerHTML = text;
-			document.getElementById('nameHerePlz').src=getWebStorage[makeTable].imglink;
+			document.getElementById('nameHerePlz').src='/TJ_TeamProject1/teamProject/'+getWebStorage[makeTable].imglink;
 			
 			//let img = doocument.querySelector("img");
 			//img.src = getWebStorage[makeTable].imglink;
 			
 			function goProduct2(){
 				//let getp_no = document.getElementById('nameHere').value;
-				window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[makeTable].p_no,'_blank');
+				window.open('/TJ_TeamProject1/teamProject/selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[makeTable].p_no,'_blank');
 				location.reload;
 			}
 		}
