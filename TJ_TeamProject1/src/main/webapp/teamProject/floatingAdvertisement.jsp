@@ -31,8 +31,8 @@
 		
 		</div>
 		
-		</a>
 		<img id="nameHerePlz" alt="" src="" width="100" height="100">
+		</a>
 		<script type="text/javascript">
 		//세션스토리지값 가져오기..
 		/*
@@ -87,7 +87,7 @@
 			
 			function goProduct2(){
 				//let getp_no = document.getElementById('nameHere').value;
-				window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[0].p_no,'_blank');
+				window.open('selPage/ProductDetailBuyForm.jsp?p_no='+goProductNo[makeTable].p_no,'_blank');
 				location.reload;
 			}
 		}

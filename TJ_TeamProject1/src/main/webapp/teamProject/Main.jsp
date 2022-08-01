@@ -262,14 +262,14 @@ function showDivs(n) {
 
         function setSession(pno, img) {
         	
-        	alert("Main.Script 265 Session");
+        	//alert("Main.Script 265 Session");
             window.i++;
             console.log("out Function.value i : ", i);
 
             var Product = {
                 p_no: pno,
                 testNum: window.i,
-                expire: Date.now() + 30000,
+               // expire: Date.now() + 30000,
                 imglink : img
             }
 
@@ -303,9 +303,9 @@ function showDivs(n) {
             }*/
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
-            location.reload;	//배열은 초기화되지않으나 float 는 새로고침이 안됨
+           // location.reload;	//배열은 초기화되지않으나 float 는 새로고침이 안됨
             //스크립트는 초기화가 아니지만, float는 새로고침이 안됨 109번 alert도 안뜸 --> 새로고침이 아님,,?
-            //history.go(0);	//float 까지 새로고침 시키려면 사용해야하나. 배열이 초기화됨
+            history.go(0);	//float 까지 새로고침 시키려면 사용해야하나. 배열이 초기화됨
             // 스크립트까지 초기화
            //alert("reload!");
             
