@@ -25,6 +25,12 @@
 <title>장물아비-자유게시판</title> 
 
 <link href="../style.css" rel="stylesheet" type="text/css" /> 
+<style>
+#cox tr td {
+  text-align: "center" !important;
+}
+
+</style>
 
   
 
@@ -46,7 +52,7 @@
 
 	 
 
-	int pageSize = 5;    
+	int pageSize = 12;    
 
 	int currentPage = Integer.parseInt(pageNum);   
 
@@ -130,7 +136,7 @@
 
 	<br /> 
 
-		<table align="center"  > 
+		<table align="center"  id="cox" > 
 
 				<tr> 
 
@@ -144,17 +150,17 @@
 
 					 
 
-					<td>글 번호</td> 
+					<td style="width:20%">글 번호</td> 
 
-					<td>제목</td> 
+					<td style="width:50% ">제목</td> 
 
 					 
 
-					<td>작성자</td> 
+					<td style="width:10%">작성자</td> 
 
-					<td>작성시간</td> 
+					<td style="width:10%">작성시간</td> 
 
-					<td>조회수</td> 
+					<td style="width:10%">조회수</td> 
 
 					 
 

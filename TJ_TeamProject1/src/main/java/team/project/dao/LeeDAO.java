@@ -948,9 +948,74 @@ public class LeeDAO {
 		
 		return count;
 	}
+	public int noticeCount2() {
+		int count =0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql="select count(*) from notice";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			System.out.println("LEE DAO .noticeCount ERR");
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		return count;
+	}
 	
 	
 	public List noticeList(int start, int end) {
+		List list = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection(); 
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notice  ORDER BY NO_REG DESC) A) B where r>=? and r<=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				list = new ArrayList();
+				do {
+					
+					NoticeDTO ndto = new NoticeDTO();
+					ndto.setNo_no(rs.getInt("NO_NO"));
+					ndto.setNo_title(rs.getString("NO_TITLE"));
+					ndto.setNo_content(rs.getString("NO_CONTENT"));
+					ndto.setNo_cat(rs.getString("NO_CAT"));
+					ndto.setNo_hidden(rs.getInt("NO_HIDDEN"));
+					ndto.setNo_reg(rs.getTimestamp("NO_REG"));
+					list.add(ndto);
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return list;
+	}
+	
+	public List noticeList2(int start, int end) {
 		List list = null; 
 		Connection conn = null; 
 		PreparedStatement pstmt = null; 
