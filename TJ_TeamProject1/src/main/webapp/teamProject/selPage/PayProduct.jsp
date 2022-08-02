@@ -76,7 +76,7 @@
 				<td>상품 제목 : <%=proDTO.getP_title() %></td>
 			</tr>
 			<tr>
-				<td><img src="../save/<%=proDTO.getP_img1()%>" width="300" height="300"/></td>
+				<td><img src="../save/<%=proDTO.getP_img1()%>" height="300px" width="300px"/></td>
 			</tr>
 			<tr>
 <%			if(p_status == 1){ %>

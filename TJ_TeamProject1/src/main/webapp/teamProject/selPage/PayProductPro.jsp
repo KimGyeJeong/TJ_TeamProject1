@@ -36,11 +36,20 @@
 	ProductDTO proDTO = dao.productDetailBuy(p_no);
 	userDTO = dao.userCheck(UID);
 	int result = 0;
-	
-	if((userDTO.getUser_money() - b_bidding) > 0 || (userDTO.getUser_money() - p_price) > 0){
+	int result2 = 0;
+	if((userDTO.getUser_usemoney() - p_price) > 0){
 		result = 1;
+		
 	}else{
 		result = -1;
+		result2 = 1;
+	}
+	if(result2 == 0){
+		if((userDTO.getUser_usemoney() - b_bidding) > 0){
+			result = 1;	
+		}else{
+			result = -1;	
+		}
 	}
 	int proResult = 0;
 	BiddingDTO bidDTO = dao.biddingGet(p_no, UID);
