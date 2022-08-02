@@ -25,7 +25,7 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%id=(String)session.getAttribute("UID"); %>
-	<h3 align="right"> 사용자: <%=id %></h3>
+	
 	
 	
   	<style>

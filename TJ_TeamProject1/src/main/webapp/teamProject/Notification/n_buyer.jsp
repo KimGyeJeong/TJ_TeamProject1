@@ -12,6 +12,8 @@
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <br />
 <h1 align="center">알림 페이지-구매자 알림</h1>
 <table>
@@ -43,7 +45,7 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%  id=(String)session.getAttribute("UID"); %>
-<h3 align="right">사용자:<%=id %></h3>
+
 
 	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
@@ -191,7 +193,7 @@ if(auto != null && id != null && pw != null){
 	
 	</div>
 	
-	
+<%@ include file="../Footer.jsp" %>	
 
 
 

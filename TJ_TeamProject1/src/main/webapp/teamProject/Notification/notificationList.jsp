@@ -12,17 +12,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+
+</style>
 <head>
 <br />
 <h1 align="center">알림 페이지-전체보기</h1>
-<table>
+<div id="box" >
+<table  >
 	<tr>
+		<td></td>
+		
 		<td><input type='button' name='seller' value="판매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_seller.jsp'" ></td>
 		<td><input type='button' name='buyer' value="구매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_buyer.jsp'"></td>
 		<td><input type='button' name='warning' value="경고" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_warning.jsp'"></td>
 		<td><input type='button' name='all' value="전체보기" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'"></td>
 	</tr>
 </table>
+</div>
 
 <%
 String id = null, pw = null, auto = null; 
@@ -44,7 +57,6 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%  id=(String)session.getAttribute("UID"); %>
-<h3 align="right">사용자:<%=id %></h3>
 
 	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
@@ -85,7 +97,7 @@ if(auto != null && id != null && pw != null){
  
  	
  	System.out.println("notificationListCount  : " + count);
- 
+ 	SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 	
 	int number = count - (currentPage - 1) * pageSize;
 
@@ -96,9 +108,8 @@ if(auto != null && id != null && pw != null){
 </head>
 <body>
 
-<br />
-<br />
-<br />
+
+
 	<div>
 	
 	<% if(count == 0){ // 글이 없으면  %>
@@ -112,7 +123,7 @@ if(auto != null && id != null && pw != null){
 	<%}else{ // 글이 하나라도 있으면 %>
 		<br />
 	
-		<div>
+		<div id="box">
 		<table>
 			<tr>
 				<td>no.</td>
@@ -145,7 +156,7 @@ if(auto != null && id != null && pw != null){
 				notType= "경고";
 			} %>(<%=notType%>)<%=dto.getNot_message() %></td>
 			<form action="notificationListPro.jsp" method="get"  >	
-			<td><%=dto.getNot_reg()%></td> 
+			<td><%=sdf.format(dto.getNot_reg())%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> 
 			<td style='display:none'><input type='text' value='notificationList.jsp' name="where"></td>
 			<%--if문으로 이미 체크되어있으면 확인함  --%>
 			

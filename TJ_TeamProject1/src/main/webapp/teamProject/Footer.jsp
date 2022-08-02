@@ -8,14 +8,6 @@
 </head>
 
 <style>
-table{
-		margin: auto;
-		width: 80%;
-		}
-
-td{
-	size: 200px;
-	}
 #stupid{
 	size: 100px;
 }

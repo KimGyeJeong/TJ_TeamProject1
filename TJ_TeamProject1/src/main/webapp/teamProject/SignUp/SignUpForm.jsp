@@ -15,6 +15,20 @@
 			}
 		}).open();
 	}
+	function openConfimID(inputForm) {
+		//아이디 중복 검사 팝업 열기
+		//사용자가 id 입력란에 작성을 했는지 체크
+		if (inputForm.id.value == "") {
+			//!inputForm.id.value 등 방법은 여러가지
+			alert("아이디를 입력하세요.")
+			return; //메소드 종료
+		}
+		//아이디 중복 검사 팝업 열기
+		let url = "confirmId.jsp?id=" + SignUpForm.id.value;
+		open(url, "confirmId",
+				"width=300, height=650, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
+
+	}
 	function acountCheck(){
 		let inputs = document.SignUpForm; 
 		if(!inputs.id.value){
@@ -61,18 +75,28 @@
 	}
 </script>
 <title>Insert title here</title>
-<link href="../style.css" rel="stylesheet" type="text/css" />
+<style>
+#SignUpForm tr td input{
+	width: 300px;
+}
+
+
+</style>
 </head>
 <body>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 	<br />
 	<h1 align="center">회원가입</h1>
+	<br/>
 	<form action="SignUpPro.jsp" method="post" enctype="multipart/form-data" name="SignUpForm" onsubmit="return acountCheck()">
-		<table>
+		<div style="margin-left: 30%;">
+		<table id="SignUpForm">
 			<tr>
-				<td>아이디 *</td>
-				<td><input type="text" name="id" required/></td> 
+				<td>아이디 *</td> 
+				<td><input  type="text" name="id" style="width:200px;" required="required" />&nbsp;<input type="button" value="중복 확인"
+					onclick="openConfimID(this.form)" style="width:100px;"></td> 
 			</tr>
-
 			<tr>
 				<td>비밀번호 *</td>
 				<td><input type="password" name="pw" /></td>
@@ -101,8 +125,8 @@
 			</tr>
 			<tr>
 				<td width="200">우편번호*</td>
-				<td><input type="text" name="zipcode" id="zipcode" size="7">
-					<input type="button" onclick="a()" value="우편번호찾기"></td>
+				<td><input type="text" name="zipcode" id="zipcode" size="7" style="width:200px;">
+					<input type="button" onclick="a()" value="우편번호찾기" style="width:100px;"></td>
 			</tr>
 			<tr>
 				<td>주소*</td>
@@ -118,14 +142,19 @@
 			<tr>
 				<td>photo*</td>
 				<td><input type="file" name="photo" value="File Upload" /></td>
-			</tr>
+			
 			<tr>
-				<td colspan="2"><input type="submit" value="회원 가입" /> <input
-					type="reset" value="재작성" /> <input type="button" value="취소"
-					onclick="window.location='../Main.jsp'" /></td>
+				<td colspan="2" align="center"><input type="submit" value="회원 가입" style="width:100px;"/> <input
+					type="reset" value="재작성"  style="width:100px;"/> <input type="button" value="취소"
+					onclick="window.location='../Main.jsp'"style="width:100px;" /></td>
 			</tr>
 		</table>
+		</div>
+		
 	</form>
-
+	<br/>
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html> 

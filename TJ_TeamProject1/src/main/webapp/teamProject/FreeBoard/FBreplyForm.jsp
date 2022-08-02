@@ -100,12 +100,11 @@
 			<td colspan="4"><b>댓 글</b></td>
 		</tr>
 		<tr>
-			<td>no
-			<td>
-			<td>내 용</td>
-			<td>작성자</td>
-			<td>작성시간</td>
-			<td>답글 수정 삭제</td>
+			<td style="width:20%">no</td>
+			<td style="width:50%">내 용</td>
+			<td style="width:10%">작성자</td>
+			<td style="width:10%">작성시간</td>
+			<td style="width:10%">답글 수정 삭제</td>
 		<tr>
 			<%
 		for(int i = 0; i < replyList.size(); i++){
@@ -113,7 +112,7 @@
 		
 		<tr>
 			<td><%=reply.getR_no() %></td>
-			<td></td>
+			
 			<td align="left">
 				<% // 댓글의 댓글 들여쓰기 효과 주기 
 					int wid = 0; 
