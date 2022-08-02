@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.LeeDAO"%>
 <%@page import="team.project.dao.InstanceDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.CategoryDTO"%>
@@ -27,9 +28,13 @@
 	</style>
 	
 
-<%String id=(String)session.getAttribute("UID"); 
+<%String id=(String)session.getAttribute("UID");
+	LeeDAO dao2 = new LeeDAO();
+	int alram=dao2.getAlarm(id);
 if((String)session.getAttribute("UID")!=null){%>
 	<h3 align="right"> 사용자: <%=id %></h3>
+ 	
+	
 <%}
 System.out.println("id :"+id);
 
@@ -38,7 +43,7 @@ System.out.println("id :"+id);
 <%if(session.getAttribute("UID") != null){%>
 <input  type="button" value="로그아웃" onclick="window.location='/TJ_TeamProject1/teamProject/Login/Logout.jsp'" style="float: right;"/>
 <input  type="button" value="mypage" onclick="window.location='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="float: right;"/>
-<input  type="button" value="알림" onclick="window.location='/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'" style="float: right;"/>
+<input  type="button" value="알림(<%=alram %>)" onclick="window.location='/TJ_TeamProject1/teamProject/Notification/notificationList.jsp'" style="float: right;"/>
 <%}else{%>
 <input  type="button" value="로그인" onclick="window.location='/TJ_TeamProject1/teamProject/Login/Login.jsp'" style="float: right;"/>	
 <input  type="button" value="회원가입" onclick="window.location='/TJ_TeamProject1/teamProject/SignUp/Agecheck.jsp'" style="float: right;"/>	

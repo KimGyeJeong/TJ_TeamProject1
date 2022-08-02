@@ -669,15 +669,18 @@ public class LeeDAO {
 		
 		try {
 			conn = getConnection(); 
-			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where not_type=3 ORDER BY NOT_REG DESC ) A) B where r>="+start+" and r<="+end+" and user_id=? " ;
+			String sql ="select * from(select ROWNUM r, A.* FROM (select * from notification where not_type=3 and user_id=? ORDER BY NOT_REG DESC ) A) B where r>=? and r<=? " ;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			rs = pstmt.executeQuery(); 
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			
+			rs = pstmt.executeQuery();
 			if(rs.next()) { // 결과 있는지 체크 + 커서 첫번째 레코드 가르키게됨.
 				list = new ArrayList(); // 저장공간 생성(결과없으면 저장공간도 차지하지않게하겠다)
+				
 				do {
 					
-							
 					NotificationDTO ndto = new NotificationDTO();
 					ndto.setNot_no(rs.getInt("NOT_NO"));
 					ndto.setUser_id(rs.getString("USER_ID"));
@@ -1647,6 +1650,36 @@ public class LeeDAO {
 		
 		return result;
 		
+	}
+	
+	public int getAlarm(String id){
+		int result =0;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn=getConnection();
+			String sql="select count(*) from notification where user_id=? and NOT_CH=0";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result= rs.getInt(1);
+			}
+				
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("getAlarm:"+result);
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return result;
 	}
 	
 	

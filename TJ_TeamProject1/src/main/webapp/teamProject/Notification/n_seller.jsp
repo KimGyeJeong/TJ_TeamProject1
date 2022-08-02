@@ -12,6 +12,8 @@
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <br />
 <h1 align="center">알림 페이지-판매자 알림</h1>
 <table>
@@ -192,7 +194,7 @@ if(auto != null && id != null && pw != null){
 	</div>
 	
 	
-
+<%@ include file="../Footer.jsp" %>	
 
 
 

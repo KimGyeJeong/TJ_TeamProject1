@@ -12,6 +12,8 @@
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <br />
 <h1 align="center">알림 페이지-경고 알림</h1>
 <table>
@@ -83,7 +85,8 @@ if(auto != null && id != null && pw != null){
  	
  	System.out.println("notificationListCount  : " + count);
  
-	
+ 	System.out.println("notificationList  : " +NotificationList);
+ 	
 	int number = count - (currentPage - 1) * pageSize;
 
 	
@@ -195,6 +198,6 @@ if(auto != null && id != null && pw != null){
 
 
 
-
+<%@ include file="../Footer.jsp" %>	
 </body>
 </html>
