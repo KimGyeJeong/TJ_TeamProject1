@@ -77,10 +77,10 @@
 					<td>돈 충전하기</td>
 				</tr>
 				<tr>
-					<td>현재 잔액 : <%=dto.getUser_money() %></td>
+					<td>현재 잔액 : <%=dto.getUser_money() %>원</td>
 				</tr>
 				<tr>
-					<td>현재 사용가능한 금액 : <%=dto.getUser_usemoney() %></td>
+					<td>현재 사용가능한 금액 : <%=dto.getUser_usemoney() %>원</td>
 				</tr>
 				<tr>
 					<%-- 

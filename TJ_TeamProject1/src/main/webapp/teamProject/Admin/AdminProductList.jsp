@@ -74,7 +74,7 @@
 		<!-- Sidebar End -->
 	</div>
 	<!-- Content End -->
-	<div align="center">
+	<div align="center" style="margin-left: 250px">
 		<%
 		//TODO
 		//신고자, 피신고자 null 확인
@@ -401,7 +401,9 @@
 						}
 						%>
 					</td>
-					<td><%=dto.getP_title()%></td>
+					<td><a
+						href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"
+						target="_blank"> <%=dto.getP_title()%></a></td>
 					<td><%=dto.getP_price()%></td>
 					<td><%=dto.getP_minPrice()%></td>
 					<td><%=dto.getP_maxPrice()%></td>

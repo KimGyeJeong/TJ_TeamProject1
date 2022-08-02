@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>error404</title>
+<title>ERRORPAGE404</title>
 </head>
 <body>
 <h4>ERRORPAGE</h4>

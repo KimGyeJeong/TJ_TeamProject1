@@ -327,7 +327,7 @@
 										dto_c = list_content.get(i);
 									%>
 									<tr>
-										<td><a href=""><%=dto_c.getC_title()%></a></td>
+										<td><a href="../FreeBoard/FBcontent.jsp?cno=<%=dto_c.getC_no()%>"><%=dto_c.getC_title()%></a></td>
 									</tr>
 									<%
 									}
