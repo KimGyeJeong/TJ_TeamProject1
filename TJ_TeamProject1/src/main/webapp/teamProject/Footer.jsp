@@ -69,8 +69,8 @@ td{
 <br>
 
 	<div align="center">
-	<input type="button"  value="회사소개" onclick="location.href='Main.jsp'"> |
-	<input type="button"  value="쇼핑가이드" onclick="location.href='Main.jsp'"> |
+	<input type="button"  value="회사소개" onclick="location.href='/TJ_TeamProject1/teamProject/Main.jsp'"> |
+	<input type="button"  value="쇼핑가이드" onclick="location.href='/TJ_TeamProject1/teamProject/Main.jsp'"> |
 	<input type="button"  value="개인정보보호정책" onclick="location.href='/TJ_TeamProject1/teamProject/Header.jsp'"> |
 	<input type="button"  value="이용약관" onclick="location.href='/TJ_TeamProject1/teamProject/Admin/AdminMain.jsp'">
 	</div>
