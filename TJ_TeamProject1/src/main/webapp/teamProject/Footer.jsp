@@ -6,13 +6,7 @@
 <meta charset="UTF-8">
 <title>Footer</title>
 </head>
-
-<style>
-#stupid{
-	size: 100px;
-}
-
-</style>
+<link href="teamstyle.css" rel="stylesheet" type="text/css" />
 
 <body>
 
