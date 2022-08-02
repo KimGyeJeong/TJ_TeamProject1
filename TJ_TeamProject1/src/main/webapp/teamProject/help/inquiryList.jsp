@@ -100,7 +100,7 @@ if(auto != null && id != null && pw != null){
 	<h1>
 		1:1문의내역 목록
 		<button
-			onclick="window.location.href='http://localhost:8080/TJ_TeamProject1/teamProject/help/inquiry.jsp'">문의하기</button>
+			onclick="window.location.href='/TJ_TeamProject1/teamProject/help/inquiry.jsp'">문의하기</button>
 	</h1>
 
 

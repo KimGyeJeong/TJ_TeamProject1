@@ -156,6 +156,9 @@ List viewsProductList = daoL.viewsProductList();
 		<button
 			onclick="window.location.href='/TJ_TeamProject1/teamProject/Notice.jsp'"
 			style="width: 120px;">공지사항</button>
+			<button
+			onclick="window.location.href='/TJ_TeamProject1/teamProject/FreeBoard/FreeBoard.jsp'"
+			style="width: 120px;">자유게시판</button>
 	</div>
 
 	<script>
@@ -209,7 +212,7 @@ function showDivs(n) {
 				<td id="special"><a id="idAtag" href="#"
 					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
-						align="center" src="save/<%=dto.getP_img1()%>" width="250px" /><br /><%=dto.getP_title()%>
+						align="center" src="save/<%=dto.getP_img1()%>" height="250px" width="250px" /><br /><%=dto.getP_title()%>
 				</a></td>
 
 				<%
@@ -239,7 +242,7 @@ function showDivs(n) {
 				<td id="special"><a id="idAtag" href="#"
 					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
-						align="center" src="save/<%=dto.getP_img1()%>" width="300" /><br /><%=dto.getP_title()%>
+						align="center" src="save/<%=dto.getP_img1()%>" width="250px" height="250px" '/><br /><%=dto.getP_title()%>
 				</a></td>
 
 				<%
@@ -262,29 +265,29 @@ function showDivs(n) {
 
         function setSession(pno, img) {
         	
-        	alert("Session");
+        	//alert("Main.Script 265 Session");
             window.i++;
             console.log("out Function.value i : ", i);
 
-            var Product = {
+            let Product = {
                 p_no: pno,
                 testNum: window.i,
-                expire: Date.now() + 30000,
+               // expire: Date.now() + 30000,
                 imglink : img
             }
 
             recentView.unshift(Product);
-            localStorage.setItem('First', JSON.stringify(recentView));
+            sessionStorage.setItem('First', JSON.stringify(recentView));
 
             function save(name, val) {
-                localStorage.setItem(name, JSON.stringify(val));
+            	sessionStorage.setItem(name, JSON.stringify(val));
             }
             function get(name) {
-                return JSON.parse(localStorage.getItem(name));
+                return JSON.parse(sessionStorage.getItem(name));
             }
 
             //배열 정리. 중복된값 있으면 삭제해줌
-             newArray = JSON.parse(localStorage.getItem("First")).reduce(function (acc, current) {
+             newArray = JSON.parse(sessionStorage.getItem("First")).reduce(function (acc, current) {
                 if (acc.findIndex(({ p_no }) => p_no === current.p_no) === -1) {
                     acc.push(current);
                 }
@@ -303,14 +306,14 @@ function showDivs(n) {
             }*/
 
             window.open('selPage/ProductDetailBuyForm.jsp?p_no='+pno,'_blank');
-            location.reload;	//배열은 초기화되지않으나 float 는 새로고침이 안됨
+           // location.reload;	//배열은 초기화되지않으나 float 는 새로고침이 안됨
             //스크립트는 초기화가 아니지만, float는 새로고침이 안됨 109번 alert도 안뜸 --> 새로고침이 아님,,?
-            //history.go(0);	//float 까지 새로고침 시키려면 사용해야하나. 배열이 초기화됨
+            history.go(0);	//float 까지 새로고침 시키려면 사용해야하나. 배열이 초기화됨
             // 스크립트까지 초기화
            //alert("reload!");
             
             //Temp
-    		let getWebStorage = JSON.parse(localStorage.getItem("Test"));
+    		let getWebStorage = JSON.parse(sessionStorage.getItem("Test"));
             
 			let objp_no = getWebStorage[0].p_no;
 			let objimg = getWebStorage[0].imglink;

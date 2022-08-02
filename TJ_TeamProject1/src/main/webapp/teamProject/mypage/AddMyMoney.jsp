@@ -76,6 +76,9 @@
 							<option value="10000">10000원</option>
 							<option value="30000">30000원</option>
 							<option value="50000">50000원</option>
+							<option value="100000">100000원</option>
+							<option value="500000">500000원</option>
+							<option value="1000000">1000000원</option>
 					</select></td>
 
 				</tr>

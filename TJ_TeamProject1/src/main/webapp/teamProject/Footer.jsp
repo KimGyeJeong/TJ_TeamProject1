@@ -37,7 +37,7 @@ td{
 		</td>
 		<td>&nbsp;</td>
 		<td>
-			레드홀릭 무통장 입금 계좌번호 (예금주 : 김계정) <br/>
+			장물아비 무통장 입금 계좌번호 (예금주 : 김계정) <br/>
 				국민은행 : 464801 - 01 - 061719 <br/>
 				우리은행 : 1002 - 032 - 538269 <br/>
 				하나은행 : 231 - 910094 - 22507 <br/>
@@ -69,8 +69,8 @@ td{
 <br>
 
 	<div align="center">
-	<input type="button"  value="회사소개" onclick="location.href='Main.jsp'"> |
-	<input type="button"  value="쇼핑가이드" onclick="location.href='Main.jsp'"> |
+	<input type="button"  value="회사소개" onclick="location.href='/TJ_TeamProject1/teamProject/Main.jsp'"> |
+	<input type="button"  value="쇼핑가이드" onclick="location.href='/TJ_TeamProject1/teamProject/Main.jsp'"> |
 	<input type="button"  value="개인정보보호정책" onclick="location.href='/TJ_TeamProject1/teamProject/Header.jsp'"> |
 	<input type="button"  value="이용약관" onclick="location.href='/TJ_TeamProject1/teamProject/Admin/AdminMain.jsp'">
 	</div>
