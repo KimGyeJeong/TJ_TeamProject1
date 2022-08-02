@@ -69,8 +69,14 @@
 	<form action="SignUpPro.jsp" method="post" enctype="multipart/form-data" name="SignUpForm" onsubmit="return acountCheck()">
 		<table>
 			<tr>
-				<td>아이디 *</td>
+				<td>아이디 *</td> 
 				<td><input type="text" name="id" required/></td> 
+			</tr>
+			<tr>
+				<td>ID 중복확인</td>
+				<td><input type="button" value="아이디 중복 확인"
+					onclick="openConfimID(this.form)"></td>
+				<%-- this.form 은 이 form 전체를 주겠다... --%>
 			</tr>
 
 			<tr>
