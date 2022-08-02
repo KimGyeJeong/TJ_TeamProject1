@@ -46,6 +46,7 @@
 	<%}
 %>
 <body>
+<jsp:include page='../Header.jsp'/>
 	<table>
 		<tr>
 			<td>주문결제</td>
@@ -69,8 +70,7 @@
 	<form action="PayProductPro.jsp" method="post">
 	<input type="hidden" name="p_no" value="<%=p_no %>" />
 	<input type="hidden" name="p_status" value="<%=p_status %>" />
-	<%-- <input type="hidden" name="a_no" value="<%=addDTO.getA_no() %>" /> --%>
-	<input type="text" name="ano" id="ano" value="<%=addDTO.getA_no() %>" />
+	<input type="hidden" name="ano" id="ano" value="<%=addDTO.getA_no() %>" />
 		<table>
 			<tr>
 				<td>상품 제목 : <%=proDTO.getP_title() %></td>
@@ -109,5 +109,10 @@ alert("로그인 후 이용해 주세요!");
 window.location.assign("../Login/Login.jsp");
 </script>
 <%	} %>
+ <jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>

@@ -71,6 +71,7 @@
 	
 %>
 <body>
+<jsp:include page='../Header.jsp'/>
 <br />
 <%if(dto.getP_finish() == 0){ %>	
 	<table>
@@ -630,5 +631,10 @@
 		</script>
 <%	} %>	
 <br />
+ <jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>

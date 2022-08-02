@@ -26,7 +26,7 @@
 	List bidList = dao.biddingGet(p_no);
 %>
 <body>
-
+<jsp:include page='../Header.jsp'/>
 <%
 if(result < 0){
 	
@@ -225,6 +225,11 @@ if(proDTO.getP_status() == 1){ %>
 		window.location.assign("../Main.jsp");
 	</script>
 <%} %>
-
+ <jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
+
 </html>
