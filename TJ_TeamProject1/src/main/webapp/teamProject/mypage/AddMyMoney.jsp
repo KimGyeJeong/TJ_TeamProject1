@@ -14,14 +14,6 @@
 		#content {
 			display: inline-block;
 		}
-		#mypagelist {
-			list-style: none;
-			display: inline-block;
-		}
-		#mypagelist li{
-			margin: 20px;
-			font-size: 18px;
-		}
 		#mypagebody{
 			position: relative;
 			left: 50px;
@@ -30,19 +22,7 @@
 	</style> 
 </head>
 <body>
-<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
-
-<ul id="mypagelist">
-  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
-  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
-  <li><a href="MyWishList.jsp"> 찜 </a></li>
-  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
-  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
-  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-	<li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
-  <li><a href="../help/MyHelp.jsp"> 고객센터 </a></li>
-</ul>
+<jsp:include page="MyPageCategory.jsp" />
 	<%
 	//이 페이지는 로그인 한사람만 들어와야함.
 	//1. 세션값or 쿠키값 확인

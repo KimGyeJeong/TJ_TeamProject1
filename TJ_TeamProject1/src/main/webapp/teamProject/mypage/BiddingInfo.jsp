@@ -14,37 +14,17 @@
 	<meta charset="UTF-8">
 	<title>입찰한 상품</title>
 	<jsp:include page="../UIDcheck.jsp"></jsp:include>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<jsp:include page='../floatingAdvertisement.jsp'/>
 	<jsp:include page='../Header.jsp'/>
+	<link href="../teamstyle.css" rel="stylesheet" type="text/css" />
 	
 	
-	
-	 <style type="text/css">
-	 	#bodylist * {
-	 		width : 80px;
-	 		align:"center";
-	 	}
-		#mypagelist {
-			list-style: none;
-			display: inline-block;
-		}
-		#mypagelist li{
-			margin: 20px;
-			font-size: 18px;
-		}
-		#mypagebody{
-			width: 480px;
-			position: relative;
-			left: 50px;
-			display:inline-block;
-		}
-		#seller p {
-			display: inline;
-		}
-		#ordertable {
-			margin: 10px;
-		}
+	<style type="text/css">
+	#notThing{
+		margin-top : 50px;
+		text-align: center;
+		font-size: 24px;
+	}
 	</style> 
 <% 
 	String uid = (String)session.getAttribute("UID");
@@ -57,56 +37,44 @@
 %>
 </head>
 <body>
-<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
-
-<ul id="mypagelist">
-  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
-  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
-  <li><a href="MyWishList.jsp"> 찜 </a></li>
-  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
-  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
-  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
-  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
-</ul>
-<div id="mypagebody" >
-	<fieldset>
-	<legend>입찰한 상품</legend>
-	<div>
-	<table id="ordertable" >
-		<tr id=bodylist >
-	<%	if(productlist != null){ %>
-			<td> 날짜 </td><td width="300px">상품정보</td>  <td>기간</td> <td>상세</td>
-		</tr>
-		<%	for(int i=0; i<productlist.size() ; i++){
-				ProductDTO product = productlist.get(i); 
-				BiddingDTO bidding = biddinglist.get(i); %>
-				
-			<tr>
-				<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>"></a></td>
-				<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
-				<td> <%= sdf.format(product.getP_start())  %> ~ <%= sdf.format(product.getP_end()) %></td>
-				<td>
-				<% 	if(bidding.getB_status() == 0){ %>
-						입찰 대기중
-				<% 	}else if(bidding.getB_status() == 1){ %>
-						낙찰
-				<% 	}else if(bidding.getB_status() == 2){ %>
-						유찰
-				<%	} %>
-				</td>
-				</tr>	
-				
-		<%	}%>
-	
-	<%	}else{ %>
-		<p> 구매한 상품이 없습니다. </p>	
-	<%	} %>
-	</table>
+<div class="mypageContent">
+	<jsp:include page="MyPageCategory.jsp" />
+	<div class="mypagebody" >
+		<fieldset>
+		<legend>입찰한 상품</legend>
+			<table class="ordertable" >
+				<tr class="bodylist" >
+			<%	if(productlist != null){ %>
+					<td width="300px">상품정보</td>  <td>기간</td> <td>상태</td>
+				</tr>
+				<%	for(int i=0; i<productlist.size() ; i++){
+						ProductDTO product = productlist.get(i); 
+						BiddingDTO bidding = biddinglist.get(i); %>
+						
+					<tr>
+						<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>"  width="100px" height="100px"/></a>
+						&nbsp;&nbsp;<a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
+						<td> <%= sdf.format(product.getP_start())  %> ~ <%= sdf.format(product.getP_end()) %></td>
+						<td>
+						<% 	if(bidding.getB_status() == 0){ %>
+								입찰 대기중
+						<% 	}else if(bidding.getB_status() == 1){ %>
+								낙찰
+						<% 	}else if(bidding.getB_status() == 2){ %>
+								유찰
+						<%	} %>
+						</td>
+						</tr>	
+						
+				<%	}%>
+			
+			<%	}else{ %>
+				<p id="notThing"> 구매한 상품이 없습니다. </p>	
+			<%	} %>
+			</table>
+		</fieldset>
 	</div>
-	</fieldset>
-</div>
+</div>	
 </body>
 
 <script type="text/javascript">

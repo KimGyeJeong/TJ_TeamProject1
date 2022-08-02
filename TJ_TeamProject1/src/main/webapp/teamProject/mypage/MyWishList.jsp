@@ -12,9 +12,9 @@
 <meta charset="UTF-8">
 <title>찜한 상품들</title>
 <jsp:include page="../UIDcheck.jsp"></jsp:include>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <jsp:include page="../Header.jsp"></jsp:include>
 <jsp:include page='../floatingAdvertisement.jsp'/>
+<link href="../teamstyle.css" rel="stylesheet" type="text/css" />
 </head>
 
 <%
@@ -30,63 +30,60 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 
 
 <body>
-<h1 style="padding-bottom: 50px; ">&nbsp;</h1>
-
-<ul id="mypagelist">
-  <li><a href="OrderProcessList.jsp"> 구입한 상품 </a></li>
-  <li><a href="BiddingInfo.jsp"> 입찰한 상품 </a></li>
-  <li><a href="MyProductNow.jsp"> 나의 상품 판매 </a></li>
-  <li><a href="MyWishList.jsp"> 찜 </a></li>
-  <li><a href="MyReview.jsp"> 나의 후기 </a></li>
-  <li><a href="AddMyMoney.jsp"> 잔액충전 </a></li>
-  <li><a href="MyPageInfo.jsp"> 계정설정 </a></li>
-  <li><a href="../help/inquiryList.jsp"> 나의 문의사항 </a></li>
-  <li><a href="../help/Help.jsp"> 고객센터 </a></li>
-</ul>
-<div id="mypagebody" >
-<fieldset>
-	<legend>찜한 상품</legend>
+<div class="mypageContent">
+<jsp:include page="MyPageCategory.jsp" />
+	<div class="mypagebody" >
+		<fieldset>
+		<legend>찜한 상품</legend>
 	<% 	if(wList != null){ %>
-			<div id="seller">
-				<p>상품</a></p>
-				<p>가격</p>
-				<p>판매기간</p>
-			</div>
+			<table class="ordertable">
+				<tr class="bodylist">
+					<td>상품</td>
+					<td>가격</td>
+					<td>판매기간</td>
+					<td>상태</td>
+					<td>&nbsp;</td>
+				</tr>
 		
-		<% 	int [] biddingNum = new int[wList.size()];
-			for(int i =0 ; i<wList.size() ; i++){
-			ProductDTO product = dao.getProduct(wList.get(i).getP_no());  %>
-			<div id="seller">
-				<p> <img src="../save/<%= product.getP_img1() %>"> </p>
-				<p><%= product.getP_no() %> <a href=""> <%= product.getP_title() %></a></p>
-				<% if(product.getP_status() == 1){ %>
-				<p>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></p>
-				<% }else{ %>
-				<p> <%= product.getP_price() %></p>
-				<% } %> 
-				<p> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </p>
-				<% if(product.getP_status() == 1){
-					biddingNum[i] = dao.getBiddingNum(product.getP_no());
-				  %> 
-					<% if(biddingNum[i]==-1){ %>
-				<p>경매 : 
-					입찰완료
-					<% }else{ %>
-					경매
+			<% 	int [] biddingNum = new int[wList.size()];
+				for(int i =0 ; i<wList.size() ; i++){
+				ProductDTO product = dao.getProduct(wList.get(i).getP_no());  %>
+				<tr>
+					<td> <img src="../save/<%= product.getP_img1() %>"> 
+				<%= product.getP_no() %>&nbsp;&nbsp;<%= product.getP_title() %></td>
+				<% 	if(product.getP_status() == 1){ %>
+					<td>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></td>
+				<%	}else{ %>
+					<td> <%= product.getP_price() %></td>
 					<% } %> 
-				</p> 
-				<% } %>
-				<form action="deleteWishList.jsp" method="post">
-					<input type="hidden" value="<%= product.getP_no() %>" name="p_no" />
-					<input type="submit" value="찜해제">
-				</form>
-			</div>
-		<%	}	%>
+					<td> <%= sdf.format(product.getP_start()) %> ~ <%= sdf.format(product.getP_end()) %> </td>
+				<% 	if(product.getP_status() == 1){
+						biddingNum[i] = dao.getBiddingNum(product.getP_no()); %>
+					<% 	if(biddingNum[i]==-1){ %>
+						<td>
+							경매 : 
+							입찰완료
+						</td>	
+							<% }else{ %>
+						<td>	
+							경매
+						</td>	
+					<% 	} %> 
+				<% 	} %>
+					<td>
+						<form action="deleteWishList.jsp" method="post">
+							<input type="hidden" value="<%= product.getP_no() %>" name="p_no" />
+							<input type="submit" value="찜해제">
+						</form>
+					</td>
+				</tr>
+			<%	}	%>
+			</table>
 	<% 	}else{ %>
 			<p>찜한 상품이 없습니다.</p>
 	<% 	} %>
-	<div></div>
-</fieldset>
+		</fieldset>
+	</div>
 </div>
 <script type="text/javascript">
 function deleteProductCheck(){
