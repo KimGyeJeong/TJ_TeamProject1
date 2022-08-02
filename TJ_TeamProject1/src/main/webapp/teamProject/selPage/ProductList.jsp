@@ -79,7 +79,7 @@
 	%>
 	<td><a href="#" onclick="setSession('<%=dto.getP_no()%>','/TJ_TeamProject1/teamProject/save/<%=dto.getP_img1()%>')">
 						<h4>TestDTO.... <%=dto.getP_no() %></h4>
-						<img src="../save/<%=dto.getP_img1() %>" width="300" height="300"/><br/>
+						<img src="../save/<%=dto.getP_img1() %>" height="300px" width="300px"/><br/>
 						<%=dto.getP_title() %>
 						<%switch(dto.getP_finish()){
 						case 0: %>판매중<% break;
