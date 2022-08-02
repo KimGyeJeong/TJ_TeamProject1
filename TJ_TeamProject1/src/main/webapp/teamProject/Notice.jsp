@@ -26,8 +26,18 @@
 
 <head>
 
-<br />
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}s
 
+</style>
+
+<br/>
+<br/>
 <h1 align="center">공지사항</h1>
 
 
@@ -86,9 +96,7 @@ if (session.getAttribute("UID") == null || session.getAttribute("UID") == "null"
 %>
 
 <script>
-	alert("로그인 후 사용가능한 서비스입니다.");
 
-	location.href = "Main.jsp";
 </script>
 
 
@@ -153,11 +161,7 @@ int number = count - (currentPage - 1) * pageSize;
 
 
 
-	<br />
 
-	<br />
-
-	<br />
 
 	<div>
 
@@ -185,11 +189,11 @@ int number = count - (currentPage - 1) * pageSize;
 		} else { // 글이 하나라도 있으면
 		%>
 
-		<br />
+	
 
 
 
-		<div>
+		<div id='box'>
 
 			<table>
 

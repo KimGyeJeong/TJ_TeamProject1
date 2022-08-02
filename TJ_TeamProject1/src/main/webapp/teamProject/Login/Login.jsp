@@ -5,6 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style>
+#box{
+	display: block;
+	margin-left: 42%;
+	margin-top: 3%;
+	
+}
+</style>
 <script>
 function checkField() {
 	let inputs = document.loginForm; 
@@ -47,6 +56,8 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 
 </head>
 <body>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <br/>
 	<%if(session.getAttribute("UID")!=null){%>
 		<script>
@@ -57,7 +68,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<%  }%>
 	<h1 align="center"> 로그인페이지</h1>
 	<form action="LoginPro.jsp" method="post" name="loginForm" onsubmit="return checkField()" >
-	<table >
+	<table id='box' >
 		<tr >			
 			<td>아이디</td>
 			<td><input type="text" name="id"/></td>
@@ -75,6 +86,10 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 		</tr>
 		</table>
 		</form>
-
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>

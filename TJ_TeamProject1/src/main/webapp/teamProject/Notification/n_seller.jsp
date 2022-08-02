@@ -8,15 +8,26 @@
 <!DOCTYPE html>
 <html>
 
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+
+</style>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <head>
 <jsp:include page='../Header.jsp'/>
 <jsp:include page='../floatingAdvertisement.jsp'/>
+
 <br />
 <h1 align="center">알림 페이지-판매자 알림</h1>
-<table>
+<table id='box'>
 	<tr>
 		<td><input type='button' name='seller' value="판매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_seller.jsp'"></td>
 		<td><input type='button' name='buyer' value="구매자알림" onclick="location.href='http://localhost:8080/TJ_TeamProject1/teamProject/Notification/n_buyer.jsp'"></td>
@@ -108,7 +119,7 @@ if(auto != null && id != null && pw != null){
 	<%}else{ // 글이 하나라도 있으면 %>
 		<br />
 	
-		<div>
+		<div id='box'>
 		<table>
 			<tr>
 				<td>no.</td>
@@ -193,6 +204,9 @@ if(auto != null && id != null && pw != null){
 	
 	</div>
 	
+<br/>
+<br/>
+<br/>	
 	
 <%@ include file="../Footer.jsp" %>	
 

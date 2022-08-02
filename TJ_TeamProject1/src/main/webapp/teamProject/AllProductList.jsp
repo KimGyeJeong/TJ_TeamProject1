@@ -74,7 +74,7 @@
 					<tr>
 <%				} %>
 				<td><a href="selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>">
-				<img src="save/<%=dto.getP_img1() %>" width="250px"/><br/>
+				<img src="save/<%=dto.getP_img1() %>" width="250px" height="250px"/><br/>
 				<%=dto.getP_title() %>
 				</a>
 				</td>
