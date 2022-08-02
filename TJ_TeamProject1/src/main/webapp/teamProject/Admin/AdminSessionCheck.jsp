@@ -5,6 +5,38 @@
 <head>
 <meta charset="UTF-8">
 <title>AdminSessionCheck</title>
+
+<!-- Favicon -->
+<link href="AdminCSS/img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
+	rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="AdminCSS/lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+<link
+	href="AdminCSS/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+	rel="stylesheet" />
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="AdminCSS/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="AdminCSS/css/style.css" rel="stylesheet">
+
 </head>
 <body>
 <%
@@ -34,7 +66,11 @@ if(session.getAttribute("adminId")==null){
 }
 
 %>
-<h4>AdminSessionCheck : <%=aduid %></h4>
-
+<div align="center">
+<h4 >AdminSessionCheck : <%=aduid %></h4>
+</div>
+<div align="right">
+ <a href="AdminLogout.jsp">로그아웃</a>
+</div>
 </body>
 </html>
