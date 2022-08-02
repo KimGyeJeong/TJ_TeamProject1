@@ -129,14 +129,6 @@
 
 
 <style>
-body {
-	height: 2000px;
-}
-
-table {
-	margin: auto;
-	width: 80%;
-}
 
 .sideBanner {
 	align-content: center;

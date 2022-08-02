@@ -11,18 +11,6 @@
 
 
 <style type="text/css">
-		header{
-		
-		
-		}
-		td{
-			width: 200px;
-			align:"center";
-		}
-		table{
-			margin: auto;
-			width: 80%;
-		}
 		#mypagelist {
 			list-style: none;
 			display: inline-block;
@@ -35,9 +23,6 @@
 			position: relative;
 			left: 50px;
 			display:inline-block;
-		}
-		#seller p {
-			display: inline;
 		}
 	</style>
 	
@@ -96,32 +81,6 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<style type="text/css">
-		td{
-			width: 150px;
-			align:"center";
-		}
-		table{
-			margin: auto;
-			width: 80%;
-		}
-		#mypagelist {
-			list-style: none;
-			display: inline-block;
-		}
-		#mypagelist li{
-			margin: 20px;
-			font-size: 18px;
-		}
-		#mypagebody{
-			position: relative;
-			left: 50px;
-			display:inline-block;
-		}
-		#seller p {
-			display: inline;
-		}
-	</style>
 	
 </div>
 	<div align="center">

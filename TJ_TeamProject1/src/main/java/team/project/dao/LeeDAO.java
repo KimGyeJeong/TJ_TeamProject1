@@ -1616,4 +1616,38 @@ public class LeeDAO {
 		
 	}
 	
+	public boolean confimId(String id) {
+		boolean result =false;
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn=getConnection();
+			String sql="select count(*) from userlist where user_id=?";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1)==1) {
+					result=true;
+				}
+			}
+			
+		}catch(Exception e) {
+			System.out.println("LEEDAO.confimId ERR");
+			e.printStackTrace();
+		}finally{
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+		
+		return result;
+		
+	}
+	
+	
 }
