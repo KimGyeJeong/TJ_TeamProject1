@@ -34,7 +34,7 @@ if(session.getAttribute("adminId")==null){
 }
 
 %>
-<h4><%=aduid %></h4>
+<h4>AdminSessionCheck : <%=aduid %></h4>
 
 </body>
 </html>
