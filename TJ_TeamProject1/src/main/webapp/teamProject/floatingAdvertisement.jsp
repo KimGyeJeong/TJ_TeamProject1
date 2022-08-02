@@ -5,8 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link src="styleMyPage/css/style.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body class="floatingBanner">
 
 
 	<script type="text/javascript"
@@ -115,14 +116,6 @@
 
 
 <style>
-body {
-	height: 2000px;
-}
-
-table {
-	margin: auto;
-	width: 80%;
-}
 
 .sideBanner {
 	align-content: center;

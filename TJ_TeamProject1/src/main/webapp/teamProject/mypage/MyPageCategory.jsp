@@ -46,7 +46,7 @@
     
 	<!-- Sidebar Start --> 
 	<div class="sidebar pe-4 pb-3">
-	    <nav class="navbar bg-secondary navbar-dark">
+	    <nav class="navbar navbar-dark">
 	        <div class="navbar-nav w-100">
 	        	<br>
 	        	<br>

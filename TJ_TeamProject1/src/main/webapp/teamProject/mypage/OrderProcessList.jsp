@@ -12,34 +12,13 @@
 	<meta charset="UTF-8">
 	<title>구입한 상품</title>
 	<jsp:include page="../UIDcheck.jsp"></jsp:include>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<jsp:include page='../floatingAdvertisement.jsp'/>
 	<jsp:include page='../Header.jsp'/>
+	<link href="../teamstyle.css" rel="stylesheet" type="text/css" />
 	
 	
+	 
 	
-	 <style type="text/css">
-	 	#bodylist * {
-	 		
-	 		align:"center";
-	 	}
-		#ordertable tr, td{
-			height: 100px;
-			width : 100px;
-		}
-		#mypagebody{
-			width: 100%;
-			top:0px;
-			left: 0px;
-		}
-		#mypageContent{
-			margin-left : 250px;
-			display: block;
-			box-sizing: content-box;
-			padding: 30px;
-			width: 70%;
-		}
-	</style> 
 	<% 
 	String uid = (String)session.getAttribute("UID");
 	request.setCharacterEncoding("UTF-8");
@@ -51,16 +30,16 @@
 	%>
 </head>
 <body>
-	<div id="mypagebody" >
+	<div class="mypagebody" >
 	<jsp:include page="MyPageCategory.jsp" />
-	<div id="mypageContent">
-		<fieldset>
-		<legend>구입한 상품</legend>
+	<div class="mypageContent">
+		<fieldset style=" border-width: 2px; border-style: groove; border-color: rgb(192, 192, 192); border-image: initial;">
+		<legend>최근 3개월간 구입한 상품</legend>
 			<div>
-				<table id="ordertable" >
-					<tr id=bodylist >
+				<table class="ordertable" >
+					<tr class="bodylist" >
 				<%	if(orderlist != null){ %>
-						<td> 날짜 </td><td colspan="2" style="width: 200px;">상품정보</td>  <td>상태</td> <td>상세</td>
+						<td> 날짜 </td><td style="width:50%;">상품정보</td>  <td>상태</td> <td>상세</td>
 					</tr>
 					<%	for(int i=0; i<productlist.size() ; i++){
 							OrderListDTO order = orderlist.get(i);
@@ -68,8 +47,8 @@
 							
 						<tr>
 							<td><%= sdf.format(order.getO_reg())  %></td>
-							<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>" width="100px"></a></td>
-							<td><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
+							<td style="text-align: left;"><a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"><img src="../save/<%= product.getP_img1() %>" width="100px" height="100px"></a>
+							&nbsp;&nbsp;<a href="../selPage/ProductDetailBuyForm.jsp?p_no=<%= product.getP_no() %>"> <%= product.getP_title() %> </a> </td>
 						<% 	switch(order.getO_pro()) {
 								case 0: %>
 									<td>주문확인</td> 

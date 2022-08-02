@@ -1,0 +1,58 @@
+@charset "UTF-8";
+	.bodylist{
+	 		border-bottom: 2px;
+	 		border-color: black;
+    		border-style: solid;
+    		
+ 	}
+ 	.ordertable{
+ 		margin-bottom: 50px;
+ 		margin: auto;
+ 		width: 90%;
+ 	}
+	.ordertable tr td , .ordertable tr td a{
+		height: 100px;
+		width : 100px;
+		text-align: center;
+	}
+	.mypagebody{
+		width: 100%;
+		top:0px;
+		left: 0px;
+	    min-height: 969px;
+	    height: auto;
+	}
+	.mypageContent{
+		margin-left : 250px;
+		display: block ;
+		box-sizing: content-box;
+		padding: 30px;
+		width: 70%;
+	}
+	fieldset {
+	border-width: 2px;
+    border-style: groove;
+    border-color: rgb(192, 192, 192);
+    border-image: initial;
+    
+	}
+	.MoreReviewTable{
+		margin: auto;
+		width: 90%;
+		height: auto;
+		min-height: 551px;
+		text-align: center;
+	}
+	.ReviewTable{
+		margin: auto;
+		width: 90%;
+		height: auto;
+		min-height: 1051px;
+	}
+	.ReviewTable tr td{
+		text-align: center;
+	}
+	.paging a {
+		font-weight: bold;
+		color: black;
+	}
