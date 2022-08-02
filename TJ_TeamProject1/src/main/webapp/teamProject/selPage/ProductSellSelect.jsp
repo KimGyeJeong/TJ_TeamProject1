@@ -11,6 +11,7 @@
 	String UID = (String)session.getAttribute("UID");
 %>
 <body>
+<jsp:include page='../Header.jsp'/>
 <%if(UID != null){ %>
 <table>
 	<tr>
@@ -25,5 +26,10 @@
 			window.location.assign("../Login/Login.jsp");
 		</script>
 <%	}%>
+ <jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>

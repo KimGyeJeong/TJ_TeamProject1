@@ -17,7 +17,7 @@
 	List<CategoryDTO> category = dao.getCategory(); 
 %>
 <body>
-
+<jsp:include page='../Header.jsp'/>
 <%
 if(UID != null){
 
@@ -176,5 +176,10 @@ if(p_status == 1){ %>
 			window.location.assign("../Login/Login.jsp");
 		</script>
 <%	} %>
+ <jsp:include page='../floatingAdvertisement.jsp'/>
+	
+	<br/>
+	<br/>
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>
