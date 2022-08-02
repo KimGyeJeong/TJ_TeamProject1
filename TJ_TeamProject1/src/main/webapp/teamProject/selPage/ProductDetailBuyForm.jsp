@@ -76,7 +76,7 @@
 <%if(dto.getP_finish() == 0){ %>	
 	<table>
 		<tr>
-			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" height="300px" width="300px" /></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;" /></td>
 			<td>상품 제목 : <%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %><br/>
@@ -130,9 +130,17 @@
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="4">
-				<img src="../save/<%=dto.getP_img2() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img3() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img4() %>" height="300px" width="300px" /><br/>
+<%			if(dto.getP_img2() != null){ %>
+				<img src="../save/<%=dto.getP_img2() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img3() != null){ %>
+				<img src="../save/<%=dto.getP_img3() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img4() != null){ %>
+				<img src="../save/<%=dto.getP_img4() %>" style="width:300px; height:300px;"/>
+<%			} %>
+				
+				<br/>
 				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>       
@@ -222,7 +230,7 @@
 <%}else if(dto.getP_finish() == 1){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" height="300px" width="300px"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매완료)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %><br/>
@@ -265,9 +273,15 @@
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="4">
-				<img src="../save/<%=dto.getP_img2() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img3() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img4() %>" height="300px" width="300px" /><br/>
+				<%			if(dto.getP_img2() != null){ %>
+				<img src="../save/<%=dto.getP_img2() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img3() != null){ %>
+				<img src="../save/<%=dto.getP_img3() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img4() != null){ %>
+				<img src="../save/<%=dto.getP_img4() %>" style="width:300px; height:300px;" />
+<%			} %><br/>
 				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
@@ -352,7 +366,7 @@
 <%}else if(dto.getP_finish() == 2){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" height="300px" width="300px"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(거래중지 상품)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %><br/>
@@ -395,9 +409,15 @@
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="4">
-				<img src="../save/<%=dto.getP_img2() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img3() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img4() %>" height="300px" width="300px" /><br/>
+				<%			if(dto.getP_img2() != null){ %>
+				<img src="../save/<%=dto.getP_img2() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img3() != null){ %>
+				<img src="../save/<%=dto.getP_img3() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img4() != null){ %>
+				<img src="../save/<%=dto.getP_img4() %>" style="width:300px; height:300px;" />
+<%			} %><br/>
 				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
@@ -481,7 +501,7 @@
 <%}else if(dto.getP_finish() == 3){ %>
 	<table>
 		<tr>
-			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" height="300px" width="300px"/></td>
+			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매 준비중인 상품입니다!)</td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
 			<td>작성 일자 : <%=dto.getP_reg() %><br/>
@@ -534,9 +554,15 @@
 <%		if(pageNum.equals("0")){%>
 		<tr>
 			<td colspan="4">
-				<img src="../save/<%=dto.getP_img2() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img3() %>" height="300px" width="300px" />
-				<img src="../save/<%=dto.getP_img4() %>" height="300px" width="300px" /><br/>
+				<%			if(dto.getP_img2() != null){ %>
+				<img src="../save/<%=dto.getP_img2() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img3() != null){ %>
+				<img src="../save/<%=dto.getP_img3() %>" style="width:300px; height:300px;" />
+<%			} %>
+<%			if(dto.getP_img4() != null){ %>
+				<img src="../save/<%=dto.getP_img4() %>" style="width:300px; height:300px;" />
+<%			} %><br/>
 				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
