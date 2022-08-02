@@ -19,6 +19,7 @@ import team.project.model.NoticeDTO;
 import team.project.model.NotificationDTO;
 import team.project.model.ProductDTO;
 import team.project.model.QnADTO;
+import team.project.model.ReplyDTO;
 import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
