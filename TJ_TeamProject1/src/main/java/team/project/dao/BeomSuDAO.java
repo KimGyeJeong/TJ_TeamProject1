@@ -1359,7 +1359,7 @@ public class BeomSuDAO {
 		try {
 			conn = getConn();
 			String sql = "insert into Review(RE_NO, RE_STARS, RE_REPORTUID, RE_CONTENT, RE_REPORTEDUID) ";
-			sql += "value(Review_seq.nextval, ?, ?, ?, ?)";
+			sql += "values(Review_seq.nextval, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, reDTO.getRe_stars());
 			pstmt.setString(2, reDTO.getRe_reportUid());
