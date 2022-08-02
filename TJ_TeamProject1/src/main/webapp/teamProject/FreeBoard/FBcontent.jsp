@@ -11,45 +11,64 @@
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <br/>
 
-<h1 align="center"> content </h1>
-	<% String id=(String)session.getAttribute("UID"); %>
-		<h3 align="right"> 사용자: <%=id %></h3>
+<h1 align="center">  </h1>
+	<% String id=(String)session.getAttribute("UID"); 
+		if(id==null){
+			id="non-login";
+		}
+	%>
+		
 	
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
+<style>
+#fox{
+	display: block;
+	margin-left: 25%;
+	margin-top: 3%;
+	
+}
 
+</style>
 </head>
 <%
 	int cno = Integer.parseInt(request.getParameter("cno"));
 	String pageNum = request.getParameter("pageNum");
 	LeeDAO dao = new LeeDAO();
 	ContentDTO dto = dao.getOneContent(cno);  
+	dao.addReadcount(cno);
 	String shouldNotnull = null;
 	
 	System.out.println("게시판pageNum:"+pageNum);
 %>
 <body>
+<br/>
+<div align="center" id="fox">
  <table>
+
  	<tr>
- 		<td>제목 </td>
- 		<td>작성자</td>
- 		<td><%=dto.getUser_id() %></td>
- 	</tr>
- 	<tr>
- 		<td><%=dto.getC_title()%> </td>
+ 		<td><h3>제목 </h3></td>
+ 		<td><h4>작성자 :<%=dto.getUser_id() %>  &nbsp;&nbsp; 조회수: <%=dto.getC_readcount()+1 %></h4></td>
  		
  	</tr>
  	<tr>
- 		<td>내용</td>
+ 		<td ><h4><%=dto.getC_title()%> </h4></td>
+ 		
  	</tr>
  	<tr>
- 		<td><textarea  width="500px" hight="300px" readonly="readonly"><%=dto.getC_content() %></textarea></td>
+ 		<td></td>
+ 	</tr>
+ 	<tr>
+ 		<td><h3>내용</h3></td>
+ 	</tr>
+ 	<tr>
+ 		<td ><h4><%=dto.getC_content() %></h4></td>
  	</tr>
  	
- 	<tr>
- 		<td>이미지</td>
- 	</tr>
+ 	
  	
  	<tr>
- 		<td><img src="../save/<%=dto.getC_img()%>" width="500px"> </td> 
+ 		<td ><img src="../save/<%=dto.getC_img()%>" width="700px"> </td> 
  	</tr>		
  	
  	<%if(id.equals(dto.getUser_id())){ %>
@@ -60,12 +79,8 @@
  	</tr>
 	<% }%>
  </table>
- 
- <table>
- 	<tr>
- 	
- 	</tr>
- </table>
+ </div>
+
  
  <%
  System.out.println("이미지:"+dto.getC_img());
@@ -96,6 +111,6 @@
 
 
 
-
+<%@ include file="../Footer.jsp" %>
 </body>
 </html>
