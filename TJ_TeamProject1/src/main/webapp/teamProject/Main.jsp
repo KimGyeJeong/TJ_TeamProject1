@@ -156,6 +156,9 @@ List viewsProductList = daoL.viewsProductList();
 		<button
 			onclick="window.location.href='/TJ_TeamProject1/teamProject/Notice.jsp'"
 			style="width: 120px;">공지사항</button>
+			<button
+			onclick="window.location.href='/TJ_TeamProject1/teamProject/FreeBoard/FreeBoard.jsp'"
+			style="width: 120px;">자유게시판</button>
 	</div>
 
 	<script>
@@ -209,7 +212,7 @@ function showDivs(n) {
 				<td id="special"><a id="idAtag" href="#"
 					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
-						align="center" src="save/<%=dto.getP_img1()%>" width="250px" /><br /><%=dto.getP_title()%>
+						align="center" src="save/<%=dto.getP_img1()%>" height="250px" width="250px" /><br /><%=dto.getP_title()%>
 				</a></td>
 
 				<%
@@ -239,7 +242,7 @@ function showDivs(n) {
 				<td id="special"><a id="idAtag" href="#"
 					onclick="setSession('<%=dto.getP_no()%>','save/<%=dto.getP_img1()%>')"
 					data-p_no="<%=dto.getP_no()%>" rel="noopener noreferrer"> <img
-						align="center" src="save/<%=dto.getP_img1()%>" width="300" /><br /><%=dto.getP_title()%>
+						align="center" src="save/<%=dto.getP_img1()%>" width="250px" height="250px" '/><br /><%=dto.getP_title()%>
 				</a></td>
 
 				<%
