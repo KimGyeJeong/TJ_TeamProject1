@@ -1288,5 +1288,266 @@ public class LeeDAO {
 		}
 		return article;
 	}
+	public int deleteArticle(int cno) {
+		int result = 0; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "delete from content where c_no=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, cno);
+				
+				result = pstmt.executeUpdate(); 
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return result; 
+	}
+	
+	public int updateArticle(ContentDTO article) {
+		int result = 0; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+		
+			String	sql = "update Content set  c_content=?, c_img=? where c_no=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, article.getC_content());
+				pstmt.setString(2, article.getC_img());
+				pstmt.setInt(3, article.getC_no());
+				
+				result = pstmt.executeUpdate(); 
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return result;
+	}
+	 
+	
+	public int getReplyCount(int cno) {
+		int count = 0; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection(); 
+			String sql = "select count(*) from reply where c_no =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				count = rs.getInt(1);  
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return count;
+	}
+	
+	
+	public List getReplies(int cno, int start, int end) {
+		List replyList = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection(); 
+			String sql = "select B.* from (select A.*, rownum r from (select * from reply where c_no = ? order by R_GRP desc, R_STEP asc) A order by R_GRP desc, R_STEP asc) B where r >= ? and r <= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				replyList = new ArrayList(); 
+				do {
+					ReplyDTO reply = new ReplyDTO(); 
+					
+					reply.setUser_id(rs.getString("user_id"));
+					reply.setC_no(rs.getInt("c_no"));
+					reply.setR_no(rs.getInt("r_no"));
+					reply.setR_reply(rs.getString("r_reply"));
+					reply.setR_reg(rs.getTimestamp("r_reg"));
+					reply.setR_grp(rs.getInt("r_grp"));
+					reply.setR_level(rs.getInt("r_level"));
+					reply.setR_step(rs.getInt("r_step"));
+					replyList.add(reply);
+					
+					
+				}while(rs.next());
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return replyList;
+	}
+	
+	
+	public void insertReply(ReplyDTO dto) {
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		// 새댓글, 댓글의 댓글인지에 따라 조정이 필요한 값들 미리 뽑아 놓기 
+		int rno = dto.getR_no(); 	// 새 댓글  = 0, 댓글의 댓글 = 1 이상
+		int replyGrp = dto.getR_grp(); 		// 댓글 그룹, 새댓글이면 1
+		int replyLevel = dto.getR_level(); 	// 정렬 순서, 새댓글이면 0			 
+		int replyStep = dto.getR_step();		// 댓글의 레벨, 새댓글이면 0, 댓글의 댓글.
+		int number = 0; 						// replyGrp 체워줄때 필요한 임시변수
+		
+		
+		try {
+			conn = getConnection(); 
+			String sql = "select max(r_no) from reply";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) number = rs.getInt(1) + 1; //댓글이 있고, 가장 큰번호 
+			else number = 1; // 댓글이 하나도 없을 경우 
+			System.out.println("RNUMBER:"+rno);
+			// 댓글의 댓글 
+			if(rno != 0) {
+				
+				sql = "update reply set r_step=r_step+1 where r_grp=? and r_step > ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, replyGrp);
+				pstmt.setInt(2, replyStep);
+				pstmt.executeUpdate();
+				
+				// insert 날리기위해 1씩 증가해주기
+				replyStep += 1; 
+				replyLevel += 1;
+			}else { // 새댓글 
+				System.out.println("number:"+number);
+				replyGrp = number;
+				System.out.println("replyGrp:"+replyGrp);
+				replyStep = 0; 
+				replyLevel = 0; 
+			}
+
+			sql = "insert into reply values(?,?,REPLY_SEQ.nextval,?,sysdate,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getUser_id());
+			pstmt.setInt(2, dto.getC_no());
+			pstmt.setString(3, dto.getR_reply());
+			pstmt.setInt(4,replyGrp );
+			pstmt.setInt(5, replyLevel);
+			pstmt.setInt(6, replyStep);
+			
+			int result = pstmt.executeUpdate(); 
+			System.out.println("insert insertReply : " + result);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Leedao.insertReply ERR");
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+	}
+	
+	public void deleteReply(int rno) {
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		try {
+			conn = getConnection(); 
+			String sql = "delete from reply where r_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+	}
+
+	
+	public ReplyDTO getOneReply(int rno) {
+		ReplyDTO reply = null; 
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		try {
+			conn = getConnection(); 
+			String sql = "select * from reply where r_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				reply = new ReplyDTO(); 
+			
+				
+				reply.setUser_id(rs.getString("USER_ID"));
+				reply.setC_no(rs.getInt("C_NO"));
+				reply.setR_no(rs.getInt("R_NO"));
+				reply.setR_reply(rs.getString("R_REPLY"));
+				reply.setR_reg(rs.getTimestamp("R_REG"));
+				reply.setR_grp(rs.getInt("R_GRP"));
+				reply.setR_level(rs.getInt("R_LEVEL"));
+				reply.setR_step(rs.getInt("R_STEP"));
+				
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		return reply;
+	}
+	
+	public void updateReply(int rno, String reply) {
+		Connection conn = null; 
+		PreparedStatement pstmt = null; 
+		try {
+			conn = getConnection(); 
+			String sql = "update reply set r_reply=? where r_no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reply);
+			pstmt.setInt(2, rno);
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
+			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		}
+		
+	}
 	
 }
