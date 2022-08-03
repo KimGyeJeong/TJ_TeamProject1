@@ -1,3 +1,4 @@
+<%@page import="team.project.model.OrderListDTO"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,25 +23,41 @@ String ono = request.getParameter("ono");
 InstanceDAO dao = new InstanceDAO();
 List<AddressDTO> addresslist = dao.getaddressList(uid);
 Integer [] anolist = new Integer[addresslist.size()];
-for(int i = 0 ; i<addresslist.size();i++){
-	anolist[i] = addresslist.get(i).getA_no();
-}
 Map<Integer,String> commentlist = new HashMap<Integer,String>();
-for(int i=0 ; i<addresslist.size() ; i++){
-	String commentNum = ""+addresslist.get(i).getA_no();
-	String comment = request.getParameter(commentNum).trim();
-	commentlist.put(anolist[i], comment);
-}
+
+	for(int i = 0 ; i<addresslist.size();i++){
+		anolist[i] = addresslist.get(i).getA_no();
+	}
+
+	for(int i=0 ; i<addresslist.size() ; i++){
+		String commentNum = ""+addresslist.get(i).getA_no();
+		String comment = request.getParameter(commentNum).trim();
+		commentlist.put(anolist[i], comment);
+	}
+	
 dao.setAddressAllComment(anolist,commentlist);
-if(ono == null || ono.equals("") || ono.equals("null")){ %>
-<script type="text/javascript">
-window.close();
-</script>
-<% }else{
-result= dao.setAddressNum(ano,ono);
-}
 
-
+	if(ono == null || ono.equals("") || ono.equals("null")){ %>
+	<script type="text/javascript">
+		window.close();
+	</script>
+	
+<% 	}else{
+	System.out.println("ono null아님");
+		result= dao.setAddressNum(ano,ono);
+		OrderListDTO order = dao.getOrder(ono);
+		
+		if(result==2 && order.getO_pro()==0){
+			String productTitle = dao.getProduct(order.getP_no()).getP_title(); 
+			String message = productTitle+" 상품의 배송지가 변경 되었습니다.";
+			dao.insertNotification(order.getO_sellerId(), "1", message);
+		}
+		if(result==2 && order.getO_pro()==4){
+			String productTitle = dao.getProduct(order.getP_no()).getP_title(); 
+			String message = productTitle+" 상품의 반품 수거지가 변경 되었습니다.";
+			dao.insertNotification(order.getO_sellerId(), "1", message);
+		}
+	}
 %>
 <body>
 <script type="text/javascript">

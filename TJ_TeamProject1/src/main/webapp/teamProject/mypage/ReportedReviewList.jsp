@@ -11,7 +11,7 @@
 <head>
 <head>
 	<meta charset="UTF-8">
-	<title>내가 작성한 후기들</title>
+	<title>받은 후기들</title>
 	<jsp:include page="../UIDcheck.jsp"></jsp:include>
 	<jsp:include page="../Header.jsp"></jsp:include>
 	<jsp:include page='../floatingAdvertisement.jsp'/>

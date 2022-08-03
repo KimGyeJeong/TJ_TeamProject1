@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.InstanceDAO"%>
 <%@page import="team.project.model.ProductDTO"%>
 <%@page import="team.project.model.UserListDTO"%>
 <%@page import="team.project.dao.BeomSuDAO"%>
@@ -15,6 +16,7 @@
 	String UID = (String)session.getAttribute("UID");
 	int o_no = Integer.parseInt(request.getParameter("o_no"));
 	BeomSuDAO dao = new BeomSuDAO();
+	InstanceDAO instanceDao = new InstanceDAO();
 	OrderListDTO orDTO = dao.orderListGet(o_no);
 	if(UID.equals(orDTO.getO_buyerId())){
 		if(orDTO.getO_pro() == 0){
@@ -22,7 +24,8 @@
 			int result = dao.cancelPurchase(proDTO.getP_price(), UID);
 			dao.productCancelPurchase(proDTO.getP_no());
 			dao.deleteOrder(o_no);
-			
+			String message = proDTO.getP_title()+" 상품이 취소되었습니다.";
+			instanceDao.insertNotification(orDTO.getO_sellerId(), "1", message);
 			
 %>
 <body>

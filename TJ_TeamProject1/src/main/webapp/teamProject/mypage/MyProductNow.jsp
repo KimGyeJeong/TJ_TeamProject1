@@ -126,9 +126,8 @@
 										</form>
 								<%	}else if(order.getO_pro()==2){ %>
 										배송완료
-										
 								<%	}else if(order.getO_pro()==3){ %>
-										주문완료
+										거래완료
 								<%	}else if(order.getO_pro()==4){ %>
 										반품수거
 								<%	}else if(order.getO_pro()==5){ %>
@@ -141,12 +140,20 @@
 										function cancel() {
 										<%	if(order.getP_status()==1){
 												//	경매 입찰
-												bsdao.cancelPurchase(dao.getBidding(product.getP_no()).getB_bidding(), order.getO_buyerId());
-												dao.updateO_pro(order.getO_no(), 7);
+												int refund = bsdao.cancelPurchase(dao.getBidding(product.getP_no()).getB_bidding(), order.getO_buyerId());
+												refund += dao.updateO_pro(order.getO_no(), 7); 
+												if(refund == 2){
+													String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
+													dao.insertNotification(order.getO_buyerId(), "2", message);
+												}
 											}else{
 												//	일반구매
-												bsdao.cancelPurchase( product.getP_price() , order.getO_buyerId());
-												dao.updateO_pro(order.getO_no(), 7);
+												int refund = bsdao.cancelPurchase( product.getP_price() , order.getO_buyerId());
+												refund += dao.updateO_pro(order.getO_no(), 7); 
+												if(refund == 2){
+													String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
+													dao.insertNotification(order.getO_buyerId(), "2", message);
+												}
 											}	%>
 										}
 										</script>
@@ -158,7 +165,7 @@
 							<% if( order.getO_pro()<=0 && order.getO_pro()<3 ) %>
 							<td colspan="5" style="height: 30px !important">
 							<details name="detail" style="width: 500px; text-align: left;">  
-								<summary> <button type="button" onclick="modify(<%= n++ %>)" style="width: 100px;">배송지 정보</button></summary>
+								<summary> <button type="button" onclick="modify(<%= n++ %>)" style="width: 120px;">배송지 정보</button></summary>
 						  		<p> 
 								받는분 : <%= address.getA_name() %> <br>
 								주소 : (<%= address.getA_zipCode() %>)<%= address.getA_address() %> <br>

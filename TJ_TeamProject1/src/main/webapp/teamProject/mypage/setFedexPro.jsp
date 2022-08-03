@@ -1,3 +1,5 @@
+<%@page import="team.project.model.ProductDTO"%>
+<%@page import="team.project.model.OrderListDTO"%>
 <%@page import="team.project.dao.InstanceDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -21,7 +23,16 @@ int result = dao.setFedex(fedexName, trackingNo , ono);
 %>
 <body>
 <%
-	if(result == 1){ %>
+	if(result == 1){ 
+		int processUpdateSuccess = dao.updateO_pro(Integer.parseInt(ono), 1);
+		if(processUpdateSuccess != 1){
+			System.out.println("setFedexPro.jsp updateO_pro = fail");
+		}
+		String productTitle = dao.getProduct(dao.getOrder(ono).getP_no()).getP_title();
+		String message = productTitle+"의 상품 배송이 시작되었습니다.";
+		dao.insertNotification(dao.getOrder(ono).getO_buyerId(), "2", message);
+		%>
+		
 		<script type="text/javascript">
 			alert("배송시작");
 			opener.location.reload();
