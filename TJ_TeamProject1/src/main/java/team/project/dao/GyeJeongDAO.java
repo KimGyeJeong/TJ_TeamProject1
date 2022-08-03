@@ -1679,14 +1679,13 @@ public class GyeJeongDAO {
 		result = 0;
 		try {
 			conn = getConnection();
-			
-			sql = "DELETE FROM  QNA\r\n"
-					+ "WHERE Q_NO = ?";
-			
+
+			sql = "DELETE FROM  QNA\r\n" + "WHERE Q_NO = ?";
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, q_no);
-			
+
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -1698,21 +1697,22 @@ public class GyeJeongDAO {
 
 		return result;
 	}
+
 	public NoticeDTO getNotice(int no_no) {
 		NoticeDTO dto = null;
 		try {
-			conn=getConnection();
-			
-			sql="select * from notice where no_no = ?";
+			conn = getConnection();
+
+			sql = "select * from notice where no_no = ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, no_no);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				dto=new NoticeDTO();
-				
+
+			if (rs.next()) {
+				dto = new NoticeDTO();
+
 				dto.setNo_no(rs.getInt(1));
 				dto.setNo_title(rs.getString(2));
 				dto.setNo_content(rs.getString(3));
@@ -1720,15 +1720,229 @@ public class GyeJeongDAO {
 				dto.setNo_hidden(rs.getInt(5));
 				dto.setNo_reg(rs.getTimestamp(6));
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.getNotice(int no_no) ERR");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeConnection(rs, pstmt, conn);
 		}
-		
+
 		return dto;
+	}
+
+	public int getFBcount() {
+		result = 0;
+		try {
+			conn = getConnection();
+
+			sql = "select count(*) from content";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				result = rs.getInt(1);
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getFBcount() Line1749 ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
+
+	public int getFBcount(String search) {
+		result = 0;
+		try {
+			conn = getConnection();
+
+			sql = "select count(*) from content where user_id like '%" + search + "%' ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				result = rs.getInt(1);
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getFBcount(search) Line 1772 ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
+	}
+
+	public List<ContentDTO> getFBlist(int startRow, int endRow) {
+		List<ContentDTO> list = null;
+		ContentDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select B.* from\r\n" + "(select ROWNUM r, A.* from\r\n"
+					+ "(select * from CONTENT ORDER BY C_REG DESC)A)B\r\n" + "where r>=? and r<=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<ContentDTO>();
+				do {
+					dto = new ContentDTO();
+
+					dto.setC_no(rs.getInt(2));
+					dto.setC_title(rs.getString(3));
+					dto.setUser_id(rs.getString(4));
+					dto.setC_content(rs.getString(5));
+					dto.setC_reg(rs.getTimestamp(6));
+					dto.setC_readcount(rs.getInt(7));
+					dto.setC_img(rs.getString(8));
+
+					list.add(dto);
+
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getFBlist(int startRow, int endRow) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	public List<ContentDTO> getFBlist(int startRow, int endRow, String search) {
+		List<ContentDTO> list = null;
+		ContentDTO dto = null;
+		try {
+			conn = getConnection();
+
+			sql = "select B.* from\r\n" + "(select ROWNUM r, A.* from\r\n"
+					+ "(select * from CONTENT WHERE USER_ID LIKE '%" + search + "%'\r\n" + "ORDER BY C_REG DESC)A)B\r\n"
+					+ "where r>=? and r<=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<ContentDTO>();
+				do {
+					dto = new ContentDTO();
+
+					dto.setC_no(rs.getInt(2));
+					dto.setC_title(rs.getString(3));
+					dto.setUser_id(rs.getString(4));
+					dto.setC_content(rs.getString(5));
+					dto.setC_reg(rs.getTimestamp(6));
+					dto.setC_readcount(rs.getInt(7));
+					dto.setC_img(rs.getString(8));
+
+					list.add(dto);
+
+				} while (rs.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.getFBlist(int startRow, int endRow) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return list;
+	}
+
+	public int deleteFB(int cno) {
+		result = 0;
+		try {
+			conn = getConnection();
+			sql = "DELETE FROM  content\r\n" + "WHERE c_no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, cno);
+
+			result = pstmt.executeUpdate();
+			
+			if(result>0) {
+			sql="delete from REPLY\r\n"
+					+ "where c_no = ?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			int temp = pstmt.executeUpdate();
+			result+=temp;
+			
+			}
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.deleteFB(int cno) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+
+		return result;
+	}
+
+	public int deleteFBR(int rno) {
+		result = 0;
+		try {
+			conn = getConnection();
+
+			// sql="delete from REPLY where R_NO = ?";
+			sql = "Update reply\r\n" + "  SET R_REPLY='관리자에 의해 삭제된 댓글입니다.', user_id='-', r_no = r_no " + "WHERE R_NO = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, rno);
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("GyeJeongDAO.deleteFB(int cno) ERR");
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt, conn);
+		}
+		return result;
+	}
+
+	public int getFBContentFromRNO(int rno) {
+		result = 0;
+
+		try {
+			conn = getConnection();
+
+			sql = "select c_no from reply where r_no = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, rno);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				result = rs.getInt(1);
+		} catch (Exception e) {
+
+		} finally {
+			closeConnection(rs, pstmt, conn);
+		}
+
+		return result;
 	}
 
 }

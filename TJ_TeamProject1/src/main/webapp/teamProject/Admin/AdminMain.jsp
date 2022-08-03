@@ -91,7 +91,8 @@ System.out.println("AdminMain.value ad_id : "+ad_id);
 						class="nav-item nav-link">상품확인</a>
 					<a href="AdminQnAList.jsp"
 						class="nav-item nav-link">자주하는질문</a>
-
+					<a href="AdminFBList.jsp"
+						class="nav-item nav-link">자유게시판</a>
 						
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"

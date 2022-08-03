@@ -56,7 +56,8 @@
 					<a href="AdminHelpList.jsp" class="nav-item nav-link">1대1 문의 확인</a>
 					<a href="AdminProductList.jsp" class="nav-item nav-link">상품확인</a> <a
 						href="AdminQnAList.jsp" class="nav-item nav-link">자주하는질문</a>
-
+					<a href="AdminFBList.jsp"
+						class="nav-item nav-link">자유게시판</a>
 
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
@@ -74,7 +75,7 @@
 		<!-- Sidebar End -->
 	</div>
 	<!-- Content End -->
-	<div align="center">
+	<div align="center" style="margin-left: 250px">
 		<%
 		//TODO
 		//신고자, 피신고자 null 확인
@@ -401,7 +402,9 @@
 						}
 						%>
 					</td>
-					<td><%=dto.getP_title()%></td>
+					<td><a
+						href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto.getP_no()%>"
+						target="_blank"> <%=dto.getP_title()%></a></td>
 					<td><%=dto.getP_price()%></td>
 					<td><%=dto.getP_minPrice()%></td>
 					<td><%=dto.getP_maxPrice()%></td>
