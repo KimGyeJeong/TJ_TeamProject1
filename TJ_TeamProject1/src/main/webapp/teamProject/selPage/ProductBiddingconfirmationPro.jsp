@@ -20,6 +20,8 @@
 	Integer p_no = Integer.parseInt(request.getParameter("p_no"));
 	if(UID != null && b_no != null && p_no != null){
 	BeomSuDAO dao = new BeomSuDAO();
+	
+	//입찰차에서 낙찰자(구매할수있는 권한)로 바뀌는 곳. 여기서 구매자에게 알림 넣어주기
 	int result = dao.confirmation(b_no);
 	BiddingDTO bidDTO = dao.ConfirmationBidding(b_no);
 	AddressDTO addDTO = dao.addressCheck(bidDTO.getUser_id());
@@ -29,7 +31,10 @@
 <%	if(result == 1){ 
 		
 		List bidList = dao.completionBidding(p_no, b_no);
+		
+		//입찰자에서 유찰자(구매하지 못하는)로 바뀌는 곳. 여기서 구매자 알림 넣어주기
 		dao.biddingStatusSet(p_no, b_no);
+		//상품 테이블에 판매자 넣어주는곳... 여기서 입찰자 알림 넣어줘도..?
 		dao.buyerSet(p_no, bidDTO.getUser_id());
 		ProductDTO proDTO = dao.productDetailBuy(p_no);
 		dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), addDTO.getA_no());

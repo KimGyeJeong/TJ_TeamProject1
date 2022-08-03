@@ -1039,6 +1039,8 @@ public class GyeJeongDAO {
 			pstmt.setString(1, id);
 
 			result = pstmt.executeUpdate();
+			
+			setNoticeResetYellowCard(id);
 
 		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.resetYellowCard(String id) ERR");
@@ -1048,6 +1050,36 @@ public class GyeJeongDAO {
 		}
 
 		return result;
+	}
+	public void setNoticeResetYellowCard(String id) throws Exception {
+		conn=getConnection();
+		String message = "활동정지가 해제";
+
+		
+		sql="INSERT INTO NOTIFICATION\r\n"
+				+ "(\r\n"
+				+ "    NOT_NO,\r\n"
+				+ "    USER_ID,\r\n"
+				+ "    NOT_TYPE,\r\n"
+				+ "    NOT_MESSAGE,\r\n"
+				+ "    NOT_REG,\r\n"
+				+ "    NOT_CH\r\n"
+				+ ") \r\n"
+				+ "VALUES\r\n"
+				+ "(\r\n"
+				+ "  NOTIFICATION_SEQ.NEXTVAL,\r\n"
+				+ "  ?,\r\n"
+				+ "  3,"
+				+ "  ?,\r\n"
+				+ "  SYSDATE,\r\n"
+				+ "  0\r\n"
+				+ ")";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.setString(2, message);
+		
+		pstmt.executeUpdate();
+		
 	}
 
 	public List<ProductDTO> getUserProductList(String user_id) {

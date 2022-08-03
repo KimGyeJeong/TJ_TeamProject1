@@ -26,7 +26,7 @@
 			<td>판매자<text><%=proDTO.getP_sellerId() %></text></td>
 		</tr>
 		<tr>
-			<td>평정</td>
+			<td>평점</td>
 			<td><input type="number" min="1" max="5" name="re_stars" required /> / 5</td>
 		</tr>
 		<tr>

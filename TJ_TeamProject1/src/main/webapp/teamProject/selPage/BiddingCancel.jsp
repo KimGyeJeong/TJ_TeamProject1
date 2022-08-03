@@ -18,7 +18,9 @@
 	if(bidDTO != null){
 		if(UID.equals(bidDTO.getUser_id())){
 			int b_bidding = bidDTO.getB_bidding();
+			//입찰 삭제하기
 			int result = dao.biddingDelete(b_no);
+			//입찰 삭제하면서 판매자에게 알림 넣어줄까..?
 				
 		
 %>
