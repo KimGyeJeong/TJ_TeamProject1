@@ -97,7 +97,7 @@
 
 <div align="center" style="float:right">
 	<h4>현재 카테고리 보기</h4>
-	<table>
+	<table border="1">
 	<%
 	list = i_dao.getCategory();
 	
@@ -140,7 +140,7 @@
 	<div align="center" >
 		<form action="AdminInsertCategoryPro.jsp" method="post">
 		<input type="hidden" name="type" value="update">
-			<table>
+			<table border="1">
 				<tr>
 					<td colspan="2">카테고리 수정</td>
 				</tr>
@@ -213,7 +213,7 @@
 	<div align="center">
 		<form action="AdminInsertCategoryPro.jsp" method="post">
 		<input type="hidden" name="type" value="insert">
-			<table>
+			<table border="1">
 				<tr>
 					<td colspan="3">카테고리 추가</td>
 				</tr>

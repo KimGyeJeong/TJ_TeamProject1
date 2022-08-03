@@ -78,7 +78,6 @@
 <%				if(dto.getP_delete() == 0){	
 	%>
 	<td><a href="#" onclick="setSession('<%=dto.getP_no()%>','/TJ_TeamProject1/teamProject/save/<%=dto.getP_img1()%>')">
-						<h4>TestDTO.... <%=dto.getP_no() %></h4>
 						<img src="../save/<%=dto.getP_img1() %>" style="width:300px; height:300px;" /><br/>
 						<%=dto.getP_title() %>
 						<%switch(dto.getP_finish()){
@@ -178,7 +177,7 @@
 
         function setSession(pno, img) {
         	
-        	alert("ProductList.Script 156 Session");
+        	//alert("ProductList.Script 156 Session");
             window.i++;
             console.log("out Function.value i : ", i);
 
