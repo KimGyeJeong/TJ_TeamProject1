@@ -33,8 +33,10 @@
 		List bidList = dao.completionBidding(p_no, b_no);
 		
 		//입찰자에서 유찰자(구매하지 못하는)로 바뀌는 곳. 여기서 구매자 알림 넣어주기
+		//유찰자 알림은 여기서 보내주기
 		dao.biddingStatusSet(p_no, b_no);
 		//상품 테이블에 판매자 넣어주는곳... 여기서 입찰자 알림 넣어줘도..?
+		//여기서 낙찰자한테 알림이 감		
 		dao.buyerSet(p_no, bidDTO.getUser_id());
 		ProductDTO proDTO = dao.productDetailBuy(p_no);
 		dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), addDTO.getA_no());

@@ -24,29 +24,33 @@ import team.project.model.UserListDTO;
 import team.project.model.UserQuestionDTO;
 
 public class BeomSuDAO {
+
+	// 알림 넣어주기 위해 사용할 class
+	GyeJeongDAO dao_gj = null;
+
 	private Connection getConn() throws Exception {
 		Context ctx = new InitialContext();
-		Context env = (Context)ctx.lookup("java:comp/env");
-		DataSource ds = (DataSource)env.lookup("jdbc/orcl");
-		
+		Context env = (Context) ctx.lookup("java:comp/env");
+		DataSource ds = (DataSource) env.lookup("jdbc/orcl");
+
 		return ds.getConnection();
 	}
-	
-	public List categorySelect(int start, int end , int ca_no) {
-		List list = null; 
-		Connection conn = null; 
-		PreparedStatement pstmt = null; 
+
+	public List categorySelect(int start, int end, int ca_no) {
+		List list = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
-			conn = getConn(); 
-			String sql ="select * from(select ROWNUM r, A.* FROM (select * from product where ca_no=? and p_delete=0  ORDER BY P_REG DESC) A) B where r>=? and r<=?";
+			conn = getConn();
+			String sql = "select * from(select ROWNUM r, A.* FROM (select * from product where ca_no=? and p_delete=0  ORDER BY P_REG DESC) A) B where r>=? and r<=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ca_no);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
-			rs = pstmt.executeQuery(); 
-			if(rs.next()) {
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					ProductDTO dto = new ProductDTO();
@@ -72,50 +76,77 @@ public class BeomSuDAO {
 					dto.setP_title(rs.getString("p_title"));
 					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
-			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
-			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
-		
-		
+
 		return list;
 	}
-	
+
 	public int getProductListCount(int ca_no) {
-		int result=0;
-		Connection conn = null; 
-		PreparedStatement pstmt = null; 
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 
 		try {
 			conn = getConn();
-			String sql="select count(*) from product where ca_no=?";
-	
-			pstmt=conn.prepareStatement(sql);
+			String sql = "select count(*) from product where ca_no=?";
+
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ca_no);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				result=rs.getInt(1);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(rs != null) try { rs.close(); } catch(SQLException e) { e.printStackTrace();}
-			if(pstmt != null) try { pstmt.close(); } catch(SQLException e) { e.printStackTrace();}
-			if(conn != null) try { conn.close(); } catch(SQLException e) { e.printStackTrace();}
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
 
 		return result;
 	}
-	
+
 	public ProductDTO productDetailBuy(int p_no) {
 		ProductDTO dto = null;
 		Connection conn = null;
@@ -126,9 +157,9 @@ public class BeomSuDAO {
 			String sql = "select * from product where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
-			
+
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new ProductDTO();
 				dto.setP_img1(rs.getString("p_img1"));
 				dto.setP_img2(rs.getString("p_img2"));
@@ -152,16 +183,31 @@ public class BeomSuDAO {
 				dto.setP_title(rs.getString("p_title"));
 				dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return dto;
 	}
-	
+
 	public List ProductQuestionList(int p_no) {
 		List list = null;
 		Connection conn = null;
@@ -172,9 +218,9 @@ public class BeomSuDAO {
 			String sql = "select * from ProductQuestion where p_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
-			
+
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					ProductQuestionDTO dto = new ProductQuestionDTO();
@@ -189,19 +235,34 @@ public class BeomSuDAO {
 					dto.setPq_delete(rs.getInt("pq_delete"));
 					dto.setPq_secret(rs.getInt("pq_secret"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return list;
 	}
-	
+
 	public ProductQuestionDTO ProductQuestionList2(int pq_no) {
 		ProductQuestionDTO dto = null;
 		Connection conn = null;
@@ -212,9 +273,9 @@ public class BeomSuDAO {
 			String sql = "select * from ProductQuestion where pq_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pq_no);
-			
+
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new ProductQuestionDTO();
 				dto.setPq_no(rs.getInt("pq_no"));
 				dto.setP_no(rs.getInt("p_no"));
@@ -226,16 +287,31 @@ public class BeomSuDAO {
 				dto.setPq_answerReg(rs.getTimestamp("pq_answerReg"));
 				dto.setPq_delete(rs.getInt("pq_delete"));
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return dto;
 	}
-	
+
 	public int ProductQuestionAdd(int p_no, String UID, String pq_title, String pq_content, int pq_secret) {
 		int result = -1;
 		Connection conn = null;
@@ -251,23 +327,48 @@ public class BeomSuDAO {
 			pstmt.setString(4, UID);
 			pstmt.setInt(5, pq_secret);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+			
+			//0803 수정 시작. 수정자 김계정
+			if(result>0) {
+				dao_gj = new  GyeJeongDAO();
+				InstanceDAO dao_in = new InstanceDAO();
+				
+				ProductDTO dto_product = dao_in.getProduct(p_no);
+				
+				String message = dto_product.getP_title() +"에 대한 질문이 달렸습니다.";
+				
+				dao_gj.insertNotification(dto_product.getP_sellerId(), "1", message);
+			}
+			//수정 완료.
+			
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null) try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null) try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return result;
 	}
-	
-	public int RportAdd(int p_no, String UID, String rp_title, String rp_content, String rp_reportedUid, String rp_reason) {
+
+	public int RportAdd(int p_no, String UID, String rp_title, String rp_content, String rp_reportedUid,
+			String rp_reason) {
 		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
 			String sql = "insert into Report(RP_NO, RP_REASON, RP_TITLE, RP_CONTENT, RP_REPORTUID, RP_REPORTEDUID, RP_PRO, P_NO, RP_REG) ";
-			sql+= "values(report_seq.nextval, ?, ?, ?, ?, ?, 0, ?, sysdate)";
+			sql += "values(report_seq.nextval, ?, ?, ?, ?, ?, 0, ?, sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, rp_reason);
 			pstmt.setString(2, rp_title);
@@ -275,18 +376,28 @@ public class BeomSuDAO {
 			pstmt.setString(4, UID);
 			pstmt.setString(5, rp_reportedUid);
 			pstmt.setInt(6, p_no);
-			
+
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return result;
 	}
-	
+
 	public int WishAdd(int p_no, String UID) {
 		int result = -1;
 		Connection conn = null;
@@ -298,16 +409,26 @@ public class BeomSuDAO {
 			pstmt.setString(1, UID);
 			pstmt.setInt(2, p_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public int productBuyerSet(int p_no, String UID) {
 		int result = -1;
 		Connection conn = null;
@@ -319,16 +440,26 @@ public class BeomSuDAO {
 			pstmt.setString(1, UID);
 			pstmt.setInt(2, p_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public AddressDTO addressCheck(String UID) {
 		AddressDTO addDTO = null;
 		Connection conn = null;
@@ -340,7 +471,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, UID);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				addDTO = new AddressDTO();
 				addDTO.setA_address(rs.getString("a_address"));
 				addDTO.setA_address2(rs.getString("a_address2"));
@@ -351,18 +482,33 @@ public class BeomSuDAO {
 				addDTO.setA_zipCode(rs.getInt("a_zipCode"));
 				addDTO.setUser_id(UID);
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return addDTO;
 	}
-	
+
 	public AddressDTO addressCheck(String UID, int a_no) {
 		AddressDTO addDTO = null;
 		Connection conn = null;
@@ -375,7 +521,7 @@ public class BeomSuDAO {
 			pstmt.setString(1, UID);
 			pstmt.setInt(2, a_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				addDTO = new AddressDTO();
 				addDTO.setA_address(rs.getString("a_address"));
 				addDTO.setA_address2(rs.getString("a_address2"));
@@ -386,42 +532,95 @@ public class BeomSuDAO {
 				addDTO.setA_zipCode(rs.getInt("a_zipCode"));
 				addDTO.setUser_id(UID);
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return addDTO;
 	}
-	
+
 	public int biddingInput(String UID, int b_bidding, int p_no) {
 		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			conn = getConn();
-			
+
 			String sql = "update Bidding set b_bidding=? where user_id=? and p_no=? and b_bidding=0 and b_status=0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_bidding);
 			pstmt.setString(2, UID);
 			pstmt.setInt(3, p_no);
-			
+
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+			// 0803수정시작.. 수정자. 김계정
+			// 명령문 추가
+			if (result > 0) {
+				String userid = "";
+				String title = "";
+				sql = "select * from PRODUCT where P_NO=?";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, p_no);
+
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					userid = rs.getString("P_SELLERID");
+					title = rs.getString("P_TITLE");
+				}
+
+				dao_gj = new GyeJeongDAO();
+				String message = UID + "님이 " + title + "에 입찰 신청을 하였습니다.";
+				dao_gj.insertNotification(userid, "1", message);
+			}
+			// 0803 추가
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return result;
 	}
-	
+
 	public UserListDTO userCheck(String UID) {
 		UserListDTO dto = null;
 		Connection conn = null;
@@ -433,7 +632,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, UID);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new UserListDTO();
 				dto.setUser_id(UID);
 				dto.setUser_pw(rs.getString("user_pw"));
@@ -451,18 +650,33 @@ public class BeomSuDAO {
 				dto.setUser_report(rs.getInt("user_report"));
 				dto.setUser_reportCnt(rs.getInt("user_reportCnt"));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
+
 	public int userMoneyCheck(int p_no, String UID, int money) {
 		int result = -2;
 		int priceMoney = 0;
@@ -476,32 +690,45 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setString(2, UID);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				priceMoney = rs.getInt(1);
-				if(priceMoney <= money) {
+				if (priceMoney <= money) {
 					sql = "update UserList set user_usemoney=? where user_id=?";
 					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, money-priceMoney);
+					pstmt.setInt(1, money - priceMoney);
 					pstmt.setString(2, UID);
 					result = pstmt.executeUpdate();
-				}else {
+				} else {
 					result = -1;
 				}
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
-		
+
 		return result;
 	}
-	
-	
+
 	public void productBuy(int p_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -511,15 +738,25 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public void productBuy(int p_no, String UID) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -530,26 +767,36 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setString(2, UID);
 			pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
-	public List<CategoryDTO>  getCategory() {
-		List<CategoryDTO> list = null; 
+
+	public List<CategoryDTO> getCategory() {
+		List<CategoryDTO> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConn();
-			String sql ="select * from category order by ca_grp asc"; 
+			String sql = "select * from category order by ca_grp asc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList<CategoryDTO>();
 				do {
 					CategoryDTO dto = new CategoryDTO();
@@ -559,19 +806,34 @@ public class BeomSuDAO {
 					dto.setCa_grp(rs.getInt("ca_grp"));
 					list.add(dto);
 				} while (rs.next());
-			}else{
+			} else {
 				System.out.println("getCategory = 0");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return list;
 	}
-	
+
 	public int productSelling(ProductDTO dto) {
 		int result = -1;
 		Connection conn = null;
@@ -595,19 +857,29 @@ public class BeomSuDAO {
 			pstmt.setString(12, dto.getP_sellerId());
 			pstmt.setTimestamp(13, dto.getP_start());
 			pstmt.setTimestamp(14, dto.getP_end());
-			
+
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public ProductDTO getP_no(String P_img1) {
 		ProductDTO dto = null;
 		Connection conn = null;
@@ -619,22 +891,37 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, P_img1);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new ProductDTO();
 				dto.setP_no(rs.getInt("p_no"));
 				dto.setCa_no(rs.getInt("ca_no"));
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
+
 	public void readCountUp(int p_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -644,15 +931,25 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
-	public int productBiddingSet(int p_no,String UID) {
+
+	public int productBiddingSet(int p_no, String UID) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -664,17 +961,27 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setString(2, UID);
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public void orderList(int p_no, String p_sellerId, String p_buyerId, int a_no, int p_status) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -689,14 +996,35 @@ public class BeomSuDAO {
 			pstmt.setString(4, p_sellerId);
 			pstmt.setString(5, p_buyerId);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+
+			// 0803 수정 시작. 수정자 김계정
+			dao_gj = new GyeJeongDAO();
+			InstanceDAO dao_in = new InstanceDAO();
+			ProductDTO dto = dao_in.getProduct(p_no);
+
+			String message = p_buyerId + "님이 " + dto.getP_title() + "을(를) 구매하셨습니다.";
+			dao_gj.insertNotification(p_sellerId, "1", message);
+			// 수정 완료.
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
+
 	}
-	
+
 	public void orderList(int p_no, String p_sellerId, String p_buyerId, int a_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -710,14 +1038,24 @@ public class BeomSuDAO {
 			pstmt.setString(3, p_sellerId);
 			pstmt.setString(4, p_buyerId);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public ProductDTO ProductDateCheck(int p_no) {
 		int result = -1;
 		ProductDTO dto = null;
@@ -730,12 +1068,12 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
-			if(result == 1) {
+			if (result == 1) {
 				sql = "select * from Product where p_no=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, p_no);
 				rs = pstmt.executeQuery();
-				if(rs.next()) {
+				if (rs.next()) {
 					dto = new ProductDTO();
 					dto.setP_img1(rs.getString("p_img1"));
 					dto.setP_img2(rs.getString("p_img2"));
@@ -760,18 +1098,33 @@ public class BeomSuDAO {
 					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
+
 	public ProductDTO ProductDateCheck2(int p_no) {
 		int result = -1;
 		ProductDTO dto = null;
@@ -784,12 +1137,12 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
-			if(result == 1) {
+			if (result == 1) {
 				sql = "select * from Product where p_no=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, p_no);
 				rs = pstmt.executeQuery();
-				if(rs.next()) {
+				if (rs.next()) {
 					dto = new ProductDTO();
 					dto.setP_img1(rs.getString("p_img1"));
 					dto.setP_img2(rs.getString("p_img2"));
@@ -814,18 +1167,33 @@ public class BeomSuDAO {
 					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
+
 	public ProductDTO ProductDateCheck3(int p_no) {
 		int result = -1;
 		ProductDTO dto = null;
@@ -838,12 +1206,12 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
-			if(result == 1) {
+			if (result == 1) {
 				sql = "select * from Product where p_no=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, p_no);
 				rs = pstmt.executeQuery();
-				if(rs.next()) {
+				if (rs.next()) {
 					dto = new ProductDTO();
 					dto.setP_img1(rs.getString("p_img1"));
 					dto.setP_img2(rs.getString("p_img2"));
@@ -868,19 +1236,34 @@ public class BeomSuDAO {
 					dto.setP_tempReg(rs.getTimestamp("p_tempReg"));
 				}
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
-	public int productModify(ProductDTO dto, int p_no) {          
+
+	public int productModify(ProductDTO dto, int p_no) {
 		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -904,52 +1287,77 @@ public class BeomSuDAO {
 			pstmt.setTimestamp(13, dto.getP_start());
 			pstmt.setTimestamp(14, dto.getP_end());
 			pstmt.setInt(15, p_no);
-			
+
 			result = pstmt.executeUpdate();
 			System.out.println(result);
 			System.out.println(result);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
-		 
+
 	}
-	
-	public CategoryDTO  getCategoryName(int ca_no) {
-		CategoryDTO dto = null; 
+
+	public CategoryDTO getCategoryName(int ca_no) {
+		CategoryDTO dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConn();
-			String sql ="select * from category where ca_no=?"; 
+			String sql = "select * from category where ca_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ca_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-					dto = new CategoryDTO();
-					dto.setCa_no(ca_no);
-					dto.setCa_name(rs.getString("ca_name"));
-					dto.setCa_level(rs.getInt("ca_level"));
-					dto.setCa_grp(rs.getInt("ca_grp"));
+			if (rs.next()) {
+				dto = new CategoryDTO();
+				dto.setCa_no(ca_no);
+				dto.setCa_name(rs.getString("ca_name"));
+				dto.setCa_level(rs.getInt("ca_level"));
+				dto.setCa_grp(rs.getInt("ca_grp"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return dto;
 	}
-	
+
 	public int setAddressNum(String a_no) {
-		int ano=Integer.parseInt(a_no);
-		int result=0;
+		int ano = Integer.parseInt(a_no);
+		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -957,40 +1365,60 @@ public class BeomSuDAO {
 			String sql = "update address set a_usereg=sysdate where a_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ano);
-			result = pstmt.executeUpdate(); 
-			if(result==0) {
+			result = pstmt.executeUpdate();
+			if (result == 0) {
 				System.out.println("setAddressNum() result==0");
-			}else if(result==1) {
+			} else if (result == 1) {
 				System.out.println("setAddressNum() result==1");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return result;
 	}
-	
+
 	public int updateOrderConfirmation(int Ono) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn= getConn();
+			conn = getConn();
 			String sql = "update orderlist set o_pro=3 where o_no=?";
-			pstmt= conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, Ono);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return result;
 	}
-	
+
 	public OrderListDTO orderListGet(int o_no) {
 		OrderListDTO dto = null;
 		Connection conn = null;
@@ -1002,7 +1430,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, o_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new OrderListDTO();
 				dto.setO_no(o_no);
 				dto.setP_no(rs.getInt("p_no"));
@@ -1014,19 +1442,34 @@ public class BeomSuDAO {
 				dto.setO_reg(rs.getTimestamp("o_reg"));
 				dto.setO_review(rs.getInt("o_review"));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return dto;
 	}
-	
-	public int userMoneyUpdate(int p_price,String p_sellerId) {
+
+	public int userMoneyUpdate(int p_price, String p_sellerId) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1037,17 +1480,27 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_price);
 			pstmt.setString(2, p_sellerId);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
-	public BiddingDTO biddingGet(int p_no,String UID) {
+
+	public BiddingDTO biddingGet(int p_no, String UID) {
 		BiddingDTO dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1059,7 +1512,7 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setString(2, UID);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new BiddingDTO();
 				dto.setB_no(rs.getInt("b_no"));
 				dto.setP_no(rs.getInt("p_no"));
@@ -1068,16 +1521,31 @@ public class BeomSuDAO {
 				dto.setB_reg(rs.getTimestamp("b_reg"));
 				dto.setB_status(rs.getInt("b_status"));
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return dto;
 	}
-	
+
 	public List biddingGet(int p_no) {
 		List list = null;
 		Connection conn = null;
@@ -1089,7 +1557,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					BiddingDTO dto = new BiddingDTO();
@@ -1100,18 +1568,33 @@ public class BeomSuDAO {
 					dto.setB_reg(rs.getTimestamp("b_reg"));
 					dto.setB_status(rs.getInt("b_status"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return list;
 	}
-	
+
 	public BiddingDTO ConfirmationBidding(int b_no) {
 		BiddingDTO dto = null;
 		Connection conn = null;
@@ -1123,7 +1606,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new BiddingDTO();
 				dto.setB_no(rs.getInt("b_no"));
 				dto.setP_no(rs.getInt("p_no"));
@@ -1132,16 +1615,31 @@ public class BeomSuDAO {
 				dto.setB_reg(rs.getTimestamp("b_reg"));
 				dto.setB_status(rs.getInt("b_status"));
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return dto;
 	}
-	
+
 	public int confirmation(int b_no) {
 		int result = 0;
 		Connection conn = null;
@@ -1152,16 +1650,26 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public int biddingStatusSet(int p_no, int b_no) {
 		int result = 0;
 		Connection conn = null;
@@ -1173,16 +1681,45 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setInt(2, b_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+
+			// 0803 수정 시작. 수정자 김계정
+			if (result > 0) {
+				dao_gj = new GyeJeongDAO();
+				InstanceDAO dao_in = new InstanceDAO();
+				ProductDTO dto_product = dao_in.getProduct(p_no);
+				BiddingDTO dto_bid = null;
+				List<BiddingDTO> list_bid = dao_gj.getBiddingList(p_no);
+				if (list_bid != null) {
+					for (int i = 0; i < list_bid.size(); i++) {
+						dto_bid = list_bid.get(i);
+						String message = dto_product.getP_title() + "의 입찰자로 선정되지 못하셨습니다.";
+
+						dao_gj.insertNotification(dto_bid.getUser_id(), "2", message);
+					}
+				}
+			}
+			// 수정 완료.
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public int biddingStatusSet(int p_no) {
 		int result = 0;
 		Connection conn = null;
@@ -1193,16 +1730,26 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public List completionBidding(int p_no, int b_no) {
 		List list = null;
 		Connection conn = null;
@@ -1215,7 +1762,7 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_no);
 			pstmt.setInt(2, b_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					BiddingDTO dto = new BiddingDTO();
@@ -1226,18 +1773,33 @@ public class BeomSuDAO {
 					dto.setB_reg(rs.getTimestamp("b_reg"));
 					dto.setB_status(rs.getInt("b_status"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return list;
 	}
-	
+
 	public List completionBidding(int p_no) {
 		List list = null;
 		Connection conn = null;
@@ -1249,7 +1811,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					BiddingDTO dto = new BiddingDTO();
@@ -1260,18 +1822,33 @@ public class BeomSuDAO {
 					dto.setB_reg(rs.getTimestamp("b_reg"));
 					dto.setB_status(rs.getInt("b_status"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return list;
 	}
-	
+
 	public void userMoneyReturn(String user_id, int bidding) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1282,15 +1859,25 @@ public class BeomSuDAO {
 			pstmt.setInt(1, bidding);
 			pstmt.setString(2, user_id);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 	}
-	
+
 	public int biddingModify(String UID, int b_bidding, int p_no) {
 		int bid = 0;
 		int result = 0;
@@ -1304,7 +1891,7 @@ public class BeomSuDAO {
 			pstmt.setString(1, UID);
 			pstmt.setInt(2, p_no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				bid = rs.getInt("b_bidding");
 				sql = "update bidding set b_bidding=? where user_id=? and p_no=?";
 				pstmt = conn.prepareStatement(sql);
@@ -1312,25 +1899,40 @@ public class BeomSuDAO {
 				pstmt.setString(2, UID);
 				pstmt.setInt(3, p_no);
 				result = pstmt.executeUpdate();
-				if(result == 1) {
+				if (result == 1) {
 					sql = "update UserList set user_usemoney=user_usemoney+? where user_id=?";
 					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, bid-b_bidding);
+					pstmt.setInt(1, bid - b_bidding);
 					pstmt.setString(2, UID);
 					result = pstmt.executeUpdate();
 				}
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public int ProductAnswerAdd(int pq_no, String pq_answer) {
 		int result = 0;
 		Connection conn = null;
@@ -1342,16 +1944,38 @@ public class BeomSuDAO {
 			pstmt.setString(1, pq_answer);
 			pstmt.setInt(2, pq_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+
+			// 0803 수정 시작. 수정자 김계정
+			if (result > 0) {
+				dao_gj = new GyeJeongDAO();
+				ProductDTO dto_product = dao_gj.getproductDTOFrompq_no(pq_no);
+				String message = dto_product.getP_sellerId() + " 님이 " + dto_product.getP_title()
+						+ "의 상품문의에 대한 답변을 남겼습니다.";
+
+				dao_gj.insertNotification(dto_product.getP_buyerId(), "2", message);
+			}
+			// 수정 완료.
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public int reviewAdd(ReviewDTO reDTO) {
 		int result = 0;
 		Connection conn = null;
@@ -1362,22 +1986,45 @@ public class BeomSuDAO {
 			sql += "values(Review_seq.nextval, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, reDTO.getRe_stars());
-			pstmt.setString(2, reDTO.getRe_reportUid());
+			pstmt.setString(2, reDTO.getRe_reportUid());	//구매자
 			pstmt.setString(3, reDTO.getRe_content());
-			pstmt.setString(4, reDTO.getRe_reportedUid());
+			pstmt.setString(4, reDTO.getRe_reportedUid());	//판매자
 			result = pstmt.executeUpdate();
+
+			//0803 수정 시작. 수정자 김계정
+			if(result>0) {
+				dao_gj = new GyeJeongDAO();
+				InstanceDAO dao_in = new InstanceDAO();
+				
+				ProductDTO dto_product = dao_in.getProduct(reDTO.getP_no());
+				
+				String message=dto_product.getP_title()+"에 대한 거래후기가 생성되었습니다.";
+				
+				dao_gj.insertNotification(reDTO.getRe_reportedUid(), "1", message);
+				System.out.println("리뷰작성 정상작동. BeomSuDAO is working. line2004");
+			}
+			//수정 완료.
 			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
-	
+
 	public int cancelPurchase(int p_price, String UID) {
 		int result = 0;
 		Connection conn = null;
@@ -1389,17 +2036,27 @@ public class BeomSuDAO {
 			pstmt.setInt(1, p_price);
 			pstmt.setString(2, UID);
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public void productCancelPurchase(int p_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1409,15 +2066,25 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public void endDateUpdate(int p_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1427,14 +2094,24 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public int productDelete(int p_no) {
 		int result = 0;
 		Connection conn = null;
@@ -1445,17 +2122,27 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_no);
 			result = pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public void userMoneydelete(String UID, int b_bidding) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1466,35 +2153,71 @@ public class BeomSuDAO {
 			pstmt.setInt(1, b_bidding);
 			pstmt.setString(2, UID);
 			pstmt.executeUpdate();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public int biddingDelete(int b_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
+			// 0803수정시작.. 수정자. 김계정
+			dao_gj = new GyeJeongDAO();
+			ProductDTO dtoProduct = dao_gj.getproductDTOFromb_no(b_no);
+			// 0803 수정 끝
+
 			conn = getConn();
 			String sql = "delete from bidding where b_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_no);
 			result = pstmt.executeUpdate();
-		}catch (Exception e) {
+
+			// 0803수정시작.. 수정자. 김계정
+			// 명령문 추가
+			if (result > 0) {
+
+				String message = dtoProduct.getP_buyerId() + "님이 구매 하였습니다.";
+				dao_gj.insertNotification(dtoProduct.getP_sellerId(), "1", message);
+			}
+			// 0803 추가
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return result;
 	}
-	
+
 	public void buyerSet(int p_no, String user_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1504,16 +2227,39 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			pstmt.setInt(2, p_no);
-			pstmt.executeUpdate();
-		}catch (Exception e) {
+			int result = pstmt.executeUpdate();
+
+			// 0803 수정 시작. 수정자 김계정
+			if (result > 0) {
+				dao_gj = new GyeJeongDAO();
+				InstanceDAO dao_in = new InstanceDAO();
+				ProductDTO dto_product = dao_in.getProduct(p_no);
+
+				String message = dto_product.getP_title() + "의 입찰자로 선정되셨습니다.";
+
+				dao_gj.insertNotification(dto_product.getP_buyerId(), "2", message);
+			}
+			// 수정 완료.
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 	}
-	
+
 	public List getReview(String p_sellerId) {
 		List list = null;
 		Connection conn = null;
@@ -1525,7 +2271,7 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, p_sellerId);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList();
 				do {
 					ReviewDTO dto = new ReviewDTO();
@@ -1537,19 +2283,34 @@ public class BeomSuDAO {
 					dto.setRe_reportedUid(rs.getString("re_reportedUid"));
 					dto.setRe_reg(rs.getTimestamp("re_reg"));
 					list.add(dto);
-				}while(rs.next());
+				} while (rs.next());
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null)try {rs.close();}catch (Exception e) {e.printStackTrace();}
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
-		
+
 		return list;
 	}
-	
+
 	public void userStarsAdd(String p_sellerId, int stars) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1560,14 +2321,24 @@ public class BeomSuDAO {
 			pstmt.setInt(1, stars);
 			pstmt.setString(2, p_sellerId);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
-	
+
 	public void deleteOrder(int o_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1577,11 +2348,21 @@ public class BeomSuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, o_no);
 			pstmt.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null)try {pstmt.close();}catch (Exception e) {e.printStackTrace();}
-			if(conn != null)try {conn.close();}catch (Exception e) {e.printStackTrace();}
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 	}
 }

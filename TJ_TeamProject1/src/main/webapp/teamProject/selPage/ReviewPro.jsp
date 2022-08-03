@@ -33,6 +33,8 @@ if (UID.equals(proDTO.getP_buyerId())) {
 	reDTO.setRe_reportUid(UID);
 	reDTO.setRe_reportedUid(proDTO.getP_sellerId());
 	reDTO.setRe_content(re_content);
+	//redto에 p_no도 들어가야함
+	reDTO.setP_no(p_no);
 
 	//reply dto 들고 댓글넣어주는 페이지
 	//여기서 알람이 갈수 있게...

@@ -16,7 +16,8 @@
 	BeomSuDAO dao = new BeomSuDAO();
 	
 	//여기서 알람을 넣어주기
-	//productquestion테이블에 user_id알람넣어주기
+	//productquestion테이블에 user_id알람넣어주기.
+	//판매자가 질문답변하면 구매희망자에게 알람가기
 	int result = dao.ProductAnswerAdd(pq_no, pq_answer);
 	
 %>

@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import team.project.model.AddressDTO;
+import team.project.model.BiddingDTO;
 import team.project.model.ContentDTO;
 import team.project.model.NoticeDTO;
 import team.project.model.ProductDTO;
@@ -2014,6 +2015,116 @@ public class GyeJeongDAO {
 		}
 
 		return result;
+	}
+	
+	//DAO new method here.. 
+	//알림 넣어주기.. id, 타입(판매자:1,구매자:2,경고:3 String타입), 출력해줄 메시지)
+	public void insertNotification(String id, String type, String message) throws Exception{
+		conn=getConnection();
+		sql="INSERT INTO NOTIFICATION\r\n"
+				+ "(\r\n"
+				+ "    NOT_NO,\r\n"
+				+ "    USER_ID,\r\n"
+				+ "    NOT_TYPE,\r\n"
+				+ "    NOT_MESSAGE,\r\n"
+				+ "    NOT_REG,\r\n"
+				+ "    NOT_CH\r\n"
+				+ ") \r\n"
+				+ "VALUES\r\n"
+				+ "(\r\n"
+				+ "  NOTIFICATION_SEQ.NEXTVAL,\r\n"
+				+ "  ?,\r\n"
+				+ "  ?,\r\n"
+				+ "  ?,\r\n"
+				+ "  SYSDATE,\r\n"
+				+ "  0\r\n"
+				+ ")";
+		pstmt=conn.prepareStatement(sql);
+		
+		pstmt.setString(1, id);
+		pstmt.setString(2, type);
+		pstmt.setString(3, message);
+		
+		result = pstmt.executeUpdate();
+		if(result>0)
+			System.out.println("GJDAO.insertNotification WORKING Line2048");
+		
+	}
+	
+	public ProductDTO getproductDTOFromb_no(int b_no) throws Exception {
+		ProductDTO dto = null;
+		
+		conn=getConnection();
+		sql="select * from PRODUCT WHERE P_NO =(\r\n"
+				+ "select P_NO from BIDDING where B_NO=?)";
+		pstmt=conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, b_no);
+		
+		rs=pstmt.executeQuery();
+		
+		if(rs.next()) {
+			dto = new ProductDTO();
+			
+			dto.setP_no(rs.getInt(1));
+			dto.setP_sellerId(rs.getString("P_SELLERID"));
+			dto.setP_buyerId(rs.getString("P_BUYERID"));
+			dto.setP_title(rs.getString("P_TITLE"));
+		}
+		
+		return dto;
+	}
+	public ProductDTO getproductDTOFrompq_no(int pq_no) throws Exception {
+		ProductDTO dto = null;
+		
+		conn=getConnection();
+		sql="select * from PRODUCT WHERE P_NO =(\r\n"
+				+ "select P_NO from ProductQuestion where pq_NO=?)";
+		pstmt=conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, pq_no);
+		
+		rs=pstmt.executeQuery();
+		
+		if(rs.next()) {
+			dto = new ProductDTO();
+			
+			dto.setP_no(rs.getInt(1));
+			dto.setP_sellerId(rs.getString("P_SELLERID"));
+			dto.setP_buyerId(rs.getString("P_BUYERID"));
+			dto.setP_title(rs.getString("P_TITLE"));
+		}
+		
+		return dto;
+	}
+	public List<BiddingDTO> getBiddingList(int p_no) throws Exception{
+		List<BiddingDTO> list = null;
+		BiddingDTO dto = null;
+		
+		conn=getConnection();
+		sql="select * from BIDDING WHERE B_STATUS=2 and P_NO=?";
+		
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, p_no);
+		
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			list = new ArrayList<BiddingDTO>();
+			do {
+				dto = new BiddingDTO();
+				
+				dto.setB_no(rs.getInt(1));
+				dto.setP_no(rs.getInt(2));
+				dto.setB_bidding(rs.getInt(3));
+				dto.setUser_id(rs.getString(4));
+				
+				list.add(dto);
+				
+			}while(rs.next());
+		}
+		
+		return list;
 	}
 
 }
