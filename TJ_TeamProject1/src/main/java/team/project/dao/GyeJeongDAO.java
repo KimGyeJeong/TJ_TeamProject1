@@ -976,6 +976,8 @@ public class GyeJeongDAO {
 					System.out.println("DAO.Day SUCCESS else,else value.result : " + result);
 				}
 			}
+			//알림 넣어주기
+			setNoticeYellowCard(id, date);
 
 		} catch (Exception e) {
 			System.out.println("GyeJeongDAO.setYellowCard(id, date) ERR");
@@ -983,8 +985,45 @@ public class GyeJeongDAO {
 		} finally {
 			closeConnection(pstmt, conn);
 		}
+		
 
 		return result;
+	}
+	
+	// 경고시 알림 설정
+	public void setNoticeYellowCard(String id, int date) throws Exception {
+		conn=getConnection();
+		String message = "";
+		if(date>90) {
+			message = "10년 활동정지";
+		}else {
+			message = date+"일 정지입니다";
+		}
+		
+		sql="INSERT INTO NOTIFICATION\r\n"
+				+ "(\r\n"
+				+ "    NOT_NO,\r\n"
+				+ "    USER_ID,\r\n"
+				+ "    NOT_TYPE,\r\n"
+				+ "    NOT_MESSAGE,\r\n"
+				+ "    NOT_REG,\r\n"
+				+ "    NOT_CH\r\n"
+				+ ") \r\n"
+				+ "VALUES\r\n"
+				+ "(\r\n"
+				+ "  NOTIFICATION_SEQ.NEXTVAL,\r\n"
+				+ "  ?,\r\n"
+				+ "  3,"
+				+ "  ?,\r\n"
+				+ "  SYSDATE,\r\n"
+				+ "  0\r\n"
+				+ ")";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.setString(2, message);
+		
+		pstmt.executeUpdate();
+		
 	}
 
 	// new method here
