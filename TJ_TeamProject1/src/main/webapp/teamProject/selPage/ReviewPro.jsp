@@ -22,9 +22,12 @@ BeomSuDAO dao = new BeomSuDAO();
 ProductDTO proDTO = dao.productDetailBuy(p_no);
 
 if (UID.equals(proDTO.getP_buyerId())) {
+	//REVIEW 에서 넘어오는 평점과 댓글
 	int re_stars = Integer.parseInt(request.getParameter("re_stars"));
 	String re_content = request.getParameter("re_content");
 	
+	//replyDTO 에서 작성자는 세션 로그인한사람, 후기 받는 사람은 물건 판매자,..
+	// 0803 현재. 리뷰는 구매자가 판매자한테만 작성 가능.
 	ReviewDTO reDTO = new ReviewDTO();
 	reDTO.setRe_stars(re_stars);
 	reDTO.setRe_reportUid(UID);
@@ -32,6 +35,7 @@ if (UID.equals(proDTO.getP_buyerId())) {
 	reDTO.setRe_content(re_content);
 
 	//reply dto 들고 댓글넣어주는 페이지
+	//여기서 알람이 갈수 있게...
 	int result = dao.reviewAdd(reDTO);
 %>
 <body>
