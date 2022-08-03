@@ -12,8 +12,22 @@
 <jsp:include page='../Header.jsp'/>
 <jsp:include page='../floatingAdvertisement.jsp'/>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>장물아비 QnA</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+#box2{
+	display: block;
+	margin-left: 35%;
+	margin-top: 3%;
+	
+}
+</style>
 <head>
 <br />
 <h1 align="center">QnA 자주하는 질문</h1>
@@ -79,9 +93,8 @@ if(auto != null && id != null && pw != null){
 </head>
 <body>
 
-<br />
-<br />
-<br />
+
+
 	<div>
 	
 	<% if(count == 0){ // 글이 없으면  %>
@@ -93,9 +106,9 @@ if(auto != null && id != null && pw != null){
 		</table>
 	
 	<%}else{ // 글이 하나라도 있으면 %>
-		<br />
 	
-		<div>
+	
+		<div id='box2'>
 		<table>
 			<tr>
 				<td>no.</td>

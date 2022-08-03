@@ -32,6 +32,12 @@ if(auto != null && id != null && pw != null){
   	td{
   		size: 150px;
   	}
+  	#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+	}
   	
   	</style>
 </head>
@@ -43,9 +49,8 @@ if(auto != null && id != null && pw != null){
 <br />
 <h2 align="center">고객센터</h2>
 <h2 align="center">무엇을 도와드릴까요?</h2>
-<br />
-<br />
-<table border="1">
+
+<table id='box'>
 	<tr>
 		<td>
 		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/inquiry.jsp'" src="helpimg.jpg" width='200px'/>
@@ -53,15 +58,15 @@ if(auto != null && id != null && pw != null){
 		</td>
 		<td>
 		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/inquiryList.jsp'" src="helpimg2.jpg" width='200px'/>
-		
 		</td>
+		
 		<td>
 		<img onclick="location.href='/TJ_TeamProject1/teamProject/help/QnA.jsp'" src="helpimg3.png" width='200px'/>
-		
 		</td>
 	</tr>
+	
 	<tr>
-		<td  width="150">
+		<td>
 		1:1문의하기
 		</td>
 		<td>
@@ -73,9 +78,6 @@ if(auto != null && id != null && pw != null){
 	</tr>
 
 </table>
-<br />
-<br />
-<br />
 <br />
 <br />
 <br />

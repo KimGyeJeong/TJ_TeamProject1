@@ -66,7 +66,7 @@
 	            <br>
 	            <a href="../help/inquiryList.jsp" class="nav-item nav-link">나의 문의사항</a>
 	            <br>
-	            <a href="../hlep/Help.jsp" class="nav-item nav-link">고객센터</a>
+	            <a href="../help/Help.jsp" class="nav-item nav-link">고객센터</a>
 	            <br>
 	        </div>
 	    </nav>

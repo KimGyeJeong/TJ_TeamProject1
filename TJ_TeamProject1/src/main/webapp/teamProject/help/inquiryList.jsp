@@ -9,8 +9,15 @@
 <head>
 <jsp:include page='../Header.jsp'/>
 <jsp:include page='../floatingAdvertisement.jsp'/>
-<br />
-<br />
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+</style>
+
 <br />
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -35,9 +42,7 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%  id=(String)session.getAttribute("UID"); %>
-<h3 align="right">
-	사용자:
-	<%=id %></h3>
+
 
 <%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 <script>
@@ -96,15 +101,16 @@ if(auto != null && id != null && pw != null){
 
 
 
-	<img src="helpimg2.jpg" width='100' />
-	<h1>
+	
+	<h1 id='box'>
+		<img src="helpimg2.jpg" width='100' />
 		1:1문의내역 목록
 		<button
 			onclick="window.location.href='/TJ_TeamProject1/teamProject/help/inquiry.jsp'">문의하기</button>
 	</h1>
 
 
-	<br />
+	
 	<% if(count == 0){ // 글이 없으면  %>
 	<br />
 	<table>
@@ -113,8 +119,8 @@ if(auto != null && id != null && pw != null){
 		</tr>
 	</table>
 	<%}else{ // 글이 하나라도 있으면 %>
-	<br />
-	<table>
+	
+	<table id='box'>
 		<tr>
 			<td>No.</td>
 			<td>작성자</td>

@@ -3,21 +3,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <%
 String id = (String) session.getAttribute("UID");
 %>
-<h3 align="right">
-	사용자:
-	<%=id%></h3>
 
 <%
 if (session.getAttribute("UID") != null) {
 %>
-<input type="button" value="로그아웃"
-	onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
+
 <%
 } else {
 %>
@@ -31,14 +35,13 @@ if (session.getAttribute("UID") != null) {
 </head>
 <jsp:include page='../Header.jsp'/>
 <jsp:include page='../floatingAdvertisement.jsp'/>
-<br/>
-<br/>
+
 <body>
 	<br />
 	<h2 align="center">문의신청</h2>
 	<form action="inquiryPro.jsp" method="post"
 		enctype="multipart/form-data">
-		<table>
+		<table id='box'>
 			<tr>
 				<td>제 목</td>
 				<td><input type="text" name="subject" /></td>
