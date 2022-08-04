@@ -72,7 +72,7 @@ if(proDTO.getP_status() == 1){ %>
 				상한가<input type="number" name="p_maxPrice" value="<%=proDTO.getP_maxPrice()%>" required/>&nbsp;~&nbsp;하한가<input type="number" name="p_minPrice" value="<%=proDTO.getP_minPrice()%>" required/></td>
 			</tr>
 			<tr>
-				<td><textarea rows="20" cols="100" name="p_content" value="<%=proDTO.getP_content()%>" required></textarea></td>
+				<td><textarea rows="20" cols="100" name="p_content" required><%=proDTO.getP_content()%></textarea></td>
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>
@@ -148,7 +148,7 @@ if(proDTO.getP_status() == 1){ %>
 				<input type="number" name="p_price" value="<%=proDTO.getP_price()%>" required/></td>
 			</tr>
 			<tr>
-				<td><textarea rows="20" cols="100" name="p_content" value="<%=proDTO.getP_content()%>" required></textarea></td>
+				<td><textarea rows="20" cols="100" name="p_content" required><%=proDTO.getP_content()%></textarea></td>
 			</tr>
 			<tr>
 				<td>판매시작, 종료 날짜 입력<br/>

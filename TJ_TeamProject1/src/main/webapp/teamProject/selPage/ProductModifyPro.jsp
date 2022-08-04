@@ -19,7 +19,7 @@
 	String UID = (String)session.getAttribute("UID");
 	
 	if(UID != null){	
-	String path = request.getRealPath("TJ_TeamProject1/teamProject/save"); 
+	String path = request.getRealPath("teamProject/save"); 
 	System.out.println(path);
 	int max = 1024*1024*5; 
 	String enc = "UTF-8"; 
@@ -54,15 +54,18 @@
 	int p_maxPrice = Integer.parseInt(p_maxPri);
 	int p_minPrice = Integer.parseInt(p_minPri);
 	System.out.println(p_minPri);
-	if(p_maxPrice <= p_minPrice){
-		result = 0;
-	    Writer outWriter = response.getWriter();
-	    String message = URLEncoder.encode("상한가가 하한가보다 낮거나 같을 수 없습니다!.","UTF-8");
-	    response.setContentType("text/html; charset=UTF-8");
-	    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
-	    outWriter.flush();
-	    response.flushBuffer();
-	    outWriter.close();
+	int p_status = Integer.parseInt(mr.getParameter("p_status"));
+	if(p_status == 1){
+		if(p_maxPrice == 0 && p_maxPrice <= p_minPrice){
+			result = 0;
+		    Writer outWriter = response.getWriter();
+		    String message = URLEncoder.encode("상한가가 하한가보다 낮거나 같을 수 없습니다!.","UTF-8");
+		    response.setContentType("text/html; charset=UTF-8");
+		    outWriter.write("<script type=\"text/javascript\">alert(decodeURIComponent('"+message+"'.replace(/\\+/g, '%20'))); history.go(-1)</script>");
+		    outWriter.flush();
+		    response.flushBuffer();
+		    outWriter.close();
+		}
 	}
 	String p_start = mr.getParameter("p_start");
 	System.out.println(mr.getParameter("p_start"));
@@ -77,7 +80,7 @@
 	dto.setP_img2(mr.getFilesystemName("p_img2"));
 	dto.setP_img3(mr.getFilesystemName("p_img3"));
 	dto.setP_img4(mr.getFilesystemName("p_img4"));
-	dto.setP_status(Integer.parseInt(mr.getParameter("p_status")));
+	dto.setP_status(p_status);
 	dto.setCa_no(Integer.parseInt(mr.getParameter("ca_no")));
 	dto.setP_content(mr.getParameter("p_content"));
 	dto.setP_price(Integer.parseInt(p_price));

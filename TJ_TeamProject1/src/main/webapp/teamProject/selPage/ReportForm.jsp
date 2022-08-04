@@ -29,19 +29,18 @@
 			<tr>
 				<td>신고 사유<br/>
 				<select id="rp_reason" name="rp_reason" >
-					<option value="1">1</option>
-					<option value="1">2</option>
-					<option value="1">3</option>
+					<option value="허위매물 의심">허위매물 의심</option>
+					<option value="부적절한 게시물">부적절한 게시물</option>
 					<option value="기타">기타</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>신고 제목<br/>
-				<textarea rows="2" cols="50" name="rp_title"></textarea></td>
+				<textarea rows="2" cols="50" name="rp_title" required></textarea></td>
 			</tr>
 			<tr>
 				<td>신고 내용<br/>
-				<br/><textarea rows="10" cols="50" name="rp_content"></textarea></td>
+				<br/><textarea rows="10" cols="50" name="rp_content" required></textarea></td>
 			</tr>
 			<tr>
 				<td>주의사항</td>
