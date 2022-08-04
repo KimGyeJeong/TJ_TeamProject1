@@ -25,7 +25,7 @@
 			left: 50px;
 			display:inline-block;
 		}
-		#fox{
+		#xox{
 		display: block;
 		margin-left:0%;
 		margin-top: 3%;
@@ -94,7 +94,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	
 </div>
-	<div align="center" id='fox'>
+	<div align="center" id='xox'>
 		<a href="/TJ_TeamProject1/teamProject/Main.jsp"><img alt="장물아비" src="/TJ_TeamProject1/teamProject/logo.png" width="250px"></a>
 		<h1 style="display: inline-block;"></h1>
 		<form action="/TJ_TeamProject1/teamProject/AllProductList.jsp" style="display: inline-block;">

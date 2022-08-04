@@ -20,7 +20,7 @@
 <style>
 #fox{
 	display: block;
-	margin-left: 20%;
+	margin-left:25%;
 	margin-top: 3%;
 	
 }
@@ -157,7 +157,7 @@ textarea {
 <%			} %>
 				
 				<br/>
-				<textarea rows="50" cols="100" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="50" cols="80" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>       
 <%		}else{ %>
