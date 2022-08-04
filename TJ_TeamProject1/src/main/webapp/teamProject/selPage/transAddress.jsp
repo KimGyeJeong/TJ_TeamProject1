@@ -107,7 +107,7 @@ List<AddressDTO> address = dao.getaddressList(uid);
 		for(var i=0; i<getano.length ; i++){
 			if(getano[i].checked){
 				opener.document.getElementById('ano').value = getano[i].value;
-				alert(opener.document.getElementById('ano').value);
+				//alert(opener.document.getElementById('ano').value);
 				break;
 			}
 		}

@@ -55,7 +55,7 @@
 									<td>
 										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 										<a href="javascript:address('transAddress.jsp','<%= order.getO_no() %>')" ><button>배송지변경</button></a><br>
-										<form action="../selPage/CancelPurchase.jsp" method="post">
+										<form action="../selPage/CancelPurㅊchase.jsp" method="post">
 											<input type="hidden" name="o_no" value="<%= order.getO_no()  %>">
 											<input type="submit" value="취소하기">
 										</form>

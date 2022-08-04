@@ -752,6 +752,27 @@ public class InstanceDAO {
 		return result;
 	}
 	
+	public int checkWishList(int pno,String uid) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= getConnection();
+			String sql = "select count(*) from wishlist where user_id=? and p_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setInt(2, pno);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(pstmt, conn);}
+		return result;
+	}
+	
 	
 	
 	

@@ -62,6 +62,7 @@
 	
 	<br />
 	<h1 align="center">상품 리스트</h1>
+	<h2 align="center"><%= dao.getCategoryName(ca_no).getCa_name() %></h2>
 	<br />
 
 	<br />

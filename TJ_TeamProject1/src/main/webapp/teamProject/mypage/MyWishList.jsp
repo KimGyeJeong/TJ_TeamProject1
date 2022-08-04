@@ -49,7 +49,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 				for(int i =0 ; i<wList.size() ; i++){
 				ProductDTO product = dao.getProduct(wList.get(i).getP_no());  %>
 				<tr>
-					<td> <img src="../save/<%= product.getP_img1() %>"> 
+					<td> <img src="../save/<%= product.getP_img1() %>" width="100px" height="100px"> 
 				<%= product.getP_no() %>&nbsp;&nbsp;<%= product.getP_title() %></td>
 				<% 	if(product.getP_status() == 1){ %>
 					<td>  <%= product.getP_minPrice() %> ~ <%= product.getP_maxPrice() %></td>

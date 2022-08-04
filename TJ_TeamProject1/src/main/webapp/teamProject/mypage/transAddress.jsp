@@ -109,7 +109,6 @@ List<AddressDTO> address = dao.getaddressList(uid);
 		for(var i=0; i<getano.length ; i++){
 			if(getano[i].checked){
 				opener.document.getElementById('ano').value = getano[i].value;
-				alert(opener.document.getElementById('ano').value);
 				break;
 			}
 		}
@@ -118,7 +117,7 @@ function confirmation(tag,ano){
 	let confirmValue = confirm(tag+" 를 삭제하시겠습니까?");
 	console.log(confirmValue);
 	if(confirmValue==true){ 
-	window.location="addAddressPro.jsp?deleteAno="+ano;
+		window.location="addAddressPro.jsp?deleteAno="+ano;
 	}
 }
 </script>
