@@ -63,8 +63,8 @@ if(p_status == 1){ %>
 				<input type="file" name="p_img4" /></td>
 			</tr>
 			<tr>
-				<td>상한가, 하한가 입력<br/>
-				하한가<input type="number" name="p_minPrice" id="p_minPrice" required/>&nbsp;~&nbsp;상한가<input type="number" name="p_maxPrice" id="p_maxPrice"required/></td>
+				<td>하한가, 상한가 입력<br/>
+				하한가<input type="number" name="p_minPrice"  required/>&nbsp;&nbsp;상한가<input type="number" name="p_maxPrice" required/></td>
 			</tr>
 			
 			<tr>

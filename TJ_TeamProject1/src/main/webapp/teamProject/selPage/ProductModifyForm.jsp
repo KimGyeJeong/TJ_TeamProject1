@@ -30,12 +30,11 @@
 function ACheck(){
 	let inputs = document.ProductModifyPro; 
 	
-	if(inputs.p_minPrice.value >= inputs.p_maxPrice.value){
+	if(inputs.p_minPrice.value > inputs.p_maxPrice.value){
 		alert("하한가는 상한가보다 클 수 없습니다. ");
 		return false;
 	}
-	console.log(inputs.p_minPrice.value);
-	console.log(inputs.p_maxPrice.value);
+	
 }
 </script>
 <body>
@@ -82,7 +81,7 @@ if(proDTO.getP_status() == 1){ %>
 			</tr>
 			<tr>
 				<td>하한가,상한가 입력<br/>
-				하한가<input type="number" name="p_minPrice" value="<%=proDTO.getP_minPrice()%>" required/>&nbsp;~&nbsp;상한가<input type="number" name="p_maxPrice" value="<%=proDTO.getP_maxPrice()%>" required/></td>
+				하한가<input type="number" name="p_minPrice"  required/>&nbsp;~&nbsp;상한가<input type="number" name="p_maxPrice"  required/></td>
 			</tr>
 			<tr>
 				<td><textarea rows="20" cols="100" name="p_content" required><%=proDTO.getP_content()%></textarea></td>
