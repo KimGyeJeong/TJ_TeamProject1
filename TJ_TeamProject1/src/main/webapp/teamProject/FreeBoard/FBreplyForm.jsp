@@ -10,6 +10,14 @@
 
 
 </script>
+<style>
+#box{
+	display: block;
+	margin-left: 10%;
+	margin-top: 3%;
+	
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>reply write form</title>
@@ -54,7 +62,7 @@
 
 <body>
 	<br />
-	<h1 align="center">댓글달기</h1>
+	
 	<form action="FBreplyPro.jsp?pageNum=<%=pageNum%>" method="post" name="FBreplyForm" onsubmit="return acountCheck()">
 		<input type="hidden" name="c_no" value="<%=cno%>" /> <input
 				type="hidden" name="r_no" value="<%=rno%>" /> <input type="hidden"
@@ -62,20 +70,24 @@
 				name="r_step" value="<%=replyStep%>" /> <input type="hidden"
 				name="r_level" value="<%=replyLevel%>" /> <input type="hidden"
 				name="user_id" value="<%=id%>" />
-		<table>
+		<table id='box'>
 			<%if(!id.equals("non-login")){ %>
 			<tr>
 				<td align="right">내 용</td>
-				<td ><textarea rows="3" cols="40" name="r_reply"></textarea>
+				<td ><textarea rows="3" cols="40" name="r_reply" required="required"></textarea>
 				</td>
 			</tr>
 
 			<tr>
 				<td colspan="2" align="center"><input type="submit"
-					value="댓글저장" /> <input type="button" value="취소"
-					onclick="window.location='FBcontent.jsp?cno=<%=cno%>&pageNum=<%=pageNum%>'" />
+					value="댓글저장" /> 
 				</td>
 			</tr>
+			<tr>		
+				<td colspan="2" align="center"><input type="button" value="글목록으로" onclick="window.location='FreeBoard.jsp?pageNum=<%=pageNum%>'"></td>
+			</tr>
+			
+			
 			<%}%>
 		</table>
 	</form>
@@ -84,7 +96,7 @@
 	<%--- 댓글 --%>
 	<%
 	if(count == 0) { %>
-	<table>
+	<table id='box'>
 		<tr>
 			<td colspan="4"><b>댓 글</b></td>
 		</tr>
@@ -95,7 +107,7 @@
 
 	<%}else{ %>
 
-	<table>
+	<table id='box'>
 		<tr>
 			<td colspan="4"><b>댓 글</b></td>
 		</tr>

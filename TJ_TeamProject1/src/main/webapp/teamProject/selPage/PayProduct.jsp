@@ -55,7 +55,7 @@
 		<tr>
 			<td>구매하시는 분 : <%=UID %></td>
 <%			if(a_n.equals("0")){ %>
-				<td>받으시는 분 : <%=UID %></td>
+				<td>받으시는 분 : <%=addDTO.getA_name() %></td>
 <%			}else{ %>
 				<td>받으시는 분 : <%=addDTO.getA_name() %></td>
 <%			} %>

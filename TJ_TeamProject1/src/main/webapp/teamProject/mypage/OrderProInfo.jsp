@@ -35,12 +35,13 @@ if(order.getP_status()==1){
 <div> <% if(order.getP_status()==1){ %><%= sdf.format(bidding.getB_reg()) %><%}else{%><%= sdf.format(order.getO_reg()) %><%} %>&nbsp;구입 </div>
 결제금액 : <% if(order.getP_status()==1){ %><%= bidding.getB_bidding() %><%}else{%><%= product.getP_price() %><%} %> &nbsp;원
 <br> <br>
-<h3><%= address.getA_tag() %></h3>
+<h3> 배송지명 : <%= address.getA_tag() %></h3>
+<h4> 구매자 : <%= address.getUser_id() %></h4>
 <h4> 받는분 :&nbsp;<%= address.getA_name() %></h4>
 (<%= address.getA_zipCode() %>)<%= address.getA_address()%>&nbsp;<%= address.getA_address2() %>
 <div>배송시 요청사항 : &nbsp;<% if(address.getA_comment()!=null){ %> <%= address.getA_comment() %> <% } %> </div>
 	<div>
-		<p> <img src="../save/<%= product.getP_img1() %>"> </p>
+		<p> <img src="../save/<%= product.getP_img1() %>" width="300px"> </p>
 		<p> 상품 번호 : <a href="../selPage/ProductDetailBuyForm.jsp?<%= order.getP_no() %>"><%= product.getP_no() %> </p>  
 		<p> <%= product.getP_title() %></a></p>
 		<% if(order.getP_status() == 1) {%>

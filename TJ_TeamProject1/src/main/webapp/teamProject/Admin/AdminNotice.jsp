@@ -52,9 +52,8 @@
 						href="AdminNotice.jsp" class="nav-item nav-link">공지사항/이벤트 글 작성</a>
 					<a href="AdminHelpList.jsp" class="nav-item nav-link">1대1 문의 확인</a>
 					<a href="AdminProductList.jsp" class="nav-item nav-link">상품확인</a> <a
-						href="AdminQnAList.jsp" class="nav-item nav-link">자주하는질문</a>
-					<a href="AdminFBList.jsp"
-						class="nav-item nav-link">자유게시판</a>
+						href="AdminQnAList.jsp" class="nav-item nav-link">자주하는질문</a> <a
+						href="AdminFBList.jsp" class="nav-item nav-link">자유게시판</a>
 
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
@@ -96,8 +95,7 @@
 		<script type="text/javascript">
 	function testSomeThing(){
 		document.getElementById("no_title").value='<%=dto.getNo_title()%>';
-		document.getElementById("no_content").value='<%=dto.getNo_content()%>
-			';
+		document.getElementById("no_content").value='<%=dto.getNo_content()%>';
 				document.getElementById("testSome").value = 'After';
 				//location.reload;
 				console.log("Function ACTIVE");
@@ -117,6 +115,7 @@
 					<table>
 						<tr>
 							<td colspan="2">공지사항/이벤트 글 작성</td>
+							<td> <input type="hidden" name="no_no" value=<%=no_no %>> </td>
 						</tr>
 						<tr>
 							<td>카테고리</td>
@@ -139,9 +138,13 @@
 								value="초기화"> <input type="button" value="작성 취소"
 								onclick="location.href='AdminMain.jsp'">
 								<button type="submit" formaction="AdminNoticeTempPro.jsp"
-									formmethod="post">임시저장</button>
+									formmethod="post">임시저장</button> <%
+									if(no_no!=null){
+									%>
+								<button type="submit" formaction="AdminUpdatePro.jsp"
+									formmethod="post">수정</button> <%}else{ %>
 								<button type="submit" formaction="AdminNoticePro.jsp"
-									formmethod="post">저장</button></td>
+									formmethod="post">저장</button> <%} %></td>
 						</tr>
 					</table>
 				</form>

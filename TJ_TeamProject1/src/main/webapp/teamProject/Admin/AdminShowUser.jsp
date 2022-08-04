@@ -266,11 +266,11 @@
 									<tr>
 										<td>판매글 리스트
 									<%--	<% if(list_product.size()>3){%> --%>
-										<% if(list_product.size()>1){%>
+										<% if(list_product.size()>3){%>
 											<button style="width: 60pt" type="submit"
 											<%-- 
 												formaction="buttonClick/MoreProductList.jsp"--%>
-												formaction="AdminProductList.jsp?search=<%=dto.getUser_id() %>"
+												formaction="AdminProductList.jsp?searchOpt=p_sellerid&search=<%=dto.getUser_id() %>"
 												formmethod="post">+더보기</button>
 												<% }%>
 										</td>
@@ -281,7 +281,7 @@
 									%>
 									<tr>
 										<td><a
-											href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto_p.getP_no()%>&ca_no=<%=dto_p.getCa_no()%>"><%=dto_p.getP_title()%></a>
+											target="_blank" href="../selPage/ProductDetailBuyForm.jsp?p_no=<%=dto_p.getP_no()%>&ca_no=<%=dto_p.getCa_no()%>"><%=dto_p.getP_title()%></a>
 										</td>
 									</tr>
 									<%

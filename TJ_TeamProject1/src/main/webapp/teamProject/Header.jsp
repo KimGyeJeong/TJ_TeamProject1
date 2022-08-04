@@ -25,6 +25,12 @@
 			left: 50px;
 			display:inline-block;
 		}
+		#xox{
+		display: block;
+		margin-left:0%;
+		margin-top: 3%;
+		;
+		}
 	</style>
 	
 
@@ -72,7 +78,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	// 세개 변수에 값이 들어있을 경우 (쿠키 제대로 생성되서 다 갖고 있다.)
 	if(auto != null && cid != null && pw != null){
 		// 로그인 처리되도록 loginPro.jsp 처리 페이지로 이동시키기 
-		response.sendRedirect("loginPro.jsp");
+		response.sendRedirect("/TJ_TeamProject1/teamProject/Login/loginPro.jsp");
 	}
 }
 	request.setCharacterEncoding("UTF-8");
@@ -88,7 +94,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	
 </div>
-	<div align="center">
+	<div align="center" id='xox'>
 		<a href="/TJ_TeamProject1/teamProject/Main.jsp"><img alt="장물아비" src="/TJ_TeamProject1/teamProject/logo.png" width="250px"></a>
 		<h1 style="display: inline-block;"></h1>
 		<form action="/TJ_TeamProject1/teamProject/AllProductList.jsp" style="display: inline-block;">
@@ -97,14 +103,14 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 				<option value="P_CONTENT">글내용</option>
 				<option value="p_SELLERID">작성자</option>
 			</select>
-			<input type="text" name="search" >
+			<input type="text" name="search" style="width: 350px;">
 			<input type="submit" value="검색"  />
 		</form>
 		
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/selPage/ProductSellSelect.jsp'" style="width:100px;" >판매하기</button>
 
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:60px;  " >내정보</button>
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/help/Help.jsp'" style="width:60px;  " >고객센터</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:100px;  " >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/help/Help.jsp'" style="width:100px;  " >고객센터</button>
 
 		<div style=" margin-right: 300px;">
 	<form action="" name="ca">

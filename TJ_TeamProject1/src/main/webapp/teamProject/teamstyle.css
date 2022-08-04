@@ -20,7 +20,7 @@
 		width: 100%;
 		top:0px;
 		left: 0px;
-	    min-height: 969px;
+	    min-height:1169px;
 	    height: auto;
 	}
 	.mypageContent{
@@ -41,17 +41,16 @@
 		margin: auto;
 		width: 90%;
 		height: auto;
-		min-height: 551px;
 		text-align: center;
 	}
 	.ReviewTable{
 		margin: auto;
 		width: 90%;
 		height: auto;
-		min-height: 1051px;
 	}
 	.ReviewTable tr td{
 		text-align: center;
+		height: 50px;
 	}
 	.paging a {
 		font-weight: bold;

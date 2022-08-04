@@ -159,17 +159,17 @@ if(auto != null && id != null && pw != null){
 				if(endPage > pageCount){ endPage = pageCount;}
 				
 				if(startPage > pageNumSize){%>
-					<a class="pageNums" href="Notice.jsp?pageNum=<%=startPage-1%>"> &lt; &nbsp; </a>
+					<a class="pageNums" href="QnA.jsp?pageNum=<%=startPage-1%>"> &lt; &nbsp; </a>
 		<%}
 				for(int l = startPage; l <= endPage; l++){ %>
-		<a class="pageNums" href="Notice.jsp?pageNum=<%=l%>">
+		<a class="pageNums" href="QnA.jsp?pageNum=<%=l%>">
 			&nbsp; <%=l%> &nbsp;
 		</a>
 		<%}
 			
 				if(endPage < pageCount) { %>
 		<a class="pageNums"
-			href="Notice.jsp?pageNum=<%=startPage+pageNumSize%>">
+			href="QnA.jsp?pageNum=<%=startPage+pageNumSize%>">
 			&nbsp; &gt; </a>
 		<%}
 			}%>

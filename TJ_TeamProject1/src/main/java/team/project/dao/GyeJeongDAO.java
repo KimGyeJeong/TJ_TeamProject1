@@ -2126,5 +2126,35 @@ public class GyeJeongDAO {
 		
 		return list;
 	}
+	public int updateNotice(NoticeDTO dto) {
+		
+		try {
+			conn=getConnection();
+			
+			sql="Update NOTICE\r\n"
+					+ "  SET NO_TITLE=?,\r\n"
+					+ "  NO_CONTENT=?,\r\n"
+					+ "  NO_CAT=?,\r\n"
+					+ "  NO_HIDDEN=0\r\n"
+					+ "WHERE NO_NO = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dto.getNo_title());
+			pstmt.setString(2, dto.getNo_content());
+			pstmt.setString(3, dto.getNo_cat());
+			pstmt.setInt(4, dto.getNo_no());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			System.out.println("GyeJeongDAO.updateNotice(dto) ERR");
+			e.printStackTrace();
+		}finally {
+			closeConnection(pstmt, conn);
+		}
+		
+		return result;
+	}
 
 }
