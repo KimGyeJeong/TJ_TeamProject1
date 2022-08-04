@@ -71,12 +71,12 @@
 									<td>배송완료</td> 
 									<td>
 										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-										<form action="../selPage/AddPayProductPro.jsp" method="post">
+										<form action="../selPage/AddPayProductPro.jsp" method="post" onsubmit="return confirm('주문확정 하시겠습니까?');">
 											<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
-											<input type="submit" value="주문확정">
+											<input type="submit" value="주문확정"/>
 										</form> 
-										<form action="FinishFedex.jsp" method="post">
-											<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+										<form action="FinishFedex.jsp" method="post" onsubmit="return confirm('반품 하시겠습니까?');">
+											<input type="hidden" value="<%= order.getO_no() %>" name="o_no" id="returnteakbae">
 											<input type="hidden" value="4" name="o_pro">
 											<input type="submit" value="반품하기">
 										</form>
@@ -86,9 +86,11 @@
 									<td>거래완료</td> 
 									<td> 
 										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-									<% 	if(dao.writeReview(order.getP_no())<1){ %>
-											<a href="javascript:writeReview('../selPage/Review.jsp','<%= order.getP_no() %>')" ><button>리뷰작성</button></a>
-									<%	}	%>
+									<% 	if(dao.writeReview(order.getP_no())<1){ 
+											if(dao.getReviewCheck(uid,product.getP_no())==0){ %>
+												<a href="javascript:writeReview('../selPage/Review.jsp','<%= order.getP_no() %>')" ><button>리뷰작성</button></a>
+										<%	}
+										}	%>
 									</td>
 								<%	break;
 								case 4: %>

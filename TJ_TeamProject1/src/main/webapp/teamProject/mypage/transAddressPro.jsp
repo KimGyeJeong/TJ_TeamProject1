@@ -43,7 +43,6 @@ dao.setAddressAllComment(anolist,commentlist);
 	</script>
 	
 <% 	}else{
-	System.out.println("ono null아님");
 		result= dao.setAddressNum(ano,ono);
 		OrderListDTO order = dao.getOrder(ono);
 		

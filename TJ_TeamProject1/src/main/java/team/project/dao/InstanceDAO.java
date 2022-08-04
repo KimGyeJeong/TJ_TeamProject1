@@ -1249,6 +1249,28 @@ public class InstanceDAO {
 			e.printStackTrace();
 		}finally {closeConnection(pstmt, conn);}
 	}
+	public int getReviewCheck(String uid, int pno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn= getConnection();
+			String sql = "select count(*) from review where re_reportUid=? and p_no=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setInt(2, pno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}else {
+				System.out.println("getReviewCheck 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(rs, pstmt, conn);}
+		return count;
+	}
 	
 	
 	
