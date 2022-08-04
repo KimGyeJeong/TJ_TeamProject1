@@ -102,7 +102,11 @@ System.out.println("AdminMain.value ad_id : "+ad_id);
 	<!-- Content End -->
 
 
+<div id="AdminCat" align="center" style="margin-left: 250px">
+<img alt="" src="../save/AdminCat.png">
+</div>
 
+<%-- 
 	<div align="center">
 		<table>
 			<tr>
@@ -136,7 +140,7 @@ System.out.println("AdminMain.value ad_id : "+ad_id);
 			</tr>
 		</table>
 	</div>
-
+--%>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

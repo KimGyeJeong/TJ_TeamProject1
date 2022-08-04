@@ -41,11 +41,12 @@
 	//address 에러 --> 해당 아이디에 주소가 없으면 500에러 발생
 	%>
 
+<%-- 
 	<h1>
 		A.S.U TEST pageNum =
 		<%=pageNum%>, search =
 		<%=search%>, user_id =
-		<%=user_id%></h1>
+		<%=user_id%></h1>--%>
 		
 		<%-- CSS입힌 곳.. --%>
 	<div class="container-fluid position-relative d-flex p-0">
