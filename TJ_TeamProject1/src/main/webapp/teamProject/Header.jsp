@@ -25,6 +25,12 @@
 			left: 50px;
 			display:inline-block;
 		}
+		#fox{
+		display: block;
+		margin-left:0%;
+		margin-top: 3%;
+		;
+		}
 	</style>
 	
 
@@ -88,7 +94,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	<title>Insert title here</title>
 	
 </div>
-	<div align="center">
+	<div align="center" id='fox'>
 		<a href="/TJ_TeamProject1/teamProject/Main.jsp"><img alt="장물아비" src="/TJ_TeamProject1/teamProject/logo.png" width="250px"></a>
 		<h1 style="display: inline-block;"></h1>
 		<form action="/TJ_TeamProject1/teamProject/AllProductList.jsp" style="display: inline-block;">
@@ -97,7 +103,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 				<option value="P_CONTENT">글내용</option>
 				<option value="p_SELLERID">작성자</option>
 			</select>
-			<input type="text" name="search" style="width: 250px;">
+			<input type="text" name="search" style="width: 350px;">
 			<input type="submit" value="검색"  />
 		</form>
 		
