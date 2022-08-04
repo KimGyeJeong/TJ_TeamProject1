@@ -20,7 +20,7 @@
 <style>
 #fox{
 	display: block;
-	margin-left: 25%;
+	margin-left: 20%;
 	margin-top: 3%;
 	
 }
