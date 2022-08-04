@@ -37,6 +37,15 @@ function ACheck(){
 	
 }
 </script>
+<style>
+#fox{
+	display: block;
+	margin-left: 25%;
+	margin-top: 3%;
+;
+}
+
+</style>
 <body>
 <jsp:include page='../Header.jsp'/>
 <%
@@ -51,7 +60,7 @@ if(proDTO.getP_status() == 1){ %>
 	<input type="hidden" name="p_status" value="<%=proDTO.getP_status()%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
 	<input type="hidden" name="p_no" value="<%=p_no%>" />
-		<table>
+		<table id='fox'>
 			<tr>
 				<td>상품 제목<br/>
 				<input type="text" name="p_title" value="<%=proDTO.getP_title() %>" required /></td>
