@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -25,6 +26,18 @@
 	int result = today.compareTo(proDTO.getP_end());
 	List bidList = dao.biddingGet(p_no);
 %>
+<script>
+function ACheck(){
+	let inputs = document.ProductModifyPro; 
+	
+	if(inputs.p_minPrice.value >= inputs.p_maxPrice.value){
+		alert("하한가는 상한가보다 클 수 없습니다. ");
+		return false;
+	}
+	console.log(inputs.p_minPrice.value);
+	console.log(inputs.p_maxPrice.value);
+}
+</script>
 <body>
 <jsp:include page='../Header.jsp'/>
 <%
@@ -35,7 +48,7 @@ if(UID.equals(proDTO.getP_sellerId())){
 
 if(proDTO.getP_status() == 1){ %>
 
-	<form action="ProductModifyPro.jsp" method="post" enctype="multipart/form-data">
+	<form action="ProductModifyPro.jsp" method="post" enctype="multipart/form-data" name="ProductModifyPro" onsubmit="return ACheck()">
 	<input type="hidden" name="p_status" value="<%=proDTO.getP_status()%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
 	<input type="hidden" name="p_no" value="<%=p_no%>" />
@@ -68,8 +81,8 @@ if(proDTO.getP_status() == 1){ %>
 				<%} %></td>
 			</tr>
 			<tr>
-				<td>상한가, 하한가 입력<br/>
-				상한가<input type="number" name="p_maxPrice" value="<%=proDTO.getP_maxPrice()%>" required/>&nbsp;~&nbsp;하한가<input type="number" name="p_minPrice" value="<%=proDTO.getP_minPrice()%>" required/></td>
+				<td>하한가,상한가 입력<br/>
+				하한가<input type="number" name="p_minPrice" value="<%=proDTO.getP_minPrice()%>" required/>&nbsp;~&nbsp;상한가<input type="number" name="p_maxPrice" value="<%=proDTO.getP_maxPrice()%>" required/></td>
 			</tr>
 			<tr>
 				<td><textarea rows="20" cols="100" name="p_content" required><%=proDTO.getP_content()%></textarea></td>
