@@ -44,7 +44,7 @@ if (session.getAttribute("UID") != null) {
 		<table id='box'>
 			<tr>
 				<td>제 목</td>
-				<td><input type="text" name="subject" /></td>
+				<td><input type="text" name="subject"  required="required"/></td>
 			</tr>
 			<tr>
 				<td>카테고리</td>
@@ -59,7 +59,7 @@ if (session.getAttribute("UID") != null) {
 			</tr>
 			<tr>
 				<td>내 용</td>
-				<td><textarea rows="15" cols="50" name="content"></textarea></td>
+				<td><textarea rows="15" cols="50" name="content" required="required"></textarea></td>
 			</tr>
 			<tr>
 				<td>이미지첨부1</td>
@@ -75,7 +75,7 @@ if (session.getAttribute("UID") != null) {
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="제출하기" /> <input
-					type="button" value="취소" onclick="window.location='help.jsp'" /></td>
+					type="button" value="취소" onclick="window.location='Help.jsp'" /></td>
 			</tr>
 
 		</table>

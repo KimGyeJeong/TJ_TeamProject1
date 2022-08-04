@@ -134,11 +134,12 @@ List viewsProductList = daoL.viewsProductList();
 	<div style="padding: 5px 1px 2px 3px;"></div>
 
 	<div class="w3-content w3-display-container">
+		<a href="selPage/ProductList.jsp">
+			<img class="mySlides"src="main3.png" width="100%" ></a>
+		<a href="selPage/ProductList.jsp">
+			<img class="mySlides" src="coffee.png" width="100%"></a> 
 		<a href="selPage/ProductList.jsp"><img class="mySlides"
-			src="img_nature_wide.jpg"></a> <a href="selPage/ProductList.jsp"><img
-			class="mySlides" src="img_snow_wide.jpg"></a> <a
-			href="selPage/ProductList.jsp"><img class="mySlides"
-			src="img_mountains_wide.jpg"></a>
+			src="snow.png" width="100%"></a>
 		<div
 			class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
 			style="width: 100%">

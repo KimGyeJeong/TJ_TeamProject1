@@ -30,7 +30,7 @@
 		<table>
 			<tr>
 				<td>내 용</td>
-				<td><textarea rows="3" cols="40" name="reply"></textarea>  </td>
+				<td><textarea rows="3" cols="40" name="reply"> <%=reply.getR_reply()%> </textarea></td>
 			</tr>
 			<tr>
 				<td>작성자</td>

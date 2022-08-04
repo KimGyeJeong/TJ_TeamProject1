@@ -72,7 +72,7 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 	// 세개 변수에 값이 들어있을 경우 (쿠키 제대로 생성되서 다 갖고 있다.)
 	if(auto != null && cid != null && pw != null){
 		// 로그인 처리되도록 loginPro.jsp 처리 페이지로 이동시키기 
-		response.sendRedirect("loginPro.jsp");
+		response.sendRedirect("/TJ_TeamProject1/teamProject/Login/loginPro.jsp");
 	}
 }
 	request.setCharacterEncoding("UTF-8");
