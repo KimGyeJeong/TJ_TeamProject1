@@ -83,6 +83,10 @@
 
 	GyeJeongDAO dao = new GyeJeongDAO();
 	UserQuestionDTO dto = dao.getOneUserQuestion(Integer.parseInt(uq_no));
+	
+	//답변이 없을때 답변하기에 null글씨가 나오는걸 방지
+	if(dto.getUqa_content()==null)
+		dto.setUqa_content("");
 	%>
 
 	<div align="center">

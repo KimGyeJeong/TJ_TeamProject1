@@ -80,12 +80,17 @@
 		
 		let getWebStorage = JSON.parse(sessionStorage.getItem("Test"));
 		let text =" ";
+		document.getElementById('nameHerePlz').src='/TJ_TeamProject1/teamProject/'+getWebStorage[0].imglink;
+
 		
 		for(var makeTable=0; makeTable<Object.keys(getWebStorage).length; makeTable++){
 			text+=getWebStorage[makeTable].p_no + " 이미지링크:" + getWebStorage[makeTable].imglink + "<br/>"
 			
 			document.getElementById("demo").innerHTML = text;
 			document.getElementById('nameHerePlz').src='/TJ_TeamProject1/teamProject/'+getWebStorage[makeTable].imglink;
+			
+			//임시 추가 0804
+			console.log(text);
 			
 			//let img = doocument.querySelector("img");
 			//img.src = getWebStorage[makeTable].imglink;

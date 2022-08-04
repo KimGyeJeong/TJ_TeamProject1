@@ -96,7 +96,7 @@
 			</tr>
 			<tr>
 			<td>이미지</td>
-			<td> <img alt="" src="../save/<%=dto.getC_img()%>"> </td>
+			<td> <img alt="" src="../save/<%=dto.getC_img()%>" width="30%"> </td>
 			</tr>
 			<tr>
 			<td>

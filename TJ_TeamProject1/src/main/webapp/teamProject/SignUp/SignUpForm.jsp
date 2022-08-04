@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -15,6 +16,7 @@
 			}
 		}).open();
 	}
+
 	function openConfimID(inputForm) {
 		//아이디 중복 검사 팝업 열기
 		//사용자가 id 입력란에 작성을 했는지 체크
@@ -28,7 +30,9 @@
 		open(url, "confirmId",
 				"width=300, height=650, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
 
-	}
+
+
+	
 	function acountCheck(){
 		let inputs = document.SignUpForm; 
 		if(!inputs.id.value){
@@ -71,16 +75,33 @@
 			alert("프로필사진을 올려주세요!");
 			return false;
 		}
+	}
+		function openConfirmID(inputForm) {
+			//아이디 중복 검사 팝업 열기
+			//사용자가 id 입력란에 작성을 했는지 체크
+			if (inputForm.id.value == "") {
+				//!inputForm.id.value 등 방법은 여러가지
+				alert("아이디를 입력하세요.")
+				return; //메소드 종료
+			}
+			//아이디 중복 검사 팝업 열기
+			let url = "confirmId.jsp?id=" + inputForm.id.value;
+			open(url, "confirmId","width=300, height=650, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
 		
 		
 	}
 	
 </script>
+
 <% 
 	request.setCharacterEncoding("UTF-8"); 
 
 %>
-<title>Insert title here</title>
+
+
+
+<title>장물아비 회원가입페이지</title>
+
 <style>
 #SignUpForm tr td input{
 	width: 300px;
@@ -88,6 +109,7 @@
 
 
 </style>
+
 </head>
 <body>
 <jsp:include page='../Header.jsp'/>
@@ -100,8 +122,10 @@
 		<table id="SignUpForm">
 			<tr>
 				<td>아이디 *</td> 
+
 				<td><input  type="text" name="id" style="width:200px;" required="required" />&nbsp;<input type="button" value="중복 확인"
 					onclick="openConfimID(this.form)" style="width:100px;" ></td> 
+
 			</tr>
 			<tr>
 				<td>비밀번호 *</td>

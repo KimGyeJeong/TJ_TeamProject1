@@ -108,13 +108,11 @@
 			</tr>
 			<tr>
 				<td>질문 내용</td>
-				<td><textarea rows="" cols="" name="q_questionContent">
-			<%=dto.getQ_questionContent()%></textarea></td>
+				<td><textarea rows="" cols="" name="q_questionContent"><%=dto.getQ_questionContent()%></textarea></td>
 			</tr>
 			<tr>
 				<td>답변 내용</td>
-				<td><textarea rows="" cols="" name="q_answerContent">
-			<%=dto.getQ_answerContent()%></textarea></td>
+				<td><textarea rows="" cols="" name="q_answerContent"><%=dto.getQ_answerContent()%></textarea></td>
 			</tr>
 			<tr>
 				<td>등록시간</td>
