@@ -29,7 +29,7 @@
 		let url = "confirmId.jsp?id=" + inputForm.id.value;
 		open(url, "confirmId",
 				"width=300, height=650, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
-
+	}
 
 
 	
