@@ -28,9 +28,9 @@
 		display: block;
 	}
 	#add {
-		position : relative;
-		bottom : 2px;
-		left : 175px;
+		position : absolute;
+		top : 20px;
+		right : 20px;
 		font-size : 18px;
 		width : 180px;
 		height : 50px;
@@ -38,7 +38,8 @@
 	}
 	#modify{
 		position: relative;
-		left: -20px;
+		top : 10px;
+		right : 10px;
 		display: inline;
 	}
 	`
@@ -72,21 +73,27 @@ List<AddressDTO> address = dao.getaddressList(uid);
 <% 	for(int i=0 ; i<address.size() ; i++) {
 		AddressDTO dto = address.get(i);  %>
 	  	<fieldset>
-		<input type="radio" name="ano" value="<%= dto.getA_no() %>" onclick="selectAno()" <% if(dao.getOrder(ono).getA_no()==dto.getA_no()){%>checked="checked"<%} %>> 
-		<p style="display: inline-block; width: 300px; margin: 8px; "><%= dto.getA_tag() %> </p>
-		<div id="modify">
-			<button type="button" onclick="addAddress('addAddress.jsp?modifyAno=<%= dto.getA_no() %>')">수정</button>
-			<button type="button" onclick="confirmation('<%= dto.getA_tag() %>','<%= dto.getA_no() %>')">삭제</button>
-			<script type="text/javascript">
+			<input type="radio" name="ano" value="<%= dto.getA_no() %>" onclick="selectAno()" 
+			<%	if(ono!=null){ 
+					if(dao.getOrder(ono).getA_no()==dto.getA_no()){%>
+					checked="checked"
+				<%	}
+				}else{
+					if(i==0){%>
+					checked="checked"
+				<%	}
+				} %> > 
+			<p style="display: inline-block; width: 250px; margin: 8px; "><%= dto.getA_tag() %> </p>
+			<div id="modify">
+				<button type="button" onclick="addAddress('addAddress.jsp?modifyAno=<%= dto.getA_no() %>')">수정</button>
+				<button type="button" onclick="confirmation('<%= dto.getA_tag() %>','<%= dto.getA_no() %>')">삭제</button>
+			</div> 
+			<br>
+			<input type="text" value="<%= dto.getA_name() %>" readonly> <br>
+			<input type="text" value="(<%= dto.getA_zipCode() %>)<%= dto.getA_address() %>" readonly> <br>
+			<input type="text" value="<%= dto.getA_address2() %>" readonly> <br>
 			
-			</script>
-			
-		</div> <br>
-		<input type="text" value="<%= dto.getA_name() %>" readonly> <br>
-		<input type="text" value="(<%= dto.getA_zipCode() %>)<%= dto.getA_address() %>" readonly> <br>
-		<input type="text" value="<%= dto.getA_address2() %>" readonly> <br>
-		
-		<input type="text" name="<%= dto.getA_no() %>" value="<% if(dto.getA_comment()!=null){%><%= dto.getA_comment() %> <%} %>" placeholder="배송시 요청사항"> <br>
+			<input type="text" name="<%= dto.getA_no() %>" value="<% if(dto.getA_comment()!=null){%><%= dto.getA_comment() %> <%} %>" placeholder="배송시 요청사항"> <br>
 		</fieldset>
 		<br>
 <% 	} %>
