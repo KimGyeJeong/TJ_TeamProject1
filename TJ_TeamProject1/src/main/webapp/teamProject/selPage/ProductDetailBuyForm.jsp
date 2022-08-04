@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.time.LocalDateTime"%>
@@ -16,6 +17,20 @@
 <meta charset="UTF-8">
 <title>상품 판매 페이지</title>
 <link href="/TJ_TeamProject1/teamProject/style.css" rel="stylesheet" type="text/css" />
+<style>
+#fox{
+	display: block;
+	margin-left: 25%;
+	margin-top: 3%;
+	
+}
+textarea {
+    width: 100%;
+    height: 40em;
+  
+ 
+  }
+</style>
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -27,7 +42,8 @@
 	if(pageNum == null || pageNum == "" || pageNum == "null"){
 		pageNum = "0";
 	}
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
+	SimpleDateFormat sdf2 = new SimpleDateFormat("YY-MM-dd");
 	String p = request.getParameter("p_no");
 	if(p == null){
 		p = "-1";
@@ -74,14 +90,14 @@
 <jsp:include page='../Header.jsp'/>
 <br />
 <%if(dto.getP_finish() == 0){ %>	
-	<table>
+	<table id='fox'>
 		<tr>
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;" /></td>
 			<td>상품 제목 : <%=dto.getP_title() %></td>
 			<td>조회수 : <%=dto.getP_readCount() %></td>
-			<td>작성 일자 : <%=dto.getP_reg() %><br/>
-			판매 시작 일자 : <%=dto.getP_start() %><br/>
-			판매 종료 일자 : <%=dto.getP_end() %></td>
+			<td>작성 일자 : <%=sdf.format(dto.getP_reg()) %><br/>
+			판매 시작 일자 : <%=sdf2.format(dto.getP_start())%><br/>
+			판매 종료 일자 : <%=sdf2.format(dto.getP_end())%></td>
 		</tr>
 		<tr>
 			<td>판매자 : <%=dto.getP_sellerId() %>&nbsp;별점 : <%=userDTO.getUser_stars() %>/5</td>
@@ -141,7 +157,7 @@
 <%			} %>
 				
 				<br/>
-				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="50" cols="100" readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>       
 <%		}else{ %>
@@ -228,7 +244,7 @@
 		</tr>
 	</table>	
 <%}else if(dto.getP_finish() == 1){ %>
-	<table>
+	<table id='fox'>
 		<tr>
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매완료)</td>
@@ -364,7 +380,7 @@
 		</tr>
 	</table>
 <%}else if(dto.getP_finish() == 2){ %>
-	<table>
+	<table id='fox'>
 		<tr>
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(거래중지 상품)</td>
@@ -418,7 +434,7 @@
 <%			if(dto.getP_img4() != null){ %>
 				<img src="../save/<%=dto.getP_img4() %>" style="width:300px; height:300px;" />
 <%			} %><br/>
-				<textarea rows="30" cols="100" readonly><%=dto.getP_content() %></textarea>
+				<textarea rows="30" cols="150"  readonly><%=dto.getP_content() %></textarea>
 			</td>
 		</tr>
 <%		}else{ %>
@@ -499,7 +515,7 @@
 		</tr>
 	</table>
 <%}else if(dto.getP_finish() == 3){ %>
-	<table>
+	<table id='fox'>
 		<tr>
 			<td rowspan="5"><img src="../save/<%=dto.getP_img1()%>" style="width:300px; height:300px;"/></td>
 			<td>상품 제목 : <%=dto.getP_title() %>&nbsp;(판매 준비중인 상품입니다!)</td>
