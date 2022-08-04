@@ -27,7 +27,7 @@
 	dto.setNo_cat(no_cat);
 	dto.setNo_hidden(hidden);
 
-	int result = dao.insertNotice(dto);
+	int result = dao.updateNotice(dto);
 
 	response.sendRedirect("AdminMain.jsp");
 	%>
