@@ -126,7 +126,7 @@
 
 		<br>
 
-		<div id="userProfileDetail">
+		<div id="userProfileDetail" align="center" style="margin-left: 250px">
 			<table border="1">
 				<tr>
 					<td>ID</td>
@@ -192,8 +192,8 @@
 			</table>
 		</div>
 		<br>
-		<div id="UserInformation">
-			<table>
+		<div id="UserInformation" align="center">
+			<table border="1">
 				<tr>
 					<td>가입일</td>
 					<td>삭제여부(O,X)</td>
@@ -246,7 +246,7 @@
 		</div>
 		<br>
 		<div id="showUserList">
-			<table>
+			<table border="1">
 				<tr>
 					<td align="left">
 						<div id="sellList" align="left">

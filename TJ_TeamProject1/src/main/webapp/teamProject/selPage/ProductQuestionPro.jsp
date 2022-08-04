@@ -15,6 +15,9 @@
 	String pq_content = request.getParameter("pq_content");
 	int pq_secret = Integer.parseInt(request.getParameter("pq_secret"));
 	BeomSuDAO dao = new BeomSuDAO();
+	
+	//상품에 대한 구매희망자가 판매자에게 질문글 남기는 곳.
+	//여기서 알림 넣어주기
 	int result = dao.ProductQuestionAdd(p_no, UID, pq_title, pq_content, pq_secret);
 	
 %>

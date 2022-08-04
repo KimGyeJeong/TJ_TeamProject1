@@ -21,8 +21,11 @@
 	if(UID.equals(orDTO.getO_buyerId())){
 		if(orDTO.getO_pro() == 0){
 			ProductDTO proDTO = dao.productDetailBuy(orDTO.getP_no());
+			//구매취소? 유저 돈 추가..
 			int result = dao.cancelPurchase(proDTO.getP_price(), UID);
+			//물건 상태 p_finish 값 0으로 돌리기
 			dao.productCancelPurchase(proDTO.getP_no());
+			//주문 취소
 			dao.deleteOrder(o_no);
 			String message = proDTO.getP_title()+" 상품이 취소되었습니다.";
 			instanceDao.insertNotification(orDTO.getO_sellerId(), "1", message);

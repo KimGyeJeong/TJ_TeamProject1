@@ -31,10 +31,11 @@
 		
 		
 		<a href="#" onclick="goProduct()">
+		<%-- 
 		<div id="demo">
 		
 		</div>
-		
+		--%>
 		<img id="nameHerePlz" alt="" src="" width="100" height="100">
 		</a>
 		<script type="text/javascript">

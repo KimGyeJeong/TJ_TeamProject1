@@ -59,9 +59,11 @@
 <%
 	if(result == 1){
 		if(p_status == 1){
-			if(bidDTO.getB_bidding() == 0){
-				dao.userMoneydelete(UID, b_bidding);
-				dao.biddingInput(UID, b_bidding, p_no);	
+		//p_status==1 입찰 거래
+			if(bidDTO.getB_bidding() == 0){		//입찰가격이 없으면 (입찰비 : 0원)
+				dao.userMoneydelete(UID, b_bidding);	//입찰금액 마이너스
+				dao.biddingInput(UID, b_bidding, p_no);	//입찰테이블에 데이터 생성
+				//biddingInput하면서 판매자에게 입찰알림 넣어주기
 			}else{
 				dao.userMoneydelete(UID, b_bidding);
 				dao.biddingModify(UID, b_bidding, p_no);
@@ -73,7 +75,11 @@
 				window.location.assign("ProductDetailBuyForm.jsp?p_no="+<%=p_no%>+"&ca_no="+<%=proDTO.getCa_no()%>);
 			</script>
 <%		}else{
+		//p_status==0 일반 거래
+				
+			//주문리스트에 추가 0803 오더리스트에 들어가면서 알람설정해주기.
 			dao.orderList(p_no, proDTO.getP_sellerId(), proDTO.getP_buyerId(), a_no, p_status);
+			//물건이 팔려서 물건상태 바뀜
 			dao.productBuy(p_no);
 			List bidList = dao.completionBidding(p_no);
 			dao.userMoneydelete(UID, p_price);
