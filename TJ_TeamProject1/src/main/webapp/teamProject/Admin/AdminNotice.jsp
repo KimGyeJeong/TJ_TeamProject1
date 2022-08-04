@@ -104,7 +104,8 @@
 					<table>
 						<tr>
 							<td colspan="2">공지사항/이벤트 글 작성</td>
-							<td> <input type="hidden" name="no_no" value=<%=no_no %>> </td>
+							<td><input type="hidden" name="no_no" value=<%=no_no %>>
+							</td>
 						</tr>
 						<tr>
 							<td>카테고리</td>
@@ -125,15 +126,14 @@
 						<tr>
 							<td colspan="2" align="right"><input type="reset"
 								value="초기화"> <input type="button" value="작성 취소"
-								onclick="location.href='AdminMain.jsp'">
-								<button type="submit" formaction="AdminNoticeTempPro.jsp"
-									formmethod="post">임시저장</button> <%
-									if(no_no!=null){
+								onclick="location.href='AdminMain.jsp'"> <%
+									if(no_no==null){
 									%>
-								<button type="submit" formaction="AdminUpdatePro.jsp"
-									formmethod="post">수정</button> <%}else{ %>
+								<button type="submit" formaction="AdminNoticeTempPro.jsp"
+									formmethod="post">임시저장</button>
 								<button type="submit" formaction="AdminNoticePro.jsp"
-									formmethod="post">저장</button> <%} %></td>
+									formmethod="post">저장</button> <%}else{ %><button type="submit"
+									formaction="AdminUpdatePro.jsp" formmethod="post">수정</button> <%} %></td>
 						</tr>
 					</table>
 				</form>
