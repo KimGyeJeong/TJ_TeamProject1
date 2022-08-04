@@ -97,14 +97,14 @@ if(session.getAttribute("UID") == null){ // 로그인 안했을때
 				<option value="P_CONTENT">글내용</option>
 				<option value="p_SELLERID">작성자</option>
 			</select>
-			<input type="text" name="search" >
+			<input type="text" name="search" style="width: 250px;">
 			<input type="submit" value="검색"  />
 		</form>
 		
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/selPage/ProductSellSelect.jsp'" style="width:70px;" >판매하기</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/selPage/ProductSellSelect.jsp'" style="width:100px;" >판매하기</button>
 
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:60px;  " >내정보</button>
-		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/help/Help.jsp'" style="width:60px;  " >고객센터</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/mypage/OrderProcessList.jsp'" style="width:100px;  " >내정보</button>
+		<button onclick="window.location.href='/TJ_TeamProject1/teamProject/help/Help.jsp'" style="width:100px;  " >고객센터</button>
 
 		<div style=" margin-right: 300px;">
 	<form action="" name="ca">

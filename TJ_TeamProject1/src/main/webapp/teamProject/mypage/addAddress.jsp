@@ -25,16 +25,16 @@ address = dao.getaddress(Integer.parseInt(ano));
 <input type="hidden" value="<%= ano %>" name="ano">
 <%	} %>
 배송지명
-<input type="text" name="aTag" value=<%if(ano!=null){%>"<%=address.getA_tag()%>"<%}%>> <br>
+<input type="text" name="aTag" value=<%if(ano!=null){%>"<%=address.getA_tag()%>"<%}%> required > <br>
 받으시는분
-<input type="text" name="aname" value=<%if(ano!=null){%>"<%=address.getA_name()%>"<%}%>> <br>
+<input type="text" name="aname" value=<%if(ano!=null){%>"<%=address.getA_name()%>"<%}%> required > <br>
 주소
-<input type="text" name="address1" id="address" value=<%if(ano!=null){%>"<%=address.getA_address()%>"<%}%>> 
-<input type="text" name="zipcode" id="zipcode" value=<%if(ano!=null){%>"<%=address.getA_zipCode()%>"<%}%>>  
+<input type="text" name="address1" id="address" value=<%if(ano!=null){%>"<%=address.getA_address()%>"<%}%> required > 
+<input type="text" name="zipcode" id="zipcode" value=<%if(ano!=null){%>"<%=address.getA_zipCode()%>"<%}%> required >  
 <input type="button" onclick="seachzipcode()" value="주소찾기"><br>
-상세주소<input type="text" name="address2" value=<%if(ano!=null){%>"<%=address.getA_address2()%>"<%}%>> <br>
+상세주소<input type="text" name="address2" value=<%if(ano!=null){%>"<%=address.getA_address2()%>"<%}%> > <br>
 배송시 요청사항
-<input type="text" name="acomment" value=<%if(ano!=null){%>"<%=address.getA_comment()%>"<%}%>> <br>
+<input type="text" name="acomment" value=<%if(ano!=null){%>"<%=address.getA_comment()%>"<%}%> required > <br>
 <input type="submit" value=<%if(ano!=null){ %>"수정하기"<%}else{%>"추가하기"<%}%> > <input type="reset" value="리셋"> 
 <button type="button" onclick="window.close()" >취소</button>
 </form>

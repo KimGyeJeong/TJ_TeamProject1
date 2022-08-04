@@ -25,15 +25,17 @@ String uid = (String)session.getAttribute("UID");
 <body>
 <jsp:include page="../Header.jsp"></jsp:include>
 
-<p> 주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 <br> 사항들주의 사항들
-주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들 <br> 주의 사항들
-주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 사항들주의 <br> 사항들주의 사항들 </p>
+<p style="margin-top: 200px; font-size: 22px;"> 탈퇴시 복구가 불가능합니다. </p>
 <form action="deleteAccountPro.jsp" method="post">
-아이디 : <%= uid %> 비밀번호 : <input type="password" name="pw" placeholder="Password"> <br>
+아이디 : <%= uid %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 비밀번호 : <input type="password" name="pw" placeholder="Password"> 
+<br>
 <input type="text" name="confirm" placeholder="확인하였습니다">
+<br>
 <h4>유의사항을 모두 확인하셨고 탈퇴를 원하시면 위 항목에 "확인하였습니다" 를 입력해주세요</h4>
+<br> <br>
 <input type="button" value="취소" onclick="window.location='MyPageInfo.jsp'">
 <input type="submit" value="탈퇴하기"> 
+<br> <br> <br>
 </form>
 <jsp:include page="../Footer.jsp"></jsp:include>
 </body>

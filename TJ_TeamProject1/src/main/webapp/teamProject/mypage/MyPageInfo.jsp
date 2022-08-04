@@ -12,18 +12,8 @@
 	<meta charset="UTF-8">
 	<title>계정 설정</title>
 	<jsp:include page="../UIDcheck.jsp"></jsp:include>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<style type="text/css">
-		#mypagebody{
-			position: relative;
-			left: 50px;
-			display:inline-block;
-		}
-		fieldset {
-			display: inline-block;
-			width: 500px;	
-		}	
-	</style>
+	<link href="../teamstyle.css" rel="stylesheet" type="text/css" />
+	
 <%
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
@@ -38,56 +28,61 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 <jsp:include page="../Header.jsp"></jsp:include>
 </head>
 <body>
+<div class="mypageContent">
 	<jsp:include page="MyPageCategory.jsp" />
-<div id="mypagebody" >
-<fieldset>
-	<table>
-		<tr>
-			<td style="width: 700px;">
-				<table>
-					<tr>
-						<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
-					</tr>
-					<tr>
-						<td>이름 : </td> <td> <%= profile.getUser_name() %> </td>
-						
-					</tr>
-					<tr>
-						<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>
-					</tr>
-					<tr>
-						<td>평점 : </td> <td> <%= profile.getUser_stars() %> / 5</td>
-					</tr>
-					<tr>
-						<td>E-Mail : </td> <td> <%= profile.getUser_email() %> </td>
-					</tr>
-					<tr>
-						<td>전화번호 : </td> <td> <%= profile.getUser_phone() %> </td>
-					</tr>
-					<tr>
-						<td>가입일 : </td> <td> <%= sdf.format(profile.getUser_reg())  %> </td>
-					</tr>
-				<% 	if(profile.getUser_report()==1){ %>
-					<tr>
-						<td>상태 : 활동정지</td> <td> 
-					</tr>
-					<tr>
-						<td>기간 : </td> <td><%= sdf.format(profile.getUser_activeReg()) %></td> 
-					</tr>
-				<% 	} %>
-				</table>
-			</td>
-			<td>
-				<img src="../save/<%= profile.getUser_img() %>" width="200px">  
-			</td>
-		</tr>
-	</table> 
-	<br>
-	<div>
-		<button type="button" onclick="location='PasswordConfirm.jsp'">정보수정</button>
-		<button type="button" onclick="address('transAddress.jsp')">배송지 수정하기</button>
+	<div class="mypagebody" >
+		<fieldset style="width: 50%; margin: auto; height: 350px; ">
+			<table style="margin: auto; margin-top: 40px;" >
+				<tr>
+					<td style="width: 300px;">
+						<table>
+							<tr>
+								<td>ID : </td> <td> <%= profile.getUser_id() %> </td>
+							</tr>
+							<tr>
+								<td>이름 : </td> <td> <%= profile.getUser_name() %> </td>
+								
+							</tr>
+							<tr>
+								<td>잔액 : </td> <td> <%= profile.getUser_usemoney() %>&nbsp; 원</td>
+							</tr>
+							<tr>
+								<td>평점 : </td> <td> <%= profile.getUser_stars() %> / 5</td>
+							</tr>
+							<tr>
+								<td>E-Mail : </td> <td> <%= profile.getUser_email() %> </td>
+							</tr>
+							<tr>
+								<td>전화번호 : </td> <td> <%= profile.getUser_phone() %> </td>
+							</tr>
+							<tr>
+								<td>가입일 : </td> <td> <%= sdf.format(profile.getUser_reg())  %> </td>
+							</tr>
+						<% 	if(profile.getUser_report()==1){ %>
+							<tr>
+								<td>상태 : 활동정지</td> <td> 
+							</tr>
+							<tr>
+								<td>기간 : </td> <td><%= sdf.format(profile.getUser_activeReg()) %></td> 
+							</tr>
+						<% 	} %>
+						</table>
+					</td>
+					<td>
+						<img src="../save/<%= profile.getUser_img() %>" width="200px" height="200px">  
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div style="margin: auto;">
+							<button type="button" onclick="location='PasswordConfirm.jsp'">정보수정</button>
+							<button type="button" onclick="address('transAddress.jsp')">배송지 수정하기</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
 	</div>
-</fieldset>
 </div>
 <jsp:include page="../Footer.jsp"></jsp:include>
 <script type="text/javascript">

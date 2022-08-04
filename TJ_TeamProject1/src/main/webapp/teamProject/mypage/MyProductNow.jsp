@@ -134,29 +134,14 @@
 										반송중
 								<%	}else if(order.getO_pro()==6){ %>
 										반송완료
-										<button type="button" onclick="cancel()" value="환불하기" />
-										<% 	BeomSuDAO bsdao = new BeomSuDAO(); %>
-										<script type="text/javascript">
-										function cancel() {
-										<%	if(order.getP_status()==1){
-												//	경매 입찰
-												int refund = bsdao.cancelPurchase(dao.getBidding(product.getP_no()).getB_bidding(), order.getO_buyerId());
-												refund += dao.updateO_pro(order.getO_no(), 7); 
-												if(refund == 2){
-													String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
-													dao.insertNotification(order.getO_buyerId(), "2", message);
-												}
-											}else{
-												//	일반구매
-												int refund = bsdao.cancelPurchase( product.getP_price() , order.getO_buyerId());
-												refund += dao.updateO_pro(order.getO_no(), 7); 
-												if(refund == 2){
-													String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
-													dao.insertNotification(order.getO_buyerId(), "2", message);
-												}
-											}	%>
-										}
-										</script>
+										<form action="ProductCancel.jsp">
+											<input type="hidden" value="<%= product.getP_no() %>" name="p_no">
+											<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
+											<input type="hidden" value="<%= order.getO_buyerId() %>" name="o_buyerId">
+											<input type="hidden" value="<%= order.getP_status() %>"  name="p_status">
+											<input type="submit" value="환불하기">
+										</form>
+										
 								<%	}else if(order.getO_pro()==7){ %>
 										환불완료
 								<% 	} %>
@@ -167,9 +152,10 @@
 							<details name="detail" style="width: 500px; text-align: left;">  
 								<summary> <button type="button" onclick="modify(<%= n++ %>)" style="width: 120px;">배송지 정보</button></summary>
 						  		<p> 
+						  		구매자 : <%= address.getUser_id() %>
 								받는분 : <%= address.getA_name() %> <br>
 								주소 : (<%= address.getA_zipCode() %>)<%= address.getA_address() %> <br>
-								상세 주소 : <%= address.getA_address2() %> <br>
+								상세 주소 : <% if(address.getA_address2()!=null){%><%= address.getA_address2() %><%}%> <br>
 								배송시 요청사항 : 
 								<% 	if(address.getA_comment() != null){%><%= address.getA_comment() %><% } %> <br>
 								

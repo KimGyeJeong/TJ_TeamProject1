@@ -7,19 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>충전하기</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <jsp:include page="../Header.jsp"></jsp:include>
 <jsp:include page="../UIDcheck.jsp"></jsp:include>
-<style type="text/css">
-		#content {
-			display: inline-block;
-		}
-		#mypagebody{
-			position: relative;
-			left: 50px;
-			display:inline-block;
-		}
-	</style> 
+<link href="../teamstyle.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <jsp:include page="MyPageCategory.jsp" />
@@ -43,58 +33,60 @@
 		src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript"
 		src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<div id="mypagebody">
-<h2><%=dto.getUser_id() %></h2>
-
-	<div id="addMoney">
-		<form action="AddMyMoneyPro.jsp" method="post">
-			<table>
-				<tr style="display: none">
-					<td><input type="hidden" name="user_id" id="user_id"
-						value="<%=dto.getUser_id()%>"></td>
-				</tr>
-				<tr>
-					<td>돈 충전하기</td>
-				</tr>
-				<tr>
-					<td>현재 잔액 : <%=dto.getUser_money() %>원</td>
-				</tr>
-				<tr>
-					<td>현재 사용가능한 금액 : <%=dto.getUser_usemoney() %>원</td>
-				</tr>
-				<tr>
-					<%-- 
-					<td><input type="radio" name="money" id="money" value="5000">5000원
-						<input type="radio" name="money" id="money" value="10000">10000원
-						<input type="radio" name="money" id="money" value="30000">30000원
-						<input type="radio" name="money" id="money" value="50000">50000원
-					</td>--%>
-
-					<td><select id="money" name="money">
-							<option value="3000">3000원</option>
-							<option value="5000">5000원</option>
-							<option value="10000">10000원</option>
-							<option value="30000">30000원</option>
-							<option value="50000">50000원</option>
-							<option value="100000">100000원</option>
-							<option value="500000">500000원</option>
-							<option value="1000000">1000000원</option>
-					</select></td>
-
-				</tr>
-				<tr>
-					<td>
-						<button id="iamportPayment" type="button">결제하기</button>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="text" value="충전된금액" id="aftermoney"
-						name="aftermoney"></td>
-				</tr>
-			</table>
-		</form>
+<div class="mypageContent">
+	<h2><%=dto.getUser_id() %></h2>
+	<div class="mypagebody">
+	
+		<div id="addMoney">
+			<form action="AddMyMoneyPro.jsp" method="post">
+				<table>
+					<tr style="display: none">
+						<td><input type="hidden" name="user_id" id="user_id"
+							value="<%=dto.getUser_id()%>"></td>
+					</tr>
+					<tr>
+						<td>돈 충전하기</td>
+					</tr>
+					<tr>
+						<td>현재 잔액 : <%=dto.getUser_money() %>원</td>
+					</tr>
+					<tr>
+						<td>현재 사용가능한 금액 : <%=dto.getUser_usemoney() %>원</td>
+					</tr>
+					<tr>
+						<%-- 
+						<td><input type="radio" name="money" id="money" value="5000">5000원
+							<input type="radio" name="money" id="money" value="10000">10000원
+							<input type="radio" name="money" id="money" value="30000">30000원
+							<input type="radio" name="money" id="money" value="50000">50000원
+						</td>--%>
+	
+						<td><select id="money" name="money">
+								<option value="3000">3000원</option>
+								<option value="5000">5000원</option>
+								<option value="10000">10000원</option>
+								<option value="30000">30000원</option>
+								<option value="50000">50000원</option>
+								<option value="100000">100000원</option>
+								<option value="500000">500000원</option>
+								<option value="1000000">1000000원</option>
+						</select></td>
+	
+					</tr>
+					<tr>
+						<td>
+							<button id="iamportPayment" type="button">결제하기</button>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="text" value="충전된금액" id="aftermoney"
+							name="aftermoney"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
-
+</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#iamportPayment").click(function() {
@@ -170,7 +162,7 @@
 		<%
 	}
 	%>
-</div>
+
 <jsp:include page="../Footer.jsp"></jsp:include>
 </body>
 </html>
