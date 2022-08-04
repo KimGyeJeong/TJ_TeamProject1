@@ -467,7 +467,7 @@ public class BeomSuDAO {
 		ResultSet rs = null;
 		try {
 			conn = getConn();
-			String sql = "select * from Address where user_id=?";
+			String sql = "select * from Address where user_id=? order by a_usereg desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, UID);
 			rs = pstmt.executeQuery();
@@ -1982,13 +1982,14 @@ public class BeomSuDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConn();
-			String sql = "insert into Review(RE_NO, RE_STARS, RE_REPORTUID, RE_CONTENT, RE_REPORTEDUID) ";
-			sql += "values(Review_seq.nextval, ?, ?, ?, ?)";
+			String sql = "insert into Review(RE_NO, RE_STARS, RE_REPORTUID, RE_CONTENT, RE_REPORTEDUID, p_no) ";
+			sql += "values(Review_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, reDTO.getRe_stars());
 			pstmt.setString(2, reDTO.getRe_reportUid());	//구매자
 			pstmt.setString(3, reDTO.getRe_content());
 			pstmt.setString(4, reDTO.getRe_reportedUid());	//판매자
+			pstmt.setInt(5, reDTO.getP_no());
 			result = pstmt.executeUpdate();
 
 			//0803 수정 시작. 수정자 김계정

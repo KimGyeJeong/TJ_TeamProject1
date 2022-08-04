@@ -30,11 +30,11 @@
 			</tr>
 			<tr>
 				<td>문의 제목</td>
-				<td><textarea rows="2" cols="50" name="pq_title"></textarea></td>
+				<td><textarea rows="2" cols="50" name="pq_title" required></textarea></td>
 			</tr>
 			<tr>
 				<td>문의 내용</td>
-				<td><textarea rows="10" cols="50" name="pq_content"></textarea></td>
+				<td><textarea rows="10" cols="50" name="pq_content" required></textarea></td>
 			</tr>
 			<tr>
 				<td></td>
