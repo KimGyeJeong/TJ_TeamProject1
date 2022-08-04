@@ -66,9 +66,11 @@ if(session.getAttribute("adminId")==null){
 }
 
 %>
+<%-- 
 <div align="center">
 <h4 >AdminSessionCheck : <%=aduid %></h4>
 </div>
+--%>
 <div align="right">
  <a href="AdminLogout.jsp">로그아웃</a>
 </div>

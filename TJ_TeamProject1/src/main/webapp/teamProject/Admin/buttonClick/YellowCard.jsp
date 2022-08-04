@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>YellowCard</title>
+<%-- 
 <link href="../../style.css" rel="stylesheet" type="text/css">
+--%>
 </head>
 <body onload="getValue()">
 
@@ -21,7 +23,7 @@
 		}
 	</script>
 
-	<div>
+	<div class="content">
 		<form action="YellowCardPro.jsp" method="post">
 			<table>
 				<tr>

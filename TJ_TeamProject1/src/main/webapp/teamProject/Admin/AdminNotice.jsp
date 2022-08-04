@@ -54,17 +54,6 @@
 					<a href="AdminProductList.jsp" class="nav-item nav-link">상품확인</a> <a
 						href="AdminQnAList.jsp" class="nav-item nav-link">자주하는질문</a> <a
 						href="AdminFBList.jsp" class="nav-item nav-link">자유게시판</a>
-
-					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-						<div class="dropdown-menu bg-transparent border-0">
-							<a href="signin.html" class="dropdown-item">Sign In</a> <a
-								href="signup.html" class="dropdown-item">Sign Up</a> <a
-								href="404.html" class="dropdown-item">404 Error</a> <a
-								href="blank.html" class="dropdown-item">Blank Page</a>
-						</div>
-					</div>
 				</div>
 			</nav>
 		</div>
