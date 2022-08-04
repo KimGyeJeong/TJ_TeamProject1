@@ -7,8 +7,18 @@
 <title>ERRORPAGE500</title>
 </head>
 <body>
-<h4>ERRORPAGE</h4>
-<h4>ERRORCODE 500</h4>
+<%
+request.setCharacterEncoding("UTF-8");
+
+
+%>
+<h4>ERRORPAGE500</h4>
+<div>
+<img alt="" src="../save/고장아닙니다고양이입니다.gif">
+</div>
+<div>
+<button onclick="location.href='../Main.jsp'">Go Main...</button>
+</div>
 
 </body>
 </html>

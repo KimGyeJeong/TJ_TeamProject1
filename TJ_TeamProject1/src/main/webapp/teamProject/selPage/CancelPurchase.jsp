@@ -34,18 +34,24 @@
 <body>
 			<script type="text/javascript">
 				alert("성공적으로 취소했습니다!");
-				window.location.assign("../Main.jsp");
+				//window.location.assign("../Main.jsp");
+				//location.reload(); --> 500 ERR
+				window.location.assign("../mypage/OrderProcessList.jsp");
 			</script>
 <%		}else{%>
 			<script type="text/javascript">
 				alert("배송이 시작된 상품은 취소할 수 없습니다!");
-				window.location.assign("../Main.jsp");
+				//window.location.assign("../Main.jsp");
+				//location.reload();
+				window.location.assign("../mypage/OrderProcessList.jsp");
 			</script>	
 <% 		}		
 	}else{ %>
 		<script type="text/javascript">
 			alert("권한이 없습니다!");
-			window.location.assign("../Main.jsp");
+			//window.location.assign("../Main.jsp");
+			//location.reload();
+			window.location.assign("../mypage/OrderProcessList.jsp");
 		</script>
 <%	} %>
 </body>
