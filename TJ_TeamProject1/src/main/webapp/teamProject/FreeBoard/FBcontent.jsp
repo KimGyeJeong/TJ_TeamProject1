@@ -24,7 +24,7 @@
 <style>
 #fox{
 	display: block;
-	margin-left: 25%;
+	margin-left: 10%;
 	margin-top: 3%;
 	
 }
@@ -68,7 +68,14 @@
  	
  	
  	<tr>
- 		<td ><img src="../save/<%=dto.getC_img()%>" width="700px"> </td> 
+ 		<td >
+ 		<%	if(dto.getC_img()==null){
+ 			String text ="등록된 사진이 없습니다";
+ 			%>등록된 사진이 없습니다. <%
+ 		}else{ %><img src="../save/<%=dto.getC_img()%>" width="500px""/> <%}%>
+ 		
+ 	
+ 		</td> 
  	</tr>		
  	
  	<%if(id.equals(dto.getUser_id())){ %>

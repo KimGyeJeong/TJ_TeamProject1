@@ -24,7 +24,7 @@
 			return; //메소드 종료
 		}
 		//아이디 중복 검사 팝업 열기
-		let url = "confirmId.jsp?id=" + SignUpForm.id.value;
+		let url = "confirmId.jsp?id=" + inputForm.id.value;
 		open(url, "confirmId",
 				"width=300, height=650, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
 
@@ -72,8 +72,14 @@
 			return false;
 		}
 		
+		
 	}
+	
 </script>
+<% 
+	request.setCharacterEncoding("UTF-8"); 
+
+%>
 <title>Insert title here</title>
 <style>
 #SignUpForm tr td input{
@@ -95,7 +101,7 @@
 			<tr>
 				<td>아이디 *</td> 
 				<td><input  type="text" name="id" style="width:200px;" required="required" />&nbsp;<input type="button" value="중복 확인"
-					onclick="openConfimID(this.form)" style="width:100px;"></td> 
+					onclick="openConfimID(this.form)" style="width:100px;" ></td> 
 			</tr>
 			<tr>
 				<td>비밀번호 *</td>

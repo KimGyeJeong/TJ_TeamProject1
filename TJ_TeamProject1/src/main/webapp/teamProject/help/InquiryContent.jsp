@@ -4,7 +4,17 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<style>
+#box{
+	display: block;
+	margin-left: 30%;
+	margin-top: 3%;
+	
+}
+</style>
 <head>
+<jsp:include page='../Header.jsp'/>
+<jsp:include page='../floatingAdvertisement.jsp'/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../style.css" rel="stylesheet" type="text/css" />
@@ -37,10 +47,13 @@
 		
 		
 	}
+	if(dto.getUq_img1()==null){
+		String text ="등록된 사진이 없습니다";
+	}
 	
 %>
 <body>
- <table>
+ <table id='box'>
  	<tr>
  		<td>문의 제목 </td>
  	</tr>
@@ -51,9 +64,17 @@
  		<td>사진</td>
  	</tr>
  	<tr>
- 		<td><img src="../save/<%=dto.getUq_img1()%>"/> </td> 
+ 		<td>
+ 		<%	if(dto.getUq_img1()==null){
+ 			String text ="등록된 사진이 없습니다";
+ 			%>등록된 사진이 없습니다. <%
+ 		}else{ %><img src="../save/<%=dto.getUq_img1()%>"/> <%}%>
+ 		</td> 
  		
  	</tr>
+ 	<tr>
+ 	</tr>
+ 	<br/>
  	<tr>
  		<td>문의 내용 </td>
  	</tr>
@@ -99,7 +120,7 @@
 
 
 
-
+<%@ include file="../Footer.jsp" %>
 
 
 </body>
