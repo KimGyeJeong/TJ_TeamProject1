@@ -51,10 +51,11 @@ function addAddress(uri) {
 }
 </script>
 <%
-String ono = request.getParameter("ono");	
+String ono = request.getParameter("o_no");	
 request.setCharacterEncoding("UTF-8");
 String uid = (String)session.getAttribute("UID");
 InstanceDAO dao = new InstanceDAO();
+
 List<AddressDTO> address = dao.getaddressList(uid);
 %>
 
@@ -71,7 +72,7 @@ List<AddressDTO> address = dao.getaddressList(uid);
 <% 	for(int i=0 ; i<address.size() ; i++) {
 		AddressDTO dto = address.get(i);  %>
 	  	<fieldset>
-		<input type="radio" name="ano" value="<%= dto.getA_no() %>" onclick="selectAno()" <% if(i==0){%>checked="checked"<%} %>> 
+		<input type="radio" name="ano" value="<%= dto.getA_no() %>" onclick="selectAno()" <% if(dao.getOrder(ono).getA_no()==dto.getA_no()){%>checked="checked"<%} %>> 
 		<p style="display: inline-block; width: 300px; margin: 8px; "><%= dto.getA_tag() %> </p>
 		<div id="modify">
 			<button type="button" onclick="addAddress('addAddress.jsp?modifyAno=<%= dto.getA_no() %>')">수정</button>

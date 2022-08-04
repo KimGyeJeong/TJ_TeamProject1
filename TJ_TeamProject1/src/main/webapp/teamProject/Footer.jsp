@@ -10,8 +10,8 @@
 
 <body>
 
-<footer>
-<table >
+<footer class="footer">
+<table class="footertable">
 	<tr>
 		<td>
 			고객센터 C/S Center <br/>

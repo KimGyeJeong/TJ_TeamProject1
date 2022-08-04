@@ -45,27 +45,27 @@
 
     
 	<!-- Sidebar Start --> 
-	<div class="sidebar pe-4 pb-3">
+	<div class="sidebar pe-4 pb-3" style="border: 1px solid black ;">
 	    <nav class="navbar navbar-dark">
 	        <div class="navbar-nav w-100">
 	        	<br>
 	        	<br>
 	            <a href="OrderProcessList.jsp" class="nav-item nav-link">구입한 상품</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="BiddingInfo.jsp" class="nav-item nav-link">입찰한 상품</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="MyProductNow.jsp" class="nav-item nav-link">나의 상품 판매</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="MyWishList.jsp" class="nav-item nav-link">찜</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="MyReview.jsp" class="nav-item nav-link">나의 후기</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="AddMyMoney.jsp" class="nav-item nav-link">잔액충전</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="MyPageInfo.jsp" class="nav-item nav-link">계정설정</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="../help/inquiryList.jsp" class="nav-item nav-link">나의 문의사항</a>
-	            <br>
+	            <div class="mypage-space"></div>
 	            <a href="../help/Help.jsp" class="nav-item nav-link">고객센터</a>
 	            <br>
 	        </div>

@@ -1,3 +1,4 @@
+<%@page import="team.project.dao.InstanceDAO"%>
 <%@page import="team.project.model.BiddingDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="team.project.model.ProductDTO"%>
@@ -17,6 +18,7 @@
 	int o_no = Integer.parseInt(request.getParameter("o_no"));
 	int o_pro = 3;
 	BeomSuDAO dao = new BeomSuDAO();
+	InstanceDAO instanceDao = new InstanceDAO();
 	OrderListDTO orderDTO = dao.orderListGet(o_no);
 	int result = 0;
 	if(orderDTO.getO_pro() == 0 || orderDTO.getO_pro() == 1 || orderDTO.getO_pro() == 2){
@@ -31,7 +33,10 @@
 <%if(UID != null){
 	if(result == 1 && orderDTO.getP_status() == 0){
 		int result2 = dao.userMoneyUpdate(proDTO.getP_price(), proDTO.getP_sellerId());
-		if(result2 == 1){%>
+		if(result2 == 1){
+			String message = proDTO.getP_title()+" 상품이 거래완료";
+			instanceDao.insertNotification(orderDTO.getO_buyerId(), "1", message);
+			%>
 			<script type="text/javascript">
 
 				alert("구매가 확정되었습니다!");

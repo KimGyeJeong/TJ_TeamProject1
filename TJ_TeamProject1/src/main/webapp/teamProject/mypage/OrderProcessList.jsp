@@ -53,7 +53,7 @@
 								case 0: %>
 									<td>주문확인</td> 
 									<td>
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 										<a href="javascript:address('transAddress.jsp','<%= order.getO_no() %>')" ><button>배송지변경</button></a><br>
 										<form action="../selPage/CancelPurchase.jsp" method="post">
 											<input type="hidden" name="o_no" value="<%= order.getO_no()  %>">
@@ -63,14 +63,14 @@
 								<%	break; 
 								case 1: %>
 									<td>배송중</td>
-									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+									<td>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									</td>
 								<%	break; 
 								case 2: %>
 									<td>배송완료</td> 
-									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+									<td>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 										<form action="../selPage/AddPayProductPro.jsp" method="post">
 											<input type="hidden" value="<%= order.getO_no() %>" name="o_no">
 											<input type="submit" value="주문확정">
@@ -85,37 +85,45 @@
 								case 3: %>
 									<td>거래완료</td> 
 									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-										
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									<% 	if(dao.writeReview(order.getP_no())<1){ %>
 											<a href="javascript:writeReview('../selPage/Review.jsp','<%= order.getP_no() %>')" ><button>리뷰작성</button></a>
 									<%	}	%>
 									</td>
 								<%	break;
 								case 4: %>
-									<td>반품수거</td> 
+									<td>반송준비</td> 
 									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-										<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">수거지 변경</button> </a>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+										<a href="javascript:address('transAddress.jsp','<%= order.getO_no() %>')" ><button>수거지 변경</button> </a> <br>
+										<form action="FinishFedex.jsp">
+											<input type="hidden" name="o_no" value="<%= order.getO_no() %>">
+											<input type="hidden" name="o_pro" value="5">
+											<input type="submit" value="반송완료">
+										</form>
 									</td>
-									
 								<%	break; 
 								case 5: %>
 									<td>반송중</td> 
 									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br> 
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+										<form action="FinishFedex.jsp">
+											<input type="hidden" name="o_no" value="<%= order.getO_no() %>">
+											<input type="hidden" name="o_pro" value="6">
+											<input type="submit" value="배송완료">
+										</form>
 									</td>
 								<%	break;
 								case 6: %>
 									<td>반송완료</td> 
 									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									</td>
 								<%	break;
 								case 7: %>
 									<td>환불완료</td> 
 									<td> 
-										<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
+										<a href="javascript:detail('OrderProInfo.jsp','<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 									</td>
 								<%	break;
 							} %>
@@ -153,10 +161,25 @@
 				document.body.appendChild(f);
 				f.submit();
 		}
-		function detail(uri){
+		function detail(uri, ono){
 			let properties = "top=100 , left=600 , width=1000, height=800, "; 
 				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-			window.open(uri,"OrderProInfo",properties);
+			window.open("","OrderProInfo",properties);
+			
+			let f = document.createElement('form');
+
+			let no;
+			no = document.createElement('input');
+			no.setAttribute('type', 'hidden');
+			no.setAttribute('name', 'ono');
+			no.setAttribute('value', ono);
+
+			f.appendChild(no);
+			f.setAttribute('method', 'post');
+			f.setAttribute('action', uri );
+			f.target = 'OrderProInfo';
+			document.body.appendChild(f);
+			f.submit();
 		}
 		function writeReview(uri , p_no) {
 			

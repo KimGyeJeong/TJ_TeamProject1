@@ -1119,7 +1119,7 @@ public class InstanceDAO {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "update orderlist set o_fedexName=? , o_trackingNo=? , o_pro=1 where o_no=?";
+			String sql = "update orderlist set o_fedexName=? , o_trackingNo=? where o_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, o_fedexName); 
 			pstmt.setInt(2,trackingNo);
@@ -1224,6 +1224,30 @@ public class InstanceDAO {
 			e.printStackTrace();
 		}finally {closeConnection(rs, pstmt, conn);}
 		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	// notification(알림) 넣기
+	public void insertNotification(String uid,String type, String message) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn= getConnection();
+			String sql = "insert into notification (not_no ,user_id ,not_type ,not_message ,not_reg) ";
+				sql += "values(notification_seq.nextval,?,?,?,sysdate)";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setString(2, type);
+			pstmt.setString(3, message);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {closeConnection(pstmt, conn);}
 	}
 	
 	

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<jsp:include page="../UIDcheck.jsp"></jsp:include>
+<jsp:include page="../UIDcheck.jsp" />
 </head>
 <%
 request.setCharacterEncoding("UTF-8");

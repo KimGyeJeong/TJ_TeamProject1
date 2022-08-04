@@ -55,8 +55,7 @@ if(order.getP_status()==1){
 			case 0: %>
 			<td>주문확인</td>  <br>
 			<td>
-				<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
-				<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">배송지 변경</button> </a> <br>
+				<a href="javascript:address('transAddress.jsp','<%= order.getO_no() %>')" ><button>배송지 변경</button> </a>
 				<form action="../selPage/CancelPurchase.jsp" method="post">
 					<input type="hidden" name="o_no" value="<%= order.getO_no()  %>">
 					<input type="submit" value="취소하기">
@@ -66,7 +65,6 @@ if(order.getP_status()==1){
 		case 1: %>
 			<td>배송중</td>
 			<td> 
-				<a onclick="detail('OrderProInfo.jsp?ono=<%= order.getO_no() %>')"><button>상세보기</button></a> <br>
 			</td>
 		<%	break; 
 		case 2: %>
@@ -89,7 +87,7 @@ if(order.getP_status()==1){
 		case 4: %>
 			<td>반품수거</td> 
 			<td> 
-				<a> <button onclick="address('transAddress.jsp?ono=<%= order.getO_no() %>')">수거지 변경</button> </a>
+				<a href="javascript:address('transAddress.jsp','<%= order.getO_no() %>')" ><button>수거지 변경</button> </a>
 			</td>
 			
 		<%	break; 
@@ -105,16 +103,26 @@ if(order.getP_status()==1){
 		} %>
 	</tr>
 	<script type="text/javascript">
-		function address(uri){
-			let properties = "top=100 , left=600 , width=500, height=800, "; 
-				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-				addr = window.open(uri,"address",properties);
-		}
-		function detail(uri){
-			let properties = "top=100 , left=600 , width=1000, height=800, "; 
-				properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
-			window.open(uri,"OrderProInfo",properties);
-		}
+	function address(uri,o_no){
+		let properties = "top=100 , left=600 , width=500, height=800, "; 
+			properties += "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no";
+			addr = window.open("","address",properties);
+			
+			let f = document.createElement('form');
+
+			let no;
+			no = document.createElement('input');
+			no.setAttribute('type', 'hidden');
+			no.setAttribute('name', 'o_no');
+			no.setAttribute('value', o_no);
+
+			f.appendChild(no);
+			f.setAttribute('method', 'post');
+			f.setAttribute('action', uri );
+			f.target = 'address';
+			document.body.appendChild(f);
+			f.submit();
+	}
 </script>
 </body>
 </html>

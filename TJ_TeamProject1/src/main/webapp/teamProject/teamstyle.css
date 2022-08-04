@@ -10,6 +10,7 @@
  		margin: auto;
  		width: 90%;
  	}
+ 	
 	.ordertable tr td , .ordertable tr td a{
 		height: 100px;
 		width : 100px;
@@ -56,3 +57,22 @@
 		font-weight: bold;
 		color: black;
 	}
+	.footertable{
+ 		margin: auto;
+ 		width: 80%;
+ 	}
+ 	.footer{
+ 		margin-top: 100px !important;
+ 		margin-bottom: 50px !important;
+ 		margin: auto;
+ 		width: 90%;
+ 	}
+ 	.mypage-space{
+ 		border-top: 1px solid #c3c3c3;
+ 		height: 2px ;
+ 		width: 150px;
+ 		margin: auto;
+ 		margin-top: 12px;
+ 		margin-bottom: 12px;
+ 	}
+	
