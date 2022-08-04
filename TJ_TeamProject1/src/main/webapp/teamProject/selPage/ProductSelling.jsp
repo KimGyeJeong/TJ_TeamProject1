@@ -17,6 +17,14 @@
 	List<CategoryDTO> category = dao.getCategory(); 
 %>
 <body>
+<style>
+#fox{
+	display: block;
+	margin-left: 25%;
+	margin-top: 3%;
+;
+}
+</style>
 <jsp:include page='../Header.jsp'/>
 <%
 if(UID != null){
@@ -26,7 +34,7 @@ if(p_status == 1){ %>
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
-		<table>
+		<table id='fox'>
 			<tr>
 				<td>상품 제목<br/>
 				<input type="text" name="p_title" required /></td>
@@ -90,7 +98,7 @@ if(p_status == 1){ %>
 	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
-		<table>
+		<table id='fox'>
 			<tr>
 				<td>상품 제목<br/>
 				<input type="text" name="p_title" required /></td>
