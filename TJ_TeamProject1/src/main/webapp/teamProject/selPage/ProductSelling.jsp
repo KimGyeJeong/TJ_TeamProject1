@@ -6,8 +6,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>상품 올리는 페이지</title>
+<script>
+function acountCheck(){
+	let inputs = document.ProductSell; 
+	
+	if(inputs.p_minPrice.value > inputs.p_maxPrice.value){
+		alert("하한가는 상한가보다 클 수 없습니다. ");
+		return false;
+	}
+}
+
+</script>
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -31,7 +43,7 @@ if(UID != null){
 
 if(p_status == 1){ %>
 
-	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data">
+	<form action="ProductSellingPro.jsp" method="post" enctype="multipart/form-data" name="ProductSell" onsubmit="return acountCheck()">
 	<input type="hidden" name="p_status" value="<%=p_status%>" />
 	<input type="hidden" name="p_sellerId" value="<%=UID%>" />
 		<table id='fox'>

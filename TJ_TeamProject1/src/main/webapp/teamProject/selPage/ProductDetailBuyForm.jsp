@@ -1,4 +1,9 @@
+
+<%@page import="team.project.model.WishListDTO"%>
+<%@page import="team.project.dao.InstanceDAO"%>
+
 <%@page import="java.text.SimpleDateFormat"%>
+
 <%@page import="team.project.model.CategoryDTO"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.time.LocalDateTime"%>
@@ -51,6 +56,7 @@ textarea {
 	int p_no = Integer.parseInt(p);
 	
 	BeomSuDAO dao = new BeomSuDAO();
+	InstanceDAO instanceDao = new InstanceDAO();
 	ProductDTO dto = null;
 	List list = null;
 	dto = dao.productDetailBuy(p_no);
@@ -109,7 +115,13 @@ textarea {
 			<td colspan="3" align="left">가격 : <%=dto.getP_price() %></td>
 		</tr>
 		<tr>
+			<%	int checkWishList= instanceDao.checkWishList(p_no, UID);
+				if(checkWishList == 0){%>
+				
 			<td><button onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')">찜하기</button></td>
+			<%	}else if(checkWishList == 1){ %>
+			<td>이미 찜한 상품입니다.</td>
+			<% 	} %>
 			<td><button onclick="window.location='ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>&p_status=<%=dto.getP_status()%>'">구매하기</button></td>
 		</tr>	
 <%			}else{%>
@@ -122,7 +134,12 @@ textarea {
 			<td align="left">상한가 : <%=dto.getP_maxPrice() %></td>
 		</tr>
 		<tr>
+			<%	int checkWishList= instanceDao.checkWishList(p_no, UID);
+				if(checkWishList == 0){%>
 			<td><input type="button" onclick="window.open('Wish.jsp?p_no=<%=dto.getP_no()%>', '찜', 'width=500, height=500, location=no, left=100, top=200')" value="찜하기"/></td>
+			<%	}else{ %>
+			<td>이미 찜한 상품입니다.</td>
+			<% 	} %>
 			<td><input type="button" onclick="window.location='ProductDetailBuyPro.jsp?p_no=<%=dto.getP_no()%>&p_status=0'" value="즉시구매(상한가구매)"/></td>
 			<td><input type="submit" value="입찰하기" /></td>
 		</tr>
