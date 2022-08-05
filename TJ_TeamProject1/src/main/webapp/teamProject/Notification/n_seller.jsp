@@ -25,7 +25,7 @@
 <jsp:include page='../Header.jsp'/>
 <jsp:include page='../floatingAdvertisement.jsp'/>
 
-<br />
+<br/>
 <h1 align="center">알림 페이지-판매자 알림</h1>
 <table id='box'>
 	<tr>
@@ -56,7 +56,7 @@ if(auto != null && id != null && pw != null){
 
 <%request.setCharacterEncoding("UTF-8"); %>
 <%  id=(String)session.getAttribute("UID"); %>
-<h3 align="right">사용자:<%=id %></h3>
+
 
 	<%if(session.getAttribute("UID") == null || session.getAttribute("UID") == "null" || session.getAttribute("UID") ==""){%>
 		<script>
@@ -65,8 +65,7 @@ if(auto != null && id != null && pw != null){
   		</script>
 
 	<%}else{%>
-	<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
-
+	
 	<%}%>
 
 	<%
@@ -160,7 +159,7 @@ if(auto != null && id != null && pw != null){
 			
 			<td><input type='checkbox' value='1' name="check"/></td>
 			<td><input type='submit' value='확인' /></td>
-			<td style='display:none'><input type='text' value='n_seller.jsp' name="where"></td>
+			<td style='display:none'><input type='text' value='n_seller.jsp?pageNum=<%=pageNum%>' name="where"></td>
 			</tr>
 			<input type='hidden' name='dto' value='<%=dto.getNot_no() %>'>
 			</form>
@@ -204,7 +203,7 @@ if(auto != null && id != null && pw != null){
 	
 	</div>
 	
-<br/>
+
 <br/>
 <br/>	
 	

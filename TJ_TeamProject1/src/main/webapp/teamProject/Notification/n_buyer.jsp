@@ -64,7 +64,7 @@ if(auto != null && id != null && pw != null){
   		</script>
 
 	<%}else{%>
-	<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
+	
 
 	<%}%>
 
@@ -159,7 +159,7 @@ if(auto != null && id != null && pw != null){
 			
 			<td><input type='checkbox' value='1' name="check"/></td>
 			<td><input type='submit' value='확인' /></td>
-			<td style='display:none'><input type='text' value='n_buyer.jsp' name="where"></td>
+			<td style='display:none'><input type='text' value='n_buyer.jsp?pageNum=<%=pageNum%>' name="where"></td>
 			</tr>
 			<input type='hidden' name='dto' value='<%=dto.getNot_no() %>'>
 			</form>
@@ -169,7 +169,7 @@ if(auto != null && id != null && pw != null){
 	</table>
 	</div>
 	
-	<br />
+	
 	<div align="center" >
 		<%
 			if(count >0){
@@ -203,7 +203,7 @@ if(auto != null && id != null && pw != null){
 	
 
 	</div>
-<br/>
+
 <br/>
 <br/>	
 <%@ include file="../Footer.jsp" %>	
