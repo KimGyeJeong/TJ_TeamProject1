@@ -65,7 +65,7 @@ if(auto != null && id != null && pw != null){
   		</script>
 
 	<%}else{%>
-	<input type="button" value="로그아웃" onclick="window.location='../Login/Logout.jsp'" style="float: right;" />
+	
 
 	<%}%>
 
@@ -157,7 +157,7 @@ if(auto != null && id != null && pw != null){
 			} %>(<%=notType%>)<%=dto.getNot_message() %></td>
 			<form action="notificationListPro.jsp" method="get"  >	
 			<td><%=sdf.format(dto.getNot_reg())%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> 
-			<td style='display:none'><input type='text' value='notificationList.jsp' name="where"></td>
+			<td style='display:none'><input type='text' value='notificationList.jsp?pageNum=<%=pageNum%>' name="where"></td>
 			<%--if문으로 이미 체크되어있으면 확인함  --%>
 			
 			<td><%=readCheck%></td>
