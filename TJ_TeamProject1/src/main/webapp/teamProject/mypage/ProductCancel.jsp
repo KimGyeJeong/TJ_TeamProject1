@@ -22,8 +22,8 @@ ProductDTO product = dao.getProduct(pno);
 <%	if(p_status=="1"){
 		//	경매 입찰
 		int refund = bsdao.cancelPurchase(dao.getBidding(pno).getB_bidding(), o_buyerId);
-		refund += dao.updateO_pro(Integer.parseInt(ono), 7); 
-		if(refund == 2){
+		int sum = refund + dao.updateO_pro(Integer.parseInt(ono), 7); 
+		if(sum == 2){
 			String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
 			dao.insertNotification(o_buyerId, "2", message);
 			response.sendRedirect("MyProductNow.jsp");
@@ -31,8 +31,8 @@ ProductDTO product = dao.getProduct(pno);
 	}else{
 		//	일반구매
 		int refund = bsdao.cancelPurchase( product.getP_price() , o_buyerId);
-		refund += dao.updateO_pro(Integer.parseInt(ono), 7); 
-		if(refund == 2){
+		int sum = refund + dao.updateO_pro(Integer.parseInt(ono), 7); 
+		if(sum == 2){
 			String message = product.getP_title()+" 상품의 환불이 완료되었습니다.";
 			dao.insertNotification(o_buyerId, "2", message);
 			response.sendRedirect("MyProductNow.jsp");
