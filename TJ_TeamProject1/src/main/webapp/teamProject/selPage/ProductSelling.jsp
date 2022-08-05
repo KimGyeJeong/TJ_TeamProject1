@@ -17,6 +17,10 @@ function acountCheck(){
 		alert("하한가는 상한가보다 클 수 없습니다. ");
 		return false;
 	}
+	if(inputs.p_minPrice.value == inputs.p_maxPrice.value){
+		alert("하한가와 상한가는 같을 수 없습니다. ");
+		return false;
+	}
 }
 
 </script>

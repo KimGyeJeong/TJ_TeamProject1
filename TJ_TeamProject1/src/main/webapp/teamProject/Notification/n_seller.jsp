@@ -84,7 +84,7 @@ if(auto != null && id != null && pw != null){
  	int count=0;
  	List NotificationList = null; 	
  	count = dao.notificationListCount2(id);
- 
+ 	SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
  	
  	
  	
@@ -151,7 +151,7 @@ if(auto != null && id != null && pw != null){
 				notType= "경고";
 			} %>(<%=notType%>)<%=dto.getNot_message() %></td>
 			<form action="notificationListPro.jsp" method="get" >	
-			<td><%=dto.getNot_reg()%></td> 
+			<td><%=sdf.format(dto.getNot_reg())%></td> 
 			
 			<%--if문으로 이미 체크되어있으면 확인함  --%>
 			

@@ -136,7 +136,7 @@ List viewsProductList = daoL.viewsProductList();
 	<div class="w3-content w3-display-container">
 		<a href="/TJ_TeamProject1/teamProject/selPage/ProductList.jsp?ca_no=132">
 			<img class="mySlides"src="main3.png" width="100%" ></a>
-		<a href="selPage/ProductList.jsp">
+		<a href="selPage/ProductList.jsp?ca_no=55">
 			<img class="mySlides" src="coffee.png" width="100%"></a> 
 		<a href="/TJ_TeamProject1/teamProject/selPage/ProductList.jsp?ca_no=131"><img class="mySlides"
 			src="snow.png" width="100%"></a>
