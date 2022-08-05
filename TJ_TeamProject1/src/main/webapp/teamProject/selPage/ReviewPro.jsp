@@ -58,6 +58,7 @@ if (UID.equals(proDTO.getP_buyerId())) {
 	%>
 	<script type="text/javascript">
 		alert("리뷰를 작성했습니다!");
+		window.opener.reload();
 		window.close();
 	</script>
 	<%
